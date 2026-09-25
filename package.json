@@ -3,22 +3,32 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "start:lan": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0",
+    "server": "node server/index.mjs",
+    "dev": "concurrently -k -n server,web -c blue,magenta \"API_PORT=3000 node server/index.mjs\" \"npm:start\"",
     "build": "ng build",
+    "serve:prod": "npm run build && API_PORT=3000 node server/index.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
   "packageManager": "npm@10.9.8",
   "dependencies": {
+    "@angular/cdk": "^22.1.7",
     "@angular/common": "^22.1.0",
     "@angular/compiler": "^22.1.0",
     "@angular/core": "^22.1.0",
     "@angular/forms": "^22.1.0",
+    "@angular/material": "^22.1.7",
     "@angular/platform-browser": "^22.1.0",
     "@angular/router": "^22.1.0",
+    "@angular/service-worker": "^22.1.0",
+    "concurrently": "^10.0.5",
+    "express": "^5.2.1",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "ws": "^8.21.3"
   },
   "devDependencies": {
     "@angular/build": "^22.1.8",

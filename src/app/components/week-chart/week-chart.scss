@@ -1,0 +1,299 @@
+:host {
+  display: block;
+  --hour-px: 22px;
+  --head-h: 52px;
+  /* Short day ranges still get a usable bar. */
+  --bar-min: 380px;
+}
+
+.chart {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 4px;
+}
+
+.days {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--days), minmax(0, 1fr));
+  gap: 6px;
+  /* Up to 5 days share the width; beyond that each keeps a fifth and the row scrolls. */
+  min-width: calc(100% * var(--days) / var(--visible, 1));
+}
+
+/* First and last hour, drawn on the first bar. */
+.hour {
+  position: absolute;
+  left: 5px;
+  z-index: 1;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--when-surface);
+  font-size: 10px;
+  color: var(--when-muted);
+  pointer-events: none;
+
+  &.first {
+    top: calc(var(--head-h) + 3px);
+  }
+  &.last {
+    bottom: calc(40px + 8px + 3px);
+  }
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+
+  &.today .dn {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.open {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+  &:hover .bar,
+  &:focus-visible .bar {
+    border-color: var(--mat-sys-primary);
+  }
+}
+
+.head {
+  height: var(--head-h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  line-height: 1.1;
+
+  .wd {
+    font-size: 12px;
+    color: var(--when-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .dn {
+    font-size: 16px;
+    font-weight: 600;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 999px;
+  }
+  .mo {
+    font-size: 10px;
+    color: var(--when-muted);
+  }
+}
+
+.bar {
+  position: relative;
+  display: block;
+  height: max(calc(var(--hour-px) * var(--hours, 24)), var(--bar-min));
+  border: 1px solid var(--when-border);
+  border-radius: 10px;
+  background: var(--when-surface)
+    repeating-linear-gradient(
+      to bottom,
+      var(--when-grid) 0,
+      var(--when-grid) 1px,
+      transparent 1px,
+      transparent calc(100% / var(--hours, 24))
+    );
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: -4px 0 2px;
+}
+
+.scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 4px;
+  font-size: 12px;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+  .arrow {
+    animation: nudge 1.2s ease-in-out infinite;
+  }
+  &.done {
+    opacity: 0.6;
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.common {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--when-text);
+
+  .t,
+  .b {
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: var(--when-surface);
+    box-shadow: 0 0 0 1px var(--when-common);
+  }
+  .t {
+    margin-top: 3px;
+  }
+  .b {
+    margin-bottom: 3px;
+  }
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--when-common-bg) 0,
+    var(--when-common-bg) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  box-shadow: inset 0 0 0 2px var(--when-common);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.lanes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 2px;
+  padding: 0 3px;
+}
+
+.lane {
+  position: relative;
+  flex: 1;
+  min-width: 3px;
+  transition: opacity 0.15s;
+
+  &.me .block {
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.8);
+  }
+  &.dim {
+    opacity: 0.18;
+  }
+}
+
+.block {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  opacity: 0.92;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+
+  .pill.icon {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.sheet {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  transform: translateX(-50%);
+  z-index: 31;
+  width: min(420px, calc(100vw - 32px));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  animation: sheet-in 0.18s ease-out both;
+
+  p {
+    margin: 0 0 12px;
+    font-size: 16px;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .danger {
+    --mat-button-filled-container-color: var(--mat-sys-error);
+    --mat-button-filled-label-text-color: var(--mat-sys-on-error);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    --hour-px: 18px;
+    --bar-min: 340px;
+  }
+  .actions .pill.icon {
+    width: 32px;
+    height: 32px;
+  }
+}

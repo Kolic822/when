@@ -1,0 +1,216 @@
+<section class="editor card" [style.--color]="color()" [style.--hours]="range().hours">
+  @if (mode() === 'full') {
+    <header>
+      <button mat-icon-button type="button" (click)="closed.emit()" aria-label="Back to all days">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="title">
+        <strong>{{ title() }}</strong>
+        <span class="muted">{{ subtitle() }}</span>
+      </div>
+      <span class="day-nav">
+        <button
+          type="button"
+          class="icon-btn"
+          (click)="goTo(prevDate())"
+          [disabled]="!prevDate()"
+          aria-label="Previous day"
+          title="Previous day"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span class="muted count">{{ dayIndex() + 1 }}/{{ event().dates.length }}</span>
+        <button
+          type="button"
+          class="icon-btn"
+          (click)="goTo(nextDate())"
+          [disabled]="!nextDate()"
+          aria-label="Next day"
+          title="Next day"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </span>
+    </header>
+  }
+
+  <p class="hint muted">
+    {{ coarse ? 'Hold to add' : 'Drag to add' }} · drag edges to resize · hold to move · tap for a
+    note
+    @if (strict()) {
+      · min {{ minLabel() }}
+    }
+  </p>
+
+  @if (mode() === 'full') {
+    <div class="quick">
+      <button type="button" class="pill" (click)="freeAllDay()" [class.active]="allDay()">
+        <mat-icon>{{ allDay() ? 'check' : 'wb_sunny' }}</mat-icon>
+        Free all day
+      </button>
+      @if (mine().length) {
+        <button type="button" class="pill danger" (click)="clearDay()">
+          <mat-icon>delete_outline</mat-icon>
+          Clear day
+        </button>
+      }
+      @if (event().dates.length > 1) {
+        <app-copy-days
+          [dates]="event().dates"
+          [from]="date()"
+          [disabled]="!mine().length"
+          (applied)="copyTo.emit({ from: date(), to: $event })"
+        />
+      }
+    </div>
+  }
+
+  @if (copySlotIndex() !== null) {
+    <div class="copy-slot">
+      <app-copy-days
+        [dates]="event().dates"
+        [from]="date()"
+        [what]="copySlotLabel()"
+        [startOpen]="true"
+        (applied)="applyCopySlot($event)"
+        (cancelled)="copySlotIndex.set(null)"
+      />
+    </div>
+  }
+
+  <!-- Always in the DOM (collapsed when unused) so a tap can focus it synchronously and open the keyboard. -->
+  <form
+    class="note-form"
+    [class.hidden]="noteEditing() === null"
+    (submit)="$event.preventDefault(); saveNote()"
+  >
+    <label>
+      <span class="muted"
+        >Note for
+        {{
+          noteEditing() !== null && mine()[noteEditing()!] ? label(mine()[noteEditing()!]) : ''
+        }}</span
+      >
+      <input
+        #noteInput
+        type="text"
+        [value]="noteDraft()"
+        (input)="noteDraft.set($any($event.target).value)"
+        (keydown.escape)="cancelNote()"
+        maxlength="120"
+        placeholder="e.g. have to leave 20 min early"
+        autocomplete="off"
+        enterkeyhint="done"
+        [tabindex]="noteEditing() === null ? -1 : 0"
+      />
+    </label>
+    <div class="actions">
+      <button type="button" class="pill" (click)="cancelNote()">Cancel</button>
+      <button mat-flat-button type="submit">Save note</button>
+    </div>
+  </form>
+
+  <div class="body">
+    <div class="axis" aria-hidden="true">
+      @for (h of hours(); track h.min) {
+        <span class="hour" [style.top.%]="h.top" [class.minor]="h.minor">{{ h.label }}</span>
+      }
+    </div>
+
+    @if (others().length) {
+      <div class="others" aria-label="Other people's free time">
+        @for (p of others(); track p.id) {
+          <div class="lane" [title]="p.name">
+            @for (s of othersBlocks(p.id); track s.start) {
+              <span
+                class="block"
+                [style.top.%]="pct(s.start)"
+                [style.height.%]="height(s)"
+                [style.background]="p.color"
+                [title]="p.name + ' ' + label(s) + (s.note ? ' – ' + s.note : '')"
+              ></span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <div
+      #bar
+      class="bar"
+      [class.moving]="moving()"
+      [class.holding]="holding()"
+      role="application"
+      aria-label="Drag to select the hours you are free"
+      (pointerdown)="onDown($event)"
+      (pointermove)="onMove($event)"
+      (pointerup)="onUp($event)"
+      (pointercancel)="onCancel()"
+      (contextmenu)="$event.preventDefault()"
+    >
+      @for (s of mine(); track $index) {
+        <span
+          class="slot"
+          [class.editing]="drag()?.index === $index"
+          [attr.data-index]="$index"
+          [style.top.%]="pct(s.start)"
+          [style.height.%]="height(s)"
+        >
+          <span class="handle top" aria-hidden="true"></span>
+          <span class="text">
+            <span class="label">{{ label(s) }}</span>
+            @if (s.note) {
+              <span class="note">{{ s.note }}</span>
+            } @else {
+              <span class="note hint-note">tap to add a note</span>
+            }
+          </span>
+          <span class="icons">
+            @if (event().dates.length > 1) {
+              <span
+                class="copy-one"
+                role="button"
+                aria-label="Copy this period to other days"
+                title="Copy to other days"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </span>
+            }
+            <span class="x" role="button" aria-label="Remove this period" title="Remove">
+              <mat-icon>close</mat-icon>
+            </span>
+          </span>
+          <span class="handle bottom" aria-hidden="true"></span>
+        </span>
+      }
+      @if (drag(); as d) {
+        <span class="slot preview" [style.top.%]="pct(d.start)" [style.height.%]="height(d)">
+          <span class="label">{{ label(d) }}</span>
+        </span>
+      }
+    </div>
+
+    <ng-content select="[actions]" />
+  </div>
+
+  @if (holding()) {
+    <span
+      class="hold-hint"
+      aria-hidden="true"
+      [style.left.px]="holdPoint().x"
+      [style.top.px]="holdPoint().y"
+    >
+      <span class="txt">Keep holding, then drag…</span>
+      <span class="progress" [style.animation-duration.ms]="holdProgressMs"></span>
+    </span>
+  }
+
+  @if (mode() === 'full') {
+    <div class="done-bar">
+      <button mat-flat-button type="button" (click)="closed.emit()">
+        <mat-icon>check</mat-icon>
+        Done
+      </button>
+    </div>
+  }
+</section>

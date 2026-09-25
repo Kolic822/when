@@ -1,0 +1,51 @@
+<div class="picker">
+  <div class="shortcuts">
+    @for (s of shortcuts; track s.label) {
+      <button
+        type="button"
+        class="pill"
+        (click)="applyShortcut(s.days)"
+        [class.active]="shortcutActive(s.days)"
+      >
+        {{ s.label }}
+      </button>
+    }
+    @if (selected().length) {
+      <button type="button" class="pill" (click)="clear()">Clear</button>
+    }
+  </div>
+
+  <div class="month-nav">
+    <button mat-icon-button type="button" (click)="shiftMonth(-1)" aria-label="Previous month">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button type="button" class="month-label" (click)="goToday()" title="Jump to today">
+      {{ monthLabel() }}
+    </button>
+    <button mat-icon-button type="button" (click)="shiftMonth(1)" aria-label="Next month">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="grid" role="grid" [attr.aria-label]="monthLabel()">
+    @for (w of weekdays; track w) {
+      <span class="wd" role="columnheader">{{ w }}</span>
+    }
+    @for (c of cells(); track c.key) {
+      <button
+        type="button"
+        role="gridcell"
+        class="day"
+        [class.selected]="isSelected(c.key)"
+        [class.other]="!c.inMonth"
+        [class.today]="c.today"
+        [disabled]="c.past"
+        [attr.aria-pressed]="isSelected(c.key)"
+        [attr.aria-label]="c.key"
+        (click)="toggle(c)"
+      >
+        {{ c.day }}
+      </button>
+    }
+  </div>
+</div>

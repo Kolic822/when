@@ -1,0 +1,128 @@
+@if (confirmClear(); as d) {
+  <div class="sheet-backdrop" (click)="confirmClear.set(null)"></div>
+  <div
+    class="sheet card"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'Clear ' + d.longLabel"
+  >
+    <p>
+      Clear your times on <strong>{{ d.longLabel }}</strong
+      >?
+    </p>
+    <div class="actions">
+      <button type="button" class="pill" (click)="confirmClear.set(null)">Cancel</button>
+      <button mat-flat-button type="button" class="danger" (click)="clearConfirmed(d)">
+        Clear day
+      </button>
+    </div>
+  </div>
+}
+
+@if (overflows()) {
+  <div class="toolbar">
+    @if (overflows()) {
+      <span class="scroll-hint muted" [class.done]="scrolledToEnd()" aria-live="polite">
+        <mat-icon>swipe</mat-icon>
+        {{ scrolledToEnd() ? 'All days shown' : 'Scroll for more days' }}
+        @if (!scrolledToEnd()) {
+          <mat-icon class="arrow">arrow_forward</mat-icon>
+        }
+      </span>
+    }
+  </div>
+}
+
+<div
+  class="chart"
+  [style.--days]="days().length"
+  [style.--visible]="visibleCount()"
+  [style.--hours]="range().hours"
+  (scroll)="onChartScroll($event)"
+>
+  <div class="days">
+    <!-- Hour labels sit on the first bar so the bars can use the full width. -->
+    @for (h of hours(); track h.min) {
+      <span class="hour" [class]="'hour ' + h.edge" aria-hidden="true">{{ h.label }}</span>
+    }
+    @for (d of days(); track d.key) {
+      <div class="day" [class.today]="d.today">
+        <button
+          type="button"
+          class="open"
+          [attr.aria-label]="d.label"
+          (click)="onOpenClick(d)"
+          (pointerdown)="onPressStart(d, $event)"
+          (pointermove)="onPressMove($event)"
+          (pointerup)="onPressEnd()"
+          (pointercancel)="onPressEnd()"
+          (pointerleave)="onPressEnd()"
+          (contextmenu)="$event.preventDefault()"
+        >
+          <span class="head">
+            <span class="wd">{{ d.weekday }}</span>
+            <span class="dn">{{ d.dayNum }}</span>
+            @if (showMonth()) {
+              <span class="mo">{{ d.month }}</span>
+            }
+          </span>
+          <span class="bar">
+            <span class="lanes">
+              @for (p of participants(); track p.id) {
+                <span
+                  class="lane"
+                  [class.me]="p.id === meId()"
+                  [class.lit]="highlightId() === p.id"
+                  [class.dim]="highlightId() !== null && highlightId() !== p.id"
+                >
+                  @for (b of d.blocks[p.id]; track b.top) {
+                    <span
+                      class="block"
+                      [style.top.%]="b.top"
+                      [style.height.%]="b.height"
+                      [style.background]="p.color"
+                      [style.color]="p.color"
+                      [title]="b.label"
+                    ></span>
+                  }
+                </span>
+              }
+            </span>
+            @for (w of d.common; track w.top) {
+              <span
+                class="common"
+                [style.top.%]="w.top"
+                [style.height.%]="w.height"
+                [title]="w.label"
+              >
+                @if (w.from) {
+                  <span class="t">{{ w.from }}</span>
+                  <span class="b">{{ w.to }}</span>
+                }
+              </span>
+            }
+          </span>
+        </button>
+        @if (meId()) {
+          <span class="actions">
+            <button
+              type="button"
+              class="pill icon"
+              [class.active]="d.allDay"
+              [attr.aria-pressed]="d.allDay"
+              [attr.aria-label]="
+                (d.allDay ? 'Switch off all day on ' : 'Free all day on ') + d.longLabel
+              "
+              [title]="
+                d.allDay ? 'Switch off all day (brings back your earlier times)' : 'Free all day'
+              "
+              (click)="toggleAllDay(d)"
+            >
+              <mat-icon>{{ d.allDay ? 'check' : 'wb_sunny' }}</mat-icon>
+            </button>
+          </span>
+        }
+      </div>
+    }
+  </div>
+</div>

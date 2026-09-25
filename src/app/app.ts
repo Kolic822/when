@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { PrefsStore } from './core/prefs';
+import { Updates } from './core/updates';
 
 @Component({
   imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  template: '<router-outlet />',
 })
 export class App {
-  protected readonly title = signal('when');
+  // Instantiated here so the saved theme is applied before any page renders.
+  private readonly prefs = inject(PrefsStore);
+  // Starts update checks for the installed PWA.
+  private readonly updates = inject(Updates);
 }

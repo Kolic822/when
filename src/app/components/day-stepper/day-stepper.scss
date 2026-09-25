@@ -1,0 +1,184 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  font-size: 0.99em;
+}
+
+.stepper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Day header: its own rounded card, pinned while the picker scrolls. */
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  padding: 8px 12px 8px;
+
+  .progress {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  h2 {
+    margin: 2px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+}
+
+.bar-track {
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: var(--when-grid);
+  overflow: hidden;
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--mat-sys-primary);
+    transition: width 0.25s ease;
+  }
+}
+
+.board {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 12px 8px;
+
+  /* The picker stretches to whatever height is left above the buttons. */
+  app-day-editor {
+    flex: 1;
+    min-height: 0;
+  }
+  /* The embedded editor is a card itself; flatten it inside the board. */
+  app-day-editor ::ng-deep .editor {
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+}
+
+/* Actions beside the bar: icon above a short label. "All days" sits at the bottom, above Next. */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 82px;
+  min-width: 0;
+  margin-left: 6px;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--when-bg);
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.side-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  padding: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Target days: same chip look; scrolls when there are many. */
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 2px;
+}
+
+.day-chip {
+  padding: 10px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  flex: none;
+
+  &.active {
+    background: color-mix(in srgb, var(--mat-sys-primary) 18%, var(--when-surface));
+    border-color: var(--mat-sys-primary);
+    color: var(--mat-sys-primary);
+  }
+}
+
+.side-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  padding: 8px 4px;
+  border: 1px solid var(--when-border);
+  border-radius: 12px;
+  background: var(--when-surface);
+  color: var(--when-text);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.1;
+  text-align: center;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+  &:hover {
+    border-color: var(--mat-sys-primary);
+    color: var(--mat-sys-primary);
+  }
+  &.active {
+    background: var(--mat-sys-primary);
+    border-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Back / Next outside the cards, equal size, at the bottom of the screen. */
+.nav {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 0;
+
+  .nav-btn {
+    height: 48px;
+    width: 100%;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 15px;
+  }
+  .done {
+    color: var(--mat-sys-primary);
+  }
+}

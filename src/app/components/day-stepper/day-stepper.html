@@ -1,0 +1,109 @@
+<div class="stepper">
+  <header class="head card">
+    <span class="progress muted">Day {{ index() + 1 }} of {{ dates().length }}</span>
+    <h2>{{ dayLabel() }}</h2>
+    <div
+      class="bar-track"
+      role="progressbar"
+      [attr.aria-valuenow]="index() + 1"
+      aria-valuemin="1"
+      [attr.aria-valuemax]="dates().length"
+      [attr.aria-label]="'Day ' + (index() + 1) + ' of ' + dates().length"
+    >
+      <div class="bar-fill" [style.width.%]="((index() + 1) / dates().length) * 100"></div>
+    </div>
+  </header>
+
+  <section class="board card">
+    <app-day-editor
+      mode="step"
+      [event]="event()"
+      [meId]="meId()"
+      [date]="date()"
+      (slotsChange)="slotsChange.emit($event)"
+      (allDayToggled)="allDayToggled.emit({ date: date(), on: $event })"
+      (dayCleared)="notFree.emit(date())"
+      (copySlotTo)="copySlotTo.emit($event)"
+      (copySlotRequested)="startCopy({ kind: 'slot', slot: $event })"
+    >
+      <div actions class="side" [class.copying]="copyTarget()">
+        @if (copyTarget(); as target) {
+          <span class="side-title muted"
+            >{{ target.kind === 'slot' ? slotLabel(target.slot) : 'Whole day' }} →</span
+          >
+          <div class="day-list" role="group" aria-label="Days to copy to">
+            @for (d of otherDates(); track d) {
+              <button
+                type="button"
+                class="side-btn day-chip"
+                [class.active]="chosen().has(d)"
+                [attr.aria-pressed]="chosen().has(d)"
+                (click)="toggleDay(d)"
+              >
+                <span>{{ shortLabel(d) }}</span>
+              </button>
+            }
+          </div>
+          <span class="spacer"></span>
+          <button type="button" class="side-btn" (click)="toggleAll()">
+            <mat-icon>{{ allChosen() ? 'deselect' : 'select_all' }}</mat-icon>
+            <span>{{ allChosen() ? 'Select none' : 'Select all' }}</span>
+          </button>
+        } @else {
+          <span class="spacer"></span>
+          @if (dates().length > 1) {
+            <button
+              type="button"
+              class="side-btn"
+              (click)="startCopy({ kind: 'day' })"
+              [disabled]="!hasTimes()"
+            >
+              <mat-icon>content_copy</mat-icon>
+              <span>Copy to…</span>
+            </button>
+          }
+          <button type="button" class="side-btn" (click)="clearDay()" [disabled]="!hasTimes()">
+            <mat-icon>delete_outline</mat-icon>
+            <span>Clear day</span>
+          </button>
+          <button type="button" class="side-btn" [class.active]="isAllDay()" (click)="freeAllDay()">
+            <mat-icon>wb_sunny</mat-icon>
+            <span>Free all day</span>
+          </button>
+        }
+      </div>
+    </app-day-editor>
+  </section>
+
+  <div class="nav">
+    @if (copyTarget()) {
+      <button type="button" class="pill nav-btn" (click)="cancelCopy()">
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="nav-btn"
+        (click)="applyCopy()"
+        [disabled]="!chosen().size"
+      >
+        Copy ({{ chosen().size }})
+        <mat-icon iconPositionEnd>check</mat-icon>
+      </button>
+    } @else {
+      <button type="button" class="pill nav-btn" (click)="prev()" [disabled]="index() === 0">
+        <mat-icon>arrow_back</mat-icon>
+        Prev
+      </button>
+      <button type="button" class="pill nav-btn done" (click)="finished.emit()">
+        <mat-icon>check</mat-icon>
+        Done
+      </button>
+      <button mat-flat-button type="button" class="nav-btn" (click)="next()">
+        {{ isLast() ? 'Finish' : 'Next' }}
+        <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
+      </button>
+    }
+  </div>
+</div>

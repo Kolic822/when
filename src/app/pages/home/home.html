@@ -1,0 +1,119 @@
+<main class="page">
+  <header class="hero">
+    <div class="topbar">
+      <span class="brand">When <span class="tagline">are you free?</span></span>
+      <app-menu />
+    </div>
+    <h1>When are we all free?</h1>
+    <p class="muted">
+      Create a link, share it with your group, and everyone marks the times they're free. When finds
+      the slots that work for all of you.
+    </p>
+  </header>
+
+  <form class="card" (submit)="create($event)">
+    <mat-form-field appearance="outline">
+      <mat-label>What's the meetup?</mat-label>
+      <input
+        matInput
+        [formField]="form.title"
+        placeholder="Band rehearsal, drinks, hike…"
+        autocomplete="off"
+      />
+      @if (form.title().touched() && form.title().invalid()) {
+        <mat-error>Give the meetup a name</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description (optional)</mat-label>
+      <textarea
+        matInput
+        [formField]="form.description"
+        rows="2"
+        placeholder="Where, what to bring, anything the group should know…"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Your name</mat-label>
+      <input matInput [formField]="form.name" autocomplete="given-name" />
+      @if (form.name().touched() && form.name().invalid()) {
+        <mat-error>Tell others who you are</mat-error>
+      }
+    </mat-form-field>
+
+    <section class="days">
+      <h2>Which days are in the running?</h2>
+      <p class="muted">
+        Tap any days you like – a whole week, just weekends, or a few scattered dates.
+      </p>
+      <app-day-picker [(selected)]="dates" />
+      <p class="summary" [class.muted]="!dates().length">
+        @if (dates().length) {
+          <mat-icon>event_available</mat-icon> {{ rangeText() }}
+        } @else {
+          Pick at least one day.
+        }
+      </p>
+    </section>
+
+    <mat-form-field appearance="outline">
+      <mat-label>How long should the meetup be?</mat-label>
+      <mat-select [formField]="form.durationHours">
+        @for (d of durations; track d) {
+          <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Earliest</mat-label>
+        <mat-select [formField]="form.dayStart">
+          @for (h of startOptions; track h.value) {
+            <mat-option [value]="h.value">{{ h.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Latest</mat-label>
+        <mat-select [formField]="form.dayEnd">
+          @for (h of endOptions; track h.value) {
+            <mat-option [value]="h.value">{{ h.label }}</mat-option>
+          }
+        </mat-select>
+        @if (!rangeValid()) {
+          <mat-hint class="warn"
+            >Must leave room for a {{ model().durationHours }} h meetup</mat-hint
+          >
+        }
+      </mat-form-field>
+    </div>
+    <p class="muted between">People can only pick times between these hours.</p>
+
+    <div class="toggle">
+      <mat-slide-toggle [formField]="form.partialOk"
+        >People can join for part of it</mat-slide-toggle
+      >
+      <p class="muted">
+        @if (model().partialOk) {
+          People can mark shorter periods. Sessions need everyone together for at least half the
+          time.
+        } @else {
+          People must mark periods at least as long as the meetup, so everyone is there for all of
+          it.
+        }
+      </p>
+    </div>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <button mat-flat-button type="submit" class="submit" [disabled]="!canCreate()">
+      <mat-icon>link</mat-icon>
+      {{ busy() ? 'Creating…' : 'Create & get link' }}
+    </button>
+  </form>
+</main>

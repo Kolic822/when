@@ -1,0 +1,221 @@
+<main class="page" [class.dayview]="stepping() || editingDay()">
+  <nav class="top">
+    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
+    @if (status() === 'offline') {
+      <span class="conn offline"><span class="dot"></span>reconnecting…</span>
+    }
+    @if (!stepping() && !editingDay()) {
+      <a routerLink="/" class="pill new-when" title="Plan a new When">
+        <mat-icon>add</mat-icon>
+        <span class="txt">New When</span>
+      </a>
+      <app-menu />
+    }
+  </nav>
+
+  @if (session.notFound()) {
+    <section class="card empty">
+      <h1>This link doesn't exist</h1>
+      <p class="muted">The meetup may have been removed, or the link is incomplete.</p>
+      <a mat-flat-button routerLink="/">Create a new one</a>
+    </section>
+  } @else if (!event(); as ev) {
+    <div class="loading"><mat-spinner diameter="36" /></div>
+  } @else {
+    @if (!editingDay() && !stepping()) {
+      <header class="head">
+        <div class="title-row">
+          <h1>{{ event()!.title }}</h1>
+          @if (isCreator() && me()) {
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="settingsOpen() ? settingsOpen.set(false) : openSettings()"
+              aria-label="Edit meetup"
+              title="Edit meetup"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+          @if (me()) {
+            <app-share-link [url]="shareUrl()" [title]="event()!.title" [compact]="true" />
+          }
+        </div>
+        @if (event()!.description) {
+          <p class="description">{{ event()!.description }}</p>
+        }
+      </header>
+    }
+
+    @if (session.needsName()) {
+      <app-name-prompt
+        heading="Who are you?"
+        hint="Enter your name to mark when you're free. Everyone with the link sees each other's times live."
+        [error]="session.nameError()"
+        (submitted)="join($event)"
+      />
+    } @else {
+      @if (renaming()) {
+        <app-name-prompt
+          heading="Change your name"
+          [hint]="null"
+          [initialName]="me()?.name ?? ''"
+          submitLabel="Save"
+          [cancellable]="true"
+          [error]="session.nameError()"
+          (submitted)="rename($event)"
+          (cancelled)="renaming.set(false)"
+        />
+      }
+
+      @if (settingsOpen()) {
+        <section class="card settings">
+          <h2>Edit meetup</h2>
+          <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input
+              matInput
+              [value]="draftTitle()"
+              (input)="draftTitle.set($any($event.target).value)"
+              maxlength="80"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Description (optional)</mat-label>
+            <textarea
+              matInput
+              rows="2"
+              maxlength="600"
+              [value]="draftDescription()"
+              (input)="draftDescription.set($any($event.target).value)"
+              placeholder="Where, what to bring, anything the group should know…"
+            ></textarea>
+          </mat-form-field>
+          <h3>Days in the running</h3>
+          <app-day-picker [(selected)]="draftDates" />
+          <div class="fields">
+            <mat-form-field appearance="outline">
+              <mat-label>Meetup length</mat-label>
+              <mat-select [value]="draftDuration()" (valueChange)="draftDuration.set($event)">
+                @for (d of durations; track d) {
+                  <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Earliest</mat-label>
+              <mat-select [value]="draftDayStart()" (valueChange)="draftDayStart.set($event)">
+                @for (h of startOptions; track h.value) {
+                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Latest</mat-label>
+              <mat-select [value]="draftDayEnd()" (valueChange)="draftDayEnd.set($event)">
+                @for (h of endOptions; track h.value) {
+                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-slide-toggle
+            [checked]="draftPartialOk()"
+            (change)="draftPartialOk.set($event.checked)"
+          >
+            People can join for part of it
+          </mat-slide-toggle>
+          @if (draftDayEnd() - draftDayStart() < draftDuration() * 60) {
+            <p class="warn">The hours must leave room for a {{ draftDuration() }} h meetup.</p>
+          }
+          <p class="muted note">
+            Times outside the new range, or shorter than the meetup, are removed from everyone's
+            answers.
+          </p>
+          <div class="actions">
+            <button type="button" class="pill" (click)="settingsOpen.set(false)">Cancel</button>
+            <button
+              mat-flat-button
+              type="button"
+              (click)="saveSettings()"
+              [disabled]="!draftValid()"
+            >
+              Save
+            </button>
+          </div>
+        </section>
+      }
+
+      @if (stepping()) {
+        <app-day-stepper
+          [event]="event()!"
+          [meId]="meId()!"
+          (slotsChange)="onSlotsChange($event)"
+          (allDayToggled)="onAllDay($event.date, $event.on)"
+          (notFree)="onStepNotFree($event)"
+          (quickFree)="onStepQuick('free', $event)"
+          (copyTo)="onCopyTo($event)"
+          (copySlotTo)="onCopySlotTo($event)"
+          (finished)="finishStepper()"
+        />
+      } @else {
+        @if (!editingDay()) {
+          @if (availability().answered.length) {
+            <app-results
+              [result]="availability()"
+              [durationHours]="event()!.durationHours"
+              [partialOk]="event()!.partialOk"
+            />
+          }
+        }
+
+        @if (editingDay(); as day) {
+          <app-day-stepper
+            [event]="event()!"
+            [meId]="meId()!"
+            [startDate]="day"
+            (slotsChange)="onSlotsChange($event)"
+            (allDayToggled)="onAllDay($event.date, $event.on)"
+            (notFree)="onStepNotFree($event)"
+            (quickFree)="onStepQuick('free', $event)"
+            (copyTo)="onCopyTo($event)"
+            (copySlotTo)="onCopySlotTo($event)"
+            (finished)="editingDay.set(null)"
+          />
+        } @else {
+          <section class="card chart">
+            <app-week-chart
+              [event]="event()!"
+              [meId]="meId()"
+              [windows]="availability().windows"
+              [highlightId]="highlightId()"
+              (daySelected)="editingDay.set($event)"
+              (allDayToggled)="onAllDay($event.date, $event.on)"
+              (dayCleared)="onClearDay($event)"
+            />
+            <p class="hint muted">
+              <mat-icon>touch_app</mat-icon>
+              @if (hasAnySlots()) {
+                Tap a day to change your times, or
+              } @else {
+                Tap a day to mark when you're free, or
+              }
+              <button type="button" class="linkish" (click)="startStepper()">go day by day</button>.
+            </p>
+          </section>
+        }
+      }
+
+      @if (!stepping() && !editingDay()) {
+        <app-legend
+          [participants]="event()!.participants"
+          [meId]="meId()"
+          [online]="session.online()"
+          [(selected)]="selectedId"
+          (hovered)="hoveredId.set($event)"
+          (renameRequested)="renaming.set(true)"
+        />
+      }
+    }
+  }
+</main>

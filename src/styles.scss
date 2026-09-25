@@ -1,1 +1,200 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$violet-palette,
+        tertiary: mat.$rose-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+:root {
+  --when-bg: #f6f7fb;
+  --when-surface: #ffffff;
+  --when-border: #e5e7eb;
+  --when-grid: #eef0f4;
+  --when-text: #111827;
+  --when-muted: #6b7280;
+  --when-common: #eab308;
+  --when-common-bg: rgba(250, 204, 21, 0.22);
+  --when-radius: 14px;
+}
+
+@mixin dark-vars {
+  --when-bg: #0f1116;
+  --when-surface: #181b22;
+  --when-border: #2b303b;
+  --when-grid: #222731;
+  --when-text: #e5e7eb;
+  --when-muted: #9ca3af;
+  --when-common: #facc15;
+  --when-common-bg: rgba(250, 204, 21, 0.28);
+}
+
+/* Follows the system unless the user picked a theme in the menu (data-theme on <html>). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-vars;
+  }
+}
+:root[data-theme='dark'] {
+  @include dark-vars;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  /* Inherit from <html>, where the menu's theme choice is applied. */
+  color-scheme: inherit;
+  background-color: var(--when-bg);
+  color: var(--when-text);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-bottom: 48px;
+}
+
+.card {
+  background: var(--when-surface);
+  border: 1px solid var(--when-border);
+  border-radius: var(--when-radius);
+  padding: 16px;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 12px;
+    padding-bottom: 40px;
+  }
+  .card {
+    padding: 12px;
+  }
+}
+
+.muted {
+  color: var(--when-muted);
+}
+
+/* Secondary actions share one pill style; the filled Material button is reserved for the primary action. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--when-border);
+  border-radius: 999px;
+  background: var(--when-surface);
+  color: var(--when-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    border-color 0.12s,
+    color 0.12s;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+  &:hover {
+    border-color: var(--mat-sys-primary);
+    color: var(--mat-sys-primary);
+  }
+  &.active {
+    background: var(--mat-sys-primary);
+    border-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+  &.danger:hover {
+    border-color: var(--mat-sys-error);
+    color: var(--mat-sys-error);
+  }
+  &.icon {
+    width: 36px;
+    padding: 0;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--when-muted);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--when-grid);
+    color: var(--when-text);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+  }
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 28px;
+  white-space: nowrap;
+
+  .tagline {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--when-text);
+  }
+  letter-spacing: -0.02em;
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+}
+
+/* Toasts shown while an editor with a sticky bottom bar is open sit above that bar. */
+.mat-mdc-snack-bar-container.above-bar {
+  margin-bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

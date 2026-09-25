@@ -1,0 +1,177 @@
+<button
+  type="button"
+  class="icon-btn trigger"
+  (click)="toggle()"
+  aria-label="Menu"
+  [attr.aria-expanded]="open()"
+>
+  <mat-icon>menu</mat-icon>
+</button>
+
+@if (open()) {
+  <div class="backdrop" (click)="close()"></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <header>
+      <span class="brand">When</span>
+      <button type="button" class="icon-btn" (click)="close()" aria-label="Close menu">
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
+
+    <section>
+      <h2>My Whens</h2>
+      @if (recent().length) {
+        <ul class="whens">
+          @for (m of recent(); track m.id) {
+            <li [class.past]="isPast(m)">
+              <a [routerLink]="['/e', m.id]" (click)="close()">
+                <span class="row">
+                  <span class="title">{{ m.title }}</span>
+                  <span class="muted dates">{{ rangeOf(m) }}</span>
+                </span>
+                <span class="best">
+                  @if (best()[m.id] === '') {
+                    <span class="muted">Checking…</span>
+                  } @else if (best()[m.id]) {
+                    <mat-icon>star</mat-icon>
+                    {{ best()[m.id] }}
+                  } @else {
+                    <span class="muted">No possible sessions yet</span>
+                  }
+                </span>
+                <span class="muted small">
+                  {{ m.role === 'organiser' ? 'organiser' : 'joined' }} as {{ m.name }}
+                </span>
+              </a>
+              <button
+                type="button"
+                class="icon-btn"
+                (click)="askRemove(m, $event)"
+                [attr.aria-label]="(isOrganiser(m) ? 'Delete ' : 'Leave ') + m.title"
+                [title]="isOrganiser(m) ? 'Delete this When' : 'Leave this When'"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+              @if (confirmId() === m.id) {
+                <div class="confirm">
+                  <p>
+                    @if (isOrganiser(m)) {
+                      Delete <strong>{{ m.title }}</strong> for everyone? Nobody will be able to
+                      open it again.
+                    } @else {
+                      Leave <strong>{{ m.title }}</strong
+                      >? Your times will be removed and you'll need the link to come back.
+                    }
+                  </p>
+                  <div class="actions">
+                    <button type="button" class="pill" (click)="confirmId.set(null)">Cancel</button>
+                    <button
+                      mat-flat-button
+                      type="button"
+                      class="danger"
+                      (click)="confirmRemove(m)"
+                      [disabled]="busyId() === m.id"
+                    >
+                      {{ isOrganiser(m) ? 'Delete' : 'Leave' }}
+                    </button>
+                  </div>
+                </div>
+              }
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="muted">None yet. Whens you create or join show up here.</p>
+      }
+      <button type="button" class="pill new" (click)="goHome()">
+        <mat-icon>add</mat-icon>
+        New When
+      </button>
+    </section>
+
+    <section>
+      <h2>Appearance</h2>
+      <div class="segments" role="radiogroup" aria-label="Theme">
+        @for (t of themes; track t.value) {
+          <button
+            type="button"
+            class="pill"
+            role="radio"
+            [class.active]="prefs().theme === t.value"
+            [attr.aria-checked]="prefs().theme === t.value"
+            (click)="setTheme(t.value)"
+          >
+            <mat-icon>{{ t.icon }}</mat-icon>
+            {{ t.label }}
+          </button>
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2>Defaults for new Whens</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Meetup length</mat-label>
+        <mat-select
+          [value]="prefs().durationHours"
+          (valueChange)="store.update({ durationHours: $event })"
+        >
+          @for (d of durations; track d) {
+            <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Earliest</mat-label>
+          <mat-select [value]="prefs().dayStart" (valueChange)="store.update({ dayStart: $event })">
+            @for (h of startOptions; track h.value) {
+              <mat-option [value]="h.value">{{ h.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Latest</mat-label>
+          <mat-select [value]="prefs().dayEnd" (valueChange)="store.update({ dayEnd: $event })">
+            @for (h of endOptions; track h.value) {
+              <mat-option [value]="h.value">{{ h.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      @if (!rangeValid()) {
+        <p class="warn">The hours must leave room for the meetup length.</p>
+      }
+      <mat-slide-toggle
+        [checked]="prefs().partialOk"
+        (change)="store.update({ partialOk: $event.checked })"
+      >
+        People can join for part of it
+      </mat-slide-toggle>
+      <p class="muted small">Used to pre-fill the form when you plan a new When.</p>
+    </section>
+
+    <section>
+      <h2>App</h2>
+      <div class="update-row">
+        @if (updates.status() === 'ready') {
+          <button type="button" class="pill active" (click)="updates.reload()">
+            <mat-icon>refresh</mat-icon>
+            Reload to update
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="pill"
+            (click)="updates.check()"
+            [disabled]="updates.status() === 'checking' || updates.status() === 'unsupported'"
+          >
+            <mat-icon>system_update</mat-icon>
+            Check for updates
+          </button>
+        }
+        <span class="muted small">{{ updateText() }}</span>
+      </div>
+    </section>
+  </aside>
+}
