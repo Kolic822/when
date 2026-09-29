@@ -1,19 +1,36 @@
 .picker {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .shortcuts {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  .pill {
+    flex: none;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
 }
 
 .month-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 36px;
+
+  button[mat-icon-button] {
+    --mdc-icon-button-state-layer-size: 36px;
+    --mat-icon-button-state-layer-size: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
 
   .month-label {
     border: 0;
@@ -41,11 +58,14 @@
   text-align: center;
   font-size: 12px;
   color: var(--when-muted);
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .day {
+  position: relative;
   aspect-ratio: 1;
+  /* A host can cap the height so the month fits a small screen. */
+  max-height: var(--day-max, none);
   min-width: 0;
   border: 1px solid transparent;
   border-radius: 999px;
@@ -84,4 +104,18 @@
     outline: 2px solid var(--mat-sys-primary);
     outline-offset: 1px;
   }
+}
+
+/* Month name on the first of a month. */
+.mo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
 }

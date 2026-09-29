@@ -16,13 +16,19 @@
   </div>
 
   <div class="month-nav">
-    <button mat-icon-button type="button" (click)="shiftMonth(-1)" aria-label="Previous month">
+    <button
+      mat-icon-button
+      type="button"
+      (click)="shift(-1)"
+      [disabled]="atStart()"
+      aria-label="Earlier weeks"
+    >
       <mat-icon>chevron_left</mat-icon>
     </button>
     <button type="button" class="month-label" (click)="goToday()" title="Jump to today">
       {{ monthLabel() }}
     </button>
-    <button mat-icon-button type="button" (click)="shiftMonth(1)" aria-label="Next month">
+    <button mat-icon-button type="button" (click)="shift(1)" aria-label="Later weeks">
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
@@ -37,7 +43,6 @@
         role="gridcell"
         class="day"
         [class.selected]="isSelected(c.key)"
-        [class.other]="!c.inMonth"
         [class.today]="c.today"
         [disabled]="c.past"
         [attr.aria-pressed]="isSelected(c.key)"
@@ -45,6 +50,9 @@
         (click)="toggle(c)"
       >
         {{ c.day }}
+        @if (c.month) {
+          <span class="mo">{{ c.month }}</span>
+        }
       </button>
     }
   </div>

@@ -6,7 +6,7 @@ import { addDays, dateRange, fromDateKey, startOfWeek, toDateKey } from '../../c
 interface Cell {
   key: string;
   day: number;
-  inMonth: boolean;
+  month: string;
   past: boolean;
   today: boolean;
 }
@@ -30,6 +30,8 @@ const MONTHS = [
  * Month calendar where the organiser taps the days that should be up for
  * selection. Any number of days, consecutive or not.
  */
+const WEEKS = 5;
+
 @Component({
   selector: 'app-day-picker',
   imports: [MatButtonModule, MatIconModule],
@@ -43,28 +45,36 @@ export class DayPicker {
   readonly today = toDateKey(new Date());
   private readonly thisWeek = startOfWeek(this.today);
 
-  /** First day of the displayed month. */
-  readonly month = signal(this.today.slice(0, 7) + '-01');
+  /** Monday of the first week shown. The view rolls forward from this week; the past is never shown. */
+  readonly start = signal(this.thisWeek);
+  readonly atStart = computed(() => this.start() <= this.thisWeek);
 
+  /** "October 2026", or "Sep – Oct 2026" when the weeks shown span two months. */
   readonly monthLabel = computed(() => {
-    const d = fromDateKey(this.month());
-    return `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    const from = fromDateKey(this.start());
+    // Named after the first four weeks; a lone day of a third month doesn't rename the view.
+    const to = fromDateKey(addDays(this.start(), 27));
+    if (from.getMonth() === to.getMonth())
+      return `${MONTHS[from.getMonth()]} ${from.getFullYear()}`;
+    const year = from.getFullYear() === to.getFullYear() ? '' : ` ${from.getFullYear()}`;
+    return `${MONTHS[from.getMonth()].slice(0, 3)}${year} – ${MONTHS[to.getMonth()].slice(0, 3)} ${to.getFullYear()}`;
   });
 
   readonly weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
-  readonly cells = computed<Cell[]>(() => {
-    const first = this.month();
-    const gridStart = startOfWeek(first);
-    const monthPrefix = first.slice(0, 7);
-    return dateRange(gridStart, 42).map((key) => ({
-      key,
-      day: fromDateKey(key).getDate(),
-      inMonth: key.startsWith(monthPrefix),
-      past: key < this.today,
-      today: key === this.today,
-    }));
-  });
+  readonly cells = computed<Cell[]>(() =>
+    dateRange(this.start(), WEEKS * 7).map((key) => {
+      const d = fromDateKey(key);
+      return {
+        key,
+        day: d.getDate(),
+        // The first of a month carries its name, so the change of month is easy to spot.
+        month: d.getDate() === 1 ? MONTHS[d.getMonth()].slice(0, 3) : '',
+        past: key < this.today,
+        today: key === this.today,
+      };
+    }),
+  );
 
   readonly selectedSet = computed(() => new Set(this.selected()));
 
@@ -97,7 +107,7 @@ export class DayPicker {
     const allIn = days.every((d) => set.has(d));
     for (const d of days) allIn ? set.delete(d) : set.add(d);
     this.selected.set([...set].sort());
-    if (days.length) this.month.set(days[0].slice(0, 7) + '-01');
+    if (days.length) this.show(days[0]);
   }
 
   shortcutActive(days: string[]): boolean {
@@ -109,13 +119,20 @@ export class DayPicker {
     this.selected.set([]);
   }
 
-  shiftMonth(delta: number): void {
-    const d = fromDateKey(this.month());
-    d.setMonth(d.getMonth() + delta, 1);
-    this.month.set(toDateKey(d).slice(0, 7) + '-01');
+  /** Moves the view four weeks back or forward, never before this week. */
+  shift(direction: -1 | 1): void {
+    this.show(addDays(this.start(), direction * 28));
   }
 
   goToday(): void {
-    this.month.set(this.today.slice(0, 7) + '-01');
+    this.start.set(this.thisWeek);
+  }
+
+  /** Brings a day into view if it isn't already. */
+  private show(key: string): void {
+    const end = addDays(this.start(), WEEKS * 7 - 1);
+    if (key >= this.start() && key <= end && key >= this.thisWeek) return;
+    const week = startOfWeek(key);
+    this.start.set(week < this.thisWeek ? this.thisWeek : week);
   }
 }

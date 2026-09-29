@@ -4,7 +4,6 @@ import { form, FormField, maxLength, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventApi } from '../../core/event-api';
@@ -36,7 +35,6 @@ export { DURATIONS } from './durations';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
     MatIconModule,
     MatSlideToggleModule,
   ],
@@ -80,11 +78,28 @@ export class Home {
     () => this.form().valid() && this.dates().length > 0 && this.rangeValid() && !this.busy(),
   );
 
+  /** 1: what and who. 2: which days and how long. */
+  readonly step = signal<1 | 2>(1);
+
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
 
-  async create(event: Event): Promise<void> {
+  /** Native selects hand back text; the model keeps numbers. */
+  setNumber(key: 'durationHours' | 'dayStart' | 'dayEnd', event: Event): void {
+    const value = Number((event.target as HTMLSelectElement).value);
+    this.model.update((m) => ({ ...m, [key]: value }));
+  }
+
+  onSubmit(event: Event): void {
     event.preventDefault();
+    if (this.step() === 1) {
+      if (this.form().valid()) this.step.set(2);
+      return;
+    }
+    void this.create();
+  }
+
+  private async create(): Promise<void> {
     if (!this.canCreate()) return;
     this.busy.set(true);
     this.error.set(null);

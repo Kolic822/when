@@ -4,107 +4,127 @@
       <span class="brand">When <span class="tagline">are you free?</span></span>
       <app-menu />
     </div>
-    <p class="muted">Pick some days, share the link, and find a time that works for everyone.</p>
   </header>
 
-  <form class="card" (submit)="create($event)">
-    <mat-form-field appearance="outline">
-      <mat-label>What's the plan?</mat-label>
-      <input
-        matInput
-        [formField]="form.title"
-        placeholder="Band rehearsal, drinks, hike…"
-        autocomplete="off"
-      />
-      @if (form.title().touched() && form.title().invalid()) {
-        <mat-error>Give it a name</mat-error>
-      }
-    </mat-form-field>
+  <form class="card" (submit)="onSubmit($event)">
+    <div class="steps" role="img" [attr.aria-label]="'Step ' + step() + ' of 2'">
+      <span class="dot" [class.on]="step() >= 1"></span>
+      <span class="dot" [class.on]="step() >= 2"></span>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Description (optional)</mat-label>
-      <textarea
-        matInput
-        [formField]="form.description"
-        rows="2"
-        placeholder="Where, what to bring, anything the group should know…"
-      ></textarea>
-    </mat-form-field>
+    @if (step() === 1) {
+      <div class="step first">
+        <h1>What's the plan?</h1>
+        <p class="muted lead">Pick some days, share the link, find a time that works.</p>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Your name</mat-label>
-      <input matInput [formField]="form.name" autocomplete="given-name" />
-      @if (form.name().touched() && form.name().invalid()) {
-        <mat-error>Tell others who you are</mat-error>
-      }
-    </mat-form-field>
-
-    <section class="days">
-      <h2>Which days could work?</h2>
-      <p class="muted">Tap any days you like.</p>
-      <app-day-picker [(selected)]="dates" />
-      <p class="summary" [class.muted]="!dates().length">
-        @if (dates().length) {
-          <mat-icon>event_available</mat-icon> {{ rangeText() }}
-        } @else {
-          Pick at least one day.
-        }
-      </p>
-    </section>
-
-    <mat-form-field appearance="outline">
-      <mat-label>How long should the meetup be?</mat-label>
-      <mat-select [formField]="form.durationHours">
-        @for (d of durations; track d) {
-          <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Earliest</mat-label>
-        <mat-select [formField]="form.dayStart">
-          @for (h of startOptions; track h.value) {
-            <mat-option [value]="h.value">{{ h.label }}</mat-option>
+        <mat-form-field appearance="outline">
+          <mat-label>Name it</mat-label>
+          <input
+            matInput
+            [formField]="form.title"
+            placeholder="Band rehearsal, drinks, hike…"
+            autocomplete="off"
+          />
+          @if (form.title().touched() && form.title().invalid()) {
+            <mat-error>Give it a name</mat-error>
           }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Latest</mat-label>
-        <mat-select [formField]="form.dayEnd">
-          @for (h of endOptions; track h.value) {
-            <mat-option [value]="h.value">{{ h.label }}</mat-option>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description (optional)</mat-label>
+          <textarea
+            matInput
+            [formField]="form.description"
+            rows="2"
+            placeholder="Where, what to bring…"
+          ></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Your name</mat-label>
+          <input matInput [formField]="form.name" autocomplete="given-name" />
+          @if (form.name().touched() && form.name().invalid()) {
+            <mat-error>Tell others who you are</mat-error>
           }
-        </mat-select>
+        </mat-form-field>
+
+        <div class="nav">
+          <button mat-flat-button type="submit" class="main" [disabled]="!form().valid()">
+            Next
+            <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="step second">
+        <h1>Which days could work?</h1>
+        <p class="summary" [class.muted]="!dates().length">
+          @if (dates().length) {
+            <mat-icon>event_available</mat-icon> {{ rangeText() }}
+          } @else {
+            Tap any days you like.
+          }
+        </p>
+
+        <app-day-picker [(selected)]="dates" />
+
+        <div class="details">
+          <label>
+            <span class="muted">Length</span>
+            <select (change)="setNumber('durationHours', $event)" aria-label="Meetup length">
+              @for (d of durations; track d) {
+                <option [value]="d" [selected]="model().durationHours === d">{{ d }} h</option>
+              }
+            </select>
+          </label>
+          <label>
+            <span class="muted">Earliest</span>
+            <select (change)="setNumber('dayStart', $event)" aria-label="Earliest time">
+              @for (h of startOptions; track h.value) {
+                <option [value]="h.value" [selected]="model().dayStart === h.value">
+                  {{ h.label }}
+                </option>
+              }
+            </select>
+          </label>
+          <label>
+            <span class="muted">Latest</span>
+            <select (change)="setNumber('dayEnd', $event)" aria-label="Latest time">
+              @for (h of endOptions; track h.value) {
+                <option [value]="h.value" [selected]="model().dayEnd === h.value">
+                  {{ h.label }}
+                </option>
+              }
+            </select>
+          </label>
+        </div>
         @if (!rangeValid()) {
-          <mat-hint class="warn"
-            >Must leave room for a {{ model().durationHours }} h meetup</mat-hint
+          <p class="warn" role="alert">
+            Earliest to latest must leave room for a {{ model().durationHours }} h meetup.
+          </p>
+        }
+
+        @if (features().partial) {
+          <mat-slide-toggle [formField]="form.partialOk" class="toggle"
+            >People can join for part of it</mat-slide-toggle
           >
         }
-      </mat-form-field>
-    </div>
-    <p class="muted between">People can only pick times between these hours.</p>
 
-    @if (features().partial) {
-      <div class="toggle">
-        <mat-slide-toggle [formField]="form.partialOk"
-          >People can join for part of it</mat-slide-toggle
-        >
-        <p class="muted">
-          People can mark shorter periods. Sessions need everyone together for at least half the
-          time.
-        </p>
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <div class="nav">
+          <button type="button" class="pill back" (click)="step.set(1)">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+          <button mat-flat-button type="submit" class="main" [disabled]="!canCreate()">
+            <mat-icon>link</mat-icon>
+            {{ busy() ? 'Creating…' : 'Create my When' }}
+          </button>
+        </div>
       </div>
     }
-
-    @if (error()) {
-      <p class="error" role="alert">{{ error() }}</p>
-    }
-
-    <button mat-flat-button type="submit" class="submit" [disabled]="!canCreate()">
-      <mat-icon>link</mat-icon>
-      {{ busy() ? 'Creating…' : 'Create my When' }}
-    </button>
   </form>
 </main>
