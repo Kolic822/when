@@ -28,7 +28,7 @@
   }
   h2 {
     margin: 2px 0 0;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -45,8 +45,8 @@
   .bar-fill {
     height: 100%;
     border-radius: 999px;
-    background: var(--mat-sys-primary);
-    transition: width 0.25s ease;
+    background: var(--accent);
+    transition: width 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
 }
 
@@ -79,8 +79,8 @@
   min-width: 0;
   margin-left: 6px;
   padding: 6px;
-  border-radius: 14px;
-  background: var(--when-bg);
+  border-radius: 20px;
+  background: var(--when-grid);
 
   .spacer {
     flex: 1;
@@ -128,10 +128,16 @@
   justify-content: center;
   gap: 3px;
   width: 100%;
-  padding: 8px 4px;
-  border: 1px solid var(--when-border);
-  border-radius: 12px;
+  padding: 9px 4px;
+  border: 0;
+  border-radius: 16px;
   background: var(--when-surface);
+  box-shadow: var(--card-shadow);
+  font-weight: 600;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.1s;
   color: var(--when-text);
   font: inherit;
   font-size: 11px;
@@ -145,13 +151,14 @@
     height: 22px;
   }
   &:hover {
-    border-color: var(--mat-sys-primary);
-    color: var(--mat-sys-primary);
+    color: var(--accent);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.96);
   }
   &.active {
-    background: var(--mat-sys-primary);
-    border-color: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
+    background: var(--accent);
+    color: var(--on-accent);
   }
   &:disabled {
     opacity: 0.45;

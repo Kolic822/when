@@ -19,33 +19,16 @@
   </div>
 }
 
-@if (overflows()) {
-  <div class="toolbar">
-    @if (overflows()) {
-      <span class="scroll-hint muted" [class.done]="scrolledToEnd()" aria-live="polite">
-        <mat-icon>swipe</mat-icon>
-        {{ scrolledToEnd() ? 'All days shown' : 'Scroll for more days' }}
-        @if (!scrolledToEnd()) {
-          <mat-icon class="arrow">arrow_forward</mat-icon>
-        }
-      </span>
-    }
-  </div>
-}
-
 <div
   class="chart"
+  [style.--head-h]="showMonth() ? '70px' : '52px'"
   [style.--days]="days().length"
   [style.--visible]="visibleCount()"
   [style.--hours]="range().hours"
   (scroll)="onChartScroll($event)"
 >
   <div class="days">
-    <!-- Hour labels sit on the first bar so the bars can use the full width. -->
-    @for (h of hours(); track h.min) {
-      <span class="hour" [class]="'hour ' + h.edge" aria-hidden="true">{{ h.label }}</span>
-    }
-    @for (d of days(); track d.key) {
+    @for (d of days(); track d.key; let firstDay = $first) {
       <div class="day" [class.today]="d.today">
         <button
           type="button"
@@ -61,21 +44,43 @@
         >
           <span class="head">
             <span class="wd">{{ d.weekday }}</span>
-            <span class="dn">{{ d.dayNum }}</span>
-            @if (showMonth()) {
-              <span class="mo">{{ d.month }}</span>
+            @if (numericDates()) {
+              <span class="dn wide">{{ d.dateText }}</span>
+            } @else {
+              <span class="dn">{{ d.dayNum }}</span>
+              @if (showMonth()) {
+                <span class="mo">{{ d.month }}</span>
+              }
             }
           </span>
           <span class="bar">
+            @if (firstDay) {
+              @for (h of hours(); track h.min) {
+                <span class="hour" [class]="'hour ' + h.edge" aria-hidden="true">{{
+                  h.label
+                }}</span>
+              }
+            }
+            @for (b of d.busy; track b.top) {
+              <span
+                class="busy"
+                [style.top.%]="b.top"
+                [style.height.%]="b.height"
+                [title]="b.label"
+              >
+                <span class="busy-t">{{ b.label }}</span>
+              </span>
+            }
             <span class="lanes">
               @for (p of participants(); track p.id) {
                 <span
                   class="lane"
                   [class.me]="p.id === meId()"
+                  [class.morph]="p.id === meId() && morphDay() === d.key"
                   [class.lit]="highlightId() === p.id"
                   [class.dim]="highlightId() !== null && highlightId() !== p.id"
                 >
-                  @for (b of d.blocks[p.id]; track b.top) {
+                  @for (b of d.blocks[p.id]; track $index) {
                     <span
                       class="block"
                       [style.top.%]="b.top"
@@ -91,6 +96,9 @@
             @for (w of d.common; track w.top) {
               <span
                 class="common"
+                [class.tappable]="organiser()"
+                (click)="onBandClick(d, w, $event)"
+                (pointerdown)="organiser() && $event.stopPropagation()"
                 [style.top.%]="w.top"
                 [style.height.%]="w.height"
                 [title]="w.label"
@@ -99,6 +107,11 @@
                   <span class="t">{{ w.from }}</span>
                   <span class="b">{{ w.to }}</span>
                 }
+              </span>
+            }
+            @for (p of d.picked; track p.top) {
+              <span class="picked" [style.top.%]="p.top" [style.height.%]="p.height">
+                <span class="who">{{ p.label }}</span>
               </span>
             }
           </span>
@@ -126,3 +139,15 @@
     }
   </div>
 </div>
+
+@if (overflows()) {
+  <div class="toolbar">
+    <span class="scroll-hint muted" [class.done]="scrolledToEnd()" aria-live="polite">
+      <mat-icon>swipe</mat-icon>
+      {{ scrolledToEnd() ? 'All days shown' : 'Scroll for more days' }}
+      @if (!scrolledToEnd()) {
+        <mat-icon class="arrow">arrow_forward</mat-icon>
+      }
+    </span>
+  </div>
+}

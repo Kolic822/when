@@ -15,9 +15,9 @@
 
   @if (session.notFound()) {
     <section class="card empty">
-      <h1>This link doesn't exist</h1>
-      <p class="muted">The meetup may have been removed, or the link is incomplete.</p>
-      <a mat-flat-button routerLink="/">Create a new one</a>
+      <h1>This When doesn't exist</h1>
+      <p class="muted">It may have been deleted, or the link is incomplete.</p>
+      <a mat-flat-button routerLink="/">Start a new one</a>
     </section>
   } @else if (!event(); as ev) {
     <div class="loading"><mat-spinner diameter="36" /></div>
@@ -49,8 +49,8 @@
 
     @if (session.needsName()) {
       <app-name-prompt
-        heading="Who are you?"
-        hint="Enter your name to mark when you're free. Everyone with the link sees each other's times live."
+        heading="What's your name?"
+        hint="So the others know who's who."
         [error]="session.nameError()"
         (submitted)="join($event)"
       />
@@ -119,12 +119,14 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <mat-slide-toggle
-            [checked]="draftPartialOk()"
-            (change)="draftPartialOk.set($event.checked)"
-          >
-            People can join for part of it
-          </mat-slide-toggle>
+          @if (features().partial) {
+            <mat-slide-toggle
+              [checked]="draftPartialOk()"
+              (change)="draftPartialOk.set($event.checked)"
+            >
+              People can join for part of it
+            </mat-slide-toggle>
+          }
           @if (draftDayEnd() - draftDayStart() < draftDuration() * 60) {
             <p class="warn">The hours must leave room for a {{ draftDuration() }} h meetup.</p>
           }
@@ -160,11 +162,39 @@
         />
       } @else {
         @if (!editingDay()) {
-          @if (availability().answered.length) {
+          @if (event()!.booked; as booked) {
+            <app-booked
+              [session]="booked"
+              [title]="event()!.title"
+              [description]="event()!.description"
+              [url]="shareUrl()"
+              [organiser]="isCreator()"
+              (unbooked)="onBook(null)"
+            />
+          }
+          @if (isCreator() && !event()!.booked && event()!.shortlists?.length) {
+            <app-answer-card
+              [shortlists]="event()!.shortlists ?? []"
+              [minutes]="event()!.durationHours * 60"
+              (book)="onBook($event)"
+              (choose)="onChooseTime($event)"
+            />
+          }
+          @if (availability().answered.length || event()!.shortlists?.length) {
             <app-results
+              #results
               [result]="availability()"
               [durationHours]="event()!.durationHours"
               [partialOk]="event()!.partialOk"
+              [features]="features()"
+              [organiser]="isCreator()"
+              [eventId]="id()"
+              [title]="event()!.title"
+              [description]="event()!.description"
+              [url]="shareUrl()"
+              [shortlists]="event()!.shortlists ?? []"
+              [booked]="!!event()!.booked"
+              (book)="onBook($event)"
             />
           }
         }
@@ -184,24 +214,22 @@
           />
         } @else {
           <section class="card chart">
+            <p class="hint muted">
+              <mat-icon>touch_app</mat-icon>
+              Tap a day to add a time slot
+            </p>
             <app-week-chart
               [event]="event()!"
               [meId]="meId()"
               [windows]="availability().windows"
               [highlightId]="highlightId()"
+              [organiser]="isCreator()"
+              [picked]="answered()"
+              (sessionSelected)="resultsCard()?.openFor($event.date, $event.start)"
               (daySelected)="editingDay.set($event)"
               (allDayToggled)="onAllDay($event.date, $event.on)"
               (dayCleared)="onClearDay($event)"
             />
-            <p class="hint muted">
-              <mat-icon>touch_app</mat-icon>
-              @if (hasAnySlots()) {
-                Tap a day to change your times, or
-              } @else {
-                Tap a day to mark when you're free, or
-              }
-              <button type="button" class="linkish" (click)="startStepper()">go day by day</button>.
-            </p>
           </section>
         }
       }
@@ -215,6 +243,9 @@
           (hovered)="hoveredId.set($event)"
           (renameRequested)="renaming.set(true)"
         />
+        @if (features().history) {
+          <app-history [entries]="event()!.history ?? []" [meId]="meId()" />
+        }
       }
     }
   }

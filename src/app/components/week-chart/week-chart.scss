@@ -23,23 +23,23 @@
   min-width: calc(100% * var(--days) / var(--visible, 1));
 }
 
-/* First and last hour, drawn on the first bar. */
+/* First and last hour, drawn inside the first bar, flush with its top and bottom. */
 .hour {
   position: absolute;
-  left: 5px;
+  left: 3px;
   z-index: 1;
   padding: 1px 4px;
-  border-radius: 3px;
+  border-radius: 4px;
   background: var(--when-surface);
   font-size: 10px;
   color: var(--when-muted);
   pointer-events: none;
 
   &.first {
-    top: calc(var(--head-h) + 3px);
+    top: 3px;
   }
   &.last {
-    bottom: calc(40px + 8px + 3px);
+    bottom: 3px;
   }
 }
 
@@ -85,8 +85,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1px;
+  justify-content: flex-start;
+  gap: 2px;
+  padding-bottom: 10px;
   line-height: 1.1;
 
   .wd {
@@ -96,12 +97,19 @@
     letter-spacing: 0.04em;
   }
   .dn {
+    font-family: var(--font-display);
     font-size: 16px;
     font-weight: 600;
-    width: 26px;
+    min-width: 26px;
     height: 26px;
     line-height: 26px;
     border-radius: 999px;
+    text-align: center;
+
+    &.wide {
+      padding: 0 7px;
+      font-size: 15px;
+    }
   }
   .mo {
     font-size: 10px;
@@ -113,13 +121,13 @@
   position: relative;
   display: block;
   height: max(calc(var(--hour-px) * var(--hours, 24)), var(--bar-min));
-  border: 1px solid var(--when-border);
-  border-radius: 10px;
-  background: var(--when-surface)
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--when-grid)
     repeating-linear-gradient(
       to bottom,
-      var(--when-grid) 0,
-      var(--when-grid) 1px,
+      var(--when-border) 0,
+      var(--when-border) 1px,
       transparent 1px,
       transparent calc(100% / var(--hours, 24))
     );
@@ -130,22 +138,21 @@
 .toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 8px;
-  margin: -4px 0 2px;
+  margin: 10px 0 0;
 }
 
 .scroll-hint {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding-left: 4px;
-  font-size: 12px;
+  font-size: 11px;
 
   mat-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
   }
   .arrow {
     animation: nudge 1.2s ease-in-out infinite;
@@ -225,12 +232,35 @@
   }
 }
 
+/* "All day" toggled in the overview: my blocks glide to the new size, new ones grow in. */
+.lane.morph {
+  --in-sy: 0.15;
+  --in-dur: 0.42s;
+
+  .block {
+    transition:
+      top 0.42s cubic-bezier(0.2, 0.9, 0.25, 1),
+      height 0.42s cubic-bezier(0.2, 0.9, 0.25, 1);
+  }
+}
+
+@keyframes block-in {
+  from {
+    opacity: 0.2;
+    transform: scaleY(var(--in-sy, 0.9));
+  }
+  to {
+    transform: none;
+  }
+}
+
 .block {
+  animation: block-in var(--in-dur, 0.2s) cubic-bezier(0.2, 0.9, 0.25, 1) both;
   position: absolute;
   left: 0;
   right: 0;
-  border-radius: 4px;
-  opacity: 0.92;
+  border-radius: 6px;
+  opacity: 0.68;
 }
 
 .actions {
@@ -295,5 +325,82 @@
   .actions .pill.icon {
     width: 32px;
     height: 32px;
+  }
+}
+
+/* Connect calendar (preview): what is already in your own calendar, behind the lanes. */
+.busy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  border-left: 3px solid var(--when-muted);
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--when-muted) 22%, transparent) 0 6px,
+    color-mix(in srgb, var(--when-muted) 10%, transparent) 6px 12px
+  );
+  pointer-events: none;
+}
+
+.busy-t {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  right: 2px;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--when-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.75;
+}
+
+/* The organiser books by tapping a gold band. */
+.common.tappable {
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* The window someone chose through an "Ask someone" link. */
+.picked {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid var(--accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  pointer-events: none;
+  animation: picked-pulse 1.6s ease-in-out 3;
+
+  .who {
+    max-width: calc(100% - 6px);
+    padding: 2px 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@keyframes picked-pulse {
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent);
   }
 }

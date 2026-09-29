@@ -1,4 +1,10 @@
+import { signal } from '@angular/core';
+
 export const MINUTES_PER_DAY = 1440;
+
+export type DateStyle = 'numeric' | 'name';
+/** How dates are written: "30.9." or "30 Sep". Set from the user's preferences. */
+export const dateStyle = signal<DateStyle>('numeric');
 
 export const WEEKDAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const WEEKDAYS_LONG = [
@@ -76,10 +82,18 @@ export function weekdayLong(key: string): string {
   return WEEKDAYS_LONG[fromDateKey(key).getDay()];
 }
 
-/** "24 Sep" */
+/** "24.9." or "24 Sep", depending on the chosen date style. */
 export function dayMonth(key: string): string {
   const d = fromDateKey(key);
-  return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
+  return dateStyle() === 'numeric'
+    ? `${d.getDate()}.${d.getMonth() + 1}.`
+    : `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
+}
+
+/** Joins a date and a year: "24.9.2026" or "24 Sep 2026". */
+function withYear(key: string): string {
+  const y = fromDateKey(key).getFullYear();
+  return dateStyle() === 'numeric' ? `${dayMonth(key)}${y}` : `${dayMonth(key)} ${y}`;
 }
 
 /** "Tue 24 Sep" */
@@ -92,12 +106,9 @@ export function rangeLabel(dates: string[]): string {
   if (dates.length === 0) return 'No days picked';
   const first = dates[0];
   const last = dates[dates.length - 1];
-  if (dates.length === 1)
-    return `${weekdayShort(first)} ${dayMonth(first)} ${fromDateKey(first).getFullYear()}`;
-  const s = fromDateKey(first);
-  const e = fromDateKey(last);
-  const sameYear = s.getFullYear() === e.getFullYear();
-  const span = `${dayMonth(first)}${sameYear ? '' : ' ' + s.getFullYear()} – ${dayMonth(last)} ${e.getFullYear()}`;
+  if (dates.length === 1) return `${weekdayShort(first)} ${withYear(first)}`;
+  const sameYear = fromDateKey(first).getFullYear() === fromDateKey(last).getFullYear();
+  const span = `${sameYear ? dayMonth(first) : withYear(first)} – ${withYear(last)}`;
   return isContiguous(dates) ? span : `${dates.length} days · ${span}`;
 }
 

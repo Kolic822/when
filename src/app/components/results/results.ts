@@ -1,238 +1,94 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, input, output, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AvailabilityResult, bestWindow } from '../../core/availability';
+import { AvailabilityResult } from '../../core/availability';
+import { buildIcs, openInCalendar } from '../../core/calendar';
+import { CommonWindow, Session, Shortlist } from '../../core/models';
+import { Features, NO_FEATURES } from '../../core/prefs';
 import { formatDuration, formatMinutes, shortDate } from '../../core/time';
+import { AskPanel } from '../ask-panel/ask-panel';
 
 interface Row {
   key: string;
-  best: boolean;
   day: string;
   time: string;
   length: string;
   /** People who can't stay for the whole meetup (partial-attendance mode). */
   partial: string;
   notes: { name: string; note: string }[];
+  window: CommonWindow;
+  /** Start times the organiser can book inside this window. */
+  starts: number[];
+  /** Whether tapping the row reveals anything (notes, booking, calendar). */
+  expandable: boolean;
+}
+
+interface AskedRow {
+  text: string;
+  /** Who said yes, with the window they chose inside the session, if any. */
+  yes: { name: string; at: string }[];
+}
+
+interface Asked {
+  id: string;
+  url: string;
+  mode: 'one' | 'many';
+  rows: AskedRow[];
+  none: string[];
+  answered: number;
 }
 
 const COLLAPSED_ROWS = 3;
 
-/** Compact list of possible sessions; collapses to three rows with a show-more toggle. */
+/** Compact list of possible sessions, with the Pro extras when they are switched on. */
 @Component({
   selector: 'app-results',
-  imports: [MatIconModule],
-  template: `
-    <section class="card results">
-      <header>
-        <mat-icon>event_available</mat-icon>
-        <h2>Possible sessions</h2>
-        <span class="length" title="Meetup length">
-          <mat-icon>schedule</mat-icon>
-          {{ durationLabel() }}
-        </span>
-      </header>
-
-      @if (rows().length) {
-        <ul>
-          @for (r of visible(); track r.key) {
-            <li>
-              <span class="line">
-                @if (r.best) {
-                  <span class="best"><mat-icon>star</mat-icon>Best</span>
-                }
-                <span class="day">{{ r.day }}</span>
-                <span class="time">{{ r.time }}</span>
-                <span class="len muted">{{ r.length }}</span>
-              </span>
-              @if (r.partial || r.notes.length) {
-                <span class="extra muted">
-                  @if (r.partial) {
-                    {{ r.partial }}
-                  }
-                  @for (n of r.notes; track $index) {
-                    <span class="note">{{ n.name }}: {{ n.note }}</span>
-                  }
-                </span>
-              }
-            </li>
-          }
-        </ul>
-        @if (rows().length > collapsedRows) {
-          <button
-            type="button"
-            class="more"
-            (click)="expanded.set(!expanded())"
-            [attr.aria-expanded]="expanded()"
-          >
-            {{ expanded() ? 'Show less' : 'Show ' + (rows().length - collapsedRows) + ' more' }}
-            <mat-icon>{{ expanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
-          </button>
-        }
-      } @else if (result().answered.length === 0) {
-        <p class="muted">Nothing yet. Tap a day below to mark when you're free.</p>
-      } @else if (result().answered.length === 1) {
-        <p class="muted">
-          Waiting for one more person. Only {{ result().answered[0].name }} has answered so far.
-        </p>
-      } @else {
-        <p class="muted">
-          No {{ durationLabel() }} window fits everyone{{ partialOk() ? ', even partly' : '' }} yet.
-          Try adding more times.
-        </p>
-      }
-
-      @if (result().pending.length && result().answered.length) {
-        <p class="pending muted">Waiting for {{ pendingNames() }}.</p>
-      }
-    </section>
-  `,
-  styles: `
-    .results {
-      padding: 10px 14px 12px;
-    }
-    header {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 6px 8px;
-      margin-bottom: 6px;
-
-      mat-icon {
-        align-self: center;
-        color: var(--when-common);
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-      }
-      h2 {
-        margin: 0;
-        font-size: 16px;
-        letter-spacing: -0.01em;
-      }
-      .length {
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-        margin-left: auto;
-        align-self: center;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--when-text);
-
-        mat-icon {
-          color: var(--when-muted);
-          font-size: 18px;
-          width: 18px;
-          height: 18px;
-        }
-      }
-    }
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      display: flex;
-      flex-direction: column;
-      padding: 5px 0;
-      border-top: 1px solid var(--when-border);
-      font-size: 14px;
-    }
-    .line {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-    .day {
-      font-weight: 600;
-      min-width: 92px;
-    }
-    .best {
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      padding: 1px 8px 1px 5px;
-      border-radius: 999px;
-      background: var(--when-common-bg);
-      color: var(--when-text);
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-
-      mat-icon {
-        font-size: 14px;
-        width: 14px;
-        height: 14px;
-        color: var(--when-common);
-      }
-    }
-    .time {
-      font-variant-numeric: tabular-nums;
-    }
-    .len {
-      margin-left: auto;
-      font-size: 13px;
-    }
-    .extra {
-      font-size: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2px 10px;
-    }
-    .more {
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      margin-top: 4px;
-      padding: 4px 0;
-      border: 0;
-      background: none;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--mat-sys-primary);
-      cursor: pointer;
-
-      mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-      }
-      &:focus-visible {
-        outline: 2px solid var(--mat-sys-primary);
-        border-radius: 4px;
-      }
-    }
-    p {
-      margin: 0;
-      font-size: 14px;
-    }
-    .pending {
-      margin-top: 6px;
-      font-size: 12px;
-    }
-  `,
+  imports: [MatButtonModule, MatIconModule, AskPanel],
+  templateUrl: './results.html',
+  styleUrl: './results.scss',
 })
 export class Results {
   readonly result = input.required<AvailabilityResult>();
   readonly durationHours = input.required<number>();
   readonly partialOk = input(false);
+  readonly features = input<Features>(NO_FEATURES);
+  readonly organiser = input(false);
+  readonly eventId = input('');
+  readonly title = input('Meetup');
+  readonly description = input('');
+  readonly url = input('');
+  readonly shortlists = input<Shortlist[]>([]);
+  /** A session is already booked, so the list starts folded away. */
+  readonly booked = input(false);
+
+  /** The organiser settles on a session. */
+  readonly book = output<Session>();
 
   readonly collapsedRows = COLLAPSED_ROWS;
+
+  /** Whole card folded to one line; null follows the default (folded once booked). */
+  private readonly folded = signal<boolean | null>(null);
+  readonly isFolded = computed(() => this.folded() ?? this.booked());
   readonly expanded = signal(false);
+  /** Row the organiser is choosing a start time for, before booking. */
+  readonly selecting = signal<string | null>(null);
+  /** Row whose details are open. */
+  readonly openRow = signal<string | null>(null);
+  /** Start the organiser picked per row; defaults to the start of the window. */
+  private readonly pickedStart = signal<Record<string, number>>({});
+  readonly asking = signal(false);
+  readonly copied = signal<string | null>(null);
 
-  readonly durationLabel = computed(() => formatDuration(this.durationHours() * 60));
+  readonly minutes = computed(() => Math.round(this.durationHours() * 60));
+  readonly durationLabel = computed(() => formatDuration(this.minutes()));
 
-  /** Best = fewest people leaving early, then the longest overlap, then the earliest. */
+  /** In date order; the app doesn't rank them, the organiser decides. */
   readonly rows = computed<Row[]>(() => {
-    const windows = [...this.result().windows];
-    if (!windows.length) return [];
-    const best = bestWindow(windows)!;
-    const ordered = [best, ...windows.filter((w) => w !== best)];
+    const ordered = [...this.result().windows].sort(
+      (a, b) => a.date.localeCompare(b.date) || a.start - b.start,
+    );
     return ordered.map((w) => ({
       key: `${w.date}-${w.start}`,
-      best: w === best && windows.length > 1,
       day: shortDate(w.date),
       time: `${formatMinutes(w.start)} – ${formatMinutes(w.end)}`,
       length: formatDuration(w.end - w.start),
@@ -240,6 +96,10 @@ export class Results {
         ? `${w.partial.join(', ')} can't stay the full ${this.durationLabel()}`
         : '',
       notes: w.notes ?? [],
+      window: w,
+      starts: this.startsIn(w),
+      expandable:
+        this.organiser() || this.features().calendar || !!w.notes?.length || !!w.partial?.length,
     }));
   });
 
@@ -247,9 +107,143 @@ export class Results {
     this.expanded() ? this.rows() : this.rows().slice(0, COLLAPSED_ROWS),
   );
 
+  readonly sessions = computed<Session[]>(() =>
+    this.rows().map(({ window: w }) => ({ date: w.date, start: w.start, end: w.end })),
+  );
+
   readonly pendingNames = computed(() => {
     const names = this.result().pending.map((p) => p.name);
     if (names.length <= 2) return names.join(' and ');
     return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
   });
+
+  /** Shortlists already sent, with who said yes to what. */
+  readonly asked = computed<Asked[]>(() =>
+    this.shortlists().map((list) => ({
+      id: list.id,
+      url: `${location.origin}/s/${list.id}`,
+      mode: list.mode,
+      answered: list.answers.length,
+      rows: list.sessions.map((s, i) => ({
+        text: `${shortDate(s.date)} · ${formatMinutes(s.start)} – ${formatMinutes(s.end)}`,
+        yes: list.answers
+          .filter((a) => a.picks.includes(i))
+          .map((a) => {
+            const start = a.starts?.[i];
+            const len = Math.min(list.minutes ?? this.minutes(), s.end - s.start);
+            return {
+              name: a.name,
+              at:
+                start === undefined
+                  ? ''
+                  : `${formatMinutes(start)} – ${formatMinutes(start + len)}`,
+            };
+          }),
+      })),
+      none: list.answers.filter((a) => a.picks.length === 0).map((a) => a.name),
+    })),
+  );
+
+  fmt = formatMinutes;
+
+  /** Start times in 30-minute steps (hourly when the window is long). */
+  private startsIn(w: CommonWindow): number[] {
+    const len = Math.min(this.minutes(), w.end - w.start);
+    const room = w.end - w.start - len;
+    const step = room > 6 * 60 ? 60 : 30;
+    const out: number[] = [];
+    for (let s = w.start; s + len <= w.end; s += step) out.push(s);
+    return out;
+  }
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** Opens a session ready for booking, e.g. after its gold band was tapped in the calendar. */
+  openFor(date: string, start: number): boolean {
+    // The window that contains this moment; it may have grown or shrunk since it was sent.
+    const index = this.rows().findIndex(
+      (r) => r.window.date === date && r.window.start <= start && start < r.window.end,
+    );
+    if (index < 0) return false;
+    const key = this.rows()[index].key;
+    const row = this.rows()[index];
+    this.folded.set(false);
+    if (index >= COLLAPSED_ROWS) this.expanded.set(true);
+    this.openRow.set(key);
+    this.selecting.set(row.starts.length > 1 ? key : null);
+    setTimeout(() =>
+      this.host.nativeElement
+        .querySelector('li.open')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+    );
+    return true;
+  }
+
+  toggleFold(): void {
+    this.folded.set(!this.isFolded());
+  }
+
+  toggleRow(r: Row): void {
+    if (!r.expandable) return;
+    this.selecting.set(null);
+    this.openRow.set(this.openRow() === r.key ? null : r.key);
+  }
+
+  startOf(r: Row): number {
+    return this.pickedStart()[r.key] ?? r.window.start;
+  }
+
+  /** "10:30 – 12:30": the meetup-length window the organiser is about to book. */
+  chosen(r: Row): string {
+    const start = this.startOf(r);
+    const len = Math.min(this.minutes(), r.window.end - r.window.start);
+    return `${formatMinutes(start)} – ${formatMinutes(start + len)}`;
+  }
+
+  pickStart(r: Row, start: number): void {
+    this.pickedStart.update((all) => ({ ...all, [r.key]: start }));
+  }
+
+  confirmBooking(r: Row): void {
+    const start = this.startOf(r);
+    const len = Math.min(this.minutes(), r.window.end - r.window.start);
+    this.selecting.set(null);
+    this.openRow.set(null);
+    this.folded.set(null);
+    this.book.emit({ date: r.window.date, start, end: start + len });
+  }
+
+  addToCalendar(r: Row): void {
+    const w = r.window;
+    const start = this.startOf(r);
+    const end = Math.min(w.end, start + this.minutes());
+    const notes = [
+      this.description(),
+      w.end > end ? `Everyone is free ${r.day} ${r.time}.` : '',
+      this.url() ? `Planned with When: ${this.url()}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n\n');
+    openInCalendar(
+      buildIcs({
+        title: this.title(),
+        description: notes,
+        date: w.date,
+        start,
+        end,
+        url: this.url(),
+      }),
+      'when.ics',
+    );
+  }
+
+  async copy(url: string): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(url);
+      this.copied.set(url);
+      setTimeout(() => this.copied.set(null), 1800);
+    } catch {
+      /* ignore */
+    }
+  }
 }

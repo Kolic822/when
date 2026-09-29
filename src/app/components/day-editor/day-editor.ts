@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  effect,
   Component,
   computed,
   DestroyRef,
@@ -15,6 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MeetEvent, Slot } from '../../core/models';
 import { mergeSlots } from '../../core/availability';
+import { sampleBusy } from '../../core/busy';
+import { PrefsStore } from '../../core/prefs';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
 import { CopyDays } from '../copy-days/copy-days';
 
@@ -47,6 +50,17 @@ const MOVE_TOLERANCE_PX = 8;
   styleUrl: './day-editor.scss',
 })
 export class DayEditor {
+  private readonly prefs = inject(PrefsStore);
+  /** Own calendar events behind the bar (Connect calendar preview, sample data). */
+  readonly busy = computed(() => {
+    if (!this.prefs.prefs().features.connect) return [];
+    const { dayStart, dayEnd } = this.event();
+    return sampleBusy(this.date(), dayStart, dayEnd).map((b) => ({
+      ...b,
+      label: `${b.title} · ${formatMinutes(b.start)} – ${formatMinutes(b.end)}`,
+    }));
+  });
+
   readonly event = input.required<MeetEvent>();
   readonly meId = input.required<string>();
   readonly date = input.required<string>();
@@ -159,7 +173,7 @@ export class DayEditor {
   readonly moving = signal(false);
 
   private gesture:
-    | { kind: 'create'; origin: number; last: number }
+    | { kind: 'create'; origin: number; last: number; held?: boolean }
     | {
         kind: 'pending-create';
         origin: number;
@@ -171,6 +185,24 @@ export class DayEditor {
     | { kind: 'pending-move'; index: number; startY: number; timer: ReturnType<typeof setTimeout> }
     | { kind: 'move'; index: number; grab: number; length: number }
     | null = null;
+
+  /** True for a moment after "free all day" flips, so blocks glide to their new size. */
+  readonly morphing = signal(false);
+  private morphTimer: ReturnType<typeof setTimeout> | null = null;
+  private lastAllDay: boolean | null = null;
+  private lastDate: string | null = null;
+
+  private readonly watchAllDay = effect(() => {
+    const now = this.allDay();
+    const date = this.date();
+    const changed = this.lastAllDay !== null && this.lastDate === date && this.lastAllDay !== now;
+    this.lastAllDay = now;
+    this.lastDate = date;
+    if (!changed) return;
+    this.morphing.set(true);
+    if (this.morphTimer) clearTimeout(this.morphTimer);
+    this.morphTimer = setTimeout(() => this.morphing.set(false), 500);
+  });
 
   /** Touch screens: hold to add so a plain swipe scrolls the page. */
   readonly coarse = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
@@ -298,7 +330,8 @@ export class DayEditor {
     });
     const hintTimer = setTimeout(() => this.holding.set(true), HOLD_HINT_DELAY_MS);
     const timer = setTimeout(() => {
-      this.gesture = { kind: 'create', origin: m, last: m };
+      // Started by holding: the minimum-length block stays even if the finger never moves.
+      this.gesture = { kind: 'create', origin: m, last: m, held: true };
       this.holding.set(false);
       this.drag.set(this.withMin(m, m, 'start'));
       navigator.vibrate?.(20);
@@ -353,7 +386,7 @@ export class DayEditor {
     switch (g.kind) {
       case 'create': {
         if (!d) return;
-        if (Math.abs(g.last - g.origin) < SNAP) return; // a tap on empty space does nothing
+        if (!g.held && Math.abs(g.last - g.origin) < SNAP) return; // a tap on empty space does nothing
         this.commit([...mine, d]);
         this.warnIfExtended(Math.abs(g.last - g.origin));
         break;

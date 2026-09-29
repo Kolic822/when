@@ -56,8 +56,11 @@
   color: var(--when-text);
   transition: background 0.12s;
 
-  &:hover:not(:disabled) {
-    background: var(--when-grid);
+  /* Hover only where a real pointer exists; on touch it would stick after a tap. */
+  @media (hover: hover) {
+    &:hover:not(:disabled):not(.selected) {
+      background: var(--when-grid);
+    }
   }
   &.other {
     color: var(--when-muted);

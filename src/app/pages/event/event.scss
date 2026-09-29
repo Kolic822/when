@@ -145,22 +145,12 @@
 .chart {
   padding: 12px 8px 8px;
 
-  .linkish {
-    border: 0;
-    background: none;
-    padding: 0;
-    font: inherit;
-    color: var(--mat-sys-primary);
-    text-decoration: underline;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
   .hint {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    margin: 4px 8px 0;
+    margin: 0 8px 10px;
     font-size: 13px;
 
     mat-icon {

@@ -1,0 +1,75 @@
+<div class="panel">
+  @if (link(); as url) {
+    <p class="title">Link ready</p>
+    <p class="muted">Send it to whoever should choose. They only see these sessions.</p>
+    <div class="link">
+      <span class="url">{{ url }}</span>
+      <button mat-flat-button type="button" (click)="copy()">
+        <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+        {{ copied() ? 'Copied' : 'Copy' }}
+      </button>
+    </div>
+    <div class="actions">
+      <button type="button" class="pill" (click)="closed.emit()">Close</button>
+    </div>
+  } @else {
+    <p class="title">Ask someone</p>
+    <p class="muted">Which sessions should they choose from?</p>
+    <div class="chips" role="group" aria-label="Sessions to include">
+      @for (s of sessions(); track $index) {
+        <button
+          type="button"
+          class="chip"
+          [class.on]="picked().has($index)"
+          [attr.aria-pressed]="picked().has($index)"
+          (click)="toggle($index)"
+        >
+          <mat-icon>{{
+            picked().has($index) ? 'check_circle' : 'radio_button_unchecked'
+          }}</mat-icon>
+          {{ label(s) }}
+        </button>
+      }
+    </div>
+
+    <p class="muted">They can pick</p>
+    <div class="segments" role="radiogroup" aria-label="Answer mode">
+      <button
+        type="button"
+        class="pill"
+        role="radio"
+        [class.active]="mode() === 'one'"
+        [attr.aria-checked]="mode() === 'one'"
+        (click)="mode.set('one')"
+      >
+        Just one
+      </button>
+      <button
+        type="button"
+        class="pill"
+        role="radio"
+        [class.active]="mode() === 'many'"
+        [attr.aria-checked]="mode() === 'many'"
+        (click)="mode.set('many')"
+      >
+        One or more
+      </button>
+    </div>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="actions">
+      <button type="button" class="pill" (click)="closed.emit()">Cancel</button>
+      <button
+        mat-flat-button
+        type="button"
+        (click)="create()"
+        [disabled]="!picked().size || busy()"
+      >
+        {{ busy() ? 'Creating…' : 'Create link' }}
+      </button>
+    </div>
+  }
+</div>

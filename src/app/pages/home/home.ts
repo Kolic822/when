@@ -52,7 +52,9 @@ export class Home {
   readonly startOptions = HOUR_OPTIONS.slice(0, 24);
   readonly endOptions = HOUR_OPTIONS.slice(1);
 
-  private readonly prefs = inject(PrefsStore).prefs();
+  private readonly store = inject(PrefsStore);
+  private readonly prefs = this.store.prefs();
+  readonly features = computed(() => this.store.prefs().features);
   readonly model = signal<CreateModel>({
     title: '',
     description: '',
@@ -60,7 +62,7 @@ export class Home {
     durationHours: this.prefs.durationHours,
     dayStart: this.prefs.dayStart,
     dayEnd: this.prefs.dayEnd,
-    partialOk: this.prefs.partialOk,
+    partialOk: false,
   });
   readonly form = form(this.model, (p) => {
     required(p.title);

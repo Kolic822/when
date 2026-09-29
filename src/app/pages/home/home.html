@@ -4,16 +4,12 @@
       <span class="brand">When <span class="tagline">are you free?</span></span>
       <app-menu />
     </div>
-    <h1>When are we all free?</h1>
-    <p class="muted">
-      Create a link, share it with your group, and everyone marks the times they're free. When finds
-      the slots that work for all of you.
-    </p>
+    <p class="muted">Pick some days, share the link, and find a time that works for everyone.</p>
   </header>
 
   <form class="card" (submit)="create($event)">
     <mat-form-field appearance="outline">
-      <mat-label>What's the meetup?</mat-label>
+      <mat-label>What's the plan?</mat-label>
       <input
         matInput
         [formField]="form.title"
@@ -21,7 +17,7 @@
         autocomplete="off"
       />
       @if (form.title().touched() && form.title().invalid()) {
-        <mat-error>Give the meetup a name</mat-error>
+        <mat-error>Give it a name</mat-error>
       }
     </mat-form-field>
 
@@ -44,10 +40,8 @@
     </mat-form-field>
 
     <section class="days">
-      <h2>Which days are in the running?</h2>
-      <p class="muted">
-        Tap any days you like – a whole week, just weekends, or a few scattered dates.
-      </p>
+      <h2>Which days could work?</h2>
+      <p class="muted">Tap any days you like.</p>
       <app-day-picker [(selected)]="dates" />
       <p class="summary" [class.muted]="!dates().length">
         @if (dates().length) {
@@ -92,20 +86,17 @@
     </div>
     <p class="muted between">People can only pick times between these hours.</p>
 
-    <div class="toggle">
-      <mat-slide-toggle [formField]="form.partialOk"
-        >People can join for part of it</mat-slide-toggle
-      >
-      <p class="muted">
-        @if (model().partialOk) {
+    @if (features().partial) {
+      <div class="toggle">
+        <mat-slide-toggle [formField]="form.partialOk"
+          >People can join for part of it</mat-slide-toggle
+        >
+        <p class="muted">
           People can mark shorter periods. Sessions need everyone together for at least half the
           time.
-        } @else {
-          People must mark periods at least as long as the meetup, so everyone is there for all of
-          it.
-        }
-      </p>
-    </div>
+        </p>
+      </div>
+    }
 
     @if (error()) {
       <p class="error" role="alert">{{ error() }}</p>
@@ -113,7 +104,7 @@
 
     <button mat-flat-button type="submit" class="submit" [disabled]="!canCreate()">
       <mat-icon>link</mat-icon>
-      {{ busy() ? 'Creating…' : 'Create & get link' }}
+      {{ busy() ? 'Creating…' : 'Create my When' }}
     </button>
   </form>
 </main>

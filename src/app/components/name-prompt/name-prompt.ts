@@ -65,7 +65,7 @@ export class NamePrompt {
   readonly heading = input('Who are you?');
   readonly hint = input<string | null>('Your name is shown to the others in the group.');
   readonly initialName = input('');
-  readonly submitLabel = input('Continue');
+  readonly submitLabel = input("Let's go");
   readonly cancellable = input(false);
   readonly error = input<string | null>(null);
   readonly submitted = output<string>();

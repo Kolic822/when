@@ -1,8 +1,11 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { sampleBusy } from '../../core/busy';
+import { PrefsStore } from '../../core/prefs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonWindow, MeetEvent, Participant, Slot } from '../../core/models';
 import {
+  dateStyle,
   dayMonth,
   formatMinutes,
   fromDateKey,
@@ -12,6 +15,7 @@ import {
 } from '../../core/time';
 
 const LONG_PRESS_MS = 500;
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /** At most this many days are visible at once; more scroll sideways. */
 const MAX_VISIBLE = 5;
 const MANY_DAYS = MAX_VISIBLE;
@@ -20,6 +24,8 @@ interface Block {
   top: number; // percent
   height: number; // percent
   label: string;
+  /** Start of the window in minutes (gold bands only). */
+  start?: number;
   /** Start/end text drawn inside gold bands that are tall enough. */
   from?: string;
   to?: string;
@@ -30,12 +36,18 @@ interface DayColumn {
   weekday: string;
   dayNum: number;
   month: string;
+  /** "30.9." – used when dates are written with numbers. */
+  dateText: string;
   today: boolean;
   label: string;
   longLabel: string;
   /** participantId -> that person's blocks on this day */
   blocks: Record<string, Block[]>;
   common: Block[];
+  /** Own calendar events (Connect calendar preview). */
+  busy: Block[];
+  /** What someone chose through an "Ask someone" link. */
+  picked: Block[];
   hasMine: boolean;
   allDay: boolean;
 }
@@ -51,11 +63,19 @@ interface DayColumn {
   styleUrl: './week-chart.scss',
 })
 export class WeekChart {
+  private readonly prefs = inject(PrefsStore);
+  readonly showBusy = computed(() => this.prefs.prefs().features.connect);
+
   readonly event = input.required<MeetEvent>();
   readonly meId = input<string | null>(null);
   readonly windows = input<CommonWindow[]>([]);
   /** Person to emphasise (others fade), e.g. while hovering a legend chip. */
   readonly highlightId = input<string | null>(null);
+  /** The organiser can tap a gold band to book that session. */
+  readonly organiser = input(false);
+  readonly sessionSelected = output<{ date: string; start: number }>();
+  /** Window chosen through an "Ask someone" link, with who chose it. */
+  readonly picked = input<{ date: string; start: number; end: number; label: string } | null>(null);
   readonly daySelected = output<string>();
   readonly allDayToggled = output<{ date: string; on: boolean }>();
   readonly dayCleared = output<string>();
@@ -80,9 +100,13 @@ export class WeekChart {
     const all = this.event().participants;
     return [...all.filter((p) => p.id !== me), ...all.filter((p) => p.id === me)];
   });
-  readonly showMonth = computed(
-    () => new Set(this.event().dates.map((d) => d.slice(0, 7))).size > 1,
-  );
+  readonly numericDates = computed(() => dateStyle() === 'numeric');
+  /** Month name under the day number, whenever dates are written with names ("30 Sep"). */
+  readonly showMonth = computed(() => !this.numericDates());
+
+  /** Day whose "all day" was just toggled, so its blocks glide instead of jumping. */
+  readonly morphDay = signal<string | null>(null);
+  private morphTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ---- Many days: optionally hide the ones nobody has marked.
   readonly manyDays = computed(() => this.event().dates.length > MANY_DAYS);
@@ -111,11 +135,19 @@ export class WeekChart {
         key,
         weekday: weekdayShort(key),
         dayNum: d.getDate(),
-        month: dayMonth(key).split(' ')[1],
+        month: MONTHS[d.getMonth()],
+        dateText: `${d.getDate()}.${d.getMonth() + 1}.`,
         today: key === today,
         label: `${weekdayLong(key)} ${dayMonth(key)} – tap to mark when you're free, hold to clear`,
         longLabel: `${weekdayLong(key)} ${dayMonth(key)}`,
         blocks,
+        picked:
+          this.picked()?.date === key
+            ? [this.block(this.picked()!.start, this.picked()!.end, this.picked()!.label)]
+            : [],
+        busy: this.showBusy()
+          ? sampleBusy(key, ev.dayStart, ev.dayEnd).map((b) => this.block(b.start, b.end, b.title))
+          : [],
         common: this.windows()
           .filter((w) => w.date === key)
           .map((w) => ({
@@ -124,6 +156,7 @@ export class WeekChart {
               w.end,
               `Everyone can make it ${formatMinutes(w.start)} – ${formatMinutes(w.end)}`,
             ),
+            start: w.start,
             ...(w.end - w.start >= 90
               ? { from: formatMinutes(w.start), to: formatMinutes(w.end) }
               : {}),
@@ -136,6 +169,9 @@ export class WeekChart {
   });
 
   toggleAllDay(day: DayColumn): void {
+    this.morphDay.set(day.key);
+    if (this.morphTimer) clearTimeout(this.morphTimer);
+    this.morphTimer = setTimeout(() => this.morphDay.set(null), 500);
     this.allDayToggled.emit({ date: day.key, on: !day.allDay });
   }
 
@@ -174,6 +210,13 @@ export class WeekChart {
       return;
     }
     this.daySelected.emit(day.key);
+  }
+
+  /** Organiser tapped a gold band: go and book it instead of opening the day. */
+  onBandClick(day: DayColumn, band: Block, e: Event): void {
+    if (!this.organiser() || band.start === undefined) return;
+    e.stopPropagation();
+    this.sessionSelected.emit({ date: day.key, start: band.start });
   }
 
   clearConfirmed(day: DayColumn): void {

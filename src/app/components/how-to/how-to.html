@@ -1,0 +1,100 @@
+<div class="backdrop" (click)="skip()"></div>
+
+<section
+  class="sheet"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="howto-title"
+  (pointerdown)="onSwipeStart($event)"
+  (pointerup)="onSwipeEnd($event)"
+  (pointercancel)="onSwipeEnd($event)"
+>
+  <header>
+    <span class="count muted">{{ index() + 1 }} / {{ steps.length }}</span>
+    <button type="button" class="pill skip" (click)="skip()">Skip</button>
+  </header>
+
+  @for (s of [step()]; track s.key) {
+    <div class="slide" [class.back]="dir() === 'back'">
+      <!-- A small drawing of what the step is about. -->
+      <div class="art" aria-hidden="true">
+        @switch (step().key) {
+          @case ('calendar') {
+            <div class="mini-cal">
+              <span class="col"
+                ><i class="a" style="top: 10%; height: 50%"></i
+                ><i class="b" style="top: 35%; height: 55%"></i
+              ></span>
+              <span class="col"
+                ><i class="a" style="top: 30%; height: 60%"></i
+                ><i class="b" style="top: 20%; height: 45%"></i
+                ><b class="gold" style="top: 30%; height: 35%"></b
+              ></span>
+              <span class="col"
+                ><i class="a" style="top: 55%; height: 35%"></i
+                ><i class="b" style="top: 5%; height: 30%"></i
+              ></span>
+              <span class="col"
+                ><i class="a" style="top: 15%; height: 70%"></i
+                ><i class="b" style="top: 40%; height: 50%"></i
+                ><b class="gold" style="top: 40%; height: 45%"></b
+              ></span>
+            </div>
+          }
+          @case ('day') {
+            <div class="mini-day">
+              <span class="bar">
+                <span class="block">
+                  <span class="grip"></span>
+                  <span class="time">10:00 – 13:00</span>
+                  <span class="grip"></span>
+                </span>
+                <mat-icon class="finger">touch_app</mat-icon>
+              </span>
+            </div>
+          }
+          @case ('actions') {
+            <div class="mini-actions">
+              <span class="bar"><span class="block full"></span></span>
+              <span class="side">
+                <span class="btn"><mat-icon>content_copy</mat-icon></span>
+                <span class="btn"><mat-icon>delete_outline</mat-icon></span>
+                <span class="btn on"><mat-icon>wb_sunny</mat-icon></span>
+              </span>
+            </div>
+          }
+        }
+      </div>
+
+      <h2 id="howto-title">{{ step().title }}</h2>
+      <p class="lead muted">{{ step().lead }}</p>
+
+      <ul>
+        @for (t of step().tips; track t.text) {
+          <li>
+            <span class="ico"
+              ><mat-icon>{{ t.icon }}</mat-icon></span
+            >
+            <span>{{ t.text }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
+  <div class="dots" aria-hidden="true">
+    @for (s of steps; track s.key) {
+      <span class="dot" [class.on]="$index === index()"></span>
+    }
+  </div>
+
+  <footer>
+    @if (index() > 0) {
+      <button type="button" class="pill" (click)="back()">Back</button>
+    }
+    <button #primary mat-flat-button type="button" class="go" (click)="next()">
+      {{ isLast() ? 'Got it' : 'Next' }}
+      <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
+    </button>
+  </footer>
+</section>

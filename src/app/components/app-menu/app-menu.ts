@@ -4,13 +4,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Identity, RecentMeetup } from '../../core/identity';
-import { PrefsStore, Theme } from '../../core/prefs';
+import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Updates } from '../../core/updates';
-import { HOUR_OPTIONS, formatMinutes, rangeLabel, shortDate, toDateKey } from '../../core/time';
+import { HowToState } from '../../core/how-to-state';
+import {
+  DateStyle,
+  HOUR_OPTIONS,
+  formatMinutes,
+  rangeLabel,
+  shortDate,
+  toDateKey,
+} from '../../core/time';
 import { EventApi } from '../../core/event-api';
-import { bestWindow, findCommonWindows } from '../../core/availability';
+import { findCommonWindows } from '../../core/availability';
 import { DURATIONS } from '../../pages/home/durations';
 
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */
@@ -32,12 +40,18 @@ export class AppMenu {
   private readonly router = inject(Router);
   readonly store = inject(PrefsStore);
   readonly updates = inject(Updates);
+  private readonly howTo = inject(HowToState);
+
+  showHowTo(): void {
+    this.close();
+    this.howTo.show();
+  }
 
   private readonly api = inject(EventApi);
 
   readonly open = signal(false);
   readonly recent = signal<RecentMeetup[]>([]);
-  /** Per When: best session text, '' while loading, or null when none. */
+  /** Per When: booked or first possible session, '' while loading, or null when none. */
   readonly best = signal<Record<string, string | null>>({});
   readonly prefs = this.store.prefs;
 
@@ -63,7 +77,7 @@ export class AppMenu {
     this.open.set(!this.open());
   }
 
-  /** Looks up each remembered When and works out its best possible session. */
+  /** Looks up each remembered When: what is booked, or else the first possible session. */
   private async loadBest(): Promise<void> {
     const list = this.recent();
     this.best.set(Object.fromEntries(list.map((m) => [m.id, ''])));
@@ -71,9 +85,11 @@ export class AppMenu {
       list.map(async (m) => {
         try {
           const ev = await this.api.get(m.id);
-          const w = ev ? bestWindow(findCommonWindows(ev).windows) : null;
+          const windows = ev ? findCommonWindows(ev).windows : [];
+          const w = ev?.booked ?? windows[0] ?? null;
+          const more = !ev?.booked && windows.length > 1 ? ` +${windows.length - 1} more` : '';
           const text = w
-            ? `${shortDate(w.date)} · ${formatMinutes(w.start)} – ${formatMinutes(w.end)}`
+            ? `${ev?.booked ? 'Booked · ' : ''}${shortDate(w.date)} · ${formatMinutes(w.start)} – ${formatMinutes(w.end)}${more}`
             : null;
           this.best.update((b) => ({ ...b, [m.id]: text }));
           if (ev && (ev.title !== m.title || ev.dates.join() !== m.dates.join())) {
@@ -144,6 +160,69 @@ export class AppMenu {
     this.store.update({ theme });
   }
 
+  readonly looks: { value: Look; label: string; color: string }[] = [
+    { value: 'grape', label: 'Grape', color: '#6d5ef5' },
+    { value: 'sunset', label: 'Sunset', color: '#f4516c' },
+    { value: 'lagoon', label: 'Lagoon', color: '#00a389' },
+  ];
+
+  setLook(look: Look): void {
+    this.store.update({ look });
+  }
+
+  readonly proFeatures: { key: keyof Features; label: string; hint: string }[] = [
+    {
+      key: 'connect',
+      label: 'Connect calendar',
+      hint: 'See your own events behind the bars. Sample events for now.',
+    },
+    {
+      key: 'shortlist',
+      label: 'Ask someone',
+      hint: 'Send a link with only the possible sessions.',
+    },
+    {
+      key: 'calendar',
+      label: 'Add to calendar',
+      hint: 'A calendar button on every possible session.',
+    },
+    {
+      key: 'partial',
+      label: 'Join for part of it',
+      hint: 'Let people mark less than the full length.',
+    },
+    { key: 'history', label: 'History', hint: 'See who changed what, and when.' },
+  ];
+
+  /** Sections folded away; settings start folded so My Whens stays on screen. */
+  readonly folded = signal<Set<string>>(loadFolded());
+
+  isFolded(id: string): boolean {
+    return this.folded().has(id);
+  }
+
+  toggleSection(id: string): void {
+    this.folded.update((set) => {
+      const next = new Set(set);
+      next.has(id) ? next.delete(id) : next.add(id);
+      saveFolded(next);
+      return next;
+    });
+  }
+
+  setFeature(key: keyof Features, on: boolean): void {
+    this.store.setFeature(key, on);
+  }
+
+  readonly dateStyles: { value: DateStyle; label: string }[] = [
+    { value: 'numeric', label: '30.9.' },
+    { value: 'name', label: '30 Sep' },
+  ];
+
+  setDateStyle(dateStyle: DateStyle): void {
+    this.store.update({ dateStyle });
+  }
+
   readonly updateText = computed(() => {
     switch (this.updates.status()) {
       case 'unsupported':
@@ -160,4 +239,24 @@ export class AppMenu {
         return '';
     }
   });
+}
+
+const FOLDED_KEY = 'when:menu-folded';
+const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'pro', 'app'];
+
+function loadFolded(): Set<string> {
+  try {
+    const raw = localStorage.getItem(FOLDED_KEY);
+    return new Set(raw ? (JSON.parse(raw) as string[]) : FOLDED_DEFAULT);
+  } catch {
+    return new Set(FOLDED_DEFAULT);
+  }
+}
+
+function saveFolded(set: Set<string>): void {
+  try {
+    localStorage.setItem(FOLDED_KEY, JSON.stringify([...set]));
+  } catch {
+    /* ignore */
+  }
 }

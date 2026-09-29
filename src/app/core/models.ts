@@ -33,6 +33,44 @@ export interface HistoryEntry {
   text?: string;
 }
 
+/** A concrete session the organiser can book or put on a shortlist. */
+export interface Session {
+  date: string;
+  start: number;
+  end: number;
+}
+
+export interface ShortlistAnswer {
+  name: string;
+  /** Indices into the shortlist's sessions that work for this person. */
+  picks: number[];
+  /** Chosen start inside a picked session (session index -> minutes), when it is longer than needed. */
+  starts?: Record<number, number>;
+  at: string;
+}
+
+/** A link with only a few sessions, answered with yes/no by people outside the calendar. */
+export interface Shortlist {
+  id: string;
+  mode: 'one' | 'many';
+  sessions: Session[];
+  /** Meetup length in minutes when the link was made. */
+  minutes?: number;
+  answers: ShortlistAnswer[];
+  createdAt: string;
+}
+
+/** What a shortlist link shows to the person answering. */
+export interface ShortlistView {
+  id: string;
+  mode: 'one' | 'many';
+  sessions: Session[];
+  minutes: number;
+  title: string;
+  description: string;
+  booked: Session | null;
+}
+
 export interface MeetEvent {
   id: string;
   title: string;
@@ -51,6 +89,9 @@ export interface MeetEvent {
   partialOk: boolean;
   participants: Participant[];
   history: HistoryEntry[];
+  /** The session the organiser settled on, if any. */
+  booked?: Session | null;
+  shortlists?: Shortlist[];
   createdAt: string;
 }
 
@@ -72,6 +113,7 @@ export interface EventPatch {
   dayStart?: number;
   dayEnd?: number;
   partialOk?: boolean;
+  booked?: Session | null;
 }
 
 export const DEFAULT_DAY_START = 8 * 60;

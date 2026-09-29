@@ -19,159 +19,300 @@
     </header>
 
     <section>
-      <h2>My Whens</h2>
-      @if (recent().length) {
-        <ul class="whens">
-          @for (m of recent(); track m.id) {
-            <li [class.past]="isPast(m)">
-              <a [routerLink]="['/e', m.id]" (click)="close()">
-                <span class="row">
-                  <span class="title">{{ m.title }}</span>
-                  <span class="muted dates">{{ rangeOf(m) }}</span>
-                </span>
-                <span class="best">
-                  @if (best()[m.id] === '') {
-                    <span class="muted">Checking…</span>
-                  } @else if (best()[m.id]) {
-                    <mat-icon>star</mat-icon>
-                    {{ best()[m.id] }}
-                  } @else {
-                    <span class="muted">No possible sessions yet</span>
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('whens')"
+          [attr.aria-expanded]="!isFolded('whens')"
+        >
+          <span>My Whens</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('whens')) {
+        <div class="sect">
+          @if (recent().length) {
+            <ul class="whens">
+              @for (m of recent(); track m.id) {
+                <li [class.past]="isPast(m)">
+                  <a [routerLink]="['/e', m.id]" (click)="close()">
+                    <span class="row">
+                      <span class="title">{{ m.title }}</span>
+                      <span class="muted dates">{{ rangeOf(m) }}</span>
+                    </span>
+                    <span class="best">
+                      @if (best()[m.id] === '') {
+                        <span class="muted">Checking…</span>
+                      } @else if (best()[m.id]) {
+                        {{ best()[m.id] }}
+                      } @else {
+                        <span class="muted">No possible sessions yet</span>
+                      }
+                    </span>
+                    <span class="muted small">
+                      {{ m.role === 'organiser' ? 'organiser' : 'joined' }} as {{ m.name }}
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    (click)="askRemove(m, $event)"
+                    [attr.aria-label]="(isOrganiser(m) ? 'Delete ' : 'Leave ') + m.title"
+                    [title]="isOrganiser(m) ? 'Delete this When' : 'Leave this When'"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  @if (confirmId() === m.id) {
+                    <div class="confirm">
+                      <p>
+                        @if (isOrganiser(m)) {
+                          Delete <strong>{{ m.title }}</strong> for everyone? Nobody will be able to
+                          open it again.
+                        } @else {
+                          Leave <strong>{{ m.title }}</strong
+                          >? Your times will be removed and you'll need the link to come back.
+                        }
+                      </p>
+                      <div class="actions">
+                        <button type="button" class="pill" (click)="confirmId.set(null)">
+                          Cancel
+                        </button>
+                        <button
+                          mat-flat-button
+                          type="button"
+                          class="danger"
+                          (click)="confirmRemove(m)"
+                          [disabled]="busyId() === m.id"
+                        >
+                          {{ isOrganiser(m) ? 'Delete' : 'Leave' }}
+                        </button>
+                      </div>
+                    </div>
                   }
-                </span>
-                <span class="muted small">
-                  {{ m.role === 'organiser' ? 'organiser' : 'joined' }} as {{ m.name }}
-                </span>
-              </a>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="muted">None yet. Whens you create or join show up here.</p>
+          }
+          <button type="button" class="pill new" (click)="goHome()">
+            <mat-icon>add</mat-icon>
+            New When
+          </button>
+          <button type="button" class="pill new" (click)="showHowTo()">
+            <mat-icon>help_outline</mat-icon>
+            How it works
+          </button>
+        </div>
+      }
+    </section>
+
+    <section>
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('look')"
+          [attr.aria-expanded]="!isFolded('look')"
+        >
+          <span>Appearance</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('look')) {
+        <div class="sect">
+          <div class="segments looks" role="radiogroup" aria-label="Colour">
+            @for (l of looks; track l.value) {
               <button
                 type="button"
-                class="icon-btn"
-                (click)="askRemove(m, $event)"
-                [attr.aria-label]="(isOrganiser(m) ? 'Delete ' : 'Leave ') + m.title"
-                [title]="isOrganiser(m) ? 'Delete this When' : 'Leave this When'"
+                class="pill"
+                role="radio"
+                [class.active]="prefs().look === l.value"
+                [attr.aria-checked]="prefs().look === l.value"
+                (click)="setLook(l.value)"
               >
-                <mat-icon>close</mat-icon>
+                <span class="swatch" [style.background]="l.color"></span>
+                {{ l.label }}
               </button>
-              @if (confirmId() === m.id) {
-                <div class="confirm">
-                  <p>
-                    @if (isOrganiser(m)) {
-                      Delete <strong>{{ m.title }}</strong> for everyone? Nobody will be able to
-                      open it again.
-                    } @else {
-                      Leave <strong>{{ m.title }}</strong
-                      >? Your times will be removed and you'll need the link to come back.
-                    }
-                  </p>
-                  <div class="actions">
-                    <button type="button" class="pill" (click)="confirmId.set(null)">Cancel</button>
-                    <button
-                      mat-flat-button
-                      type="button"
-                      class="danger"
-                      (click)="confirmRemove(m)"
-                      [disabled]="busyId() === m.id"
-                    >
-                      {{ isOrganiser(m) ? 'Delete' : 'Leave' }}
-                    </button>
-                  </div>
-                </div>
-              }
-            </li>
-          }
-        </ul>
-      } @else {
-        <p class="muted">None yet. Whens you create or join show up here.</p>
+            }
+          </div>
+          <div class="segments" role="radiogroup" aria-label="Theme">
+            @for (t of themes; track t.value) {
+              <button
+                type="button"
+                class="pill"
+                role="radio"
+                [class.active]="prefs().theme === t.value"
+                [attr.aria-checked]="prefs().theme === t.value"
+                (click)="setTheme(t.value)"
+              >
+                <mat-icon>{{ t.icon }}</mat-icon>
+                {{ t.label }}
+              </button>
+            }
+          </div>
+        </div>
       }
-      <button type="button" class="pill new" (click)="goHome()">
-        <mat-icon>add</mat-icon>
-        New When
-      </button>
     </section>
 
     <section>
-      <h2>Appearance</h2>
-      <div class="segments" role="radiogroup" aria-label="Theme">
-        @for (t of themes; track t.value) {
-          <button
-            type="button"
-            class="pill"
-            role="radio"
-            [class.active]="prefs().theme === t.value"
-            [attr.aria-checked]="prefs().theme === t.value"
-            (click)="setTheme(t.value)"
-          >
-            <mat-icon>{{ t.icon }}</mat-icon>
-            {{ t.label }}
-          </button>
-        }
-      </div>
-    </section>
-
-    <section>
-      <h2>Defaults for new Whens</h2>
-      <mat-form-field appearance="outline">
-        <mat-label>Meetup length</mat-label>
-        <mat-select
-          [value]="prefs().durationHours"
-          (valueChange)="store.update({ durationHours: $event })"
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('dates')"
+          [attr.aria-expanded]="!isFolded('dates')"
         >
-          @for (d of durations; track d) {
-            <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <div class="row">
-        <mat-form-field appearance="outline">
-          <mat-label>Earliest</mat-label>
-          <mat-select [value]="prefs().dayStart" (valueChange)="store.update({ dayStart: $event })">
-            @for (h of startOptions; track h.value) {
-              <mat-option [value]="h.value">{{ h.label }}</mat-option>
+          <span>Date format</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('dates')) {
+        <div class="sect">
+          <div class="segments" role="radiogroup" aria-label="Date format">
+            @for (d of dateStyles; track d.value) {
+              <button
+                type="button"
+                class="pill"
+                role="radio"
+                [class.active]="prefs().dateStyle === d.value"
+                [attr.aria-checked]="prefs().dateStyle === d.value"
+                (click)="setDateStyle(d.value)"
+              >
+                {{ d.label }}
+              </button>
             }
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Latest</mat-label>
-          <mat-select [value]="prefs().dayEnd" (valueChange)="store.update({ dayEnd: $event })">
-            @for (h of endOptions; track h.value) {
-              <mat-option [value]="h.value">{{ h.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-      @if (!rangeValid()) {
-        <p class="warn">The hours must leave room for the meetup length.</p>
+          </div>
+        </div>
       }
-      <mat-slide-toggle
-        [checked]="prefs().partialOk"
-        (change)="store.update({ partialOk: $event.checked })"
-      >
-        People can join for part of it
-      </mat-slide-toggle>
-      <p class="muted small">Used to pre-fill the form when you plan a new When.</p>
     </section>
 
     <section>
-      <h2>App</h2>
-      <div class="update-row">
-        @if (updates.status() === 'ready') {
-          <button type="button" class="pill active" (click)="updates.reload()">
-            <mat-icon>refresh</mat-icon>
-            Reload to update
-          </button>
-        } @else {
-          <button
-            type="button"
-            class="pill"
-            (click)="updates.check()"
-            [disabled]="updates.status() === 'checking' || updates.status() === 'unsupported'"
-          >
-            <mat-icon>system_update</mat-icon>
-            Check for updates
-          </button>
-        }
-        <span class="muted small">{{ updateText() }}</span>
-      </div>
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('defaults')"
+          [attr.aria-expanded]="!isFolded('defaults')"
+        >
+          <span>Defaults for new Whens</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('defaults')) {
+        <div class="sect">
+          <mat-form-field appearance="outline">
+            <mat-label>Meetup length</mat-label>
+            <mat-select
+              [value]="prefs().durationHours"
+              (valueChange)="store.update({ durationHours: $event })"
+            >
+              @for (d of durations; track d) {
+                <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Earliest</mat-label>
+              <mat-select
+                [value]="prefs().dayStart"
+                (valueChange)="store.update({ dayStart: $event })"
+              >
+                @for (h of startOptions; track h.value) {
+                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Latest</mat-label>
+              <mat-select [value]="prefs().dayEnd" (valueChange)="store.update({ dayEnd: $event })">
+                @for (h of endOptions; track h.value) {
+                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          @if (!rangeValid()) {
+            <p class="warn">The hours must leave room for the meetup length.</p>
+          }
+          <p class="muted small">Used to pre-fill the form when you plan a new When.</p>
+        </div>
+      }
+    </section>
+
+    <section>
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('pro')"
+          [attr.aria-expanded]="!isFolded('pro')"
+        >
+          <span>Pro features <span class="preview">preview</span></span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('pro')) {
+        <div class="sect">
+          <ul class="features">
+            @for (f of proFeatures; track f.key) {
+              <li>
+                <mat-slide-toggle
+                  [checked]="prefs().features[f.key]"
+                  (change)="setFeature(f.key, $event.checked)"
+                  [attr.aria-label]="f.label"
+                />
+                <span class="text">
+                  <span class="label">{{ f.label }}</span>
+                  <span class="muted small">{{ f.hint }}</span>
+                </span>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </section>
+
+    <section>
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('app')"
+          [attr.aria-expanded]="!isFolded('app')"
+        >
+          <span>App</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('app')) {
+        <div class="sect">
+          <div class="update-row">
+            @if (updates.status() === 'ready') {
+              <button type="button" class="pill active" (click)="updates.reload()">
+                <mat-icon>refresh</mat-icon>
+                Reload to update
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="pill"
+                (click)="updates.check()"
+                [disabled]="updates.status() === 'checking' || updates.status() === 'unsupported'"
+              >
+                <mat-icon>system_update</mat-icon>
+                Check for updates
+              </button>
+            }
+            <span class="muted small">{{ updateText() }}</span>
+          </div>
+        </div>
+      }
     </section>
   </aside>
+  <button type="button" class="fab-close" (click)="close()" aria-label="Close menu">
+    <mat-icon>close</mat-icon>
+  </button>
 }

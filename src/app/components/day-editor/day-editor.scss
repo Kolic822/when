@@ -80,6 +80,10 @@ header {
 .hint {
   margin: 2px 0 10px 4px;
   font-size: 13px;
+
+  &.ghost {
+    visibility: hidden;
+  }
 }
 
 .body {
@@ -144,14 +148,14 @@ header {
       font-size: 11px;
     }
     .x {
-      width: 24px;
-      height: 24px;
-      margin: -4px -4px 0 0;
+      width: 36px;
+      height: 36px;
+      margin: -6px -6px 0 0;
 
       mat-icon {
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
       }
     }
   }
@@ -183,15 +187,44 @@ header {
   .lane {
     position: relative;
     width: 10px;
-    border-radius: 4px;
+    border-radius: 999px;
     background: var(--when-grid);
   }
   .block {
     position: absolute;
     left: 0;
     right: 0;
-    border-radius: 4px;
-    opacity: 0.55;
+    border-radius: 999px;
+    opacity: 0.7;
+  }
+}
+
+.empty-prompt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: rise 0.3s ease both;
+
+  mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    color: var(--accent);
+    opacity: 0.8;
+  }
+  small {
+    font-size: 12px;
+    opacity: 0.8;
   }
 }
 
@@ -199,13 +232,13 @@ header {
   position: relative;
   flex: 1;
   height: max(calc(var(--hour-px) * var(--hours, 24)), var(--bar-min));
-  border: 1px solid var(--when-border);
+  border: 0;
   border-radius: 12px;
-  background: var(--when-surface)
+  background: var(--when-grid)
     repeating-linear-gradient(
       to bottom,
-      var(--when-grid) 0,
-      var(--when-grid) 1px,
+      var(--when-border) 0,
+      var(--when-border) 1px,
       transparent 1px,
       transparent calc(100% / var(--hours, 24))
     );
@@ -226,13 +259,14 @@ header {
   align-items: flex-start;
   justify-content: space-between;
   padding: 8px 8px 4px;
-  border-radius: 8px;
-  background: var(--color);
-  color: #fff;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color) 62%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color) 85%, transparent);
+  color: var(--when-text);
+  animation: slot-in var(--in-dur, 0.22s) cubic-bezier(0.2, 1.1, 0.4, 1) both;
   font-size: 13px;
   font-weight: 500;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   transition: opacity 0.12s;
 
   .text {
@@ -261,17 +295,17 @@ header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     margin: -6px -6px 0 0;
     border-radius: 999px;
     cursor: pointer;
     opacity: 0.85;
 
     mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
     }
     &:hover {
       background: rgba(0, 0, 0, 0.18);
@@ -294,7 +328,7 @@ header {
       width: 32px;
       height: 4px;
       border-radius: 2px;
-      background: rgba(255, 255, 255, 0.75);
+      background: color-mix(in srgb, var(--color) 70%, var(--when-text));
     }
     &.top {
       top: 0;
@@ -318,7 +352,7 @@ header {
     width: 32px;
     height: 32px;
     margin: 0;
-    background: rgba(255, 255, 255, 0.18);
+    background: color-mix(in srgb, var(--when-surface) 55%, transparent);
 
     mat-icon {
       font-size: 18px;
@@ -331,8 +365,9 @@ header {
   }
 
   &.preview {
+    animation: none;
     opacity: 0.7;
-    outline: 2px dashed #fff;
+    outline: 2px dashed var(--color);
     outline-offset: -3px;
     pointer-events: none;
   }
@@ -387,6 +422,33 @@ header {
   to {
     opacity: 1;
     transform: translate(-50%, calc(-100% - 32px));
+  }
+}
+
+/* "Free all day" on/off: an existing block glides to its new size (top/height transition);
+   a block created at that moment grows in from a sliver. Variables only, so blocks that are
+   already on screen never replay their entrance. */
+.bar.morphing {
+  --in-sx: 1;
+  --in-sy: 0.15;
+  --in-opacity: 0.4;
+  --in-dur: 0.42s;
+
+  .slot:not(.preview) {
+    transition:
+      top 0.42s cubic-bezier(0.2, 0.9, 0.25, 1),
+      height 0.42s cubic-bezier(0.2, 0.9, 0.25, 1);
+  }
+}
+
+@keyframes slot-in {
+  from {
+    opacity: var(--in-opacity, 0);
+    transform: scale(var(--in-sx, 0.94), var(--in-sy, 0.94));
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -476,4 +538,32 @@ header {
   :host {
     --hour-px: 40px;
   }
+}
+
+/* Connect calendar (preview): your own events sit behind the slots and never take touches. */
+.busy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  border-left: 4px solid var(--when-muted);
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--when-muted) 20%, transparent) 0 8px,
+    color-mix(in srgb, var(--when-muted) 9%, transparent) 8px 16px
+  );
+  pointer-events: none;
+}
+
+.busy-t {
+  display: block;
+  padding: 4px 8px;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--when-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.8;
 }

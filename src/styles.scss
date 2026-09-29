@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@angular/material' as mat;
 
 html {
@@ -8,47 +9,165 @@ html {
         primary: mat.$violet-palette,
         tertiary: mat.$rose-palette,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: 'DM Sans',
+        brand-family: 'Outfit',
+        bold-weight: 700,
+        medium-weight: 500,
+        regular-weight: 400,
+      ),
       density: 0,
     )
   );
 }
 
-:root {
-  --when-bg: #f6f7fb;
-  --when-surface: #ffffff;
-  --when-border: #e5e7eb;
-  --when-grid: #eef0f4;
-  --when-text: #111827;
-  --when-muted: #6b7280;
-  --when-common: #eab308;
-  --when-common-bg: rgba(250, 204, 21, 0.22);
-  --when-radius: 14px;
-}
+/* ------------------------------------------------------------------------------------------
+   Looks: three colour moods, each with a light and a dark side. The menu sets data-look and
+   data-theme on <html>; without data-theme the system preference decides light or dark.
+   ------------------------------------------------------------------------------------------ */
+$looks: (
+  grape: (
+    light: (
+      accent: #6d5ef5,
+      on-accent: #ffffff,
+      accent-soft: #ebe8ff,
+      bg: #f6f4ff,
+      surface: #ffffff,
+      grid: #f0edfb,
+      border: #e4dff7,
+      text: #17142b,
+      muted: #6f6a8a,
+    ),
+    dark: (
+      accent: #a99cff,
+      on-accent: #1b1442,
+      accent-soft: #2a2550,
+      bg: #0f0e17,
+      surface: #1a1826,
+      grid: #242136,
+      border: #2f2b47,
+      text: #eceaf8,
+      muted: #a19db8,
+    ),
+  ),
+  sunset: (
+    light: (
+      accent: #f4516c,
+      on-accent: #ffffff,
+      accent-soft: #ffe4e1,
+      bg: #fff6f2,
+      surface: #ffffff,
+      grid: #fdeee8,
+      border: #f8ddd4,
+      text: #2a1517,
+      muted: #8a6a68,
+    ),
+    dark: (
+      accent: #ff8f9f,
+      on-accent: #3b0a14,
+      accent-soft: #42202a,
+      bg: #151011,
+      surface: #211819,
+      grid: #2c2022,
+      border: #3b2a2d,
+      text: #f6eae8,
+      muted: #b9a2a0,
+    ),
+  ),
+  lagoon: (
+    light: (
+      accent: #00a389,
+      on-accent: #ffffff,
+      accent-soft: #d8f5ee,
+      bg: #f0fbf8,
+      surface: #ffffff,
+      grid: #e6f6f2,
+      border: #cfece5,
+      text: #0f2521,
+      muted: #5c7a74,
+    ),
+    dark: (
+      accent: #4fe0c5,
+      on-accent: #00302a,
+      accent-soft: #123a34,
+      bg: #0c1413,
+      surface: #15201e,
+      grid: #1c2b28,
+      border: #283a36,
+      text: #e6f4f1,
+      muted: #9db8b2,
+    ),
+  ),
+);
 
-@mixin dark-vars {
-  --when-bg: #0f1116;
-  --when-surface: #181b22;
-  --when-border: #2b303b;
-  --when-grid: #222731;
-  --when-text: #e5e7eb;
-  --when-muted: #9ca3af;
-  --when-common: #facc15;
-  --when-common-bg: rgba(250, 204, 21, 0.28);
-}
+@mixin look-vars($c, $dark: false) {
+  --accent: #{map.get($c, accent)};
+  --on-accent: #{map.get($c, on-accent)};
+  --accent-soft: #{map.get($c, accent-soft)};
+  --when-bg: #{map.get($c, bg)};
+  --when-surface: #{map.get($c, surface)};
+  --when-grid: #{map.get($c, grid)};
+  --when-border: #{map.get($c, border)};
+  --when-text: #{map.get($c, text)};
+  --when-muted: #{map.get($c, muted)};
 
-/* Follows the system unless the user picked a theme in the menu (data-theme on <html>). */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    @include dark-vars;
+  @if $dark {
+    --when-common: #facc15;
+    --when-common-bg: rgba(250, 204, 21, 0.28);
+    --card-shadow: none;
+    --card-border: 1px solid #{map.get($c, border)};
+  } @else {
+    --when-common: #eab308;
+    --when-common-bg: rgba(250, 204, 21, 0.24);
+    --card-shadow: 0 1px 2px rgba(23, 20, 43, 0.04), 0 12px 32px rgba(23, 20, 43, 0.07);
+    --card-border: 1px solid transparent;
   }
+
+  /* Material components follow the look. */
+  --mat-sys-primary: var(--accent);
+  --mat-sys-on-primary: var(--on-accent);
+  --mat-sys-primary-container: var(--accent-soft);
+  --mat-sys-on-primary-container: var(--when-text);
+  --mat-sys-secondary-container: var(--accent-soft);
+  --mat-sys-on-secondary-container: var(--when-text);
+  --mat-sys-surface: var(--when-surface);
+  --mat-sys-surface-container: var(--when-surface);
+  --mat-sys-surface-container-low: var(--when-surface);
+  --mat-sys-surface-container-high: var(--when-surface);
+  --mat-sys-surface-container-highest: var(--when-grid);
+  --mat-sys-on-surface: var(--when-text);
+  --mat-sys-on-surface-variant: var(--when-muted);
+  --mat-sys-outline: var(--when-muted);
+  --mat-sys-outline-variant: var(--when-border);
+  --mat-sys-inverse-surface: var(--when-text);
+  --mat-sys-inverse-on-surface: var(--when-surface);
+  --mat-sys-inverse-primary: var(--accent-soft);
 }
-:root[data-theme='dark'] {
-  @include dark-vars;
+
+@each $name, $sides in $looks {
+  $sel: "html:root[data-look='#{$name}']";
+  @if $name == grape {
+    $sel: 'html:root';
+  }
+
+  #{$sel} {
+    @include look-vars(map.get($sides, light));
+  }
+  @media (prefers-color-scheme: dark) {
+    #{$sel}:not([data-theme='light']) {
+      @include look-vars(map.get($sides, dark), true);
+    }
+  }
+  #{$sel}[data-theme='dark'] {
+    @include look-vars(map.get($sides, dark), true);
+  }
 }
 
 :root {
   color-scheme: light dark;
+  --when-radius: 22px;
+  --font-display: 'Outfit', 'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 body {
@@ -57,13 +176,21 @@ body {
   background-color: var(--when-bg);
   color: var(--when-text);
   font: var(--mat-sys-body-medium);
+  font-family: var(--font-body);
   margin: 0;
   height: 100%;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease;
 }
 
 * {
   box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
 }
 
 .page {
@@ -73,10 +200,12 @@ body {
   padding-bottom: 48px;
 }
 
+/* Cards float on soft shadow in light mode and get a hairline in dark mode. */
 .card {
   background: var(--when-surface);
-  border: 1px solid var(--when-border);
+  border: var(--card-border);
   border-radius: var(--when-radius);
+  box-shadow: var(--card-shadow);
   padding: 16px;
 }
 
@@ -94,27 +223,27 @@ body {
   color: var(--when-muted);
 }
 
-/* Secondary actions share one pill style; the filled Material button is reserved for the primary action. */
+/* Secondary actions share one pill style; the filled button is reserved for the primary action. */
 .pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--when-border);
+  height: 38px;
+  padding: 0 16px;
+  border: 0;
   border-radius: 999px;
-  background: var(--when-surface);
+  background: var(--when-grid);
   color: var(--when-text);
   font: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background 0.12s,
-    border-color 0.12s,
-    color 0.12s;
+    background 0.15s,
+    color 0.15s,
+    transform 0.1s;
 
   mat-icon {
     font-size: 18px;
@@ -122,28 +251,30 @@ body {
     height: 18px;
   }
   &:hover {
-    border-color: var(--mat-sys-primary);
-    color: var(--mat-sys-primary);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.97);
   }
   &.active {
-    background: var(--mat-sys-primary);
-    border-color: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
+    background: var(--accent);
+    color: var(--on-accent);
   }
   &.danger:hover {
-    border-color: var(--mat-sys-error);
+    background: color-mix(in srgb, var(--mat-sys-error) 14%, transparent);
     color: var(--mat-sys-error);
   }
   &.icon {
-    width: 36px;
+    width: 38px;
     padding: 0;
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: default;
   }
   &:focus-visible {
-    outline: 2px solid var(--mat-sys-primary);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 }
@@ -159,30 +290,46 @@ body {
   background: none;
   color: var(--when-muted);
   cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
   &:hover {
     background: var(--when-grid);
     color: var(--when-text);
   }
   &:focus-visible {
-    outline: 2px solid var(--mat-sys-primary);
+    outline: 2px solid var(--accent);
   }
 }
 
 .brand {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 28px;
   white-space: nowrap;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  text-decoration: none;
 
   .tagline {
     font-size: 26px;
     font-weight: 500;
-    letter-spacing: 0;
+    letter-spacing: -0.01em;
     color: var(--when-text);
   }
-  letter-spacing: -0.02em;
-  color: var(--mat-sys-primary);
-  text-decoration: none;
+}
+
+/* Primary buttons: a little weight and a press response. */
+.mat-mdc-unelevated-button {
+  font-family: var(--font-body);
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  transition: transform 0.1s;
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
 }
 
 /* Toasts shown while an editor with a sticky bottom bar is open sit above that bar. */
@@ -197,4 +344,51 @@ body {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Shared little animations. */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

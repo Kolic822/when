@@ -1,0 +1,112 @@
+<main class="page">
+  <nav class="top">
+    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
+  </nav>
+
+  @if (missing()) {
+    <section class="card empty">
+      <h1>This link doesn't exist</h1>
+      <p class="muted">It may have been deleted, or the link is incomplete.</p>
+    </section>
+  } @else if (!list()) {
+    <div class="loading"><mat-spinner diameter="36" /></div>
+  } @else {
+    <header class="head">
+      <h1>{{ list()!.title }}</h1>
+      @if (list()!.description) {
+        <p class="description">{{ list()!.description }}</p>
+      }
+      <p class="ask muted">
+        {{ single() ? 'Pick the one that works for you.' : 'Tap every time that works for you.' }}
+      </p>
+    </header>
+
+    <form (submit)="send($event)">
+      <label class="name">
+        <span class="muted">Your name</span>
+        <input
+          type="text"
+          [value]="name()"
+          (input)="name.set($any($event.target).value); sent.set(false)"
+          maxlength="40"
+          autocomplete="given-name"
+          placeholder="So they know who answered"
+        />
+      </label>
+
+      <div class="cards" [attr.role]="single() ? 'radiogroup' : 'group'" aria-label="Sessions">
+        @for (c of cards(); track $index; let i = $index) {
+          <div class="session" [class.on]="picks().has($index)">
+            <button
+              type="button"
+              class="pick"
+              [attr.role]="single() ? 'radio' : null"
+              [attr.aria-checked]="single() ? picks().has($index) : null"
+              [attr.aria-pressed]="single() ? null : picks().has($index)"
+              (click)="toggle($index)"
+            >
+              <span class="text">
+                <span class="day"
+                  >{{ c.day }} <span class="date">{{ c.date }}</span></span
+                >
+                <span class="time">{{ c.time }}</span>
+              </span>
+              <mat-icon>{{
+                picks().has($index) ? 'check_circle' : 'radio_button_unchecked'
+              }}</mat-icon>
+            </button>
+            @if (picks().has($index) && c.options.length) {
+              <div class="window">
+                <span class="muted">
+                  {{ lengthLabel() }} needed. When should it start?
+                  @if (c.chosen) {
+                    <strong>{{ c.chosen }}</strong>
+                  }
+                </span>
+                <div class="starts" role="radiogroup" aria-label="Start time">
+                  <button
+                    type="button"
+                    class="pill start"
+                    role="radio"
+                    [class.on]="c.start === undefined"
+                    [attr.aria-checked]="c.start === undefined"
+                    (click)="setStart(i, undefined)"
+                  >
+                    Any time
+                  </button>
+                  @for (o of c.options; track o) {
+                    <button
+                      type="button"
+                      class="pill start"
+                      role="radio"
+                      [class.on]="c.start === o"
+                      [attr.aria-checked]="c.start === o"
+                      (click)="setStart(i, o)"
+                    >
+                      {{ fmt(o) }}
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+
+      @if (sent()) {
+        <p class="thanks" role="status">
+          <mat-icon>check_circle</mat-icon>
+          Sent. Thanks, {{ name().trim() }}! You can change your answer any time.
+        </p>
+      } @else {
+        <button mat-flat-button type="submit" class="send" [disabled]="!canSend()">
+          {{ busy() ? 'Sending…' : picks().size ? 'Send my answer' : 'None of these work' }}
+        </button>
+      }
+    </form>
+  }
+</main>

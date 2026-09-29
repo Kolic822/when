@@ -34,12 +34,9 @@
     </header>
   }
 
-  <p class="hint muted">
-    {{ coarse ? 'Hold to add' : 'Drag to add' }} · drag edges to resize · hold to move · tap for a
-    note
-    @if (strict()) {
-      · min {{ minLabel() }}
-    }
+  <!-- Always takes its line so nothing jumps when the first block appears. -->
+  <p class="hint muted" [class.ghost]="!mine().length">
+    Drag edges to resize · hold to move · tap for a note
   </p>
 
   @if (mode() === 'full') {
@@ -139,6 +136,7 @@
       #bar
       class="bar"
       [class.moving]="moving()"
+      [class.morphing]="morphing()"
       [class.holding]="holding()"
       role="application"
       aria-label="Drag to select the hours you are free"
@@ -148,6 +146,11 @@
       (pointercancel)="onCancel()"
       (contextmenu)="$event.preventDefault()"
     >
+      @for (b of busy(); track b.start) {
+        <span class="busy" [style.top.%]="pct(b.start)" [style.height.%]="height(b)">
+          <span class="busy-t">{{ b.label }}</span>
+        </span>
+      }
       @for (s of mine(); track $index) {
         <span
           class="slot"
@@ -181,6 +184,15 @@
             </span>
           </span>
           <span class="handle bottom" aria-hidden="true"></span>
+        </span>
+      }
+      @if (!mine().length && !drag()) {
+        <span class="empty-prompt muted" aria-hidden="true">
+          <mat-icon>touch_app</mat-icon>
+          <span>{{ coarse ? 'Hold and drag' : 'Drag' }}<br />to add your free time</span>
+          @if (strict()) {
+            <small>at least {{ minLabel() }}</small>
+          }
         </span>
       }
       @if (drag(); as d) {

@@ -14,8 +14,8 @@ const DIST = path.join(__dirname, '..', 'dist', 'when', 'browser');
 
 /** Modern palette; the first unused colour is picked at random. */
 const PALETTE = [
-  '#6366F1', '#EC4899', '#14B8A6', '#F59E0B', '#8B5CF6', '#22C55E',
-  '#F97316', '#06B6D4', '#EF4444', '#84CC16', '#A855F7', '#0EA5E9',
+  '#6D5EF5', '#FF5C8A', '#00B8A0', '#FF9F1C', '#3D9BFF', '#FF6B4A',
+  '#9B5DE5', '#22C55E', '#F15BB5', '#06B6D4', '#E0529C', '#7CB518',
 ];
 
 const store = new Store(process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json'));
@@ -31,6 +31,14 @@ const clampInt = (n, lo, hi, fallback) =>
 const cleanName = (s) => String(s ?? '').trim().slice(0, 40);
 const cleanDescription = (s) => String(s ?? '').trim().slice(0, 600);
 const cleanNote = (s) => (typeof s === 'string' ? s.trim().slice(0, 120) : '');
+/** A concrete session { date, start, end } or null. */
+function cleanSession(s) {
+  if (!s || !isDateKey(s.date)) return null;
+  const start = clampInt(Number(s.start), 0, 1440, NaN);
+  const end = clampInt(Number(s.end), 0, 1440, NaN);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
+  return { date: s.date, start, end };
+}
 const DEFAULT_DAY_START = 8 * 60;
 const DEFAULT_DAY_END = 23 * 60;
 /** Snaps a time-of-day range to whole hours and keeps it sane (at least one hour long). */
@@ -94,6 +102,8 @@ for (const ev of store.all()) {
   ev.history ??= [];
   ev.description ??= '';
   ev.partialOk ??= false;
+  ev.booked ??= null;
+  ev.shortlists ??= [];
   if (ev.dayStart === undefined || ev.dayEnd === undefined) {
     [ev.dayStart, ev.dayEnd] = cleanRange(ev.dayStart, ev.dayEnd);
     for (const p of ev.participants) p.slots = sanitizeSlots(ev, p.slots);
@@ -125,6 +135,8 @@ app.post('/api/events', (req, res) => {
     partialOk,
     participants: [],
     history: [],
+    booked: null,
+    shortlists: [],
     createdAt: new Date().toISOString(),
     creatorToken: randomUUID(),
   };
@@ -165,6 +177,86 @@ app.delete('/api/events/:id/participants/:pid', (req, res) => {
   broadcast(ev.id);
   broadcastPresence(ev.id);
   res.status(204).end();
+});
+
+// ---- Shortlists: a link with only a few sessions, for someone who just answers yes/no.
+function findShortlist(sid) {
+  for (const ev of store.all()) {
+    const list = (ev.shortlists ?? []).find((s) => s.id === sid);
+    if (list) return { ev, list };
+  }
+  return null;
+}
+
+app.post('/api/events/:id/shortlists', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const token = req.get('x-creator-token');
+  if (!token || token !== ev.creatorToken) return res.status(403).json({ error: 'forbidden' });
+  const sessions = (Array.isArray(req.body?.sessions) ? req.body.sessions : [])
+    .map(cleanSession)
+    .filter(Boolean)
+    .slice(0, 12);
+  if (!sessions.length) return res.status(400).json({ error: 'no_sessions' });
+  let id = shortId();
+  while (findShortlist(id)) id = shortId();
+  const list = {
+    id,
+    mode: req.body?.mode === 'one' ? 'one' : 'many',
+    sessions,
+    // Meetup length when the link was made; longer sessions let people choose a start.
+    minutes: Math.round(ev.durationHours * 60),
+    answers: [],
+    createdAt: new Date().toISOString(),
+  };
+  ev.shortlists ??= [];
+  ev.shortlists.push(list);
+  store.set(ev);
+  broadcast(ev.id);
+  res.status(201).json(list);
+});
+
+app.get('/api/shortlists/:sid', (req, res) => {
+  const found = findShortlist(req.params.sid);
+  if (!found) return res.status(404).json({ error: 'not_found' });
+  const { ev, list } = found;
+  res.json({
+    id: list.id,
+    mode: list.mode,
+    sessions: list.sessions,
+    minutes: list.minutes ?? Math.round(ev.durationHours * 60),
+    title: ev.title,
+    description: ev.description ?? '',
+    booked: ev.booked ?? null,
+  });
+});
+
+app.post('/api/shortlists/:sid/answers', (req, res) => {
+  const found = findShortlist(req.params.sid);
+  if (!found) return res.status(404).json({ error: 'not_found' });
+  const { ev, list } = found;
+  const name = cleanName(req.body?.name);
+  if (!name) return res.status(400).json({ error: 'no_name' });
+  let picks = [...new Set((Array.isArray(req.body?.picks) ? req.body.picks : []).map(Number))]
+    .filter((i) => Number.isInteger(i) && i >= 0 && i < list.sessions.length)
+    .sort((a, b) => a - b);
+  if (list.mode === 'one') picks = picks.slice(0, 1);
+  // Optional start time per picked session, when the session is longer than the meetup.
+  const minutes = list.minutes ?? Math.round(ev.durationHours * 60);
+  const starts = {};
+  for (const i of picks) {
+    const s = list.sessions[i];
+    const start = Number(req.body?.starts?.[i]);
+    if (!Number.isInteger(start) || start % 15 !== 0) continue;
+    if (start >= s.start && start + Math.min(minutes, s.end - s.start) <= s.end) starts[i] = start;
+  }
+  const answer = { name, picks, starts, at: new Date().toISOString() };
+  const i = list.answers.findIndex((a) => a.name.toLowerCase() === name.toLowerCase());
+  if (i >= 0) list.answers[i] = answer;
+  else list.answers.push(answer);
+  store.set(ev);
+  broadcast(ev.id);
+  res.status(201).json(answer);
 });
 
 app.get('/api/events/:id', (req, res) => {
@@ -343,6 +435,7 @@ wss.on('connection', (ws, req) => {
         if (typeof patch.title === 'string' && patch.title.trim()) ev.title = patch.title.trim().slice(0, 80);
         if (typeof patch.description === 'string') ev.description = cleanDescription(patch.description);
         if (typeof patch.partialOk === 'boolean') ev.partialOk = patch.partialOk;
+        if (patch.booked !== undefined) ev.booked = cleanSession(patch.booked);
         if (patch.dayStart !== undefined || patch.dayEnd !== undefined) {
           [ev.dayStart, ev.dayEnd] = cleanRange(patch.dayStart ?? ev.dayStart, patch.dayEnd ?? ev.dayEnd, ev.dayStart, ev.dayEnd);
         }

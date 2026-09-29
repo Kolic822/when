@@ -1,5 +1,12 @@
 import { Service } from '@angular/core';
-import { CreateEventPayload, MeetEvent } from './models';
+import {
+  CreateEventPayload,
+  MeetEvent,
+  Session,
+  Shortlist,
+  ShortlistAnswer,
+  ShortlistView,
+} from './models';
 
 @Service()
 export class EventApi {
@@ -29,6 +36,44 @@ export class EventApi {
       { method: 'DELETE' },
     );
     if (!res.ok && res.status !== 404) throw new Error(`Could not leave (${res.status})`);
+  }
+
+  /** Organiser only: a link with just these sessions, answered with yes/no. */
+  async createShortlist(
+    id: string,
+    creatorToken: string,
+    mode: 'one' | 'many',
+    sessions: Session[],
+  ): Promise<Shortlist> {
+    const res = await fetch(`/api/events/${encodeURIComponent(id)}/shortlists`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-creator-token': creatorToken },
+      body: JSON.stringify({ mode, sessions }),
+    });
+    if (!res.ok) throw new Error(`Could not create the link (${res.status})`);
+    return res.json();
+  }
+
+  async getShortlist(sid: string): Promise<ShortlistView | null> {
+    const res = await fetch(`/api/shortlists/${encodeURIComponent(sid)}`);
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`Could not load (${res.status})`);
+    return res.json();
+  }
+
+  async answerShortlist(
+    sid: string,
+    name: string,
+    picks: number[],
+    starts: Record<number, number> = {},
+  ): Promise<ShortlistAnswer> {
+    const res = await fetch(`/api/shortlists/${encodeURIComponent(sid)}/answers`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name, picks, starts }),
+    });
+    if (!res.ok) throw new Error(`Could not send your answer (${res.status})`);
+    return res.json();
   }
 
   async get(id: string): Promise<MeetEvent | null> {

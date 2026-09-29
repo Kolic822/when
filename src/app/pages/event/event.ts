@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, input, OnDestroy, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,7 +15,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventSession } from '../../core/event-session';
 import { Identity } from '../../core/identity';
@@ -18,7 +26,7 @@ import {
   rangeLabel,
   shortDate,
 } from '../../core/time';
-import { Slot } from '../../core/models';
+import { Session, Slot } from '../../core/models';
 import { NamePrompt } from '../../components/name-prompt/name-prompt';
 import { ShareLink } from '../../components/share-link/share-link';
 import { WeekChart } from '../../components/week-chart/week-chart';
@@ -26,6 +34,11 @@ import { Legend } from '../../components/legend/legend';
 import { Results } from '../../components/results/results';
 import { DayPicker } from '../../components/day-picker/day-picker';
 import { AppMenu } from '../../components/app-menu/app-menu';
+import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
+import { Booked } from '../../components/booked/booked';
+import { History } from '../../components/history/history';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { PrefsStore } from '../../core/prefs';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
 
@@ -39,7 +52,6 @@ import { DURATIONS } from '../home/durations';
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatSlideToggleModule,
     NamePrompt,
     ShareLink,
     WeekChart,
@@ -48,6 +60,10 @@ import { DURATIONS } from '../home/durations';
     DayPicker,
     AppMenu,
     DayStepper,
+    Booked,
+    AnswerCard,
+    History,
+    MatSlideToggleModule,
   ],
   templateUrl: './event.html',
   styleUrl: './event.scss',
@@ -64,6 +80,21 @@ export class EventPage implements OnDestroy {
   readonly me = this.session.me;
   readonly meId = this.session.meId;
   readonly status = this.session.status;
+
+  /** Pro features switched on in the menu (preview). */
+  private readonly prefsStore = inject(PrefsStore);
+  readonly features = computed(() => this.prefsStore.prefs().features);
+
+  readonly resultsCard = viewChild<Results>('results');
+
+  /** What came back from an "Ask someone" link, marked in the calendar for the organiser. */
+  readonly answered = computed(() => {
+    const ev = this.event();
+    if (!ev || ev.booked || !this.isCreator()) return null;
+    const v = latestVerdict(ev.shortlists ?? [], ev.durationHours * 60);
+    const s = v?.window ?? v?.session;
+    return v && s ? { ...s, label: v.names } : null;
+  });
 
   readonly editingDay = signal<string | null>(null);
   /** Legend highlight: sticky (clicked) and transient (hovered). */
@@ -154,6 +185,24 @@ export class EventPage implements OnDestroy {
     this.session.setSlots(slots);
   }
 
+  /** Organiser settles on a session (or undoes it with null). */
+  onBook(session: Session | null): void {
+    const ok = this.session.updateEvent({ booked: session });
+    if (!ok)
+      this.snack.open('Only the organiser can book a session', undefined, { duration: 3000 });
+    else if (session) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** From the answer card: open that session so the organiser can choose the start. */
+  onChooseTime(session: Session): void {
+    const opened = this.resultsCard()?.openFor(session.date, session.start);
+    if (!opened) {
+      this.snack.open('That session is no longer possible for everyone', undefined, {
+        duration: 3500,
+      });
+    }
+  }
+
   onAllDay(date: string, on: boolean): void {
     this.session.setAllDay(date, on);
   }
@@ -191,13 +240,7 @@ export class EventPage implements OnDestroy {
   finishStepper(): void {
     this.identity.setStepperDone(this.id());
     this.stepping.set(false);
-    if (this.hasAnySlots())
-      this.snack.open('Thanks, your times are in.', undefined, { duration: 3000 });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  startStepper(): void {
-    this.stepping.set(true);
+    if (this.hasAnySlots()) this.snack.open("You're in. Nice one!", undefined, { duration: 3000 });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
