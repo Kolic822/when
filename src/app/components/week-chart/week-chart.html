@@ -21,7 +21,7 @@
 
 <div
   class="chart"
-  [style.--head-h]="showMonth() ? '70px' : '52px'"
+  [style.--head-h]="showMonth() ? '58px' : '44px'"
   [style.--days]="days().length"
   [style.--visible]="visibleCount()"
   [style.--hours]="range().hours"
@@ -140,14 +140,7 @@
   </div>
 </div>
 
-@if (overflows()) {
-  <div class="toolbar">
-    <span class="scroll-hint muted" [class.done]="scrolledToEnd()" aria-live="polite">
-      <mat-icon>swipe</mat-icon>
-      {{ scrolledToEnd() ? 'All days shown' : 'Scroll for more days' }}
-      @if (!scrolledToEnd()) {
-        <mat-icon class="arrow">arrow_forward</mat-icon>
-      }
-    </span>
-  </div>
+@if (overflows() && !scrolledToEnd()) {
+  <span class="more-days" aria-hidden="true"><mat-icon>chevron_right</mat-icon></span>
+  <span class="sr-only" aria-live="polite">Scroll sideways for more days</span>
 }

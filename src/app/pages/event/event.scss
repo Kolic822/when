@@ -1,14 +1,16 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 
   /* Day view: fill the screen exactly, no page scroll; the picker stretches to the buttons. */
   &.dayview {
-    height: 100dvh;
+    /* Pinned to the real edges of the screen: 100dvh is unreliable in an installed iOS app. */
+    position: fixed;
+    inset: 0;
     overflow: hidden;
     gap: 8px;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
 
     app-day-stepper {
       flex: 1;

@@ -197,7 +197,9 @@ h3 {
   max-width: 960px;
   margin: 0 auto;
   padding: 16px;
-  padding-bottom: 48px;
+  /* Installed on a phone: stay clear of the status bar and the home indicator. */
+  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 48px);
 }
 
 /* Cards float on soft shadow in light mode and get a hairline in dark mode. */
@@ -211,8 +213,9 @@ h3 {
 
 @media (max-width: 600px) {
   .page {
-    padding: 12px;
-    padding-bottom: 40px;
+    padding: 8px 12px;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
   }
   .card {
     padding: 12px;

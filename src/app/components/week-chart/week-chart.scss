@@ -1,7 +1,8 @@
 :host {
   display: block;
+  position: relative;
   --hour-px: 22px;
-  --head-h: 52px;
+  --head-h: 44px;
   /* Short day ranges still get a usable bar. */
   --bar-min: 380px;
 }
@@ -86,9 +87,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 2px;
-  padding-bottom: 10px;
-  line-height: 1.1;
+  gap: 0;
+  padding-bottom: 6px;
+  line-height: 1.05;
 
   .wd {
     font-size: 12px;
@@ -100,9 +101,9 @@
     font-family: var(--font-display);
     font-size: 16px;
     font-weight: 600;
-    min-width: 26px;
-    height: 26px;
-    line-height: 26px;
+    min-width: 24px;
+    height: 22px;
+    line-height: 22px;
     border-radius: 999px;
     text-align: center;
 
@@ -403,4 +404,37 @@
   50% {
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent);
   }
+}
+
+/* More days to the right: a quiet arrow on the edge instead of a line of text. */
+.more-days {
+  position: absolute;
+  top: 50%;
+  margin-top: -22px;
+  right: -6px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--when-surface);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  color: var(--accent);
+  pointer-events: none;
+  animation: nudge 1.2s ease-in-out infinite;
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }

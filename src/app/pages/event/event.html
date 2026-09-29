@@ -214,10 +214,6 @@
           />
         } @else {
           <section class="card chart">
-            <p class="hint muted">
-              <mat-icon>touch_app</mat-icon>
-              Tap a day to add a time slot
-            </p>
             @if (features().connect && meId()) {
               @if (fillAsking()) {
                 <div class="fill ask" role="group" aria-label="Fill from my calendar">
