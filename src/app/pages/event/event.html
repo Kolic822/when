@@ -218,6 +218,31 @@
               <mat-icon>touch_app</mat-icon>
               Tap a day to add a time slot
             </p>
+            @if (features().connect && meId()) {
+              @if (fillAsking()) {
+                <div class="fill ask" role="group" aria-label="Fill from my calendar">
+                  <span class="muted">You already marked some times.</span>
+                  <span class="fill-acts">
+                    <button type="button" class="pill small" (click)="fillAsking.set(false)">
+                      Cancel
+                    </button>
+                    <button type="button" class="pill small" (click)="fillFromCalendar('replace')">
+                      Replace
+                    </button>
+                    <button type="button" class="pill small go" (click)="fillFromCalendar('add')">
+                      Add to them
+                    </button>
+                  </span>
+                </div>
+              } @else {
+                <div class="fill">
+                  <button type="button" class="pill small go" (click)="fillFromCalendar()">
+                    <mat-icon>auto_awesome</mat-icon>
+                    Fill from my calendar
+                  </button>
+                </div>
+              }
+            }
             <app-week-chart
               [event]="event()!"
               [meId]="meId()"

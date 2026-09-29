@@ -335,7 +335,7 @@
   right: 0;
   overflow: hidden;
   border-radius: 6px;
-  border-left: 3px solid var(--when-muted);
+  border-right: 3px solid var(--when-muted);
   background: repeating-linear-gradient(
     135deg,
     color-mix(in srgb, var(--when-muted) 22%, transparent) 0 6px,

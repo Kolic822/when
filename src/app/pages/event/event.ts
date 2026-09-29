@@ -39,6 +39,8 @@ import { Booked } from '../../components/booked/booked';
 import { History } from '../../components/history/history';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
+import { freeAround, sampleBusy } from '../../core/busy';
+import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
 
@@ -191,6 +193,41 @@ export class EventPage implements OnDestroy {
     if (!ok)
       this.snack.open('Only the organiser can book a session', undefined, { duration: 3000 });
     else if (session) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** Asking whether to add to or replace what is already marked. */
+  readonly fillAsking = signal(false);
+
+  /** Pro preview: marks me free in every gap around my calendar events. */
+  fillFromCalendar(mode?: 'add' | 'replace'): void {
+    const ev = this.event();
+    const before = this.me()?.slots ?? [];
+    if (!ev) return;
+    if (before.length && !mode) {
+      this.fillAsking.set(true);
+      return;
+    }
+    this.fillAsking.set(false);
+    const minLength = ev.partialOk ? 15 : ev.durationHours * 60;
+    const found = ev.dates.flatMap((date) =>
+      freeAround(sampleBusy(date, ev.dayStart, ev.dayEnd), ev.dayStart, ev.dayEnd, minLength).map(
+        (gap) => ({ date, ...gap }),
+      ),
+    );
+    const days = new Set(found.map((s) => s.date)).size;
+    if (!found.length) {
+      this.snack.open('Your calendar leaves no gap long enough', undefined, this.toastOpts(3500));
+      return;
+    }
+    this.session.setSlots(mergeSlots(mode === 'add' ? [...before, ...found] : found));
+    this.snack
+      .open(
+        `Filled ${days} ${days === 1 ? 'day' : 'days'} from your calendar`,
+        'Undo',
+        this.toastOpts(5000),
+      )
+      .onAction()
+      .subscribe(() => this.session.setSlots(before));
   }
 
   /** From the answer card: open that session so the organiser can choose the start. */

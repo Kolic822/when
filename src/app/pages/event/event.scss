@@ -178,3 +178,33 @@
     margin: 0 0 20px;
   }
 }
+
+/* Pro preview: fill my free time from the calendar. */
+.fill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-size: 13px;
+
+  .small {
+    height: 34px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+  .go {
+    background: var(--accent);
+    color: #fff;
+  }
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.fill-acts {
+  display: flex;
+  gap: 6px;
+}

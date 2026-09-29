@@ -36,3 +36,36 @@ export function sampleBusy(date: string, dayStart: number, dayEnd: number): Busy
     .map((b) => ({ ...b, start: Math.max(b.start, dayStart), end: Math.min(b.end, dayEnd) }))
     .filter((b) => b.end > b.start);
 }
+
+const STEP = 15;
+
+/**
+ * Free time on a day: the gaps around calendar events inside the visible hours.
+ * Gaps shorter than `minLength` are left out, since they cannot hold the meetup.
+ * `buffer` keeps that many minutes clear before and after each event.
+ */
+export function freeAround(
+  busy: { start: number; end: number }[],
+  dayStart: number,
+  dayEnd: number,
+  minLength: number,
+  buffer = 0,
+): { start: number; end: number }[] {
+  const blocks = busy
+    .map((b) => ({ start: b.start - buffer, end: b.end + buffer }))
+    .filter((b) => b.end > dayStart && b.start < dayEnd)
+    .sort((a, b) => a.start - b.start);
+  const gaps: { start: number; end: number }[] = [];
+  let cursor = dayStart;
+  for (const b of blocks) {
+    if (b.start > cursor) gaps.push({ start: cursor, end: b.start });
+    cursor = Math.max(cursor, b.end);
+  }
+  if (cursor < dayEnd) gaps.push({ start: cursor, end: dayEnd });
+  return gaps
+    .map((g) => ({
+      start: Math.ceil(g.start / STEP) * STEP,
+      end: Math.floor(g.end / STEP) * STEP,
+    }))
+    .filter((g) => g.end - g.start >= minLength);
+}

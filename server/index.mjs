@@ -111,6 +111,29 @@ for (const ev of store.all()) {
   }
 }
 
+// ---- Abuse protection: a public address needs a cap on how fast anyone can create things.
+app.set('trust proxy', 1); // behind the host's proxy, so req.ip is the visitor
+const hits = new Map(); // ip -> timestamps of recent writes
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_WRITES = 40;
+function limitWrites(req, res, next) {
+  const now = Date.now();
+  const recent = (hits.get(req.ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= MAX_WRITES) {
+    return res.status(429).json({ error: 'too_many_requests' });
+  }
+  recent.push(now);
+  hits.set(req.ip, recent);
+  next();
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, times] of hits) {
+    if (!times.some((t) => now - t < WINDOW_MS)) hits.delete(ip);
+  }
+}, WINDOW_MS).unref();
+app.post(/^\/api\//, limitWrites);
+
 app.post('/api/events', (req, res) => {
   const body = req.body ?? {};
   const title = String(body.title ?? '').trim().slice(0, 80) || 'Meetup';
