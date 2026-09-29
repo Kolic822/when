@@ -36,6 +36,7 @@ import { DayPicker } from '../../components/day-picker/day-picker';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
 import { Booked } from '../../components/booked/booked';
+import { Notify } from '../../components/notify/notify';
 import { History } from '../../components/history/history';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
@@ -63,6 +64,7 @@ import { DURATIONS } from '../home/durations';
     AppMenu,
     DayStepper,
     Booked,
+    Notify,
     AnswerCard,
     History,
     MatSlideToggleModule,

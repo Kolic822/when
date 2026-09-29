@@ -6,6 +6,7 @@ import path from 'node:path';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { Store } from './store.mjs';
+import { cleanSubscription, createPush } from './push.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Hosting platforms set PORT; locally API_PORT keeps the API off the Angular dev server's port.
@@ -93,7 +94,8 @@ function recordSlotChanges(ev, p, before, after) {
 }
 
 function publicEvent(ev) {
-  const { creatorToken, ...rest } = ev;
+  // The organiser's token and people's push subscriptions never leave the server.
+  const { creatorToken, push, ...rest } = ev;
   return rest;
 }
 
@@ -104,6 +106,7 @@ for (const ev of store.all()) {
   ev.partialOk ??= false;
   ev.booked ??= null;
   ev.shortlists ??= [];
+  ev.push ??= [];
   if (ev.dayStart === undefined || ev.dayEnd === undefined) {
     [ev.dayStart, ev.dayEnd] = cleanRange(ev.dayStart, ev.dayEnd);
     for (const p of ev.participants) p.slots = sanitizeSlots(ev, p.slots);
@@ -160,6 +163,7 @@ app.post('/api/events', (req, res) => {
     history: [],
     booked: null,
     shortlists: [],
+    push: [],
     createdAt: new Date().toISOString(),
     creatorToken: randomUUID(),
   };
@@ -199,6 +203,61 @@ app.delete('/api/events/:id/participants/:pid', (req, res) => {
   }
   broadcast(ev.id);
   broadcastPresence(ev.id);
+  res.status(204).end();
+});
+
+// ---- Push notifications
+const DATA_FILE = process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json');
+const push = createPush(DATA_FILE);
+const MAX_SUBSCRIPTIONS = 60;
+
+/** Notifies the people of a When who asked for it; `pick` chooses who. */
+async function notify(ev, pick, message) {
+  const targets = (ev.push ?? []).filter(pick);
+  if (!targets.length) return;
+  const gone = await push.send(
+    targets.map((t) => t.sub),
+    { ...message, url: `/e/${ev.id}` },
+  );
+  if (gone.length) {
+    ev.push = ev.push.filter((t) => !gone.includes(t.sub.endpoint));
+    store.set(ev);
+  }
+}
+
+function sessionText(s) {
+  const d = new Date(`${s.date}T00:00:00`);
+  const day = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  return `${day}, ${fmt(s.start)} – ${fmt(s.end)}`;
+}
+
+app.get('/api/push/key', (_req, res) => res.json({ publicKey: push.publicKey }));
+
+/** This browser wants notifications for this When. */
+app.post('/api/events/:id/push', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const sub = cleanSubscription(req.body?.subscription);
+  if (!sub) return res.status(400).json({ error: 'bad_subscription' });
+  const participantId = ev.participants.some((p) => p.id === req.body?.participantId)
+    ? req.body.participantId
+    : null;
+  const organiser = !!req.body?.creatorToken && req.body.creatorToken === ev.creatorToken;
+  if (!participantId && !organiser) return res.status(403).json({ error: 'forbidden' });
+  ev.push = (ev.push ?? []).filter((t) => t.sub.endpoint !== sub.endpoint);
+  if (ev.push.length >= MAX_SUBSCRIPTIONS) return res.status(409).json({ error: 'too_many' });
+  ev.push.push({ participantId, organiser, sub });
+  store.set(ev);
+  res.status(201).json({ ok: true });
+});
+
+/** This browser no longer wants them. */
+app.delete('/api/events/:id/push', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const endpoint = String(req.body?.endpoint ?? '');
+  ev.push = (ev.push ?? []).filter((t) => t.sub.endpoint !== endpoint);
+  store.set(ev);
   res.status(204).end();
 });
 
@@ -279,6 +338,11 @@ app.post('/api/shortlists/:sid/answers', (req, res) => {
   else list.answers.push(answer);
   store.set(ev);
   broadcast(ev.id);
+  const chosen = picks.map((p) => sessionText(list.sessions[p])).join('; ');
+  void notify(ev, (t) => t.organiser, {
+    title: `${name} answered · ${ev.title}`,
+    body: picks.length ? `Works for them: ${chosen}` : 'None of the sessions work for them.',
+  });
   res.status(201).json(answer);
 });
 
@@ -458,7 +522,15 @@ wss.on('connection', (ws, req) => {
         if (typeof patch.title === 'string' && patch.title.trim()) ev.title = patch.title.trim().slice(0, 80);
         if (typeof patch.description === 'string') ev.description = cleanDescription(patch.description);
         if (typeof patch.partialOk === 'boolean') ev.partialOk = patch.partialOk;
+        const bookedBefore = JSON.stringify(ev.booked ?? null);
         if (patch.booked !== undefined) ev.booked = cleanSession(patch.booked);
+        if (ev.booked && JSON.stringify(ev.booked) !== bookedBefore) {
+          // Everyone but the person who just booked it.
+          void notify(ev, (t) => !t.participantId || t.participantId !== ws.participantId, {
+            title: `${ev.title} is booked`,
+            body: sessionText(ev.booked),
+          });
+        }
         if (patch.dayStart !== undefined || patch.dayEnd !== undefined) {
           [ev.dayStart, ev.dayEnd] = cleanRange(patch.dayStart ?? ev.dayStart, patch.dayEnd ?? ev.dayEnd, ev.dayStart, ev.dayEnd);
         }
