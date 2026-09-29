@@ -1,5 +1,6 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { ClientMessage, EventPatch, MeetEvent, ServerMessage, Slot } from './models';
+import { Auth } from './auth';
 import { Identity } from './identity';
 import { mergeSlots } from './availability';
 
@@ -12,6 +13,7 @@ export type ConnectionStatus = 'connecting' | 'online' | 'offline';
 @Service()
 export class EventSession {
   private readonly identity = inject(Identity);
+  private readonly auth = inject(Auth);
 
   readonly event = signal<MeetEvent | null>(null);
   readonly meId = signal<string | null>(null);
@@ -45,6 +47,8 @@ export class EventSession {
     this.online.set(new Set());
     this.meId.set(this.identity.get(eventId)?.id ?? null);
     this.pendingName = this.identity.takePendingName(eventId);
+    // Signed in with Google: join under that name straight away instead of asking.
+    if (!this.pendingName && !this.meId() && this.auth.name()) this.pendingName = this.auth.name();
     this.open();
   }
 

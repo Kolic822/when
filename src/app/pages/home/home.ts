@@ -9,6 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventApi } from '../../core/event-api';
 import { Identity } from '../../core/identity';
 import { PrefsStore } from '../../core/prefs';
+import { Auth } from '../../core/auth';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { DURATIONS } from './durations';
 import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
@@ -56,7 +57,7 @@ export class Home {
   readonly model = signal<CreateModel>({
     title: '',
     description: '',
-    name: '',
+    name: inject(Auth).name(),
     durationHours: this.prefs.durationHours,
     dayStart: this.prefs.dayStart,
     dayEnd: this.prefs.dayEnd,

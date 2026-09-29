@@ -18,6 +18,24 @@
       </button>
     </header>
 
+    <div class="account">
+      @if (auth.user(); as u) {
+        @if (u.kind === 'google') {
+          <span class="who">
+            <span class="name">{{ u.name }}</span>
+            <span class="muted small">{{ u.email }}</span>
+          </span>
+          <button type="button" class="pill small-pill" (click)="signOut()">Sign out</button>
+        } @else {
+          <span class="who">
+            <span class="name">Guest</span>
+            <span class="muted small">Your Whens are kept on this device</span>
+          </span>
+          <button type="button" class="pill small-pill" (click)="signIn()">Sign in</button>
+        }
+      }
+    </div>
+
     <section>
       <h2>
         <button

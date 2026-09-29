@@ -206,6 +206,38 @@ app.delete('/api/events/:id/participants/:pid', (req, res) => {
   res.status(204).end();
 });
 
+// ---- Signing in with Google
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? '';
+
+/** What the app needs to know before it starts; empty client id means guests only. */
+app.get('/api/config', (_req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID }));
+
+/** Checks the token Google gave the browser and returns the person's name. */
+app.post('/api/auth/google', async (req, res) => {
+  if (!GOOGLE_CLIENT_ID) return res.status(503).json({ error: 'not_configured' });
+  const credential = String(req.body?.credential ?? '');
+  if (!credential || credential.length > 4096) return res.status(400).json({ error: 'bad_token' });
+  try {
+    const check = await fetch(
+      `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`,
+    );
+    if (!check.ok) return res.status(401).json({ error: 'invalid_token' });
+    const info = await check.json();
+    const issuer = ['accounts.google.com', 'https://accounts.google.com'].includes(info.iss);
+    const fresh = Number(info.exp) * 1000 > Date.now();
+    if (info.aud !== GOOGLE_CLIENT_ID || !issuer || !fresh) {
+      return res.status(401).json({ error: 'invalid_token' });
+    }
+    res.json({
+      name: cleanName(info.given_name || info.name || String(info.email ?? '').split('@')[0]),
+      email: String(info.email ?? ''),
+      picture: String(info.picture ?? ''),
+    });
+  } catch {
+    res.status(502).json({ error: 'google_unreachable' });
+  }
+});
+
 // ---- Push notifications
 const DATA_FILE = process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json');
 const push = createPush(DATA_FILE);

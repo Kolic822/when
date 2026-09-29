@@ -1,0 +1,42 @@
+<main class="page welcome">
+  <div class="art" aria-hidden="true">
+    <span class="bar a"></span>
+    <span class="bar b"></span>
+    <span class="bar c"></span>
+    <span class="gold"></span>
+  </div>
+
+  <h1 class="brand">When <span class="tagline">are you free?</span></h1>
+  <p class="lead muted">Pick some days, share the link, find a time that works for everyone.</p>
+
+  <div class="choices">
+    <div class="google">
+      <div #google class="google-button"></div>
+      @if (!auth.checked()) {
+        <span class="placeholder"><mat-spinner diameter="20" /></span>
+      } @else if (!auth.googleReady()) {
+        <button type="button" class="pill soon" disabled>
+          <mat-icon>account_circle</mat-icon>
+          Continue with Google
+          <span class="tag">soon</span>
+        </button>
+      }
+    </div>
+    @if (failed()) {
+      <p class="error" role="alert">
+        Google sign-in didn't work. Try again, or carry on as a guest.
+      </p>
+    }
+
+    <div class="or muted" aria-hidden="true"><span>or</span></div>
+
+    <button type="button" class="pill guest" (click)="guest()">
+      Continue as guest
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+
+  <p class="small muted">
+    Guests type a name for each When. With Google, your name is filled in for you.
+  </p>
+</main>

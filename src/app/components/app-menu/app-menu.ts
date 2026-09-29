@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { Auth } from '../../core/auth';
 import { Identity, RecentMeetup } from '../../core/identity';
 import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -40,6 +41,18 @@ export class AppMenu {
   private readonly router = inject(Router);
   readonly store = inject(PrefsStore);
   readonly updates = inject(Updates);
+  readonly auth = inject(Auth);
+
+  signOut(): void {
+    this.auth.signOut();
+    this.close();
+    void this.router.navigate(['/welcome']);
+  }
+
+  signIn(): void {
+    this.close();
+    void this.router.navigate(['/welcome'], { queryParams: { next: this.router.url } });
+  }
   private readonly howTo = inject(HowToState);
 
   showHowTo(): void {
