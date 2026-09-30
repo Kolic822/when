@@ -182,7 +182,7 @@
           (click)="toggleSection('dates')"
           [attr.aria-expanded]="!isFolded('dates')"
         >
-          <span>Date format</span>
+          <span>Date and time</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
@@ -202,6 +202,15 @@
               </button>
             }
           </div>
+          <label class="pick-when zone-pick">
+            <span class="muted small">Time zone</span>
+            <select aria-label="Time zone" (change)="setZone($any($event.target).value)">
+              <option value="" [selected]="!zoneOverride()">Automatic ({{ deviceCity }})</option>
+              @for (z of zones; track z) {
+                <option [value]="z" [selected]="z === zoneOverride()">{{ z }}</option>
+              }
+            </select>
+          </label>
         </div>
       }
     </section>
@@ -285,7 +294,7 @@
                 </select>
               </label>
               @if (historyEntries(); as entries) {
-                <app-history bare [entries]="entries" [meId]="historyMe()" />
+                <app-history bare [entries]="entries" [meId]="historyMe()" [zone]="historyZone()" />
               } @else {
                 <p class="muted small">Loading…</p>
               }

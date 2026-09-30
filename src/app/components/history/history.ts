@@ -10,6 +10,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { HistoryEntry } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 interface Row {
   id: string;
@@ -131,6 +132,8 @@ interface Row {
 export class History {
   readonly entries = input.required<HistoryEntry[]>();
   readonly meId = input<string | null>(null);
+  /** Zone of the When this history belongs to. */
+  readonly zone = input<string | null>(null);
   /** Just the list, for use inside another panel such as the menu. */
   readonly bare = input(false, { transform: booleanAttribute });
 
@@ -148,17 +151,17 @@ export class History {
       id: e.id,
       color: e.color ?? '#9ca3af',
       name: e.participantId && e.participantId === this.meId() ? 'You' : e.name,
-      text: describe(e),
+      text: describe(e, this.zone()),
       when: relative(e.at, now),
     }));
   });
 }
 
-function describe(e: HistoryEntry): string {
+function describe(e: HistoryEntry, zone: string | null): string {
   const day = e.date ? shortDate(e.date) : '';
   const span =
     e.start !== undefined && e.end !== undefined
-      ? `${formatMinutes(e.start)} – ${formatMinutes(e.end)}`
+      ? spanAt(e.date ?? '', e.start, e.end, e.date ? zone : null)
       : '';
   switch (e.kind) {
     case 'joined':

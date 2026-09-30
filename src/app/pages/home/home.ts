@@ -10,6 +10,7 @@ import { EventApi } from '../../core/event-api';
 import { Identity } from '../../core/identity';
 import { PrefsStore } from '../../core/prefs';
 import { Auth } from '../../core/auth';
+import { viewerZone, zoneCity } from '../../core/zone';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { DURATIONS } from './durations';
 import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
@@ -82,6 +83,9 @@ export class Home {
   /** 1: what and who. 2: which days and how long. */
   readonly step = signal<1 | 2>(1);
 
+  /** The hours are in the organiser's own zone; people elsewhere see them converted. */
+  readonly zoneName = computed(() => zoneCity(viewerZone()));
+
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
 
@@ -114,6 +118,7 @@ export class Home {
         dayStart: m.dayStart,
         dayEnd: m.dayEnd,
         partialOk: m.partialOk,
+        timeZone: viewerZone(),
       });
       this.identity.setCreatorToken(created.id, creatorToken);
       this.identity.setPendingName(created.id, m.name.trim());

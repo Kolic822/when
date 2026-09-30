@@ -53,6 +53,17 @@ function cleanRange(start, end, fallbackStart = DEFAULT_DAY_START, fallbackEnd =
 const cleanDates = (list) =>
   Array.isArray(list) ? [...new Set(list.filter(isDateKey))].sort().slice(0, 60) : [];
 
+/** An IANA zone name the runtime knows, or null. */
+function cleanZone(zone) {
+  if (typeof zone !== 'string' || zone.length > 64) return null;
+  try {
+    new Intl.DateTimeFormat('en-GB', { timeZone: zone });
+    return zone;
+  } catch {
+    return null;
+  }
+}
+
 function shortId() {
   // 8 url-safe chars, easy to read aloud
   return randomBytes(6).toString('base64url').replace(/[-_]/g, 'x').slice(0, 8);
@@ -146,6 +157,7 @@ app.post('/api/events', (req, res) => {
   if (dates.length === 0) return res.status(400).json({ error: 'no_dates' });
   const [dayStart, dayEnd] = cleanRange(body.dayStart, body.dayEnd);
   const partialOk = body.partialOk === true;
+  const timeZone = cleanZone(body.timeZone);
   const durationHours = Math.min((dayEnd - dayStart) / 60, Math.max(0.5, Number(body.durationHours) || 3));
 
   let id = shortId();
@@ -160,6 +172,7 @@ app.post('/api/events', (req, res) => {
     dayStart,
     dayEnd,
     partialOk,
+    timeZone,
     participants: [],
     history: [],
     booked: null,
@@ -287,11 +300,24 @@ const MAX_SUBSCRIPTIONS = 60;
 async function notify(ev, pick, message) {
   const targets = (ev.push ?? []).filter(pick);
   if (!targets.length) return;
-  if (process.env.PUSH_DEBUG) console.log('notify', targets.map((t) => t.sub.endpoint.split('/').pop()), JSON.stringify(message));
-  const gone = await push.send(
-    targets.map((t) => t.sub),
-    { ...message, url: `/e/${ev.id}` },
-  );
+  if (process.env.PUSH_DEBUG) {
+    for (const t of targets) {
+      const text = typeof message === 'function' ? message((s) => sessionText(s, ev.timeZone, t.timeZone)) : message;
+      console.log('notify', t.sub.endpoint.split('/').pop(), t.timeZone ?? '-', JSON.stringify(text));
+    }
+  }
+  // Times are written in each recipient's own zone, so send one batch per zone.
+  const zones = [...new Set(targets.map((t) => t.timeZone ?? null))];
+  const gone = [];
+  for (const zone of zones) {
+    const text = typeof message === 'function' ? message((s) => sessionText(s, ev.timeZone, zone)) : message;
+    gone.push(
+      ...(await push.send(
+        targets.filter((t) => (t.timeZone ?? null) === zone).map((t) => t.sub),
+        { ...text, url: `/e/${ev.id}` },
+      )),
+    );
+  }
   if (gone.length) {
     ev.push = ev.push.filter((t) => !gone.includes(t.sub.endpoint));
     store.set(ev);
@@ -315,10 +341,27 @@ function findCommonCount(ev) {
   return count;
 }
 
-function sessionText(s) {
-  const d = new Date(`${s.date}T00:00:00`);
-  const day = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-  return `${day}, ${fmt(s.start)} – ${fmt(s.end)}`;
+/** Minutes a zone is ahead of UTC on that day (at noon). */
+function zoneOffset(zone, date) {
+  const at = new Date(`${date}T12:00:00Z`);
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: zone, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+  }).formatToParts(at);
+  const n = (type) => Number(parts.find((p) => p.type === type)?.value);
+  return Math.round((Date.UTC(n('year'), n('month') - 1, n('day'), n('hour'), n('minute')) - at.getTime()) / 60_000);
+}
+
+/** "Wed 7 Oct, 10:00 – 13:00", converted from the When's zone to the reader's when both are known. */
+function sessionText(s, from = null, to = null) {
+  const shift = from && to && from !== to ? zoneOffset(to, s.date) - zoneOffset(from, s.date) : 0;
+  const start = s.start + shift;
+  const days = Math.floor(start / 1440);
+  const d = new Date(`${s.date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  const day = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+  const wrap = (m) => ((m % 1440) + 1440) % 1440;
+  const end = s.end + shift - days * 1440;
+  return `${day}, ${fmt(wrap(start))} – ${end === 1440 ? '24:00' : fmt(wrap(end))}`;
 }
 
 app.get('/api/push/key', (_req, res) => res.json({ publicKey: push.publicKey }));
@@ -336,7 +379,7 @@ app.post('/api/events/:id/push', (req, res) => {
   if (!participantId && !organiser) return res.status(403).json({ error: 'forbidden' });
   ev.push = (ev.push ?? []).filter((t) => t.sub.endpoint !== sub.endpoint);
   if (ev.push.length >= MAX_SUBSCRIPTIONS) return res.status(409).json({ error: 'too_many' });
-  ev.push.push({ participantId, organiser, sub });
+  ev.push.push({ participantId, organiser, sub, timeZone: cleanZone(req.body?.timeZone) });
   store.set(ev);
   res.status(201).json({ ok: true });
 });
@@ -411,6 +454,7 @@ app.get('/api/shortlists/:sid', (req, res) => {
     mode: list.mode,
     sessions: list.sessions,
     minutes: list.minutes ?? Math.round(ev.durationHours * 60),
+    timeZone: ev.timeZone ?? null,
     title: ev.title,
     description: ev.description ?? '',
     booked: ev.booked ?? null,
@@ -443,12 +487,13 @@ app.post('/api/shortlists/:sid/answers', (req, res) => {
   else list.answers.push(answer);
   store.set(ev);
   broadcast(ev.id);
-  const chosen = picks.map((p) => sessionText(list.sessions[p])).join('; ');
   const withdrew = previous?.picks.length && !picks.length;
-  void notify(ev, (t) => t.organiser, {
+  void notify(ev, (t) => t.organiser, (text) => ({
     title: `${name} ${withdrew ? 'withdrew their answer' : previous ? 'changed their answer' : 'answered'} · ${ev.title}`,
-    body: picks.length ? `Works for them: ${chosen}` : 'None of the sessions work for them.',
-  });
+    body: picks.length
+      ? `Works for them: ${picks.map((p) => text(list.sessions[p])).join('; ')}`
+      : 'None of the sessions work for them.',
+  }));
   res.status(201).json(answer);
 });
 
@@ -660,16 +705,16 @@ wss.on('connection', (ws, req) => {
           // Everyone but the organiser, who just did it.
           const others = (t) => !t.organiser && t.participantId !== ws.participantId;
           if (added.length === 1 && removed.length === 1) {
-            void notify(ev, others, { title: `${ev.title} moved`, body: `Now ${sessionText(added[0])}` });
+            void notify(ev, others, (text) => ({ title: `${ev.title} moved`, body: `Now ${text(added[0])}` }));
           } else if (added.length) {
-            void notify(ev, others, {
+            void notify(ev, others, (text) => ({
               title: before.length ? `${ev.title}: another session booked` : `${ev.title} is booked`,
-              body: added.map(sessionText).join('; '),
-            });
+              body: added.map(text).join('; '),
+            }));
           } else if (!ev.bookings.length) {
             void notify(ev, others, { title: `${ev.title} is no longer booked`, body: 'The organiser cancelled the session.' });
           } else {
-            void notify(ev, others, { title: `${ev.title}: a session was cancelled`, body: removed.map(sessionText).join('; ') });
+            void notify(ev, others, (text) => ({ title: `${ev.title}: a session was cancelled`, body: removed.map(text).join('; ') }));
           }
         }
         if (patch.dayStart !== undefined || patch.dayEnd !== undefined) {

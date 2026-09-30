@@ -2,6 +2,7 @@ import { Component, computed, input, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Session, Shortlist } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 export interface Verdict {
   /** Who answered, e.g. "Mia and Zed". */
@@ -43,8 +44,8 @@ export interface Verdict {
           @if (v.window; as w) {
             <button type="button" class="pill book-full" (click)="book.emit(w)">
               Book
-              <span class="d">{{ day(w.date) }}</span>
-              <span class="t">{{ fmt(w.start) }} – {{ fmt(w.end) }}</span>
+              <span class="d">{{ day(w) }}</span>
+              <span class="t">{{ span(w) }}</span>
               <mat-icon>check</mat-icon>
             </button>
           } @else if (v.session; as s) {
@@ -164,8 +165,8 @@ export class AnswerCard {
 
   private readonly dismissed = signal<Set<string>>(loadDismissed());
 
-  fmt = formatMinutes;
-  day = shortDate;
+  day = (s: Session) => shortDate(dayOf(s.date, s.start));
+  span = (s: Session) => spanAt(s.date, s.start, s.end);
 
   private readonly latest = computed(() => latestVerdict(this.shortlists(), this.minutes()));
   readonly verdict = computed(() => {
@@ -229,7 +230,7 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
   );
   const fixed = session.end - session.start <= len;
   const start = fixed ? session.start : starts.size === 1 ? [...starts][0] : null;
-  const day = shortDate(session.date);
+  const day = shortDate(dayOf(session.date, session.start));
 
   if (start !== null) {
     return {
@@ -244,7 +245,7 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
   return {
     stamp,
     names,
-    headline: `${names} ${verb} ${day} · ${formatMinutes(session.start)} – ${formatMinutes(session.end)}`,
+    headline: `${names} ${verb} ${day} · ${spanAt(session.date, session.start, session.end)}`,
     detail: [
       starts.size > 1 ? 'They prefer different start times.' : 'Any start time suits.',
       counted,

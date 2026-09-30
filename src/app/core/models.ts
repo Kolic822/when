@@ -66,6 +66,7 @@ export interface ShortlistView {
   mode: 'one' | 'many';
   sessions: Session[];
   minutes: number;
+  timeZone?: string | null;
   title: string;
   description: string;
   booked: Session | null;
@@ -79,6 +80,8 @@ export interface MeetEvent {
   /** The days the organiser put up for selection (sorted YYYY-MM-DD keys). */
   dates: string[];
   durationHours: number;
+  /** IANA zone the times are in (the organiser's); absent on Whens from before zones were stored. */
+  timeZone?: string | null;
   /** Earliest / latest time of day people can pick, minutes from midnight (e.g. 480–1380). */
   dayStart: number;
   dayEnd: number;
@@ -105,6 +108,7 @@ export interface CreateEventPayload {
   dayStart: number;
   dayEnd: number;
   partialOk: boolean;
+  timeZone: string;
 }
 
 export interface EventPatch {

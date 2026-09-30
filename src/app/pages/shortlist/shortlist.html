@@ -21,6 +21,8 @@
       </p>
     </header>
 
+    <app-zone-note [dates]="dates()" />
+
     <form (submit)="send($event)">
       <label class="name">
         <span class="muted">Your name</span>
@@ -83,7 +85,7 @@
                       [attr.aria-checked]="c.start === o"
                       (click)="setStart(i, o)"
                     >
-                      {{ fmt(o) }}
+                      {{ fmt(c.eventDate, o) }}
                     </button>
                   }
                 </div>

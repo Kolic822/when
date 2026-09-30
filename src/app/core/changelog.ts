@@ -5,9 +5,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.5.1';
+export const VERSION = '0.6';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.6',
+    date: '30 Sep 2026',
+    changes: [
+      'Time zones: a When keeps the organiser’s zone and everyone else sees their own time',
+      'A note at the top says whose time is shown, with one tap to switch',
+      'Pick your time zone by hand under Date and time in the menu',
+      'Calendar files and notifications use the right time for each person',
+    ],
+  },
   {
     version: '0.5.1',
     date: '30 Sep 2026',

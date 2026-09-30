@@ -120,11 +120,23 @@ export class Guide {
       ],
     },
     {
+      icon: 'public',
+      title: 'Time zones',
+      intro: 'A When keeps its times in the organiser’s time zone.',
+      steps: [
+        'If your clock is different, every time is shown converted to yours, and a note at the top says so.',
+        'Tap the button in that note to see the organiser’s time instead, and again to go back.',
+        'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.',
+        'Booked sessions, calendar files and notifications always use your own time and date.',
+        'Travelling, or planning for somewhere else? Choose a time zone under Date and time in the menu.',
+      ],
+    },
+    {
       icon: 'menu',
       title: 'The menu',
       steps: [
         'My Whens lists every When you created or joined on this device, with what is booked or possible.',
-        'Appearance changes the colours and light or dark mode. Date format switches between 30.9. and 30 Sep.',
+        'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.',
         'Defaults for new Whens pre-fills the length and hours when you plan the next one.',
         'App checks for a new version and shows what changed.',
       ],

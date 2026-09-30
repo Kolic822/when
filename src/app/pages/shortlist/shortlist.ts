@@ -6,6 +6,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EventApi } from '../../core/event-api';
 import { ShortlistView } from '../../core/models';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
+import { dayOf, eventZone, spanAt, timeAt } from '../../core/zone';
+import { ZoneNote } from '../../components/zone-note/zone-note';
 
 /**
  * What someone sees when they open a shortlist link: only the listed sessions.
@@ -13,7 +15,7 @@ import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core
  */
 @Component({
   selector: 'app-shortlist',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatProgressSpinnerModule, ZoneNote],
   templateUrl: './shortlist.html',
   styleUrl: './shortlist.scss',
 })
@@ -33,6 +35,7 @@ export class ShortlistPage {
   readonly sent = signal(false);
   readonly error = signal<string | null>(null);
 
+  readonly dates = computed(() => (this.list()?.sessions ?? []).map((s) => s.date));
   readonly single = computed(() => this.list()?.mode === 'one');
   readonly canSend = computed(() => this.name().trim().length > 0 && !this.busy());
   readonly cards = computed(() =>
@@ -44,26 +47,30 @@ export class ShortlistPage {
       if (room > 0) for (let t = s.start; t + len <= s.end; t += step) options.push(t);
       const start = this.starts()[i];
       return {
-        day: weekdayLong(s.date),
-        date: dayMonth(s.date),
-        time: `${formatMinutes(s.start)} – ${formatMinutes(s.end)}`,
+        day: weekdayLong(dayOf(s.date, s.start)),
+        date: dayMonth(dayOf(s.date, s.start)),
+        time: spanAt(s.date, s.start, s.end),
+        eventDate: s.date,
         /** Start times to choose from; empty when the session is exactly as long as needed. */
         options,
         start,
-        chosen:
-          start === undefined ? '' : `${formatMinutes(start)} – ${formatMinutes(start + len)}`,
+        chosen: start === undefined ? '' : spanAt(s.date, start, start + len),
       };
     }),
   );
   readonly lengthLabel = computed(() => formatDuration(this.list()?.minutes ?? 0));
-  fmt = formatMinutes;
+  fmt = (date: string, min: number) => timeAt(date, min);
 
   constructor() {
     effect(() => {
       const sid = this.sid();
       this.api
         .getShortlist(sid)
-        .then((l) => (l ? this.list.set(l) : this.missing.set(true)))
+        .then((l) => {
+          if (!l) return this.missing.set(true);
+          eventZone.set(l.timeZone ?? null);
+          this.list.set(l);
+        })
         .catch(() => this.missing.set(true));
     });
   }

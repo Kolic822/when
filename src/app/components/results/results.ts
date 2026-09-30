@@ -8,6 +8,7 @@ import { buildIcs, openInCalendar } from '../../core/calendar';
 import { CommonWindow, Session, Shortlist } from '../../core/models';
 import { Features, NO_FEATURES } from '../../core/prefs';
 import { formatDuration, formatMinutes, shortDate } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { AskPanel } from '../ask-panel/ask-panel';
 
 interface Row {
@@ -94,8 +95,8 @@ export class Results {
     );
     return ordered.map((w) => ({
       key: `${w.date}-${w.start}`,
-      day: shortDate(w.date),
-      time: `${formatMinutes(w.start)} – ${formatMinutes(w.end)}`,
+      day: shortDate(dayOf(w.date, w.start)),
+      time: spanAt(w.date, w.start, w.end),
       length: formatDuration(w.end - w.start),
       partial: w.partial?.length
         ? `${w.partial.join(', ')} can't stay the full ${this.durationLabel()}`
@@ -132,7 +133,7 @@ export class Results {
       mode: list.mode,
       answered: list.answers.length,
       rows: list.sessions.map((s, i) => ({
-        text: `${shortDate(s.date)} · ${formatMinutes(s.start)} – ${formatMinutes(s.end)}`,
+        text: `${shortDate(dayOf(s.date, s.start))} · ${spanAt(s.date, s.start, s.end)}`,
         yes: list.answers
           .filter((a) => a.picks.includes(i))
           .map((a) => {
@@ -140,10 +141,7 @@ export class Results {
             const len = Math.min(list.minutes ?? this.minutes(), s.end - s.start);
             return {
               name: a.name,
-              at:
-                start === undefined
-                  ? ''
-                  : `${formatMinutes(start)} – ${formatMinutes(start + len)}`,
+              at: start === undefined ? '' : spanAt(s.date, start, start + len),
             };
           }),
       })),
@@ -151,7 +149,8 @@ export class Results {
     })),
   );
 
-  fmt = formatMinutes;
+  /** A start time inside a session, in the viewer's time. */
+  startLabel = (r: Row, min: number) => timeAt(r.window.date, min);
 
   /** Start times in 30-minute steps (hourly when the window is long). */
   private startsIn(w: CommonWindow): number[] {
@@ -201,7 +200,7 @@ export class Results {
   chosen(r: Row): string {
     const start = this.startOf(r);
     const len = Math.min(this.minutes(), r.window.end - r.window.start);
-    return `${formatMinutes(start)} – ${formatMinutes(start + len)}`;
+    return spanAt(r.window.date, start, start + len);
   }
 
   pickStart(r: Row, start: number): void {

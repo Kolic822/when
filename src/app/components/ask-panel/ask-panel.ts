@@ -5,6 +5,7 @@ import { EventApi } from '../../core/event-api';
 import { Identity } from '../../core/identity';
 import { Session } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 /**
  * "Ask someone": the organiser picks which possible sessions to send and whether the
@@ -35,7 +36,7 @@ export class AskPanel {
   readonly picked = computed(() => this.chosen() ?? new Set(this.sessions().map((_, i) => i)));
 
   label(s: Session): string {
-    return `${shortDate(s.date)} · ${formatMinutes(s.start)} – ${formatMinutes(s.end)}`;
+    return `${shortDate(dayOf(s.date, s.start))} · ${spanAt(s.date, s.start, s.end)}`;
   }
 
   toggle(i: number): void {

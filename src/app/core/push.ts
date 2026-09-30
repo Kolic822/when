@@ -2,6 +2,7 @@ import { effect, inject, Service, signal } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
 import { Identity } from './identity';
+import { viewerZone } from './zone';
 
 /**
  * - `on` / `off`: notifications for this device, switched in the menu
@@ -105,6 +106,7 @@ export class Push {
         subscription: this.subscription.toJSON(),
         participantId,
         creatorToken,
+        timeZone: viewerZone(),
       }),
     }).catch(() => undefined);
   }

@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MeetEvent, Slot } from '../../core/models';
 import { dayMonth, formatMinutes, shortDate, weekdayLong } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { DayEditor } from '../day-editor/day-editor';
 
 /**
@@ -47,7 +48,7 @@ export class DayStepper {
   readonly copyTarget = signal<{ kind: 'day' } | { kind: 'slot'; slot: Slot } | null>(null);
 
   slotLabel(s: Slot): string {
-    return `${formatMinutes(s.start)} – ${formatMinutes(s.end)}`;
+    return `${timeAt(s.date, s.start)} – ${timeAt(s.date, s.end)}`;
   }
 
   // ---- Copy mode: pick target days in the side panel, confirm with the bottom buttons.

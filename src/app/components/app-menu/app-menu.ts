@@ -22,6 +22,14 @@ import {
   shortDate,
   toDateKey,
 } from '../../core/time';
+import {
+  dayOf,
+  deviceZone,
+  setZoneOverride,
+  spanAt,
+  zoneCity,
+  zoneOverride,
+} from '../../core/zone';
 import { EventApi } from '../../core/event-api';
 import { findCommonWindows } from '../../core/availability';
 import { DURATIONS } from '../../pages/home/durations';
@@ -50,6 +58,18 @@ export class AppMenu {
   readonly push = inject(Push);
   readonly pushFailed = signal(false);
 
+  // ---- Time zone: the device's own, or one picked by hand (travelling, or to try it out).
+  readonly deviceCity = zoneCity(deviceZone);
+  readonly zoneOverride = zoneOverride;
+  readonly zones: string[] = (
+    Intl as typeof Intl & { supportedValuesOf?: (key: string) => string[] }
+  ).supportedValuesOf?.('timeZone') ?? [deviceZone];
+
+  setZone(value: string): void {
+    setZoneOverride(value || null);
+    this.loadBest();
+  }
+
   readonly version = VERSION;
   readonly changelog = CHANGELOG;
   readonly showChanges = signal(false);
@@ -76,6 +96,7 @@ export class AppMenu {
   // ---- History (Pro preview): what happened in any of my Whens.
   readonly historyId = signal<string | null>(null);
   readonly historyEntries = signal<HistoryEntry[] | null>(null);
+  readonly historyZone = signal<string | null>(null);
   readonly historyMe = computed(() => {
     const id = this.historyId();
     return id ? (this.identity.get(id)?.id ?? null) : null;
@@ -86,7 +107,10 @@ export class AppMenu {
     this.historyEntries.set(null);
     try {
       const ev = await this.api.get(id);
-      if (this.historyId() === id) this.historyEntries.set(ev?.history ?? []);
+      if (this.historyId() === id) {
+        this.historyZone.set(ev?.timeZone ?? null);
+        this.historyEntries.set(ev?.history ?? []);
+      }
     } catch {
       if (this.historyId() === id) this.historyEntries.set([]);
     }
@@ -159,12 +183,13 @@ export class AppMenu {
         try {
           const ev = await this.api.get(m.id);
           const windows = ev ? findCommonWindows(ev).windows : [];
+          const zone = ev?.timeZone ?? null;
           const booked = ev?.bookings ?? (ev?.booked ? [ev.booked] : []);
           const w = booked[0] ?? windows[0] ?? null;
           const rest = (booked.length || windows.length) - 1;
           const more = rest > 0 ? ` +${rest} more` : '';
           const text = w
-            ? `${booked.length ? 'Booked · ' : ''}${shortDate(w.date)} · ${formatMinutes(w.start)} – ${formatMinutes(w.end)}${more}`
+            ? `${booked.length ? 'Booked · ' : ''}${shortDate(dayOf(w.date, w.start, zone))} · ${spanAt(w.date, w.start, w.end, zone)}${more}`
             : null;
           this.best.update((b) => ({ ...b, [m.id]: text }));
           if (ev && (ev.title !== m.title || ev.dates.join() !== m.dates.join())) {

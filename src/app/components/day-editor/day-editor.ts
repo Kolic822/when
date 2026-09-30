@@ -19,6 +19,7 @@ import { mergeSlots } from '../../core/availability';
 import { sampleBusy } from '../../core/busy';
 import { PrefsStore } from '../../core/prefs';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { CopyDays } from '../copy-days/copy-days';
 
 interface Interval {
@@ -57,7 +58,7 @@ export class DayEditor {
     const { dayStart, dayEnd } = this.event();
     return sampleBusy(this.date(), dayStart, dayEnd).map((b) => ({
       ...b,
-      label: `${b.title} · ${formatMinutes(b.start)} – ${formatMinutes(b.end)}`,
+      label: `${b.title} · ${spanAt(this.date(), b.start, b.end)}`,
     }));
   });
 
@@ -124,13 +125,13 @@ export class DayEditor {
     for (let m = start; m <= end; m += 60) {
       out.push({
         min: m,
-        label: formatMinutes(m),
+        label: timeAt(this.date(), m),
         top: this.pct(m),
         minor: (m / 60) % 3 !== 0 && m !== start && m !== end,
       });
     }
     if (out[out.length - 1].min !== end)
-      out.push({ min: end, label: formatMinutes(end), top: 100, minor: false });
+      out.push({ min: end, label: timeAt(this.date(), end), top: 100, minor: false });
     return out;
   });
 
@@ -213,7 +214,7 @@ export class DayEditor {
   /** Milliseconds the hint's progress bar takes to fill (hold length minus the hint delay). */
   readonly holdProgressMs = CREATE_HOLD_MS - HOLD_HINT_DELAY_MS;
 
-  fmt = formatMinutes;
+  fmt = (min: number) => timeAt(this.date(), min);
 
   constructor() {
     // While a gesture is active, stop the page from scrolling under the finger.
@@ -243,7 +244,7 @@ export class DayEditor {
   }
 
   label(iv: Interval): string {
-    return `${formatMinutes(iv.start)} – ${formatMinutes(iv.end)}`;
+    return `${timeAt(this.date(), iv.start)} – ${timeAt(this.date(), iv.end)}`;
   }
 
   othersBlocks(id: string): Interval[] {

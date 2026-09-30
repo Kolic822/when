@@ -1,4 +1,4 @@
-import { fromDateKey } from './time';
+import { toUtc } from './zone';
 
 export interface CalendarEntry {
   title: string;
@@ -16,13 +16,6 @@ function toUtcStamp(d: Date): string {
     `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T` +
     `${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`
   );
-}
-
-function localDateTime(date: string, minutes: number): Date {
-  const d = fromDateKey(date);
-  d.setHours(0, 0, 0, 0);
-  d.setMinutes(minutes);
-  return d;
 }
 
 /** Escapes text for an iCalendar property value. */
@@ -54,8 +47,8 @@ export function buildIcs(entry: CalendarEntry): string {
     'BEGIN:VEVENT',
     `UID:${uid}`,
     `DTSTAMP:${toUtcStamp(new Date())}`,
-    `DTSTART:${toUtcStamp(localDateTime(entry.date, entry.start))}`,
-    `DTEND:${toUtcStamp(localDateTime(entry.date, entry.end))}`,
+    `DTSTART:${toUtcStamp(toUtc(entry.date, entry.start))}`,
+    `DTEND:${toUtcStamp(toUtc(entry.date, entry.end))}`,
     `SUMMARY:${escapeText(entry.title)}`,
     `DESCRIPTION:${escapeText(entry.description)}`,
     `URL:${entry.url}`,

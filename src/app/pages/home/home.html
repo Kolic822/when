@@ -98,6 +98,12 @@
             </select>
           </label>
         </div>
+        <p class="zone muted">
+          Hours are in {{ zoneName() }} time. People elsewhere see their own.
+        </p>
+        <p class="zone muted">
+          Hours are in {{ zoneName() }} time. People elsewhere see their own.
+        </p>
         @if (!rangeValid()) {
           <p class="warn" role="alert">
             Earliest to latest must leave room for a {{ model().durationHours }} h meetup.

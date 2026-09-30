@@ -172,6 +172,7 @@
         />
       } @else {
         @if (!editingDay()) {
+          <app-zone-note [dates]="event()!.dates" />
           @if (bookings().length) {
             <app-booked
               [sessions]="bookings()"

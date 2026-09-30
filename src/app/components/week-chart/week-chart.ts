@@ -13,6 +13,7 @@ import {
   weekdayLong,
   weekdayShort,
 } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 const LONG_PRESS_MS = 500;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -89,8 +90,8 @@ export class WeekChart {
   readonly hours = computed(() => {
     const { start, end } = this.range();
     return [
-      { min: start, label: formatMinutes(start), top: 0, edge: 'first' },
-      { min: end, label: formatMinutes(end), top: 100, edge: 'last' },
+      { min: start, label: timeAt(this.event().dates[0], start), top: 0, edge: 'first' },
+      { min: end, label: timeAt(this.event().dates[0], end), top: 100, edge: 'last' },
     ];
   });
 
@@ -151,14 +152,10 @@ export class WeekChart {
         common: this.windows()
           .filter((w) => w.date === key)
           .map((w) => ({
-            ...this.block(
-              w.start,
-              w.end,
-              `Everyone can make it ${formatMinutes(w.start)} – ${formatMinutes(w.end)}`,
-            ),
+            ...this.block(w.start, w.end, `Everyone can make it ${spanAt(w.date, w.start, w.end)}`),
             start: w.start,
             ...(w.end - w.start >= 90
-              ? { from: formatMinutes(w.start), to: formatMinutes(w.end) }
+              ? { from: timeAt(w.date, w.start), to: timeAt(w.date, w.end) }
               : {}),
           })),
         hasMine: mySlots.length > 0,
@@ -244,7 +241,7 @@ export class WeekChart {
         this.block(
           s.start,
           s.end,
-          `${p.name} ${formatMinutes(s.start)} – ${formatMinutes(s.end)}${s.note ? ' – ' + s.note : ''}`,
+          `${p.name} ${spanAt(date, s.start, s.end)}${s.note ? ' – ' + s.note : ''}`,
         ),
       );
   }

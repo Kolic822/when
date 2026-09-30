@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { buildIcs, openInCalendar } from '../../core/calendar';
 import { Session } from '../../core/models';
 import { formatMinutes, weekdayLong, weekdayShort, dayMonth } from '../../core/time';
+import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 /** The session the organiser settled on, shown to everyone at the top of the When. */
 @Component({
@@ -143,8 +144,8 @@ export class Booked {
     this.sessions().map((session) => ({
       key: `${session.date}-${session.start}`,
       session,
-      day: `${this.sessions().length === 1 ? weekdayLong(session.date) : weekdayShort(session.date)} ${dayMonth(session.date)}`,
-      time: `${formatMinutes(session.start)} – ${formatMinutes(session.end)}`,
+      day: label(dayOf(session.date, session.start), this.sessions().length === 1),
+      time: spanAt(session.date, session.start, session.end),
     })),
   );
 
@@ -164,4 +165,8 @@ export class Booked {
       'when.ics',
     );
   }
+}
+
+function label(date: string, long: boolean): string {
+  return `${long ? weekdayLong(date) : weekdayShort(date)} ${dayMonth(date)}`;
 }

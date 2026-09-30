@@ -1,6 +1,7 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { ClientMessage, EventPatch, MeetEvent, ServerMessage, Slot } from './models';
 import { Auth } from './auth';
+import { eventZone } from './zone';
 import { Identity } from './identity';
 import { mergeSlots } from './availability';
 
@@ -188,6 +189,7 @@ export class EventSession {
   private handle(msg: ServerMessage): void {
     switch (msg.type) {
       case 'event': {
+        eventZone.set(msg.event.timeZone ?? null);
         this.event.set(msg.event);
         // Keep the remembered name in sync (e.g. after a rename).
         const id = this.meId();
