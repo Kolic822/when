@@ -10,9 +10,7 @@ import {
 } from '@angular/core';
 import { form, FormField, maxLength, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Auth } from '../../core/auth';
 import { t } from '../../core/i18n/i18n';
@@ -46,20 +44,12 @@ interface Model {
 }
 
 /**
- * What defines a When: what it is, which days and how long. Planning a new one takes
- * two steps; the organiser changing an existing one gets everything on one page.
+ * What defines a When, on one page: what it is, which days and how long. Used to plan
+ * a new one and, by the organiser, to change an existing one.
  */
 @Component({
   selector: 'app-when-form',
-  imports: [
-    FormField,
-    DayPicker,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSlideToggleModule,
-  ],
+  imports: [FormField, DayPicker, MatButtonModule, MatIconModule, MatSlideToggleModule],
   templateUrl: './when-form.html',
   styleUrl: './when-form.scss',
 })
@@ -100,17 +90,13 @@ export class WhenForm {
   });
   readonly dates = signal<string[]>([]);
 
-  /** 1: what (and who). 2: which days and how long. */
-  readonly step = signal<1 | 2>(1);
-
   readonly rangeText = computed(() => rangeLabel(this.dates()));
   readonly rangeValid = computed(() => {
     const m = this.model();
     return m.dayEnd - m.dayStart >= m.durationHours * 60;
   });
-  readonly stepOneValid = computed(() => this.form().valid());
   readonly valid = computed(
-    () => this.stepOneValid() && this.dates().length > 0 && this.rangeValid() && !this.busy(),
+    () => this.form().valid() && this.dates().length > 0 && this.rangeValid() && !this.busy(),
   );
 
   /** Hours are in the When's zone: the organiser's own when creating. */
@@ -139,13 +125,8 @@ export class WhenForm {
     this.model.update((m) => ({ ...m, [key]: value }));
   }
 
-  /** Enter on the first step moves on; on the second it finishes. */
   onSubmit(event: Event): void {
     event.preventDefault();
-    if (!this.editing() && this.step() === 1) {
-      if (this.stepOneValid()) this.step.set(2);
-      return;
-    }
     this.save();
   }
 

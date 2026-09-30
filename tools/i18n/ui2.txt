@@ -382,14 +382,6 @@ Pro
 Pro
 Pro
 
-Step {n} of 2
-Schritt {n} von 2
-Korak {n} od 2
-
-Pick some days, share the link, find a time that works.
-Wähle ein paar Tage, teile den Link, findet eine Zeit, die passt.
-Odaberi nekoliko dana, podijeli poveznicu, pronađite vrijeme koje odgovara.
-
 Name it
 Name des Plans
 Naziv plana
@@ -398,29 +390,13 @@ Band rehearsal, drinks, hike…
 Bandprobe, Drinks, Wanderung…
 Proba benda, piće, planinarenje…
 
-Give it a name
-Gib ihm einen Namen
-Upiši naziv
-
 Where, what to bring…
 Wo, was mitbringen…
 Gdje, što ponijeti…
 
-Tell others who you are
-Sag den anderen, wer du bist
-Reci ostalima tko si
-
 What's the plan?
 Was ist der Plan?
 Kakav je plan?
-
-Which days could work?
-Welche Tage könnten passen?
-Koji bi dani mogli odgovarati?
-
-Tap any days you like.
-Tippe auf beliebige Tage.
-Dodirni dane koje želiš.
 
 Earliest time
 Früheste Uhrzeit
@@ -573,3 +549,7 @@ Imaš verziju {version}.
 You’re in. Nice one!
 Du bist dabei. Super!
 Unutra si. Bravo!
+
+Tap the days that could work.
+Tippe auf die Tage, die passen könnten.
+Dodirni dane koji bi mogli odgovarati.

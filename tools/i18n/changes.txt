@@ -161,3 +161,7 @@ Removed “Fill from my calendar” for now
 The short guide now appears right after you join a When from a link, and can be skipped
 Die Kurzanleitung erscheint jetzt direkt nach dem Beitritt zu einem When über einen Link und lässt sich überspringen
 Kratki vodič sada se pojavljuje odmah nakon pridruživanja Whenu preko poveznice i može se preskočiti
+
+Planning a When is one page too, the same as changing one
+Ein When zu planen ist jetzt auch eine Seite, genau wie das Ändern
+I planiranje Whena sada je jedna stranica, isto kao i izmjena

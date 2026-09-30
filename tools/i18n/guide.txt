@@ -14,10 +14,6 @@ Enter your own name so the others know who started it.
 Gib deinen eigenen Namen ein, damit die anderen wissen, wer es gestartet hat.
 Upiši svoje ime da ostali znaju tko je pokrenuo plan.
 
-Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once.
-Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal.
-Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom.
-
 Set how long the meetup should be, and the earliest and latest hour people can choose.
 Lege fest, wie lange das Treffen dauern soll und zwischen welchen Uhrzeiten man wählen kann.
 Odredi koliko susret treba trajati te najraniji i najkasniji sat koji se može odabrati.
@@ -353,3 +349,7 @@ Poveži kalendar
 The first time on a device they get a short three-step guide, which they can skip.
 Beim ersten Mal auf einem Gerät bekommen sie eine kurze Anleitung in drei Schritten, die sie überspringen können.
 Prvi put na uređaju dobiju kratak vodič u tri koraka, koji mogu preskočiti.
+
+Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.
+Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Die Pfeile blättern jeweils vier Wochen weiter.
+Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. Strelice pomiču po četiri tjedna.
