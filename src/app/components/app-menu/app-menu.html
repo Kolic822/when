@@ -447,6 +447,35 @@
                 <span class="text">
                   <span class="label">{{ t(f.label) }}</span>
                   <span class="muted small">{{ t(f.hint) }}</span>
+                  @if (f.key === 'connect' && prefs().features.connect) {
+                    @if (!calendar.available()) {
+                      <span class="muted small">{{ t('Showing sample events for now.') }}</span>
+                    } @else if (calendar.connected()) {
+                      <span class="cal-row">
+                        <span class="ok"
+                          ><mat-icon>check_circle</mat-icon>{{ t('Connected') }}</span
+                        >
+                        <button type="button" class="link" (click)="calendar.disconnect()">
+                          {{ t('Disconnect') }}
+                        </button>
+                      </span>
+                    } @else {
+                      <button
+                        type="button"
+                        class="pill cal-connect"
+                        [disabled]="calendar.working()"
+                        (click)="connectCalendar()"
+                      >
+                        <mat-icon>event</mat-icon>
+                        {{ t('Connect Google Calendar') }}
+                      </button>
+                      @if (calendar.failed()) {
+                        <span class="error small" role="alert">{{
+                          t('Couldn’t connect. Try again.')
+                        }}</span>
+                      }
+                    }
+                  }
                 </span>
               </li>
             }

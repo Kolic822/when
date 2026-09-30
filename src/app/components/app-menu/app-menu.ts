@@ -9,6 +9,7 @@ import { VERSION } from '../../core/changelog';
 import { HistoryEntry } from '../../core/models';
 import { History } from '../history/history';
 import { Push } from '../../core/push';
+import { CalendarLink } from '../../core/calendar-link';
 import { Identity, RecentMeetup } from '../../core/identity';
 import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -59,6 +60,11 @@ export class AppMenu {
   readonly updates = inject(Updates);
   readonly auth = inject(Auth);
   readonly push = inject(Push);
+  readonly calendar = inject(CalendarLink);
+
+  connectCalendar(): void {
+    void this.calendar.connect();
+  }
   readonly pushFailed = signal(false);
 
   readonly langs = LANGS;
@@ -290,7 +296,9 @@ export class AppMenu {
     {
       key: 'connect',
       label: m('Connect calendar'),
-      hint: m('See your own events behind the bars. Sample events for now.'),
+      hint: m(
+        'See when you are busy behind the bars. Only busy times are read, never what the events are.',
+      ),
     },
     {
       key: 'multiBook',

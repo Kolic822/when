@@ -165,3 +165,11 @@ Kratki vodič sada se pojavljuje odmah nakon pridruživanja Whenu preko poveznic
 Planning a When is one page too, the same as changing one
 Ein When zu planen ist jetzt auch eine Seite, genau wie das Ändern
 I planiranje Whena sada je jedna stranica, isto kao i izmjena
+
+Connect calendar reads your real busy times from Google Calendar
+„Kalender verbinden“ liest deine echten belegten Zeiten aus dem Google Kalender
+„Poveži kalendar” čita tvoja stvarna zauzeta vremena iz Google kalendara
+
+Send options is only offered when there is more than one possible session
+„Optionen senden“ wird nur angeboten, wenn es mehr als einen möglichen Termin gibt
+„Pošalji opcije” nudi se samo kad postoji više od jednog mogućeg termina

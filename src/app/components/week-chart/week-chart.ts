@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
-import { sampleBusy } from '../../core/busy';
+import { CalendarLink } from '../../core/calendar-link';
 import { PrefsStore } from '../../core/prefs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -67,6 +67,7 @@ interface DayColumn {
 export class WeekChart {
   readonly t = t;
   private readonly prefs = inject(PrefsStore);
+  private readonly calendar = inject(CalendarLink);
   readonly showBusy = computed(() => this.prefs.prefs().features.connect);
 
   readonly event = input.required<MeetEvent>();
@@ -151,7 +152,9 @@ export class WeekChart {
             ? [this.block(this.picked()!.start, this.picked()!.end, this.picked()!.label)]
             : [],
         busy: this.showBusy()
-          ? sampleBusy(key, ev.dayStart, ev.dayEnd).map((b) => this.block(b.start, b.end, b.title))
+          ? this.calendar
+              .busyOn(key, ev.dayStart, ev.dayEnd)
+              .map((b) => this.block(b.start, b.end, b.title))
           : [],
         common: this.windows()
           .filter((w) => w.date === key)

@@ -242,11 +242,18 @@ export class Guide {
       icon: 'event',
       title: m('Connect calendar'),
       pro: true,
-      intro: m('A preview with sample events; your real calendar is not read yet.'),
+      intro: m('See your own busy times while you mark when you are free.'),
       steps: [
         m(
-          'Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.',
+          'Switch on Connect calendar under Pro features, then tap Connect Google Calendar and allow it.',
         ),
+        m(
+          'Your busy times appear as grey striped blocks behind the bars, so you see clashes while marking.',
+        ),
+        m(
+          'Only whether you are busy is read: no titles, no guests. It goes straight from Google to your phone and is never stored by When.',
+        ),
+        m('Google asks again after about an hour; Disconnect in the menu withdraws access.'),
       ],
     },
     {

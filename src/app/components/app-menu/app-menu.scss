@@ -414,3 +414,33 @@ p {
     font-size: 13px;
   }
 }
+
+.cal-connect {
+  align-self: flex-start;
+  height: 36px;
+  margin-top: 6px;
+  padding: 0 14px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.cal-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 13px;
+
+  .ok {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+  }
+  mat-icon {
+    color: #16a34a;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}

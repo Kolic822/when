@@ -306,14 +306,6 @@ The organiser removes one with its × button.
 Der Organisator entfernt einen mit dessen ×.
 Organizator pojedini termin uklanja njegovim ×.
 
-A preview with sample events; your real calendar is not read yet.
-Eine Vorschau mit Beispielterminen; dein echter Kalender wird noch nicht gelesen.
-Pregled s primjerima događaja; tvoj pravi kalendar još se ne čita.
-
-Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.
-Deine eigenen Termine erscheinen als grau gestreifte Blöcke hinter den Balken, damit du Überschneidungen beim Markieren siehst.
-Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.
-
 Other Pro previews
 Weitere Pro-Vorschauen
 Ostali Pro pregledi
@@ -353,3 +345,23 @@ Prvi put na uređaju dobiju kratak vodič u tri koraka, koji mogu preskočiti.
 Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.
 Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Die Pfeile blättern jeweils vier Wochen weiter.
 Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. Strelice pomiču po četiri tjedna.
+
+See your own busy times while you mark when you are free.
+Sieh deine eigenen belegten Zeiten, während du markierst, wann du Zeit hast.
+Vidi svoja zauzeta vremena dok označavaš kad možeš.
+
+Switch on Connect calendar under Pro features, then tap Connect Google Calendar and allow it.
+Schalte unter Pro-Funktionen „Kalender verbinden“ ein, tippe dann auf „Google Kalender verbinden“ und erlaube es.
+Uključi „Poveži kalendar” pod Pro značajke, zatim dodirni „Poveži Google kalendar” i dopusti pristup.
+
+Your busy times appear as grey striped blocks behind the bars, so you see clashes while marking.
+Deine belegten Zeiten erscheinen als grau gestreifte Blöcke hinter den Balken, damit du Überschneidungen beim Markieren siehst.
+Tvoja zauzeta vremena prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.
+
+Only whether you are busy is read: no titles, no guests. It goes straight from Google to your phone and is never stored by When.
+Gelesen wird nur, ob du belegt bist: keine Titel, keine Gäste. Das geht direkt von Google auf dein Handy und wird von When nie gespeichert.
+Čita se samo jesi li zauzet/a: bez naziva, bez gostiju. Ide izravno s Googlea na tvoj mobitel i When to nikad ne sprema.
+
+Google asks again after about an hour; Disconnect in the menu withdraws access.
+Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.
+Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.

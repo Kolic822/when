@@ -310,10 +310,6 @@ Connect calendar
 Kalender verbinden
 Poveži kalendar
 
-See your own events behind the bars. Sample events for now.
-Sieh deine eigenen Termine hinter den Balken. Vorerst mit Beispielterminen.
-Vidi vlastite događaje iza traka. Zasad s primjerima događaja.
-
 Book several sessions
 Mehrere Termine festlegen
 Potvrdi više termina

@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.7.4';
+export const VERSION = '0.8';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.8',
+    date: '30 Sep 2026',
+    changes: [
+      m('Connect calendar reads your real busy times from Google Calendar'),
+      m('Send options is only offered when there is more than one possible session'),
+    ],
+  },
   {
     version: '0.7.4',
     date: '30 Sep 2026',

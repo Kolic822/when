@@ -109,6 +109,15 @@ export class Auth {
     }
   }
 
+  /** Loads Google's script and returns the client id, or '' when Google is not set up. */
+  async ensureGoogle(): Promise<string> {
+    await this.loadConfig();
+    const clientId = this.clientId();
+    if (!clientId) return '';
+    await this.loadScript();
+    return clientId;
+  }
+
   private loadScript(): Promise<void> {
     this.scriptRequest ??= new Promise<void>((resolve, reject) => {
       const script = document.createElement('script');

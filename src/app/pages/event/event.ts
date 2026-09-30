@@ -41,6 +41,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
 import { Push } from '../../core/push';
 import { HowToState } from '../../core/how-to-state';
+import { CalendarLink } from '../../core/calendar-link';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
@@ -91,6 +92,7 @@ export class EventPage implements OnDestroy {
   private readonly prefsStore = inject(PrefsStore);
   private readonly push = inject(Push);
   private readonly howTo = inject(HowToState);
+  private readonly calendar = inject(CalendarLink);
   readonly features = computed(() => this.prefsStore.prefs().features);
 
   readonly resultsCard = viewChild<Results>('results');
@@ -135,6 +137,13 @@ export class EventPage implements OnDestroy {
   });
 
   constructor() {
+    // Connect calendar: fetch my busy times for these days once connected.
+    effect(() => {
+      const ev = this.event();
+      if (!ev || !this.features().connect || !this.calendar.connected()) return;
+      void this.calendar.load(ev.dates, ev.timeZone ?? null);
+    });
+
     // Notifications are per device; each When still has to be registered once.
     effect(() => {
       const id = this.id();

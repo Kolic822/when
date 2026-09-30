@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MeetEvent, Slot } from '../../core/models';
 import { mergeSlots } from '../../core/availability';
-import { sampleBusy } from '../../core/busy';
+import { CalendarLink } from '../../core/calendar-link';
 import { PrefsStore } from '../../core/prefs';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
@@ -54,11 +54,12 @@ const MOVE_TOLERANCE_PX = 8;
 export class DayEditor {
   readonly t = t;
   private readonly prefs = inject(PrefsStore);
-  /** Own calendar events behind the bar (Connect calendar preview, sample data). */
+  private readonly calendar = inject(CalendarLink);
+  /** Own calendar events behind the bar: real ones when connected, samples as a preview. */
   readonly busy = computed(() => {
     if (!this.prefs.prefs().features.connect) return [];
     const { dayStart, dayEnd } = this.event();
-    return sampleBusy(this.date(), dayStart, dayEnd).map((b) => ({
+    return this.calendar.busyOn(this.date(), dayStart, dayEnd).map((b) => ({
       ...b,
       label: `${b.title} · ${spanAt(this.date(), b.start, b.end)}`,
     }));

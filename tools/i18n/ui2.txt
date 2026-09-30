@@ -553,3 +553,31 @@ Unutra si. Bravo!
 Tap the days that could work.
 Tippe auf die Tage, die passen könnten.
 Dodirni dane koji bi mogli odgovarati.
+
+Busy
+Belegt
+Zauzeto
+
+Showing sample events for now.
+Vorerst werden Beispieltermine angezeigt.
+Zasad se prikazuju primjeri događaja.
+
+Connected
+Verbunden
+Povezano
+
+Disconnect
+Trennen
+Prekini vezu
+
+Connect Google Calendar
+Google Kalender verbinden
+Poveži Google kalendar
+
+Couldn’t connect. Try again.
+Verbindung nicht möglich. Versuch es noch einmal.
+Povezivanje nije uspjelo. Pokušaj ponovno.
+
+See when you are busy behind the bars. Only busy times are read, never what the events are.
+Sieh hinter den Balken, wann du belegt bist. Gelesen wird nur, wann du belegt bist, nie, was die Termine sind.
+Vidi iza traka kad si zauzet/a. Čita se samo kad si zauzet/a, nikad o kojim je događajima riječ.
