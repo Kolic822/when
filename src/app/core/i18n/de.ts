@@ -202,6 +202,8 @@ export const de: Dictionary = {
   Finish: 'Fertig',
   'Fixed: the arrows in the day picker now move to later and earlier weeks':
     'Behoben: Die Pfeile in der Tagesauswahl blättern jetzt zu späteren und früheren Wochen',
+  'Fixed: the welcome screen buttons sometimes did nothing, for example after signing out':
+    'Behoben: Die Schaltflächen auf dem Willkommensbildschirm reagierten manchmal nicht, zum Beispiel nach dem Abmelden',
   'For when the group has options and one more person has to choose, like a teacher or a guest.':
     'Für den Fall, dass die Gruppe Optionen hat und noch eine Person entscheiden muss, etwa ein Lehrer oder ein Gast.',
   Fr: 'Fr',

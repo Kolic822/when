@@ -26,7 +26,10 @@ export class Welcome {
   private readonly router = inject(Router);
 
   /** Where the person was heading, e.g. a When someone sent them. */
-  readonly next = input('/');
+  readonly next = input('/', {
+    // The router hands over `undefined` when the address has no ?next=…
+    transform: (value: string | undefined) => value || '/',
+  });
 
   private readonly googleHost = viewChild<ElementRef<HTMLElement>>('google');
   readonly failed = signal(false);
@@ -51,8 +54,9 @@ export class Welcome {
   }
 
   private enter(): void {
-    // Only ever a path inside the app.
+    // Only ever a path inside the app, and never back to this screen.
     const next = this.next();
-    void this.router.navigateByUrl(next.startsWith('/') && !next.startsWith('//') ? next : '/');
+    const inside = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/welcome');
+    void this.router.navigateByUrl(inside ? next : '/');
   }
 }

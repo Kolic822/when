@@ -7,9 +7,16 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.4';
+export const VERSION = '0.10.5';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.5',
+    date: '30 Sep 2026',
+    changes: [
+      m('Fixed: the welcome screen buttons sometimes did nothing, for example after signing out'),
+    ],
+  },
   {
     version: '0.10.4',
     date: '30 Sep 2026',
