@@ -122,8 +122,9 @@ export class Guide {
       title: m('Change or delete a When (organiser)'),
       steps: [
         m(
-          'Tap the pencil next to the title to change the name, description, days, length or hours.',
+          'Tap the pencil next to the title. You get the same two steps as when planning: the name and description, then the days, length and hours.',
         ),
+        m('Save is always at the bottom; Cancel leaves everything as it was.'),
         m(
           'If you make the meetup longer or the hours narrower, periods that no longer fit are trimmed or removed.',
         ),
@@ -207,13 +208,13 @@ export class Guide {
     },
     {
       icon: 'forward_to_inbox',
-      title: m('Let someone else pick'),
+      title: m('Send options'),
       pro: true,
       intro: m(
         'For when the group has options and one more person has to choose, like a teacher or a guest.',
       ),
       steps: [
-        m('Under Possible sessions tap Let someone else pick and tick the sessions to offer.'),
+        m('Under Possible sessions tap Send options and tick the sessions to offer.'),
         m('Choose whether they may pick just one or several, then create and copy the link.'),
         m(
           'They see only those sessions, enter a name and tap what works. They never see the calendar.',
@@ -238,18 +239,12 @@ export class Guide {
     },
     {
       icon: 'event',
-      title: m('Connect calendar and fill from it'),
+      title: m('Connect calendar'),
       pro: true,
       intro: m('A preview with sample events; your real calendar is not read yet.'),
       steps: [
         m(
           'Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.',
-        ),
-        m(
-          'Fill from my calendar marks you free in every gap between events that is long enough for the meetup.',
-        ),
-        m(
-          'If you already marked times it asks whether to add to them or replace them. Undo is offered afterwards.',
         ),
       ],
     },

@@ -158,10 +158,6 @@ Change or delete a When (organiser)
 Ein When ändern oder löschen (Organisator)
 Promijeni ili obriši When (organizator)
 
-Tap the pencil next to the title to change the name, description, days, length or hours.
-Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern.
-Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate.
-
 If you make the meetup longer or the hours narrower, periods that no longer fit are trimmed or removed.
 Wenn du das Treffen verlängerst oder die Uhrzeiten einschränkst, werden Zeiträume, die nicht mehr passen, gekürzt oder entfernt.
 Ako produljiš susret ili suziš sate, razdoblja koja više ne odgovaraju skraćuju se ili uklanjaju.
@@ -278,10 +274,6 @@ For when the group has options and one more person has to choose, like a teacher
 Für den Fall, dass die Gruppe Optionen hat und noch eine Person entscheiden muss, etwa ein Lehrer oder ein Gast.
 Za slučaj kad grupa ima opcije, a odlučiti mora još jedna osoba, poput učitelja ili gosta.
 
-Under Possible sessions tap Let someone else pick and tick the sessions to offer.
-Tippe unter „Mögliche Termine“ auf „Jemand anderen wählen lassen“ und hake die Termine an, die du anbieten willst.
-Pod „Mogući termini” dodirni „Neka odabere netko drugi” i označi termine koje nudiš.
-
 Choose whether they may pick just one or several, then create and copy the link.
 Wähle, ob nur einer oder mehrere gewählt werden dürfen, erstelle dann den Link und kopiere ihn.
 Odaberi smije li se odabrati samo jedan ili više, zatim stvori i kopiraj poveznicu.
@@ -318,10 +310,6 @@ The organiser removes one with its × button.
 Der Organisator entfernt einen mit dessen ×.
 Organizator pojedini termin uklanja njegovim ×.
 
-Connect calendar and fill from it
-Kalender verbinden und daraus ausfüllen
-Poveži kalendar i popuni iz njega
-
 A preview with sample events; your real calendar is not read yet.
 Eine Vorschau mit Beispielterminen; dein echter Kalender wird noch nicht gelesen.
 Pregled s primjerima događaja; tvoj pravi kalendar još se ne čita.
@@ -329,14 +317,6 @@ Pregled s primjerima događaja; tvoj pravi kalendar još se ne čita.
 Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.
 Deine eigenen Termine erscheinen als grau gestreifte Blöcke hinter den Balken, damit du Überschneidungen beim Markieren siehst.
 Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.
-
-Fill from my calendar marks you free in every gap between events that is long enough for the meetup.
-„Aus meinem Kalender ausfüllen“ markiert dich in jeder Lücke zwischen Terminen als frei, die lang genug für das Treffen ist.
-„Popuni iz mog kalendara” označava te slobodnim/om u svakom razmaku između događaja koji je dovoljno dug za susret.
-
-If you already marked times it asks whether to add to them or replace them. Undo is offered afterwards.
-Hast du schon Zeiten markiert, wirst du gefragt, ob sie ergänzt oder ersetzt werden sollen. Danach kannst du es rückgängig machen.
-Ako već imaš označena vremena, pita treba li ih dopuniti ili zamijeniti. Nakon toga nudi poništavanje.
 
 Other Pro previews
 Weitere Pro-Vorschauen
@@ -353,3 +333,19 @@ Sudjelovanje samo dio vremena: može se označiti manje od punog trajanja; termi
 History: a section in the menu showing who changed what in any of your Whens.
 Verlauf: ein Bereich im Menü, der zeigt, wer in einem deiner Whens was geändert hat.
 Povijest: odjeljak u izborniku koji pokazuje tko je što promijenio u bilo kojem tvom Whenu.
+
+Under Possible sessions tap Send options and tick the sessions to offer.
+Tippe unter „Mögliche Termine“ auf „Optionen senden“ und hake die Termine an, die du anbieten willst.
+Pod „Mogući termini” dodirni „Pošalji opcije” i označi termine koje nudiš.
+
+Tap the pencil next to the title. You get the same two steps as when planning: the name and description, then the days, length and hours.
+Tippe auf den Stift neben dem Titel. Du bekommst dieselben zwei Schritte wie beim Planen: Name und Beschreibung, dann Tage, Dauer und Uhrzeiten.
+Dodirni olovku pokraj naziva. Dobivaš ista dva koraka kao pri planiranju: naziv i opis, zatim dani, trajanje i sati.
+
+Save is always at the bottom; Cancel leaves everything as it was.
+„Speichern“ ist immer unten; „Abbrechen“ lässt alles, wie es war.
+„Spremi” je uvijek na dnu; „Odustani” ostavlja sve kako je bilo.
+
+Connect calendar
+Kalender verbinden
+Poveži kalendar

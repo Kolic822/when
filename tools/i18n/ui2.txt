@@ -346,53 +346,17 @@ Save
 Speichern
 Spremi
 
-Title
-Titel
-Naziv
-
 Description (optional)
 Beschreibung (optional)
 Opis (neobavezno)
-
-Where, what to bring, anything the group should know…
-Wo, was mitbringen, alles, was die Gruppe wissen sollte…
-Gdje, što ponijeti, sve što grupa treba znati…
-
-Days in the running
-Mögliche Tage
-Dani u igri
 
 People can join for part of it
 Man kann auch nur teilweise dabei sein
 Moguće je sudjelovati i samo dio vremena
 
-The hours must leave room for a {n} h meetup.
-Zwischen den Uhrzeiten muss Platz für ein Treffen von {n} Std. sein.
-Između tih sati mora stati susret od {n} h.
-
-Fill from my calendar
-Aus meinem Kalender ausfüllen
-Popuni iz mog kalendara
-
-You already marked some times.
-Du hast schon Zeiten markiert.
-Već imaš označena vremena.
-
-Replace
-Ersetzen
-Zamijeni
-
-Add to them
-Hinzufügen
-Dodaj njima
-
 Only the organiser can book a session
 Nur der Organisator kann einen Termin festlegen
 Samo organizator može potvrditi termin
-
-Your calendar leaves no gap long enough
-Dein Kalender lässt keine ausreichend lange Lücke
-U tvom kalendaru nema dovoljno dugog slobodnog razmaka
 
 That session is no longer possible for everyone
 Dieser Termin ist nicht mehr für alle möglich
@@ -457,10 +421,6 @@ Koji bi dani mogli odgovarati?
 Tap any days you like.
 Tippe auf beliebige Tage.
 Dodirni dane koje želiš.
-
-Length
-Dauer
-Trajanje
 
 Earliest time
 Früheste Uhrzeit
@@ -566,9 +526,9 @@ Couldn't turn on notifications. Try again.
 Benachrichtigungen konnten nicht eingeschaltet werden. Versuch es noch einmal.
 Obavijesti se nisu mogle uključiti. Pokušaj ponovno.
 
-Times outside the new range, or shorter than the meetup, are removed from everyone's answers.
-Zeiten außerhalb des neuen Bereichs oder kürzer als das Treffen werden aus allen Antworten entfernt.
-Vremena izvan novog raspona ili kraća od susreta uklanjaju se iz svih odgovora.
+Times that no longer fit are removed from everyone’s answers.
+Zeiten, die nicht mehr passen, werden aus allen Antworten entfernt.
+Vremena koja više ne odgovaraju uklanjaju se iz svih odgovora.
 
 {n} hour
 {n} Stunde || {n} Stunden
@@ -590,10 +550,6 @@ Kopiraj na {n} dan || Kopiraj na {n} dana || Kopiraj na {n} dana
 {n} Tag || {n} Tage
 {n} dan || {n} dana || {n} dana
 
-Filled {n} day from your calendar
-{n} Tag aus deinem Kalender ausgefüllt || {n} Tage aus deinem Kalender ausgefüllt
-Popunjen {n} dan iz kalendara || Popunjena {n} dana iz kalendara || Popunjeno {n} dana iz kalendara
-
 Copied to {n} day
 Auf {n} Tag kopiert || Auf {n} Tage kopiert
 Kopirano na {n} dan || Kopirano na {n} dana || Kopirano na {n} dana
@@ -601,3 +557,19 @@ Kopirano na {n} dan || Kopirano na {n} dana || Kopirano na {n} dana
 Language
 Sprache
 Jezik
+
+Change the plan
+Plan ändern
+Promijeni plan
+
+Days
+Tage
+Dani
+
+Send options
+Optionen senden
+Pošalji opcije
+
+You have version {version}.
+Du hast Version {version}.
+Imaš verziju {version}.

@@ -490,32 +490,9 @@
           </div>
           <div class="about">
             <span class="ver">{{ t('Version {version}', { version }) }}</span>
-            <button
-              type="button"
-              class="link"
-              (click)="showChanges.set(!showChanges())"
-              [attr.aria-expanded]="showChanges()"
-            >
-              {{ showChanges() ? t('Hide changes') : t('What’s new') }}
-            </button>
+            <a class="link" routerLink="/changes" (click)="close()">{{ t('What’s new') }}</a>
             <a class="link" routerLink="/guide" (click)="close()">{{ t('Guide') }}</a>
           </div>
-          @if (showChanges()) {
-            <ol class="changes">
-              @for (r of changelog; track r.version) {
-                <li>
-                  <p class="rel">
-                    <strong>v{{ r.version }}</strong> <span class="muted">{{ r.date }}</span>
-                  </p>
-                  <ul>
-                    @for (c of r.changes; track c) {
-                      <li>{{ t(c) }}</li>
-                    }
-                  </ul>
-                </li>
-              }
-            </ol>
-          }
         </div>
       }
     </section>

@@ -32,15 +32,14 @@ import { ShareLink } from '../../components/share-link/share-link';
 import { WeekChart } from '../../components/week-chart/week-chart';
 import { Legend } from '../../components/legend/legend';
 import { Results } from '../../components/results/results';
-import { DayPicker } from '../../components/day-picker/day-picker';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
 import { Booked } from '../../components/booked/booked';
+import { WhenDetails, WhenForm } from '../../components/when-form/when-form';
 import { ZoneNote } from '../../components/zone-note/zone-note';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
 import { Push } from '../../core/push';
-import { freeAround, sampleBusy } from '../../core/busy';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
@@ -61,10 +60,10 @@ import { t, tn } from '../../core/i18n/i18n';
     WeekChart,
     Legend,
     Results,
-    DayPicker,
     AppMenu,
     DayStepper,
     Booked,
+    WhenForm,
     ZoneNote,
     AnswerCard,
     MatSlideToggleModule,
@@ -114,21 +113,8 @@ export class EventPage implements OnDestroy {
   private lastRenameRequest = '';
   readonly renaming = signal(false);
   readonly settingsOpen = signal(false);
-  readonly draftDates = signal<string[]>([]);
-  readonly draftDuration = signal(3);
-  readonly draftTitle = signal('');
-  readonly draftDescription = signal('');
-  readonly draftDayStart = signal(8 * 60);
-  readonly draftDayEnd = signal(23 * 60);
-  readonly draftPartialOk = signal(false);
-  readonly durations = DURATIONS;
-  readonly startOptions = HOUR_OPTIONS.slice(0, 24);
-  readonly endOptions = HOUR_OPTIONS.slice(1);
-  readonly draftValid = computed(
-    () =>
-      this.draftDates().length > 0 &&
-      this.draftDayEnd() - this.draftDayStart() >= this.draftDuration() * 60,
-  );
+  /** The When as it was when the organiser opened the editor. */
+  readonly editSnapshot = signal<WhenDetails | null>(null);
 
   readonly isCreator = computed(() => !!this.identity.creatorToken(this.id()));
   readonly shareUrl = computed(() => `${location.origin}/e/${this.id()}`);
@@ -222,45 +208,6 @@ export class EventPage implements OnDestroy {
     });
   }
 
-  /** Asking whether to add to or replace what is already marked. */
-  readonly fillAsking = signal(false);
-
-  /** Pro preview: marks me free in every gap around my calendar events. */
-  fillFromCalendar(mode?: 'add' | 'replace'): void {
-    const ev = this.event();
-    const before = this.me()?.slots ?? [];
-    if (!ev) return;
-    if (before.length && !mode) {
-      this.fillAsking.set(true);
-      return;
-    }
-    this.fillAsking.set(false);
-    const minLength = ev.partialOk ? 15 : ev.durationHours * 60;
-    const found = ev.dates.flatMap((date) =>
-      freeAround(sampleBusy(date, ev.dayStart, ev.dayEnd), ev.dayStart, ev.dayEnd, minLength).map(
-        (gap) => ({ date, ...gap }),
-      ),
-    );
-    const days = new Set(found.map((s) => s.date)).size;
-    if (!found.length) {
-      this.snack.open(
-        t('Your calendar leaves no gap long enough'),
-        undefined,
-        this.toastOpts(3500),
-      );
-      return;
-    }
-    this.session.setSlots(mergeSlots(mode === 'add' ? [...before, ...found] : found));
-    this.snack
-      .open(
-        tn(days, 'Filled {n} day from your calendar', 'Filled {n} days from your calendar'),
-        t('Undo'),
-        this.toastOpts(5000),
-      )
-      .onAction()
-      .subscribe(() => this.session.setSlots(before));
-  }
-
   /** From the answer card: open that session so the organiser can choose the start. */
   onChooseTime(session: Session): void {
     const opened = this.resultsCard()?.openFor(session.date, session.start);
@@ -336,27 +283,23 @@ export class EventPage implements OnDestroy {
   openSettings(): void {
     const ev = this.event();
     if (!ev) return;
-    this.draftDates.set([...ev.dates]);
-    this.draftTitle.set(ev.title);
-    this.draftDescription.set(ev.description ?? '');
-    this.draftDuration.set(ev.durationHours);
-    this.draftDayStart.set(ev.dayStart);
-    this.draftDayEnd.set(ev.dayEnd);
-    this.draftPartialOk.set(ev.partialOk);
+    this.editSnapshot.set({
+      title: ev.title,
+      description: ev.description ?? '',
+      name: '',
+      dates: [...ev.dates],
+      durationHours: ev.durationHours,
+      dayStart: ev.dayStart,
+      dayEnd: ev.dayEnd,
+      partialOk: ev.partialOk,
+    });
     this.settingsOpen.set(true);
+    window.scrollTo({ top: 0 });
   }
 
-  saveSettings(): void {
-    if (!this.draftValid()) return;
-    const ok = this.session.updateEvent({
-      title: this.draftTitle().trim() || undefined,
-      description: this.draftDescription().trim(),
-      dates: this.draftDates(),
-      durationHours: this.draftDuration(),
-      dayStart: this.draftDayStart(),
-      dayEnd: this.draftDayEnd(),
-      partialOk: this.draftPartialOk(),
-    });
+  saveSettings(details: WhenDetails): void {
+    const { name: _name, ...patch } = details;
+    const ok = this.session.updateEvent(patch);
     if (!ok)
       this.snack.open(t('Only the organiser can change the days'), undefined, { duration: 3000 });
     this.settingsOpen.set(false);

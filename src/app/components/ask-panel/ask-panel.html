@@ -9,7 +9,7 @@
       <button type="button" class="pill close" (click)="closed.emit()">{{ t('Close') }}</button>
     </div>
   } @else {
-    <p class="title">{{ t('Let someone else pick') }}</p>
+    <p class="title">{{ t('Send options') }}</p>
     <p class="muted">{{ t('They get a link with only these sessions. Which ones?') }}</p>
     <div class="chips" role="group" [attr.aria-label]="t('Sessions to include')">
       @for (s of sessions(); track $index) {

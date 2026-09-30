@@ -1,0 +1,189 @@
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 560px;
+  padding: 14px 16px 16px;
+}
+
+.steps {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.dot {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--when-grid);
+  transition: background 0.25s;
+
+  &.on {
+    background: var(--accent);
+  }
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  animation: rise 0.25s ease both;
+}
+
+h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.lead {
+  margin: 2px 0 14px;
+  font-size: 14px;
+}
+
+.first mat-form-field {
+  width: 100%;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 500;
+
+  mat-icon {
+    color: var(--accent);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Keeps the whole step on one phone screen: the month never grows taller than this. */
+/*
+ * The month takes the height the screen has left, so the step never scrolls:
+ * roomy on a tall phone, tighter on a small one.
+ */
+app-day-picker {
+  --day-max: clamp(32px, calc((100dvh - 530px) / 5), 48px);
+}
+
+form.editing app-day-picker {
+  --day-max: clamp(32px, calc((100dvh - 568px) / 5), 48px);
+}
+
+/* Without the intro line the heading needs its own space above the first field. */
+form.editing .first h1 {
+  margin-bottom: 14px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12px;
+  }
+  .wide {
+    grid-column: 1 / -1;
+  }
+
+  select {
+    width: 100%;
+    height: 44px;
+    padding: 0 10px;
+    border: 1.5px solid var(--when-border);
+    border-radius: 12px;
+    background: var(--when-surface);
+    color: var(--when-text);
+    font: inherit;
+    /* 16px keeps iOS from zooming in on focus. */
+    font-size: 16px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+  }
+}
+
+.toggle {
+  margin-top: 12px;
+}
+
+.warn,
+.error {
+  margin: 8px 0 0;
+  color: var(--mat-sys-error);
+  font-size: 13px;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+
+  .main {
+    flex: 1;
+    height: 48px;
+    border-radius: 999px;
+    font-size: 15px;
+  }
+  .back {
+    height: 48px;
+  }
+}
+
+.zone {
+  margin: 6px 0 0;
+  font-size: 12px;
+}
+
+.zone {
+  margin: 6px 0 0;
+  font-size: 12px;
+}
+
+/* Editing: room under the form for the bar, which stays at the bottom of the screen. */
+form.editing {
+  margin-bottom: 34px;
+}
+
+.nav.floating {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 10px 12px calc(env(safe-area-inset-bottom, 0px) + 12px);
+  background: linear-gradient(to top, var(--when-bg) 70%, transparent);
+
+  .pill {
+    height: 48px;
+  }
+  .quiet {
+    color: var(--when-muted);
+  }
+}
+
+/* Short screens: length, earliest and latest share one row again so nothing scrolls. */
+@media (max-height: 700px) {
+  .details {
+    grid-template-columns: repeat(3, 1fr);
+
+    .wide {
+      grid-column: auto;
+    }
+  }
+}

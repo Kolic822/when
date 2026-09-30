@@ -284,7 +284,9 @@ p {
 
 /* A quiet text action on its own line, away from the sessions. */
 .ask {
-  display: inline-flex;
+  display: flex;
+  /* On the right, away from the sessions it is about. */
+  margin-left: auto;
   align-items: center;
   gap: 6px;
   margin-top: 10px;

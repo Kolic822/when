@@ -258,10 +258,6 @@ Version {version}
 Version {version}
 Verzija {version}
 
-Hide changes
-Änderungen ausblenden
-Sakrij promjene
-
 What’s new
 Was ist neu
 Što je novo
@@ -325,10 +321,6 @@ Potvrdi više termina
 The organiser can book more than one session for a When.
 Der Organisator kann für ein When mehr als einen Termin festlegen.
 Organizator može potvrditi više termina za jedan When.
-
-Let someone else pick
-Jemand anderen wählen lassen
-Neka odabere netko drugi
 
 Send a link with only the possible sessions.
 Sende einen Link, der nur die möglichen Termine zeigt.

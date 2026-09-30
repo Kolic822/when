@@ -34,7 +34,7 @@
   } @else if (!event(); as ev) {
     <div class="loading"><mat-spinner diameter="36" /></div>
   } @else {
-    @if (!editingDay() && !stepping()) {
+    @if (!editingDay() && !stepping() && !settingsOpen()) {
       <header class="head">
         <div class="title-row">
           <h1>{{ event()!.title }}</h1>
@@ -81,93 +81,17 @@
       }
 
       @if (settingsOpen()) {
-        <section class="card settings">
-          <h2>{{ t('Edit meetup') }}</h2>
-          <mat-form-field appearance="outline">
-            <mat-label>{{ t('Title') }}</mat-label>
-            <input
-              matInput
-              [value]="draftTitle()"
-              (input)="draftTitle.set($any($event.target).value)"
-              maxlength="80"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>{{ t('Description (optional)') }}</mat-label>
-            <textarea
-              matInput
-              rows="2"
-              maxlength="600"
-              [value]="draftDescription()"
-              (input)="draftDescription.set($any($event.target).value)"
-              [placeholder]="t('Where, what to bring, anything the group should know…')"
-            ></textarea>
-          </mat-form-field>
-          <h3>{{ t('Days in the running') }}</h3>
-          <app-day-picker [(selected)]="draftDates" />
-          <div class="fields">
-            <mat-form-field appearance="outline">
-              <mat-label>{{ t('Meetup length') }}</mat-label>
-              <mat-select [value]="draftDuration()" (valueChange)="draftDuration.set($event)">
-                @for (d of durations; track d) {
-                  <mat-option [value]="d">{{ tn(d, '{n} hour', '{n} hours') }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>{{ t('Earliest') }}</mat-label>
-              <mat-select [value]="draftDayStart()" (valueChange)="draftDayStart.set($event)">
-                @for (h of startOptions; track h.value) {
-                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>{{ t('Latest') }}</mat-label>
-              <mat-select [value]="draftDayEnd()" (valueChange)="draftDayEnd.set($event)">
-                @for (h of endOptions; track h.value) {
-                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-          @if (features().partial) {
-            <mat-slide-toggle
-              [checked]="draftPartialOk()"
-              (change)="draftPartialOk.set($event.checked)"
-            >
-              {{ t('People can join for part of it') }}
-            </mat-slide-toggle>
-          }
-          @if (draftDayEnd() - draftDayStart() < draftDuration() * 60) {
-            <p class="warn">
-              {{ t('The hours must leave room for a {n} h meetup.', { n: draftDuration() }) }}
-            </p>
-          }
-          <p class="muted note">
-            {{
-              t(
-                "Times outside the new range, or shorter than the meetup, are removed from everyone's answers."
-              )
-            }}
-          </p>
-          <div class="actions">
-            <button type="button" class="pill" (click)="settingsOpen.set(false)">
-              {{ t('Cancel') }}
-            </button>
-            <button
-              mat-flat-button
-              type="button"
-              (click)="saveSettings()"
-              [disabled]="!draftValid()"
-            >
-              {{ t('Save') }}
-            </button>
-          </div>
-        </section>
+        <app-when-form
+          mode="edit"
+          [initial]="editSnapshot()"
+          (submitted)="saveSettings($event)"
+          (cancelled)="settingsOpen.set(false)"
+        />
       }
 
-      @if (stepping()) {
+      @if (settingsOpen()) {
+        <!-- Editing takes the whole screen. -->
+      } @else if (stepping()) {
         <app-day-stepper
           [event]="event()!"
           [meId]="meId()!"
@@ -234,31 +158,6 @@
           />
         } @else {
           <section class="card chart">
-            @if (features().connect && meId()) {
-              @if (fillAsking()) {
-                <div class="fill ask" role="group" [attr.aria-label]="t('Fill from my calendar')">
-                  <span class="muted">{{ t('You already marked some times.') }}</span>
-                  <span class="fill-acts">
-                    <button type="button" class="pill small" (click)="fillAsking.set(false)">
-                      {{ t('Cancel') }}
-                    </button>
-                    <button type="button" class="pill small" (click)="fillFromCalendar('replace')">
-                      {{ t('Replace') }}
-                    </button>
-                    <button type="button" class="pill small go" (click)="fillFromCalendar('add')">
-                      {{ t('Add to them') }}
-                    </button>
-                  </span>
-                </div>
-              } @else {
-                <div class="fill">
-                  <button type="button" class="pill small go" (click)="fillFromCalendar()">
-                    <mat-icon>auto_awesome</mat-icon>
-                    {{ t('Fill from my calendar') }}
-                  </button>
-                </div>
-              }
-            }
             <app-week-chart
               [event]="event()!"
               [meId]="meId()"
@@ -275,7 +174,7 @@
         }
       }
 
-      @if (!stepping() && !editingDay()) {
+      @if (!stepping() && !editingDay() && !settingsOpen()) {
         <app-legend
           [participants]="event()!.participants"
           [meId]="meId()"

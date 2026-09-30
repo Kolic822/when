@@ -118,6 +118,8 @@
   overscroll-behavior: contain;
 
   li {
+    /* Never squeezed by the scrolling list: a card is as tall as what is in it. */
+    flex: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -133,8 +135,8 @@
   }
   .confirm {
     flex-basis: 100%;
-    margin: 6px 8px 2px 0;
-    padding: 10px 12px;
+    margin: 8px 8px 4px 0;
+    padding: 12px;
     border-radius: 10px;
     background: var(--when-bg);
     font-size: 13px;
@@ -376,27 +378,6 @@ p {
   &:focus-visible {
     outline: 2px solid var(--accent);
     border-radius: 4px;
-  }
-}
-
-.changes {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  font-size: 13px;
-  animation: rise 0.2s ease both;
-
-  > li {
-    padding: 8px 0;
-    border-top: 1px solid var(--when-border);
-  }
-  .rel {
-    margin: 0 0 4px;
-  }
-  ul {
-    margin: 0;
-    padding-left: 18px;
-    line-height: 1.4;
   }
 }
 

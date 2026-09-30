@@ -24,10 +24,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/event/event').then((m) => m.EventPage),
   },
   {
+    path: 'changes',
+    loadComponent: () => import('./pages/changes/changes').then((m) => m.Changes),
+  },
+  {
     path: 'guide',
     loadComponent: () => import('./pages/guide/guide').then((m) => m.Guide),
   },
-  // Someone answering an "Let someone else pick" link only needs a name, never an account.
+  // Someone answering an "Send options" link only needs a name, never an account.
   {
     path: 's/:sid',
     loadComponent: () => import('./pages/shortlist/shortlist').then((m) => m.ShortlistPage),

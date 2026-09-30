@@ -137,3 +137,23 @@ Dani, mjeseci i obavijesti prate tvoj jezik
 Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in your phone’s language when it is one of the three.
 Wähle oben im Menü English, Deutsch oder Hrvatski. Die App startet in der Sprache deines Handys, wenn es eine der drei ist.
 Na vrhu izbornika odaberi English, Deutsch ili Hrvatski. Aplikacija se pokreće na jeziku tvog mobitela ako je jedan od ta tri.
+
+Editing a When uses the same two steps as planning one, with Save always in reach
+Ein When zu bearbeiten nutzt dieselben zwei Schritte wie das Planen, mit „Speichern“ immer griffbereit
+Uređivanje Whena koristi ista dva koraka kao planiranje, a „Spremi” je uvijek pri ruci
+
+Bigger calendar when picking days; length on its own row
+Größerer Kalender bei der Tagesauswahl; die Dauer steht in einer eigenen Zeile
+Veći kalendar pri odabiru dana; trajanje je u vlastitom retku
+
+“Let someone else pick” is now “Send options”, on the right
+„Jemand anderen wählen lassen“ heißt jetzt „Optionen senden“ und steht rechts
+„Neka odabere netko drugi” sada je „Pošalji opcije”, s desne strane
+
+What’s new has its own page
+„Was ist neu“ hat eine eigene Seite
+„Što je novo” ima vlastitu stranicu
+
+Removed “Fill from my calendar” for now
+„Aus meinem Kalender ausfüllen“ vorerst entfernt
+„Popuni iz mog kalendara” zasad je uklonjeno

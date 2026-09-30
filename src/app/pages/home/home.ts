@@ -1,46 +1,18 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { form, FormField, maxLength, required } from '@angular/forms/signals';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { EventApi } from '../../core/event-api';
-import { Identity } from '../../core/identity';
-import { PrefsStore } from '../../core/prefs';
-import { Auth } from '../../core/auth';
-import { viewerZone, zoneCity } from '../../core/zone';
 import { AppMenu } from '../../components/app-menu/app-menu';
-import { DURATIONS } from './durations';
-import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
-import { DayPicker } from '../../components/day-picker/day-picker';
+import { WhenDetails, WhenForm } from '../../components/when-form/when-form';
+import { EventApi } from '../../core/event-api';
 import { t } from '../../core/i18n/i18n';
-
-interface CreateModel {
-  title: string;
-  description: string;
-  name: string;
-  durationHours: number;
-  dayStart: number;
-  dayEnd: number;
-  partialOk: boolean;
-}
+import { Identity } from '../../core/identity';
+import { viewerZone } from '../../core/zone';
 
 export { DURATIONS } from './durations';
 
+/** Plan a new When. */
 @Component({
   selector: 'app-home',
-  imports: [
-    FormField,
-    DayPicker,
-    AppMenu,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSlideToggleModule,
-  ],
+  imports: [AppMenu, WhenForm],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -50,81 +22,19 @@ export class Home {
   private readonly identity = inject(Identity);
   private readonly router = inject(Router);
 
-  readonly durations = DURATIONS;
-  readonly startOptions = HOUR_OPTIONS.slice(0, 24);
-  readonly endOptions = HOUR_OPTIONS.slice(1);
-
-  private readonly store = inject(PrefsStore);
-  private readonly prefs = this.store.prefs();
-  readonly features = computed(() => this.store.prefs().features);
-  readonly model = signal<CreateModel>({
-    title: '',
-    description: '',
-    name: inject(Auth).name(),
-    durationHours: this.prefs.durationHours,
-    dayStart: this.prefs.dayStart,
-    dayEnd: this.prefs.dayEnd,
-    partialOk: false,
-  });
-  readonly form = form(this.model, (p) => {
-    required(p.title);
-    required(p.name);
-    maxLength(p.description, 600);
-  });
-
-  readonly dates = signal<string[]>([]);
-  readonly rangeText = computed(() => rangeLabel(this.dates()));
-  readonly rangeValid = computed(() => {
-    const m = this.model();
-    return m.dayEnd - m.dayStart >= m.durationHours * 60;
-  });
-  readonly canCreate = computed(
-    () => this.form().valid() && this.dates().length > 0 && this.rangeValid() && !this.busy(),
-  );
-
-  /** 1: what and who. 2: which days and how long. */
-  readonly step = signal<1 | 2>(1);
-
-  /** The hours are in the organiser's own zone; people elsewhere see them converted. */
-  readonly zoneName = computed(() => zoneCity(viewerZone()));
-
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
 
-  /** Native selects hand back text; the model keeps numbers. */
-  setNumber(key: 'durationHours' | 'dayStart' | 'dayEnd', event: Event): void {
-    const value = Number((event.target as HTMLSelectElement).value);
-    this.model.update((m) => ({ ...m, [key]: value }));
-  }
-
-  onSubmit(event: Event): void {
-    event.preventDefault();
-    if (this.step() === 1) {
-      if (this.form().valid()) this.step.set(2);
-      return;
-    }
-    void this.create();
-  }
-
-  private async create(): Promise<void> {
-    if (!this.canCreate()) return;
+  async create(details: WhenDetails): Promise<void> {
+    if (this.busy()) return;
     this.busy.set(true);
     this.error.set(null);
-    const m = this.model();
     try {
-      const { event: created, creatorToken } = await this.api.create({
-        title: m.title.trim(),
-        description: m.description.trim(),
-        dates: this.dates(),
-        durationHours: m.durationHours,
-        dayStart: m.dayStart,
-        dayEnd: m.dayEnd,
-        partialOk: m.partialOk,
-        timeZone: viewerZone(),
-      });
-      this.identity.setCreatorToken(created.id, creatorToken);
-      this.identity.setPendingName(created.id, m.name.trim());
-      await this.router.navigate(['/e', created.id]);
+      const { name, ...rest } = details;
+      const { event, creatorToken } = await this.api.create({ ...rest, timeZone: viewerZone() });
+      this.identity.setCreatorToken(event.id, creatorToken);
+      this.identity.setPendingName(event.id, name);
+      await this.router.navigate(['/e', event.id]);
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : t('Something went wrong'));
       this.busy.set(false);

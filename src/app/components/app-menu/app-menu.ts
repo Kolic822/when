@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Auth } from '../../core/auth';
-import { CHANGELOG, VERSION } from '../../core/changelog';
+import { VERSION } from '../../core/changelog';
 import { HistoryEntry } from '../../core/models';
 import { History } from '../history/history';
 import { Push } from '../../core/push';
@@ -82,8 +82,6 @@ export class AppMenu {
   }
 
   readonly version = VERSION;
-  readonly changelog = CHANGELOG;
-  readonly showChanges = signal(false);
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -234,6 +232,13 @@ export class AppMenu {
   askRemove(m: RecentMeetup, e: Event): void {
     e.stopPropagation();
     this.confirmId.set(this.confirmId() === m.id ? null : m.id);
+    // The list scrolls; bring the question fully into view.
+    setTimeout(() =>
+      this.host.nativeElement
+        .querySelector('.confirm')
+        ?.closest('li')
+        ?.scrollIntoView({ block: 'nearest' }),
+    );
   }
 
   isOrganiser(m: RecentMeetup): boolean {
@@ -294,7 +299,7 @@ export class AppMenu {
     },
     {
       key: 'shortlist',
-      label: m('Let someone else pick'),
+      label: m('Send options'),
       hint: m('Send a link with only the possible sessions.'),
     },
     {
