@@ -54,14 +54,17 @@ export class Welcome {
   }
 
   // ---- Email and password
-  readonly emailMode = signal<'login' | 'register' | null>(null);
+  readonly emailMode = signal<'login' | 'register' | 'forgot' | null>(null);
+  /** The "check your inbox" note after asking for a new password. */
+  readonly linkSent = signal(false);
   readonly emailBusy = signal(false);
   readonly emailError = signal('');
   private readonly fields = signal({ email: '', username: '', password: '' });
   readonly form = form(this.fields);
 
-  setEmailMode(mode: 'login' | 'register'): void {
+  setEmailMode(mode: 'login' | 'register' | 'forgot'): void {
     this.emailError.set('');
+    this.linkSent.set(false);
     this.emailMode.set(mode);
   }
 
@@ -72,6 +75,13 @@ export class Welcome {
     this.emailBusy.set(true);
     this.emailError.set('');
     const typed = this.fields();
+    if (mode === 'forgot') {
+      const failed = await this.auth.forgot(typed.email.trim());
+      this.emailBusy.set(false);
+      if (failed) this.emailError.set(emailError(failed));
+      else this.linkSent.set(true);
+      return;
+    }
     const code = await this.auth.withEmail(mode, {
       email: typed.email.trim(),
       username: typed.username.trim(),
@@ -79,7 +89,7 @@ export class Welcome {
     });
     this.emailBusy.set(false);
     if (!code) return this.enter();
-    this.emailError.set(EMAIL_ERRORS[code] ? t(EMAIL_ERRORS[code]) : t('Something went wrong'));
+    this.emailError.set(emailError(code));
   }
 
   guest(): void {
@@ -94,6 +104,9 @@ export class Welcome {
     void this.router.navigateByUrl(inside ? next : '/');
   }
 }
+
+const emailError = (code: string) =>
+  EMAIL_ERRORS[code] ? t(EMAIL_ERRORS[code]) : t('Something went wrong');
 
 /** What the server may answer, as sentences. */
 const EMAIL_ERRORS: Record<string, string> = {

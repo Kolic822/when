@@ -321,6 +321,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 4px 0 12px;
 
@@ -345,6 +346,32 @@ p {
     padding: 0 14px;
     font-size: 13px;
     color: var(--accent);
+  }
+  /* Takes its own line under the name. */
+  .confirm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-basis: 100%;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    font-size: 12px;
+    line-height: 1.35;
+
+    span {
+      flex: 1;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    mat-icon {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      color: var(--accent);
+    }
   }
 }
 

@@ -817,3 +817,67 @@ Prikaži moje događaje iz kalendara
 Your calendar leaves no gap long enough on this day.
 Dein Kalender lässt an diesem Tag keine ausreichend lange Lücke.
 Tvoj kalendar taj dan ne ostavlja dovoljno dugu prazninu.
+
+Forgot password?
+Passwort vergessen?
+Zaboravljena lozinka?
+
+Send link
+Link senden
+Pošalji poveznicu
+
+Enter the email of your account and we will send you a link to set a new password.
+Gib die E-Mail deines Kontos ein und wir schicken dir einen Link, um ein neues Passwort festzulegen.
+Upiši e-poštu svog računa i poslat ćemo ti poveznicu za postavljanje nove lozinke.
+
+If there is an account with that email, a link to set a new password is on its way. Check your inbox and the spam folder.
+Wenn es ein Konto mit dieser E-Mail gibt, ist ein Link für ein neues Passwort unterwegs. Schau in deinen Posteingang und in den Spam-Ordner.
+Ako postoji račun s tom e-poštom, poveznica za novu lozinku je na putu. Provjeri pristiglu poštu i neželjenu poštu.
+
+Set a new password
+Neues Passwort festlegen
+Postavi novu lozinku
+
+New password
+Neues Passwort
+Nova lozinka
+
+Save and sign in
+Speichern und anmelden
+Spremi i prijavi se
+
+Email confirmed
+E-Mail bestätigt
+E-pošta je potvrđena
+
+Thanks, {email} is confirmed.
+Danke, {email} ist bestätigt.
+Hvala, {email} je potvrđena.
+
+Open When
+When öffnen
+Otvori When
+
+This link no longer works
+Dieser Link funktioniert nicht mehr
+Ova poveznica više ne radi
+
+Links work once and for a limited time. Ask for a new one.
+Links funktionieren einmal und nur für begrenzte Zeit. Fordere einen neuen an.
+Poveznice rade jednom i ograničeno vrijeme. Zatraži novu.
+
+One moment…
+Einen Moment…
+Samo trenutak…
+
+Confirm your email: open the link we sent to {email}.
+Bestätige deine E-Mail: Öffne den Link, den wir an {email} geschickt haben.
+Potvrdi svoju e-poštu: otvori poveznicu koju smo poslali na {email}.
+
+Send again
+Erneut senden
+Pošalji ponovno
+
+Sent
+Gesendet
+Poslano

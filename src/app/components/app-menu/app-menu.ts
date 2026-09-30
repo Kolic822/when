@@ -205,6 +205,16 @@ export class AppMenu {
     if (!ok && this.push.state() !== 'blocked') this.pushFailed.set(true);
   }
 
+  /** The confirmation email was just sent again. */
+  readonly confirmationSent = signal(false);
+
+  async resendConfirmation(): Promise<void> {
+    this.confirmationSent.set(true);
+    const failed = await this.auth.resendConfirmation();
+    // Asked too often: leave it saying "Sent", there is one in the inbox already.
+    if (failed && failed !== 'too_many_tries') this.confirmationSent.set(false);
+  }
+
   signOut(): void {
     this.auth.signOut();
     this.close();

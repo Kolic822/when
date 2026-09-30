@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.11.1';
+export const VERSION = '0.12';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.12',
+    date: '30 Sep 2026',
+    changes: [
+      m('Forgot your password? Get a link by email to set a new one'),
+      m('New accounts confirm their email address with a link'),
+    ],
+  },
   {
     version: '0.11.1',
     date: '30 Sep 2026',

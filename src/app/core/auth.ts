@@ -1,12 +1,12 @@
 import { computed, Service, signal } from '@angular/core';
-import { t } from './i18n/i18n';
+import { lang, t } from './i18n/i18n';
 
 /** Who is using the app on this device. Guests have no account and type their name per When. */
 export type User =
   | { kind: 'guest' }
   | { kind: 'google'; name: string; email: string; picture: string; session: string }
   /** Registered with an email and password. */
-  | { kind: 'account'; name: string; email: string; session: string };
+  | { kind: 'account'; name: string; email: string; session: string; verified?: boolean };
 
 interface GoogleIdApi {
   initialize(options: {
@@ -23,6 +23,13 @@ declare global {
   interface Window {
     google?: { accounts: { id: GoogleIdApi } };
   }
+}
+
+interface AccountProfile {
+  name: string;
+  email: string;
+  verified: boolean;
+  session?: string;
 }
 
 const KEY = 'when:user';
@@ -46,6 +53,21 @@ export class Auth {
   private readonly clientId = signal<string | null>(null);
   readonly googleReady = computed(() => !!this.clientId());
   readonly checked = computed(() => this.clientId() !== null);
+  /** The server can send email, so forgotten passwords and address checks work. */
+  readonly mailReady = signal(false);
+  /** Signed in with an email that has not been confirmed yet. */
+  readonly needsConfirming = computed(() => {
+    const u = this.user();
+    return this.mailReady() && u?.kind === 'account' && !u.verified;
+  });
+
+  constructor() {
+    void this.loadConfig().then(() => this.refresh());
+    // The confirmation link usually opens in another browser; notice it on the way back.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && this.needsConfirming()) void this.refresh();
+    });
+  }
 
   private configRequest: Promise<void> | null = null;
   private scriptRequest: Promise<void> | null = null;
@@ -54,7 +76,10 @@ export class Auth {
   loadConfig(): Promise<void> {
     this.configRequest ??= fetch('/api/config')
       .then((res) => (res.ok ? res.json() : { googleClientId: '' }))
-      .then((config: { googleClientId?: string }) => this.clientId.set(config.googleClientId ?? ''))
+      .then((config: { googleClientId?: string; mail?: boolean }) => {
+        this.mailReady.set(!!config.mail);
+        this.clientId.set(config.googleClientId ?? '');
+      })
       .catch(() => this.clientId.set(''));
     return this.configRequest;
   }
@@ -72,23 +97,105 @@ export class Auth {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(
-          mode === 'register' ? fields : { login: fields.email, password: fields.password },
+          mode === 'register'
+            ? { ...fields, lang: lang() }
+            : { login: fields.email, password: fields.password },
         ),
       });
-      const body = (await res.json().catch(() => ({}))) as {
-        error?: string;
-        name?: string;
-        email?: string;
-        session?: string;
-      };
-      if (!res.ok || !body.session) return body.error ?? 'failed';
-      this.set({
-        kind: 'account',
-        name: body.name ?? '',
-        email: body.email ?? '',
-        session: body.session,
+      return this.enter(res);
+    } catch {
+      return 'offline';
+    }
+  }
+
+  /** Signs in with what a sign-in, sign-up or password reset answered; '' when it worked. */
+  private async enter(res: Response): Promise<string> {
+    const body = (await res.json().catch(() => ({}))) as Partial<AccountProfile> & {
+      error?: string;
+    };
+    if (!res.ok || !body.session) return body.error ?? 'failed';
+    this.set({
+      kind: 'account',
+      name: body.name ?? '',
+      email: body.email ?? '',
+      session: body.session,
+      verified: !!body.verified,
+    });
+    return '';
+  }
+
+  /** Asks for an email with a link to set a new password. '' when the request went through. */
+  async forgot(email: string): Promise<string> {
+    return this.post('/api/auth/forgot', { email, lang: lang() });
+  }
+
+  /** Sets a new password with the token from the emailed link, and signs in. */
+  async resetPassword(token: string, password: string): Promise<string> {
+    try {
+      const res = await fetch('/api/auth/reset', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ token, password }),
       });
-      return '';
+      return this.enter(res);
+    } catch {
+      return 'offline';
+    }
+  }
+
+  /** Confirms an email address with the token from the emailed link. */
+  async confirmEmail(token: string): Promise<{ email?: string }> {
+    try {
+      const res = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      if (!res.ok) return {};
+      const { email } = (await res.json()) as { email: string };
+      const u = this.user();
+      if (u?.kind === 'account' && u.email === email) this.set({ ...u, verified: true });
+      return { email };
+    } catch {
+      return {};
+    }
+  }
+
+  /** Sends the confirmation email once more. */
+  async resendConfirmation(): Promise<string> {
+    return this.post('/api/auth/verify/send', { lang: lang() }, this.authHeader());
+  }
+
+  /** Asks the server how the account stands, e.g. whether the email has been confirmed. */
+  async refresh(): Promise<void> {
+    const u = this.user();
+    if (u?.kind !== 'account' || u.verified) return;
+    try {
+      const res = await fetch('/api/me', { headers: this.authHeader() });
+      if (!res.ok) return;
+      const me = (await res.json()) as AccountProfile;
+      const now = this.user();
+      if (now?.kind === 'account' && now.session === u.session && me.verified) {
+        this.set({ ...now, verified: true });
+      }
+    } catch {
+      /* offline */
+    }
+  }
+
+  private async post(
+    url: string,
+    body: Record<string, string>,
+    headers: Record<string, string> = {},
+  ): Promise<string> {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { ...headers, 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (res.ok) return '';
+      return ((await res.json().catch(() => ({}))) as { error?: string }).error ?? 'failed';
     } catch {
       return 'offline';
     }

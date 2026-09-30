@@ -31,6 +31,17 @@ export const routes: Routes = [
     path: 'guide',
     loadComponent: () => import('./pages/guide/guide').then((m) => m.Guide),
   },
+  // Links from account emails. They work signed in or not.
+  {
+    path: 'verify',
+    data: { kind: 'verify' },
+    loadComponent: () => import('./pages/account-link/account-link').then((m) => m.AccountLink),
+  },
+  {
+    path: 'reset',
+    data: { kind: 'reset' },
+    loadComponent: () => import('./pages/account-link/account-link').then((m) => m.AccountLink),
+  },
   // Someone answering an "Outsource decision" link only needs a name, never an account.
   {
     path: 's/:sid',

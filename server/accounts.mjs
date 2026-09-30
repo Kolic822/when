@@ -1,11 +1,13 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
-import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
+import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 import path from 'node:path';
 
 const scrypt = promisify(scryptCallback);
 const MAX_SESSIONS = 12;
 const MAX_WHENS = 200;
+const VERIFY_MS = 7 * 24 * 60 * 60 * 1000;
+const RESET_MS = 60 * 60 * 1000;
 
 /**
  * People with an account, either through Google or with an email and password:
@@ -63,6 +65,7 @@ export class Accounts {
       email,
       name: username,
       password: await hashPassword(password),
+      verified: false,
       sessions: [],
       whens: {},
       createdAt: new Date().toISOString(),
@@ -78,6 +81,63 @@ export class Accounts {
     const ok = await verifyPassword(password, account?.password ?? DUMMY_HASH);
     if (!account || !ok) return null;
     return { account, session: this.#newSession(account) };
+  }
+
+  /**
+   * A one-time link token for confirming the account's email address. Only its hash is
+   * kept, so reading the accounts file does not give anyone a working link.
+   */
+  startVerify(account) {
+    const token = newToken();
+    account.verify = { hash: hashToken(token), expires: Date.now() + VERIFY_MS };
+    this.#scheduleSave();
+    return token;
+  }
+
+  /** Marks the email as confirmed. Returns the account, or null when the link is no good. */
+  verify(token) {
+    const account = this.#byToken('verify', token);
+    if (!account) return null;
+    account.verified = true;
+    delete account.verify;
+    this.#scheduleSave();
+    return account;
+  }
+
+  /** A one-time, one-hour token for setting a new password; null when no such account. */
+  startReset(email) {
+    const account = this.#byEmail(email);
+    if (!account) return null;
+    const token = newToken();
+    account.reset = { hash: hashToken(token), expires: Date.now() + RESET_MS };
+    this.#scheduleSave();
+    return { account, token };
+  }
+
+  /**
+   * Sets a new password from a reset link. Every device is signed out, and since the link
+   * arrived by email the address counts as confirmed. Returns null when the link is no good.
+   */
+  async reset(token, password) {
+    const account = this.#byToken('reset', token);
+    if (!account) return null;
+    account.password = await hashPassword(password);
+    account.verified = true;
+    delete account.reset;
+    delete account.verify;
+    for (const s of account.sessions) this.#sessions.delete(s.token);
+    account.sessions = [];
+    return { account, session: this.#newSession(account) };
+  }
+
+  #byToken(kind, token) {
+    if (typeof token !== 'string' || token.length < 20 || token.length > 100) return null;
+    const hash = hashToken(token);
+    for (const a of this.#accounts.values()) {
+      const pending = a[kind];
+      if (pending && pending.hash === hash) return pending.expires > Date.now() ? a : null;
+    }
+    return null;
   }
 
   signOut(token) {
@@ -162,6 +222,9 @@ export class Accounts {
     await rename(tmp, this.#file);
   }
 }
+
+const newToken = () => randomBytes(32).toString('base64url');
+const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 
 // ---- Passwords: scrypt with a random salt per password. Format: scrypt$<salt>$<hash>.
 const KEY_LENGTH = 64;

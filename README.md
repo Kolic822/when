@@ -23,7 +23,7 @@ source in `src/app/pages/guide/guide.ts`). The change log is next to it
 - **Decide**: possible sessions as chips; the organiser picks a start time and books
 - **Notifications**: everyone answered, booked, moved, cancelled; answers to sent links
 - **Welcome**: continue as a guest, with Google (`GOOGLE_CLIENT_ID`), or with an email, username
-  and password (hashed with scrypt in `accounts.json`; no email verification or password reset yet)
+  and password (hashed with scrypt in `accounts.json`; confirmation and password-reset emails need a mail service, see below)
 - **Accounts**: My Whens, who you are in each When and your calendar links follow the account to
   every device, including the browser next to the installed app
 - **Pro** (signed in with Google): let someone else pick via a link, book several sessions,
@@ -50,6 +50,10 @@ the server are in `server/messages.mjs`.
 | `GOOGLE_CLIENT_ID` | Switches on Google sign-in |
 | `ADMIN_TOKEN` | Enables `GET /api/admin/export`; see `deploy/backup.sh` |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | Push keys; created next to the data file if unset |
+| `RESEND_API_KEY` or `BREVO_API_KEY` | Mail service for password reset and email confirmation; without one those stay hidden |
+| `MAIL_FROM` | Sender, e.g. `When <hello@example.com>`; must be an address the mail service lets you send from |
+| `PUBLIC_URL` | The app's address for links in emails; on Railway `RAILWAY_PUBLIC_DOMAIN` is used when unset |
+| `MAIL_LOG` | `1` prints emails to the server log instead of sending (local testing) |
 
 ## Stack
 

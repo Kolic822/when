@@ -28,6 +28,22 @@
           <button type="button" class="pill small-pill" (click)="signOut()">
             {{ t('Sign out') }}
           </button>
+          @if (auth.needsConfirming()) {
+            <p class="confirm">
+              <mat-icon aria-hidden="true">mark_email_unread</mat-icon>
+              <span>{{
+                t('Confirm your email: open the link we sent to {email}.', { email: u.email })
+              }}</span>
+              <button
+                type="button"
+                class="pill small-pill"
+                (click)="resendConfirmation()"
+                [disabled]="confirmationSent()"
+              >
+                {{ confirmationSent() ? t('Sent') : t('Send again') }}
+              </button>
+            </p>
+          }
         } @else {
           <span class="who">
             <span class="name">{{ t('Guest') }}</span>

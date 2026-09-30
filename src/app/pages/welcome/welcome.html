@@ -45,24 +45,34 @@
 
     @if (emailMode(); as mode) {
       <form class="email-form" (submit)="submitEmail($event)">
-        <div class="tabs">
-          <button
-            type="button"
-            [class.on]="mode === 'login'"
-            [attr.aria-pressed]="mode === 'login'"
-            (click)="setEmailMode('login')"
-          >
-            {{ t('Sign in') }}
-          </button>
-          <button
-            type="button"
-            [class.on]="mode === 'register'"
-            [attr.aria-pressed]="mode === 'register'"
-            (click)="setEmailMode('register')"
-          >
-            {{ t('Create account') }}
-          </button>
-        </div>
+        @if (mode === 'forgot') {
+          <p class="form-lead">
+            {{
+              t(
+                'Enter the email of your account and we will send you a link to set a new password.'
+              )
+            }}
+          </p>
+        } @else {
+          <div class="tabs">
+            <button
+              type="button"
+              [class.on]="mode === 'login'"
+              [attr.aria-pressed]="mode === 'login'"
+              (click)="setEmailMode('login')"
+            >
+              {{ t('Sign in') }}
+            </button>
+            <button
+              type="button"
+              [class.on]="mode === 'register'"
+              [attr.aria-pressed]="mode === 'register'"
+              (click)="setEmailMode('register')"
+            >
+              {{ t('Create account') }}
+            </button>
+          </div>
+        }
         <label>
           <span class="muted">{{ mode === 'login' ? t('Email or username') : t('Email') }}</span>
           <input
@@ -79,24 +89,56 @@
             <input type="text" [formField]="form.username" autocomplete="nickname" />
           </label>
         }
-        <label>
-          <span class="muted">{{ t('Password') }}</span>
-          <input
-            [formField]="form.password"
-            type="password"
-            [attr.autocomplete]="mode === 'login' ? 'current-password' : 'new-password'"
-          />
-          @if (mode === 'register') {
-            <span class="muted hint">{{ t('At least 8 characters.') }}</span>
-          }
-        </label>
+        @if (mode !== 'forgot') {
+          <label>
+            <span class="muted">{{ t('Password') }}</span>
+            <input
+              [formField]="form.password"
+              type="password"
+              [attr.autocomplete]="mode === 'login' ? 'current-password' : 'new-password'"
+            />
+            @if (mode === 'register') {
+              <span class="muted hint">{{ t('At least 8 characters.') }}</span>
+            }
+          </label>
+        }
         @if (emailError()) {
           <p class="error" role="alert">{{ emailError() }}</p>
         }
-        <button type="submit" class="pill guest" [disabled]="emailBusy()">
-          {{ mode === 'login' ? t('Sign in') : t('Create account') }}
-        </button>
-        <button type="button" class="back-link" (click)="emailMode.set(null)">
+        @if (linkSent()) {
+          <p class="sent" role="status">
+            <mat-icon aria-hidden="true">mark_email_read</mat-icon>
+            <span>{{
+              t(
+                'If there is an account with that email, a link to set a new password is on its way. Check your inbox and the spam folder.'
+              )
+            }}</span>
+          </p>
+        } @else {
+          <button type="submit" class="pill guest" [disabled]="emailBusy()">
+            @switch (mode) {
+              @case ('login') {
+                {{ t('Sign in') }}
+              }
+              @case ('register') {
+                {{ t('Create account') }}
+              }
+              @default {
+                {{ t('Send link') }}
+              }
+            }
+          </button>
+        }
+        @if (mode === 'login' && auth.mailReady()) {
+          <button type="button" class="back-link" (click)="setEmailMode('forgot')">
+            {{ t('Forgot password?') }}
+          </button>
+        }
+        <button
+          type="button"
+          class="back-link"
+          (click)="mode === 'forgot' ? setEmailMode('login') : emailMode.set(null)"
+        >
           {{ t('Back') }}
         </button>
       </form>

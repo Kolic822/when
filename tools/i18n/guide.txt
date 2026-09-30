@@ -393,3 +393,7 @@ Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvjež
 In the day view, the calendar button at the top hides or shows your events. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.
 In der Tagesansicht blendet der Kalender-Button oben deine Termine ein oder aus. Aus Kalender füllen markiert dich überall dort als frei, wo dein Kalender nichts hat, wenn die Lücke für das Treffen lang genug ist.
 U prikazu dana gumb kalendara na vrhu skriva ili prikazuje tvoje događaje. Popuni iz kalendara označava te slobodnim gdje god tvoj kalendar nema ništa, ako je praznina dovoljno duga za susret.
+
+Created an account with an email? Open the link we email you to confirm the address. Forgot the password? Tap Forgot password? on the sign-in form and we email you a link to set a new one.
+Konto mit E-Mail erstellt? Öffne den Link, den wir dir mailen, um die Adresse zu bestätigen. Passwort vergessen? Tippe im Anmeldeformular auf Passwort vergessen? und wir mailen dir einen Link für ein neues.
+Račun napravljen e-poštom? Otvori poveznicu koju ti pošaljemo da potvrdiš adresu. Zaboravljena lozinka? Dodirni Zaboravljena lozinka? u obrascu za prijavu i poslat ćemo ti poveznicu za novu.

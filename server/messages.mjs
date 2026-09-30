@@ -18,6 +18,12 @@ const TEXTS = {
     works: 'Works for them: {sessions}',
     none_work: 'None of the sessions work for them.',
     planned_with: 'Planned with When: {url}',
+    mail_verify_subject: 'Confirm your email for When',
+    mail_verify_body:
+      'Hi {name},\n\nTap this link to confirm your email address for When:\n{url}\n\nThe link works for 7 days. If you did not create an account, you can ignore this email.',
+    mail_reset_subject: 'Set a new password for When',
+    mail_reset_body:
+      'Hi {name},\n\nTap this link to set a new password for When:\n{url}\n\nThe link works for one hour and only once. If you did not ask for it, you can ignore this email; your password stays as it is.',
   },
   de: {
     everyone: 'Alle haben geantwortet · {title}',
@@ -37,6 +43,12 @@ const TEXTS = {
     works: 'Passt: {sessions}',
     none_work: 'Keiner der Termine passt.',
     planned_with: 'Geplant mit When: {url}',
+    mail_verify_subject: 'Bestätige deine E-Mail für When',
+    mail_verify_body:
+      'Hallo {name},\n\ntippe auf diesen Link, um deine E-Mail-Adresse für When zu bestätigen:\n{url}\n\nDer Link gilt 7 Tage. Wenn du kein Konto erstellt hast, kannst du diese E-Mail ignorieren.',
+    mail_reset_subject: 'Neues Passwort für When festlegen',
+    mail_reset_body:
+      'Hallo {name},\n\ntippe auf diesen Link, um ein neues Passwort für When festzulegen:\n{url}\n\nDer Link gilt eine Stunde und nur einmal. Wenn du das nicht angefordert hast, kannst du diese E-Mail ignorieren; dein Passwort bleibt, wie es ist.',
   },
   hr: {
     everyone: 'Svi su odgovorili · {title}',
@@ -57,6 +69,12 @@ const TEXTS = {
     works: 'Odgovara: {sessions}',
     none_work: 'Nijedan termin ne odgovara.',
     planned_with: 'Planirano uz When: {url}',
+    mail_verify_subject: 'Potvrdi svoju e-poštu za When',
+    mail_verify_body:
+      'Bok {name},\n\ndodirni ovu poveznicu da potvrdiš svoju adresu e-pošte za When:\n{url}\n\nPoveznica vrijedi 7 dana. Ako nisi napravio/la račun, slobodno zanemari ovu poruku.',
+    mail_reset_subject: 'Postavi novu lozinku za When',
+    mail_reset_body:
+      'Bok {name},\n\ndodirni ovu poveznicu da postaviš novu lozinku za When:\n{url}\n\nPoveznica vrijedi jedan sat i samo jednom. Ako je nisi tražio/la, slobodno zanemari ovu poruku; lozinka ostaje ista.',
   },
 };
 

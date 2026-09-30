@@ -11,6 +11,7 @@ import { cleanLang, localeOf, say } from './messages.mjs';
 import { Accounts } from './accounts.mjs';
 import { eventsBetween, fetchCalendar } from './ics.mjs';
 import { calendarFile } from './calendar-file.mjs';
+import { createMailer } from './mail.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Hosting platforms set PORT; locally API_PORT keeps the API off the Angular dev server's port.
@@ -273,6 +274,13 @@ const PUBLIC_URL = (
   (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : '')
 ).replace(/\/+$/, '');
 const publicUrl = (req) => PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
+/**
+ * The same, for links sent by email. There the address must not come from the request,
+ * or a forged one could make a reset link point at someone else's site. Only a local
+ * test server may use its own address.
+ */
+const mailLinkBase = (req) =>
+  PUBLIC_URL || (['localhost', '127.0.0.1'].includes(req.hostname) ? publicUrl(req) : '');
 
 /**
  * One session of a When as a calendar file. The name ends in .ics so the app's offline
@@ -314,7 +322,18 @@ app.get('/api/events/:id/when.ics', (req, res) => {
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? '';
 
 /** What the app needs to know before it starts; empty client id means guests only. */
-app.get('/api/config', (_req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID }));
+const mailer = createMailer();
+console.log(
+  !mailer.ready
+    ? 'email: off (no mail service configured)'
+    : PUBLIC_URL
+      ? `email: ready, links point to ${PUBLIC_URL}`
+      : 'email: configured, but PUBLIC_URL is not set, so only a local test server sends mail',
+);
+
+/** What the app needs to know before it starts; empty client id means no Google sign-in. */
+const canMail = (req) => mailer.ready && !!mailLinkBase(req);
+app.get('/api/config', (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, mail: canMail(req) }));
 
 /** Checks the token Google gave the browser and returns the person's name. */
 app.post('/api/auth/google', async (req, res) => {
@@ -371,6 +390,42 @@ setInterval(() => {
 const cleanEmail = (v) => String(v ?? '').trim().toLowerCase().slice(0, 254);
 const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 
+/** Emails the link that confirms an account's address. The link carries the token after a #, which browsers never send to servers. */
+function sendVerification(req, acc, lang) {
+  if (!canMail(req) || acc.verified) return;
+  const url = `${mailLinkBase(req)}/verify#${accounts.startVerify(acc)}`;
+  void mailer.send({
+    to: acc.email,
+    subject: say(lang, 'mail_verify_subject'),
+    text: say(lang, 'mail_verify_body', { name: acc.name, url }),
+  });
+}
+
+/** How often emails may be asked for: per address and per visitor. */
+const mailAsks = new Map();
+const MAIL_WINDOW_MS = 60 * 60 * 1000;
+function mayAskForMail(keys, max = 4) {
+  const now = Date.now();
+  const recent = (key) => (mailAsks.get(key) ?? []).filter((t) => now - t < MAIL_WINDOW_MS);
+  if (keys.some((key) => recent(key).length >= max)) return false;
+  for (const key of keys) mailAsks.set(key, [...recent(key), now]);
+  return true;
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, times] of mailAsks) {
+    if (!times.some((t) => now - t < MAIL_WINDOW_MS)) mailAsks.delete(key);
+  }
+}, MAIL_WINDOW_MS).unref();
+
+const profile = (acc, session) => ({
+  name: acc.name,
+  email: acc.email,
+  // Google has already checked the address of its own accounts.
+  verified: acc.password ? acc.verified === true : true,
+  ...(session ? { session } : {}),
+});
+
 app.post('/api/auth/register', async (req, res) => {
   const email = cleanEmail(req.body?.email);
   const username = cleanName(req.body?.username);
@@ -380,7 +435,8 @@ app.post('/api/auth/register', async (req, res) => {
   if (password.length < 8 || password.length > 200) return res.status(400).json({ error: 'bad_password' });
   const made = await accounts.register({ email, username, password });
   if (made.error) return res.status(409).json({ error: made.error });
-  res.status(201).json({ name: made.account.name, email, session: made.session });
+  sendVerification(req, made.account, cleanLang(String(req.body?.lang ?? '')));
+  res.status(201).json(profile(made.account, made.session));
 });
 
 app.post('/api/auth/login', async (req, res) => {
@@ -393,10 +449,72 @@ app.post('/api/auth/login', async (req, res) => {
     noteFailure(keys);
     return res.status(401).json({ error: 'wrong_login' });
   }
-  res.json({ name: found.account.name, email: found.account.email, session: found.session });
+  res.json(profile(found.account, found.session));
 });
 
-// ---- My Whens, the same on every device signed in with the same account.
+/** Who this device is signed in as, e.g. to learn that the email was confirmed elsewhere. */
+app.get('/api/me', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  res.json(profile(me));
+});
+
+/** Sends the confirmation email again. */
+app.post('/api/auth/verify/send', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  if (!canMail(req)) return res.status(503).json({ error: 'no_mail' });
+  if (!mayAskForMail([`verify:${me.id}`])) return res.status(429).json({ error: 'too_many_tries' });
+  sendVerification(req, me, cleanLang(String(req.body?.lang ?? '')));
+  res.status(204).end();
+});
+
+/** The link from the confirmation email was opened. */
+app.post('/api/auth/verify', (req, res) => {
+  if (tooManyTries([`token:${req.ip}`])) return res.status(429).json({ error: 'too_many_tries' });
+  const acc = accounts.verify(req.body?.token);
+  if (!acc) {
+    noteFailure([`token:${req.ip}`]);
+    return res.status(400).json({ error: 'bad_link' });
+  }
+  res.json({ email: acc.email });
+});
+
+/**
+ * "Forgot password": emails a link for setting a new one. Always answers the same way,
+ * so nobody can use it to find out which addresses have an account.
+ */
+app.post('/api/auth/forgot', (req, res) => {
+  if (!canMail(req)) return res.status(503).json({ error: 'no_mail' });
+  const email = cleanEmail(req.body?.email);
+  if (!isEmail(email)) return res.status(400).json({ error: 'bad_email' });
+  if (!mayAskForMail([`ip:${req.ip}`], 8)) return res.status(429).json({ error: 'too_many_tries' });
+  res.status(204).end();
+  if (!mayAskForMail([`reset:${email}`], 3)) return;
+  const started = accounts.startReset(email);
+  if (!started) return;
+  const lang = cleanLang(String(req.body?.lang ?? ''));
+  const url = `${mailLinkBase(req)}/reset#${started.token}`;
+  void mailer.send({
+    to: started.account.email,
+    subject: say(lang, 'mail_reset_subject'),
+    text: say(lang, 'mail_reset_body', { name: started.account.name, url }),
+  });
+});
+
+/** The link from the reset email was opened and a new password chosen. */
+app.post('/api/auth/reset', async (req, res) => {
+  const password = String(req.body?.password ?? '');
+  if (password.length < 8 || password.length > 200) return res.status(400).json({ error: 'bad_password' });
+  if (tooManyTries([`token:${req.ip}`])) return res.status(429).json({ error: 'too_many_tries' });
+  const done = await accounts.reset(req.body?.token, password);
+  if (!done) {
+    noteFailure([`token:${req.ip}`]);
+    return res.status(400).json({ error: 'bad_link' });
+  }
+  res.json(profile(done.account, done.session));
+});
+
 function account(req) {
   const header = req.get('authorization') ?? '';
   return accounts.bySession(header.startsWith('Bearer ') ? header.slice(7) : '');

@@ -301,3 +301,11 @@ Dodaj u kalendar sada na mobitelu otvara kalendar
 Book stands out more on its button
 Festlegen ist auf dem Button jetzt deutlicher
 Potvrdi se sada više ističe na gumbu
+
+Forgot your password? Get a link by email to set a new one
+Passwort vergessen? Du bekommst per E-Mail einen Link für ein neues
+Zaboravljena lozinka? Poveznica za novu stiže e-poštom
+
+New accounts confirm their email address with a link
+Neue Konten bestätigen ihre E-Mail-Adresse über einen Link
+Novi računi potvrđuju adresu e-pošte poveznicom
