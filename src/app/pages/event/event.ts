@@ -40,6 +40,7 @@ import { ZoneNote } from '../../components/zone-note/zone-note';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
 import { Push } from '../../core/push';
+import { HowToState } from '../../core/how-to-state';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
@@ -89,6 +90,7 @@ export class EventPage implements OnDestroy {
   /** Pro features switched on in the menu (preview). */
   private readonly prefsStore = inject(PrefsStore);
   private readonly push = inject(Push);
+  private readonly howTo = inject(HowToState);
   readonly features = computed(() => this.prefsStore.prefs().features);
 
   readonly resultsCard = viewChild<Results>('results');
@@ -145,6 +147,8 @@ export class EventPage implements OnDestroy {
       const me = this.me();
       if (!me || this.stepperOffered) return;
       this.stepperOffered = true;
+      // New here: explain the calendar first. Skipping it is one tap.
+      this.howTo.offer();
       if (me.slots.length === 0 && !this.identity.stepperDone(this.id())) this.stepping.set(true);
     });
     // Close the rename prompt once the new name has arrived (it stays open on a "name taken" error).
@@ -255,7 +259,8 @@ export class EventPage implements OnDestroy {
   finishStepper(): void {
     this.identity.setStepperDone(this.id());
     this.stepping.set(false);
-    if (this.hasAnySlots()) this.snack.open("You're in. Nice one!", undefined, { duration: 3000 });
+    if (this.hasAnySlots())
+      this.snack.open(t('You’re in. Nice one!'), undefined, { duration: 3000 });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

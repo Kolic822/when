@@ -569,3 +569,7 @@ Pošalji opcije
 You have version {version}.
 Du hast Version {version}.
 Imaš verziju {version}.
+
+You’re in. Nice one!
+Du bist dabei. Super!
+Unutra si. Bravo!

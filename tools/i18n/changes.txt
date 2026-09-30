@@ -157,3 +157,7 @@ What’s new has its own page
 Removed “Fill from my calendar” for now
 „Aus meinem Kalender ausfüllen“ vorerst entfernt
 „Popuni iz mog kalendara” zasad je uklonjeno
+
+The short guide now appears right after you join a When from a link, and can be skipped
+Die Kurzanleitung erscheint jetzt direkt nach dem Beitritt zu einem When über einen Link und lässt sich überspringen
+Kratki vodič sada se pojavljuje odmah nakon pridruživanja Whenu preko poveznice i može se preskočiti

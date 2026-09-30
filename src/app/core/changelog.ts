@@ -7,9 +7,16 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.7.2';
+export const VERSION = '0.7.3';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.7.3',
+    date: '30 Sep 2026',
+    changes: [
+      m('The short guide now appears right after you join a When from a link, and can be skipped'),
+    ],
+  },
   {
     version: '0.7.2',
     date: '30 Sep 2026',

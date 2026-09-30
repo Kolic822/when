@@ -44,6 +44,7 @@ export class Guide {
       steps: [
         m('Tap Copy link at the top of the When and send it in any chat.'),
         m('Whoever opens it enters a name and gets their own colour. No account is needed.'),
+        m('The first time on a device they get a short three-step guide, which they can skip.'),
         m('Two people can’t use the same name in one When.'),
       ],
     },

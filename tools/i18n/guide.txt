@@ -349,3 +349,7 @@ Save is always at the bottom; Cancel leaves everything as it was.
 Connect calendar
 Kalender verbinden
 Poveži kalendar
+
+The first time on a device they get a short three-step guide, which they can skip.
+Beim ersten Mal auf einem Gerät bekommen sie eine kurze Anleitung in drei Schritten, die sie überspringen können.
+Prvi put na uređaju dobiju kratak vodič u tri koraka, koji mogu preskočiti.
