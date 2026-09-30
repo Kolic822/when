@@ -562,10 +562,6 @@ Change the plan
 Plan ändern
 Promijeni plan
 
-Days
-Tage
-Dani
-
 Send options
 Optionen senden
 Pošalji opcije

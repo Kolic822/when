@@ -1,15 +1,15 @@
 <form class="card" [class.editing]="editing()" (submit)="onSubmit($event)">
-  <div class="steps" role="img" [attr.aria-label]="t('Step {n} of 2', { n: step() })">
-    <span class="dot" [class.on]="step() >= 1"></span>
-    <span class="dot" [class.on]="step() >= 2"></span>
-  </div>
+  @if (!editing()) {
+    <div class="steps" role="img" [attr.aria-label]="t('Step {n} of 2', { n: step() })">
+      <span class="dot" [class.on]="step() >= 1"></span>
+      <span class="dot" [class.on]="step() >= 2"></span>
+    </div>
+  }
 
-  @if (step() === 1) {
+  @if (!editing() && step() === 1) {
     <div class="step first">
-      <h1>{{ editing() ? t('Change the plan') : t("What's the plan?") }}</h1>
-      @if (!editing()) {
-        <p class="muted lead">{{ t('Pick some days, share the link, find a time that works.') }}</p>
-      }
+      <h1>{{ t("What's the plan?") }}</h1>
+      <p class="muted lead">{{ t('Pick some days, share the link, find a time that works.') }}</p>
 
       <mat-form-field appearance="outline">
         <mat-label>{{ t('Name it') }}</mat-label>
@@ -34,19 +34,38 @@
         ></textarea>
       </mat-form-field>
 
-      @if (!editing()) {
-        <mat-form-field appearance="outline">
-          <mat-label>{{ t('Your name') }}</mat-label>
-          <input matInput [formField]="form.name" autocomplete="given-name" />
-          @if (form.name().touched() && form.name().invalid()) {
-            <mat-error>{{ t('Tell others who you are') }}</mat-error>
-          }
-        </mat-form-field>
-      }
+      <mat-form-field appearance="outline">
+        <mat-label>{{ t('Your name') }}</mat-label>
+        <input matInput [formField]="form.name" autocomplete="given-name" />
+        @if (form.name().touched() && form.name().invalid()) {
+          <mat-error>{{ t('Tell others who you are') }}</mat-error>
+        }
+      </mat-form-field>
     </div>
-  } @else {
+  }
+  @if (editing()) {
+    <div class="step compact">
+      <h1>{{ t('Change the plan') }}</h1>
+      <label>
+        <span class="muted">{{ t('Name it') }}</span>
+        <input type="text" [formField]="form.title" autocomplete="off" />
+      </label>
+      <label>
+        <span class="muted">{{ t('Description (optional)') }}</span>
+        <input
+          type="text"
+          [formField]="form.description"
+          autocomplete="off"
+          [placeholder]="t('Where, what to bring…')"
+        />
+      </label>
+    </div>
+  }
+  @if (editing() || step() === 2) {
     <div class="step second">
-      <h1>{{ t('Which days could work?') }}</h1>
+      @if (!editing()) {
+        <h1>{{ t('Which days could work?') }}</h1>
+      }
       <p class="summary" [class.muted]="!dates().length">
         @if (dates().length) {
           <mat-icon>event_available</mat-icon> {{ rangeText() }}
@@ -122,39 +141,27 @@
     </div>
   }
 
-  <!-- Creating: the step's one next action. Editing: a bar that floats, with Save always in reach. -->
+  <!-- Creating: the step's one next action. Editing: a floating bar with Cancel and Save. -->
   <div class="nav" [class.floating]="editing()">
     @if (editing()) {
       <button type="button" class="pill quiet" (click)="cancelled.emit()">{{ t('Cancel') }}</button>
-    }
-    @if (step() === 1) {
-      @if (editing()) {
-        <button type="button" class="pill" (click)="step.set(2)" [disabled]="!stepOneValid()">
-          {{ t('Days') }}
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      } @else {
-        <button mat-flat-button type="submit" class="main" [disabled]="!stepOneValid()">
-          {{ t('Next') }}
-          <mat-icon iconPositionEnd>arrow_forward</mat-icon>
-        </button>
-      }
+      <button mat-flat-button type="submit" class="main" [disabled]="!valid()">
+        <mat-icon>check</mat-icon>
+        {{ t('Save') }}
+      </button>
+    } @else if (step() === 1) {
+      <button mat-flat-button type="submit" class="main" [disabled]="!stepOneValid()">
+        {{ t('Next') }}
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
     } @else {
       <button type="button" class="pill back" (click)="step.set(1)">
         <mat-icon>arrow_back</mat-icon>
         {{ t('Back') }}
       </button>
-      @if (!editing()) {
-        <button mat-flat-button type="submit" class="main" [disabled]="!valid()">
-          <mat-icon>link</mat-icon>
-          {{ busy() ? t('Creating…') : t('Create my When') }}
-        </button>
-      }
-    }
-    @if (editing()) {
-      <button mat-flat-button type="button" class="main" (click)="save()" [disabled]="!valid()">
-        <mat-icon>check</mat-icon>
-        {{ t('Save') }}
+      <button mat-flat-button type="submit" class="main" [disabled]="!valid()">
+        <mat-icon>link</mat-icon>
+        {{ busy() ? t('Creating…') : t('Create my When') }}
       </button>
     }
   </div>

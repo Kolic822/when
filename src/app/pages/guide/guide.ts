@@ -122,7 +122,7 @@ export class Guide {
       title: m('Change or delete a When (organiser)'),
       steps: [
         m(
-          'Tap the pencil next to the title. You get the same two steps as when planning: the name and description, then the days, length and hours.',
+          'Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.',
         ),
         m('Save is always at the bottom; Cancel leaves everything as it was.'),
         m(

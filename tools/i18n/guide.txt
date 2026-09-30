@@ -338,9 +338,9 @@ Under Possible sessions tap Send options and tick the sessions to offer.
 Tippe unter „Mögliche Termine“ auf „Optionen senden“ und hake die Termine an, die du anbieten willst.
 Pod „Mogući termini” dodirni „Pošalji opcije” i označi termine koje nudiš.
 
-Tap the pencil next to the title. You get the same two steps as when planning: the name and description, then the days, length and hours.
-Tippe auf den Stift neben dem Titel. Du bekommst dieselben zwei Schritte wie beim Planen: Name und Beschreibung, dann Tage, Dauer und Uhrzeiten.
-Dodirni olovku pokraj naziva. Dobivaš ista dva koraka kao pri planiranju: naziv i opis, zatim dani, trajanje i sati.
+Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.
+Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern, alles auf einer Seite.
+Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate, sve na jednoj stranici.
 
 Save is always at the bottom; Cancel leaves everything as it was.
 „Speichern“ ist immer unten; „Abbrechen“ lässt alles, wie es war.

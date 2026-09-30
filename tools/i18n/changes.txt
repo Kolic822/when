@@ -138,9 +138,9 @@ Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in yo
 Wähle oben im Menü English, Deutsch oder Hrvatski. Die App startet in der Sprache deines Handys, wenn es eine der drei ist.
 Na vrhu izbornika odaberi English, Deutsch ili Hrvatski. Aplikacija se pokreće na jeziku tvog mobitela ako je jedan od ta tri.
 
-Editing a When uses the same two steps as planning one, with Save always in reach
-Ein When zu bearbeiten nutzt dieselben zwei Schritte wie das Planen, mit „Speichern“ immer griffbereit
-Uređivanje Whena koristi ista dva koraka kao planiranje, a „Spremi” je uvijek pri ruci
+Editing a When is one page with everything on it, and Save always in reach
+Ein When zu bearbeiten ist eine Seite mit allem darauf, mit „Speichern“ immer griffbereit
+Uređivanje Whena je jedna stranica sa svime na njoj, a „Spremi” je uvijek pri ruci
 
 Bigger calendar when picking days; length on its own row
 Größerer Kalender bei der Tagesauswahl; die Dauer steht in einer eigenen Zeile

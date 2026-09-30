@@ -5,7 +5,8 @@
 }
 
 .shortcuts {
-  display: flex;
+  /* A host short on space can switch the shortcuts off. */
+  display: var(--shortcuts, flex);
   gap: 6px;
   overflow-x: auto;
   scrollbar-width: none;

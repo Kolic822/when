@@ -46,8 +46,8 @@ interface Model {
 }
 
 /**
- * The two steps that define a When: what it is, then which days and how long.
- * Used both to plan a new one and, by the organiser, to change an existing one.
+ * What defines a When: what it is, which days and how long. Planning a new one takes
+ * two steps; the organiser changing an existing one gets everything on one page.
  */
 @Component({
   selector: 'app-when-form',
@@ -94,6 +94,7 @@ export class WhenForm {
   });
   readonly form = form(this.model, (p) => {
     required(p.title);
+    maxLength(p.title, 80);
     required(p.name);
     maxLength(p.description, 600);
   });
@@ -141,7 +142,7 @@ export class WhenForm {
   /** Enter on the first step moves on; on the second it finishes. */
   onSubmit(event: Event): void {
     event.preventDefault();
-    if (this.step() === 1) {
+    if (!this.editing() && this.step() === 1) {
       if (this.stepOneValid()) this.step.set(2);
       return;
     }

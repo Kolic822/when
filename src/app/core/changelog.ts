@@ -7,14 +7,18 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.7.1';
+export const VERSION = '0.7.2';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.7.2',
+    date: '30 Sep 2026',
+    changes: [m('Editing a When is one page with everything on it, and Save always in reach')],
+  },
   {
     version: '0.7.1',
     date: '30 Sep 2026',
     changes: [
-      m('Editing a When uses the same two steps as planning one, with Save always in reach'),
       m('Bigger calendar when picking days; length on its own row'),
       m('“Let someone else pick” is now “Send options”, on the right'),
       m('What’s new has its own page'),
