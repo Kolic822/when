@@ -7,9 +7,18 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.6';
+export const VERSION = '0.10.7';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.7',
+    date: '30 Sep 2026',
+    changes: [
+      m(
+        'A linked calendar now says whether it is empty or just has nothing on the days of this When',
+      ),
+    ],
+  },
   {
     version: '0.10.6',
     date: '30 Sep 2026',

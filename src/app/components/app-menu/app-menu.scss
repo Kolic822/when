@@ -664,8 +664,7 @@ p {
     font-size: 14px;
   }
   .small {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
   }
   .link,
   .small-pill {
@@ -703,4 +702,8 @@ p {
   p {
     margin: 0;
   }
+}
+
+.tip {
+  margin: 6px 0 0;
 }

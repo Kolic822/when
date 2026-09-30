@@ -13,6 +13,10 @@ export const hr: Dictionary = {
   'A double tap no longer zooms the page': 'Dvostruki dodir više ne zumira stranicu',
   'A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.':
     'Zlatna traka označava mogući termin: vrijeme kad su svi koji su odgovorili slobodni barem koliko traje susret.',
+  'A link covers one calendar. Add one for each calendar you want to see.':
+    'Jedna poveznica vrijedi za jedan kalendar. Dodaj po jednu za svaki kalendar koji želiš vidjeti.',
+  'A linked calendar now says whether it is empty or just has nothing on the days of this When':
+    'Povezani kalendar sada kaže je li prazan ili samo nema ništa na dane ovog Whena',
   'A new version is ready.': 'Nova verzija je spremna.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Napomena na vrhu kaže čije je vrijeme prikazano; jedan dodir ga mijenja',
@@ -337,6 +341,9 @@ export const hr: Dictionary = {
   'Note for {time}': 'Bilješka za {time}',
   'Nothing fits everyone yet. Try adding a bit more time.':
     'Još ništa ne odgovara svima. Pokušaj dodati malo više vremena.',
+  'Nothing on the days of this When ({n} events in the calendar).':
+    'Ništa na dane ovog Whena (u kalendaru je {n} događaja).',
+  'Nothing on the days of this When.': 'Ništa na dane ovog Whena.',
   'Nothing yet.': 'Još ništa.',
   'Nothing yet. Tap a day to add your times.': 'Još ništa. Dodirni dan da uneseš svoja vremena.',
   Notifications: 'Obavijesti',
@@ -575,6 +582,7 @@ export const hr: Dictionary = {
     'Osoba vidi samo te termine, upiše ime i dodirne ono što joj odgovara. Kalendar nikad ne vidi.',
   "This When doesn't exist": 'Ovaj When ne postoji',
   "This browser can't show notifications.": 'Ovaj preglednik ne može prikazivati obavijesti.',
+  'This calendar is empty.': 'Ovaj kalendar je prazan.',
   'This change log, version numbers and a full guide':
     'Ovaj popis promjena, brojevi verzija i potpun vodič',
   "This link doesn't exist": 'Ova poveznica ne postoji',
@@ -690,11 +698,15 @@ export const hr: Dictionary = {
   '{n} calendar': { one: '{n} kalendar', few: '{n} kalendara', other: '{n} kalendara' },
   '{n} day': { one: '{n} dan', few: '{n} dana', other: '{n} dana' },
   '{n} days ago': 'prije {n} dana',
-  '{n} event': { one: '{n} događaj', few: '{n} događaja', other: '{n} događaja' },
   '{n} event from your calendar on these days': {
     one: '{n} događaj iz tvog kalendara tih dana',
     few: '{n} događaja iz tvog kalendara tih dana',
     other: '{n} događaja iz tvog kalendara tih dana',
+  },
+  '{n} event on these days': {
+    one: '{n} događaj tih dana',
+    few: '{n} događaja tih dana',
+    other: '{n} događaja tih dana',
   },
   '{n} h ago': 'prije {n} h',
   '{n} min ago': 'prije {n} min',

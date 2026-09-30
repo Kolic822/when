@@ -82,7 +82,7 @@ export class AppMenu {
     const mine = this.calendar.sources().filter((s) => s.kind === 'google');
     if (!mine.length) return t('Connected');
     const events = mine.reduce((n, s) => n + s.count, 0);
-    return `${tn(mine.length, '{n} calendar', '{n} calendars')} · ${tn(events, '{n} event', '{n} events')}`;
+    return `${tn(mine.length, '{n} calendar', '{n} calendars')} · ${tn(events, '{n} event on these days', '{n} events on these days')}`;
   });
 
   linkProblem(url: string): string {
@@ -92,7 +92,13 @@ export class AppMenu {
   linkLine(url: string): string {
     const source = this.calendar.sources().find((s) => s.url === url);
     if (!source) return t('Added');
-    return source.problem || tn(source.count, '{n} event', '{n} events');
+    if (source.problem) return source.problem;
+    if (source.count)
+      return tn(source.count, '{n} event on these days', '{n} events on these days');
+    if (source.total === 0) return t('This calendar is empty.');
+    return source.total
+      ? t('Nothing on the days of this When ({n} events in the calendar).', { n: source.total })
+      : t('Nothing on the days of this When.');
   }
 
   addCalendarLink(event: Event, input: HTMLInputElement): void {

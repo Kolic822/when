@@ -455,6 +455,11 @@
                 <mat-icon>add</mat-icon>
                 {{ t('Add Apple or other calendar') }}
               </button>
+              @if (calendar.links().length) {
+                <p class="muted small tip">
+                  {{ t('A link covers one calendar. Add one for each calendar you want to see.') }}
+                </p>
+              }
             }
 
             <!-- 3. How events are shown -->

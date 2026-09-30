@@ -43,6 +43,8 @@ export interface CalendarSource {
   name: string;
   /** Events it has on the days last loaded. */
   count: number;
+  /** Events it holds altogether, when known (calendars added by link). */
+  total?: number;
   problem?: string;
 }
 
@@ -295,9 +297,9 @@ export class CalendarLink {
     for (const link of links) {
       const name = hostOf(link);
       try {
-        const list = await this.fromLink(link, from, to);
+        const { list, total } = await this.fromLink(link, from, to);
         events.push(...list);
-        sources.push({ kind: 'link', url: link, name, count: list.length });
+        sources.push({ kind: 'link', url: link, name, count: list.length, total });
       } catch (err) {
         sources.push({
           kind: 'link',
@@ -383,7 +385,11 @@ export class CalendarLink {
   }
 
   /** Asks the server to read a subscription link; the link itself is not stored there. */
-  private async fromLink(url: string, from: Date, to: Date): Promise<GoogleEvent[]> {
+  private async fromLink(
+    url: string,
+    from: Date,
+    to: Date,
+  ): Promise<{ list: GoogleEvent[]; total?: number }> {
     const res = await fetch('/api/calendar/link', {
       method: 'POST',
       headers: { ...this.auth.authHeader(), 'content-type': 'application/json' },
@@ -400,6 +406,7 @@ export class CalendarLink {
       );
     }
     const data = (await res.json()) as {
+      total?: number;
       events: {
         summary: string;
         start?: string;
@@ -408,11 +415,12 @@ export class CalendarLink {
         endDate?: string;
       }[];
     };
-    return data.events.map((e) =>
+    const list = data.events.map((e) =>
       e.startDate
         ? { summary: e.summary, start: { date: e.startDate }, end: { date: e.endDate } }
         : { summary: e.summary, start: { dateTime: e.start }, end: { dateTime: e.end } },
     );
+    return { list, total: data.total };
   }
 }
 

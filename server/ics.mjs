@@ -100,6 +100,8 @@ const dayKey = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDa
 export function eventsBetween(text, from, to) {
   const out = [];
   const data = ical.sync.parseICS(text);
+  // How many events the calendar holds at all, so "none on these days" can be told from "empty".
+  out.total = Object.values(data).filter((e) => e.type === 'VEVENT').length;
   for (const event of Object.values(data)) {
     if (event.type !== 'VEVENT' || !event.start || event.status === 'CANCELLED') continue;
     let occurrences;

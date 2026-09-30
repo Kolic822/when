@@ -14,6 +14,10 @@ export const de: Dictionary = {
   'A double tap no longer zooms the page': 'Ein Doppeltipp zoomt die Seite nicht mehr',
   'A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.':
     'Ein goldenes Band markiert einen möglichen Termin: eine Zeit, in der alle, die geantwortet haben, mindestens für die Dauer des Treffens Zeit haben.',
+  'A link covers one calendar. Add one for each calendar you want to see.':
+    'Ein Link gilt für einen Kalender. Füge für jeden Kalender, den du sehen willst, einen hinzu.',
+  'A linked calendar now says whether it is empty or just has nothing on the days of this When':
+    'Ein verlinkter Kalender sagt jetzt, ob er leer ist oder nur an den Tagen dieses When nichts hat',
   'A new version is ready.': 'Eine neue Version ist bereit.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Ein Hinweis oben sagt, wessen Zeit angezeigt wird; ein Tipp wechselt',
@@ -333,6 +337,9 @@ export const de: Dictionary = {
   'Note for {time}': 'Notiz für {time}',
   'Nothing fits everyone yet. Try adding a bit more time.':
     'Noch passt nichts für alle. Versuch, etwas mehr Zeit einzutragen.',
+  'Nothing on the days of this When ({n} events in the calendar).':
+    'Nichts an den Tagen dieses When ({n} Termine im Kalender).',
+  'Nothing on the days of this When.': 'Nichts an den Tagen dieses When.',
   'Nothing yet.': 'Noch nichts.',
   'Nothing yet. Tap a day to add your times.':
     'Noch nichts. Tippe auf einen Tag, um deine Zeiten einzutragen.',
@@ -578,6 +585,7 @@ export const de: Dictionary = {
   "This When doesn't exist": 'Dieses When gibt es nicht',
   "This browser can't show notifications.":
     'Dieser Browser kann keine Benachrichtigungen anzeigen.',
+  'This calendar is empty.': 'Dieser Kalender ist leer.',
   'This change log, version numbers and a full guide':
     'Dieses Änderungsprotokoll, Versionsnummern und eine vollständige Anleitung',
   "This link doesn't exist": 'Diesen Link gibt es nicht',
@@ -695,10 +703,13 @@ export const de: Dictionary = {
   '{n} calendar': { one: '{n} Kalender', other: '{n} Kalender' },
   '{n} day': { one: '{n} Tag', other: '{n} Tage' },
   '{n} days ago': 'vor {n} Tagen',
-  '{n} event': { one: '{n} Termin', other: '{n} Termine' },
   '{n} event from your calendar on these days': {
     one: '{n} Termin aus deinem Kalender an diesen Tagen',
     other: '{n} Termine aus deinem Kalender an diesen Tagen',
+  },
+  '{n} event on these days': {
+    one: '{n} Termin an diesen Tagen',
+    other: '{n} Termine an diesen Tagen',
   },
   '{n} h ago': 'vor {n} Std.',
   '{n} min ago': 'vor {n} Min.',

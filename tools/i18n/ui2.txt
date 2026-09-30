@@ -670,10 +670,6 @@ The calendar could not be reached.
 Der Kalender konnte nicht erreicht werden.
 Kalendar nije dostupan.
 
-{n} event
-{n} Termin || {n} Termine
-{n} događaj || {n} događaja || {n} događaja
-
 Calendar
 Kalender
 Kalendar
@@ -729,3 +725,23 @@ Tvoji kalendari
 {n} calendar
 {n} Kalender || {n} Kalender
 {n} kalendar || {n} kalendara || {n} kalendara
+
+This calendar is empty.
+Dieser Kalender ist leer.
+Ovaj kalendar je prazan.
+
+Nothing on the days of this When ({n} events in the calendar).
+Nichts an den Tagen dieses When ({n} Termine im Kalender).
+Ništa na dane ovog Whena (u kalendaru je {n} događaja).
+
+Nothing on the days of this When.
+Nichts an den Tagen dieses When.
+Ništa na dane ovog Whena.
+
+A link covers one calendar. Add one for each calendar you want to see.
+Ein Link gilt für einen Kalender. Füge für jeden Kalender, den du sehen willst, einen hinzu.
+Jedna poveznica vrijedi za jedan kalendar. Dodaj po jednu za svaki kalendar koji želiš vidjeti.
+
+{n} event on these days
+{n} Termin an diesen Tagen || {n} Termine an diesen Tagen
+{n} događaj tih dana || {n} događaja tih dana || {n} događaja tih dana

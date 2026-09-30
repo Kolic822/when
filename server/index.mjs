@@ -372,7 +372,8 @@ app.post('/api/calendar/link', async (req, res) => {
   if (!(span > 0) || span > 120 * DAY_MS) return res.status(400).json({ error: 'bad_range' });
   try {
     const text = await fetchCalendar(req.body?.url);
-    res.json({ events: eventsBetween(text, from, to) });
+    const events = eventsBetween(text, from, to);
+    res.json({ events, total: events.total });
   } catch (err) {
     const code = err?.code ?? (err?.name === 'TimeoutError' ? 'unreachable' : 'unreadable');
     res.status(code === 'bad_url' ? 400 : 502).json({ error: code });
