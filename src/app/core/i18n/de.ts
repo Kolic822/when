@@ -308,6 +308,7 @@ export const de: Dictionary = {
   'Open or create a When first.': 'Öffne oder erstelle zuerst ein When.',
   'Other Pro previews': 'Weitere Pro-Vorschauen',
   "Other people's free time": 'Freie Zeiten der anderen',
+  'Outsource decision': 'Entscheidung abgeben',
   People: 'Personen',
   'People can join for part of it': 'Man kann auch nur teilweise dabei sein',
   'Pick a time': 'Uhrzeit wählen',
@@ -365,9 +366,6 @@ export const de: Dictionary = {
   'Send a link with only the possible sessions.':
     'Sende einen Link, der nur die möglichen Termine zeigt.',
   'Send my answer': 'Antwort senden',
-  'Send options': 'Optionen senden',
-  'Send options is only offered when there is more than one possible session':
-    '„Optionen senden“ wird nur angeboten, wenn es mehr als einen möglichen Termin gibt',
   'Sending…': 'Wird gesendet…',
   'Sent to the wrong person? Tap the bin next to the link to remove it.':
     'An die falsche Person geschickt? Tippe auf den Papierkorb neben dem Link, um ihn zu entfernen.',
@@ -508,8 +506,8 @@ export const de: Dictionary = {
   Tu: 'Di',
   'Two people can’t use the same name in one When.':
     'Zwei Personen können in einem When nicht denselben Namen verwenden.',
-  'Under Possible sessions tap Send options and tick the sessions to offer.':
-    'Tippe unter „Mögliche Termine“ auf „Optionen senden“ und hake die Termine an, die du anbieten willst.',
+  'Under Possible sessions tap Outsource decision and tick the sessions to offer.':
+    'Tippe unter „Mögliche Termine“ auf „Entscheidung abgeben“ und hake die Termine an, die du anbieten willst.',
   Undo: 'Rückgängig',
   'Undo on the banner takes the booking back.':
     '„Rückgängig“ im Banner nimmt die Festlegung zurück.',
@@ -612,6 +610,8 @@ export const de: Dictionary = {
     '„Jemand anderen wählen lassen“ ersetzt „Jemanden fragen“; gesendete Links lassen sich entfernen',
   '“Notify me” is now “Push notifications”':
     '„Benachrichtige mich“ heißt jetzt „Push-Benachrichtigungen“',
+  '“Send options” is now “Outsource decision”, offered only when there is more than one possible session':
+    '„Optionen senden“ heißt jetzt „Entscheidung abgeben“ und wird nur angeboten, wenn es mehr als einen möglichen Termin gibt',
   '“Waiting for …” tells you who hasn’t answered yet.':
     '„Es fehlt noch …“ zeigt dir, wer noch nicht geantwortet hat.',
 };

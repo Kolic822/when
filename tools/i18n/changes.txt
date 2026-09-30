@@ -170,6 +170,6 @@ Connect calendar reads your real busy times from Google Calendar
 „Kalender verbinden“ liest deine echten belegten Zeiten aus dem Google Kalender
 „Poveži kalendar” čita tvoja stvarna zauzeta vremena iz Google kalendara
 
-Send options is only offered when there is more than one possible session
-„Optionen senden“ wird nur angeboten, wenn es mehr als einen möglichen Termin gibt
-„Pošalji opcije” nudi se samo kad postoji više od jednog mogućeg termina
+“Send options” is now “Outsource decision”, offered only when there is more than one possible session
+„Optionen senden“ heißt jetzt „Entscheidung abgeben“ und wird nur angeboten, wenn es mehr als einen möglichen Termin gibt
+„Pošalji opcije” sada je „Prepusti odluku” i nudi se samo kad postoji više od jednog mogućeg termina

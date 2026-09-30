@@ -307,7 +307,7 @@ export class AppMenu {
     },
     {
       key: 'shortlist',
-      label: m('Send options'),
+      label: m('Outsource decision'),
       hint: m('Send a link with only the possible sessions.'),
     },
     {

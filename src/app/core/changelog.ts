@@ -15,7 +15,9 @@ export const CHANGELOG: Release[] = [
     date: '30 Sep 2026',
     changes: [
       m('Connect calendar reads your real busy times from Google Calendar'),
-      m('Send options is only offered when there is more than one possible session'),
+      m(
+        '“Send options” is now “Outsource decision”, offered only when there is more than one possible session',
+      ),
     ],
   },
   {

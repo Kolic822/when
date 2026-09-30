@@ -312,6 +312,7 @@ export const hr: Dictionary = {
   'Open or create a When first.': 'Najprije otvori ili stvori When.',
   'Other Pro previews': 'Ostali Pro pregledi',
   "Other people's free time": 'Slobodno vrijeme ostalih',
+  'Outsource decision': 'Prepusti odluku',
   People: 'Osobe',
   'People can join for part of it': 'Moguće je sudjelovati i samo dio vremena',
   'Pick a time': 'Odaberi vrijeme',
@@ -368,9 +369,6 @@ export const hr: Dictionary = {
     'Pošalji poveznicu samo s mogućim terminima i prepusti nekome odabir',
   'Send a link with only the possible sessions.': 'Pošalji poveznicu samo s mogućim terminima.',
   'Send my answer': 'Pošalji odgovor',
-  'Send options': 'Pošalji opcije',
-  'Send options is only offered when there is more than one possible session':
-    '„Pošalji opcije” nudi se samo kad postoji više od jednog mogućeg termina',
   'Sending…': 'Šaljem…',
   'Sent to the wrong person? Tap the bin next to the link to remove it.':
     'Poslano krivoj osobi? Dodirni koš pokraj poveznice da je ukloniš.',
@@ -507,8 +505,8 @@ export const hr: Dictionary = {
   Tu: 'Ut',
   'Two people can’t use the same name in one When.':
     'Dvije osobe ne mogu imati isto ime u jednom Whenu.',
-  'Under Possible sessions tap Send options and tick the sessions to offer.':
-    'Pod „Mogući termini” dodirni „Pošalji opcije” i označi termine koje nudiš.',
+  'Under Possible sessions tap Outsource decision and tick the sessions to offer.':
+    'Pod „Mogući termini” dodirni „Prepusti odluku” i označi termine koje nudiš.',
   Undo: 'Poništi',
   'Undo on the banner takes the booking back.': '„Poništi” na oznaci povlači potvrdu.',
   'Updates apply automatically when opened in a browser.':
@@ -608,6 +606,8 @@ export const hr: Dictionary = {
   '“Let someone else pick” replaces “Ask someone”; sent links can be removed':
     '„Neka odabere netko drugi” zamjenjuje „Pitaj nekoga”; poslane poveznice mogu se ukloniti',
   '“Notify me” is now “Push notifications”': '„Obavijesti me” sada je „Push obavijesti”',
+  '“Send options” is now “Outsource decision”, offered only when there is more than one possible session':
+    '„Pošalji opcije” sada je „Prepusti odluku” i nudi se samo kad postoji više od jednog mogućeg termina',
   '“Waiting for …” tells you who hasn’t answered yet.':
     '„Čeka se …” govori ti tko još nije odgovorio.',
 };

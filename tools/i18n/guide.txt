@@ -322,9 +322,9 @@ History: a section in the menu showing who changed what in any of your Whens.
 Verlauf: ein Bereich im Menü, der zeigt, wer in einem deiner Whens was geändert hat.
 Povijest: odjeljak u izborniku koji pokazuje tko je što promijenio u bilo kojem tvom Whenu.
 
-Under Possible sessions tap Send options and tick the sessions to offer.
-Tippe unter „Mögliche Termine“ auf „Optionen senden“ und hake die Termine an, die du anbieten willst.
-Pod „Mogući termini” dodirni „Pošalji opcije” i označi termine koje nudiš.
+Under Possible sessions tap Outsource decision and tick the sessions to offer.
+Tippe unter „Mögliche Termine“ auf „Entscheidung abgeben“ und hake die Termine an, die du anbieten willst.
+Pod „Mogući termini” dodirni „Prepusti odluku” i označi termine koje nudiš.
 
 Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.
 Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern, alles auf einer Seite.

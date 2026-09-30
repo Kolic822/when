@@ -31,7 +31,7 @@ export const routes: Routes = [
     path: 'guide',
     loadComponent: () => import('./pages/guide/guide').then((m) => m.Guide),
   },
-  // Someone answering an "Send options" link only needs a name, never an account.
+  // Someone answering an "Outsource decision" link only needs a name, never an account.
   {
     path: 's/:sid',
     loadComponent: () => import('./pages/shortlist/shortlist').then((m) => m.ShortlistPage),

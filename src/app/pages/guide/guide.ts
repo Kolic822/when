@@ -209,13 +209,13 @@ export class Guide {
     },
     {
       icon: 'forward_to_inbox',
-      title: m('Send options'),
+      title: m('Outsource decision'),
       pro: true,
       intro: m(
         'For when the group has options and one more person has to choose, like a teacher or a guest.',
       ),
       steps: [
-        m('Under Possible sessions tap Send options and tick the sessions to offer.'),
+        m('Under Possible sessions tap Outsource decision and tick the sessions to offer.'),
         m('Choose whether they may pick just one or several, then create and copy the link.'),
         m(
           'They see only those sessions, enter a name and tap what works. They never see the calendar.',

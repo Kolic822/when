@@ -538,9 +538,9 @@ Change the plan
 Plan ändern
 Promijeni plan
 
-Send options
-Optionen senden
-Pošalji opcije
+Outsource decision
+Entscheidung abgeben
+Prepusti odluku
 
 You have version {version}.
 Du hast Version {version}.
