@@ -330,10 +330,6 @@ The first time on a device they get a short three-step guide, which they can ski
 Beim ersten Mal auf einem Gerät bekommen sie eine kurze Anleitung in drei Schritten, die sie überspringen können.
 Prvi put na uređaju dobiju kratak vodič u tri koraka, koji mogu preskočiti.
 
-Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.
-Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Die Pfeile blättern jeweils vier Wochen weiter.
-Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. Strelice pomiču po četiri tjedna.
-
 Google asks again after about an hour; Disconnect in the menu withdraws access.
 Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.
 Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.
@@ -381,3 +377,7 @@ Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa
 Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.
 Angemeldet folgen dir deine Whens: Melde dich auf einem anderen Handy oder Computer an, und „Meine Whens“ ist gleich, und du bist in jedem When dieselbe Person.
 Kad si prijavljen/a, tvoji Whenovi te prate: prijavi se na drugom mobitelu ili računalu i „Moji Whenovi” su isti, a u svakom Whenu si ista osoba.
+
+Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.
+Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal; die Pfeile blättern jeweils vier Wochen weiter.
+Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom; strelice pomiču po četiri tjedna.

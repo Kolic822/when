@@ -141,7 +141,16 @@ app-day-picker {
   }
 }
 
-/* Planning has a shorter note under the pickers, so the month can be a little taller. */
+/* Planning keeps the day shortcuts; the heading moved into the first field's label to make room. */
 form:not(.editing) app-day-picker {
-  --day-max: clamp(28px, calc((100dvh - 568px) / 5), 44px);
+  --shortcuts: flex;
+  --day-max: clamp(28px, calc((100dvh - 582px) / 5), 44px);
+}
+
+.lead {
+  color: var(--when-text);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }

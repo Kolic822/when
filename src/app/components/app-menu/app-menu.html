@@ -365,7 +365,8 @@
                   ><mat-icon>check_circle</mat-icon>{{ t('Connected') }}
                   @if (calendar.found() !== null) {
                     <span class="muted count"
-                      >· {{ tn(calendar.found()!, '{n} event found', '{n} events found') }}</span
+                      >· {{ tn(calendar.calendarsRead(), '{n} calendar', '{n} calendars') }},
+                      {{ tn(calendar.found()!, '{n} event found', '{n} events found') }}</span
                     >
                   }
                 </span>

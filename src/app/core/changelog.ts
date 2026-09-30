@@ -7,9 +7,20 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.9.2';
+export const VERSION = '0.9.3';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.9.3',
+    date: '30 Sep 2026',
+    changes: [
+      m('This week, Next week and Weekends are back when planning a When'),
+      m('The When shows how many of your calendar events fall on its days'),
+      m(
+        'Connecting the calendar opens Google’s window straight from the tap, which phones require',
+      ),
+    ],
+  },
   {
     version: '0.9.2',
     date: '30 Sep 2026',

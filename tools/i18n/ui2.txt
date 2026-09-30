@@ -653,3 +653,19 @@ Poveži ponovno
 {n} event found
 {n} Termin gefunden || {n} Termine gefunden
 pronađen {n} događaj || pronađena {n} događaja || pronađeno {n} događaja
+
+Google could not be loaded. Check your connection and try again.
+Google konnte nicht geladen werden. Prüfe deine Verbindung und versuch es noch einmal.
+Google se nije mogao učitati. Provjeri vezu i pokušaj ponovno.
+
+Your calendar has nothing on these days.
+In deinem Kalender steht an diesen Tagen nichts.
+U tvom kalendaru nema ničega tih dana.
+
+{n} event from your calendar on these days
+{n} Termin aus deinem Kalender an diesen Tagen || {n} Termine aus deinem Kalender an diesen Tagen
+{n} događaj iz tvog kalendara tih dana || {n} događaja iz tvog kalendara tih dana || {n} događaja iz tvog kalendara tih dana
+
+{n} calendar
+{n} Kalender || {n} Kalender
+{n} kalendar || {n} kalendara || {n} kalendara

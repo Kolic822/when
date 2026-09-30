@@ -32,7 +32,7 @@ export class Guide {
         m('Tap + and give it a name. A description is optional: where, what to bring.'),
         m('Enter your own name so the others know who started it.'),
         m(
-          'Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.',
+          'Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.',
         ),
         m('Set how long the meetup should be, and the earliest and latest hour people can choose.'),
         m('Tap Create my When. You are the organiser.'),

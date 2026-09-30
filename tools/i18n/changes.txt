@@ -205,3 +205,15 @@ Ako se kalendar ne može prikazati, aplikacija sada kaže zašto
 Signed in with Google: your Whens follow you to every device you sign in on
 Mit Google angemeldet: Deine Whens folgen dir auf jedes Gerät, auf dem du dich anmeldest
 Prijavljen/a uz Google: tvoji Whenovi prate te na svaki uređaj na kojem se prijaviš
+
+This week, Next week and Weekends are back when planning a When
+„Diese Woche“, „Nächste Woche“ und „Wochenenden“ sind beim Planen eines When zurück
+„Ovaj tjedan”, „Sljedeći tjedan” i „Vikendi” vraćeni su pri planiranju Whena
+
+The When shows how many of your calendar events fall on its days
+Das When zeigt, wie viele deiner Kalendertermine auf seine Tage fallen
+When pokazuje koliko tvojih događaja iz kalendara pada na njegove dane
+
+Connecting the calendar opens Google’s window straight from the tap, which phones require
+Beim Verbinden des Kalenders öffnet sich das Google-Fenster direkt beim Tippen, wie es Handys verlangen
+Pri povezivanju kalendara Googleov prozor otvara se odmah na dodir, kako mobiteli zahtijevaju

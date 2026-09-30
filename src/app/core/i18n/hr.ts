@@ -89,6 +89,8 @@ export const hr: Dictionary = {
   'Connect calendar shows all your events with their names, including all-day ones':
     '„Poveži kalendar” prikazuje sve tvoje događaje s nazivima, uključujući cjelodnevne',
   Connected: 'Povezano',
+  'Connecting the calendar opens Google’s window straight from the tap, which phones require':
+    'Pri povezivanju kalendara Googleov prozor otvara se odmah na dodir, kako mobiteli zahtijevaju',
   'Continue as guest': 'Nastavi kao gost',
   'Continue with Google': 'Nastavi uz Google',
   Copied: 'Kopirano',
@@ -196,6 +198,8 @@ export const hr: Dictionary = {
   'Gold shows when everyone can make it.': 'Zlatno pokazuje kad svi mogu.',
   'Google asks again after about an hour; Disconnect in the menu withdraws access.':
     'Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.',
+  'Google could not be loaded. Check your connection and try again.':
+    'Google se nije mogao učitati. Provjeri vezu i pokušaj ponovno.',
   'Google refused the request ({code}). {message}': 'Google je odbio zahtjev ({code}). {message}',
   "Google sign-in didn't work. Try again, or carry on as a guest.":
     'Google prijava nije uspjela. Pokušaj ponovno ili nastavi kao gost.',
@@ -470,8 +474,8 @@ export const hr: Dictionary = {
     'Dodirni mogući termin ili njegovu zlatnu traku u kalendaru.',
   'Tap a session to see the notes people left on the times it covers.':
     'Dodirni termin da vidiš bilješke ostavljene uz vremena koja pokriva.',
-  'Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.':
-    'Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. Strelice pomiču po četiri tjedna.',
+  'Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.':
+    'Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom; strelice pomiču po četiri tjedna.',
   'Tap every time that works for you.': 'Dodirni sve termine koji ti odgovaraju.',
   'Tap the bell at the top of a When, or open Notifications in the menu, and switch Push notifications on.':
     'Dodirni zvono na vrhu Whena ili otvori „Obavijesti” u izborniku pa uključi Push obavijesti.',
@@ -488,6 +492,8 @@ export const hr: Dictionary = {
     'Gumb „Potvrdi” sam prikazuje dan i vrijeme; ponovljeni tekst oko njega je uklonjen',
   'The Google Calendar API is not switched on for this Google Cloud project.':
     'Google Calendar API nije uključen za ovaj Google Cloud projekt.',
+  'The When shows how many of your calendar events fall on its days':
+    'When pokazuje koliko tvojih događaja iz kalendara pada na njegove dane',
   'The banner lists every booked session, each with its own calendar button.':
     'Oznaka prikazuje svaki potvrđeni termin, svaki s vlastitim gumbom za kalendar.',
   'The buttons next to the bar save you time.': 'Gumbi pokraj trake štede ti vrijeme.',
@@ -534,6 +540,8 @@ export const hr: Dictionary = {
     'Ovaj popis promjena, brojevi verzija i potpun vodič',
   "This link doesn't exist": 'Ova poveznica ne postoji',
   'This week': 'Ovaj tjedan',
+  'This week, Next week and Weekends are back when planning a When':
+    '„Ovaj tjedan”, „Sljedeći tjedan” i „Vikendi” vraćeni su pri planiranju Whena',
   'Three languages: English, German and Croatian': 'Tri jezika: engleski, njemački i hrvatski',
   'Tick the days it should go to, or use Select all.':
     'Označi dane na koje ide ili upotrijebi „Odaberi sve”.',
@@ -590,6 +598,7 @@ export const hr: Dictionary = {
   'Your Whens are kept on this device': 'Tvoji Whenovi spremljeni su na ovom uređaju',
   'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.':
     'Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.',
+  'Your calendar has nothing on these days.': 'U tvom kalendaru nema ničega tih dana.',
   'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
     'Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaji navedeni su na vrhu dana.',
   'Your name': 'Tvoje ime',
@@ -636,12 +645,18 @@ export const hr: Dictionary = {
   '{names} picked {session}': '{names} je odabrao/la {session}',
   '{n} answer': { one: '{n} odgovor', few: '{n} odgovora', other: '{n} odgovora' },
   '{n} answers so far.': 'Dosad odgovora: {n}.',
+  '{n} calendar': { one: '{n} kalendar', few: '{n} kalendara', other: '{n} kalendara' },
   '{n} day': { one: '{n} dan', few: '{n} dana', other: '{n} dana' },
   '{n} days ago': 'prije {n} dana',
   '{n} event found': {
     one: 'pronađen {n} događaj',
     few: 'pronađena {n} događaja',
     other: 'pronađeno {n} događaja',
+  },
+  '{n} event from your calendar on these days': {
+    one: '{n} događaj iz tvog kalendara tih dana',
+    few: '{n} događaja iz tvog kalendara tih dana',
+    other: '{n} događaja iz tvog kalendara tih dana',
   },
   '{n} h ago': 'prije {n} h',
   '{n} min ago': 'prije {n} min',

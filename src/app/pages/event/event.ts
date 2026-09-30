@@ -95,6 +95,20 @@ export class EventPage implements OnDestroy {
   private readonly howTo = inject(HowToState);
   private readonly sync = inject(Sync);
   readonly calendar = inject(CalendarLink);
+  /** Connected and loaded: says how much of my calendar falls on these days. */
+  readonly calendarStatus = computed(() => {
+    const found = this.calendar.found();
+    if (!this.features().connect || !this.calendar.connected() || found === null) return '';
+    if (this.calendar.problem()) return '';
+    return found
+      ? tn(
+          found,
+          '{n} event from your calendar on these days',
+          '{n} events from your calendar on these days',
+        )
+      : t('Your calendar has nothing on these days.');
+  });
+
   /** Pro, Google is set up, and the calendar is not connected (or the hour is up). */
   readonly showCalendarPrompt = computed(
     () =>

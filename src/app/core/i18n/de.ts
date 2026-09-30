@@ -90,6 +90,8 @@ export const de: Dictionary = {
   'Connect calendar shows all your events with their names, including all-day ones':
     '„Kalender verbinden“ zeigt alle deine Termine mit Namen, auch ganztägige',
   Connected: 'Verbunden',
+  'Connecting the calendar opens Google’s window straight from the tap, which phones require':
+    'Beim Verbinden des Kalenders öffnet sich das Google-Fenster direkt beim Tippen, wie es Handys verlangen',
   'Continue as guest': 'Als Gast fortfahren',
   'Continue with Google': 'Weiter mit Google',
   Copied: 'Kopiert',
@@ -190,6 +192,8 @@ export const de: Dictionary = {
   'Gold shows when everyone can make it.': 'Gold zeigt, wann alle können.',
   'Google asks again after about an hour; Disconnect in the menu withdraws access.':
     'Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.',
+  'Google could not be loaded. Check your connection and try again.':
+    'Google konnte nicht geladen werden. Prüfe deine Verbindung und versuch es noch einmal.',
   'Google refused the request ({code}). {message}':
     'Google hat die Anfrage abgelehnt ({code}). {message}',
   "Google sign-in didn't work. Try again, or carry on as a guest.":
@@ -470,8 +474,8 @@ export const de: Dictionary = {
     'Tippe auf einen möglichen Termin oder auf sein goldenes Band im Kalender.',
   'Tap a session to see the notes people left on the times it covers.':
     'Tippe auf einen Termin, um die Notizen zu sehen, die zu diesen Zeiten hinterlassen wurden.',
-  'Tap every day that could work. They don’t have to be next to each other. The arrows move four weeks at a time.':
-    'Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Die Pfeile blättern jeweils vier Wochen weiter.',
+  'Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.':
+    'Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal; die Pfeile blättern jeweils vier Wochen weiter.',
   'Tap every time that works for you.': 'Tippe auf alle Termine, die dir passen.',
   'Tap the bell at the top of a When, or open Notifications in the menu, and switch Push notifications on.':
     'Tippe oben in einem When auf die Glocke oder öffne im Menü „Benachrichtigungen“ und schalte Push-Benachrichtigungen ein.',
@@ -489,6 +493,8 @@ export const de: Dictionary = {
     'Die Schaltfläche „Festlegen“ zeigt selbst Tag und Uhrzeit; doppelter Text drumherum ist weg',
   'The Google Calendar API is not switched on for this Google Cloud project.':
     'Die Google Calendar API ist für dieses Google-Cloud-Projekt nicht eingeschaltet.',
+  'The When shows how many of your calendar events fall on its days':
+    'Das When zeigt, wie viele deiner Kalendertermine auf seine Tage fallen',
   'The banner lists every booked session, each with its own calendar button.':
     'Das Banner listet jeden festgelegten Termin, jeweils mit eigener Kalender-Schaltfläche.',
   'The buttons next to the bar save you time.':
@@ -537,6 +543,8 @@ export const de: Dictionary = {
     'Dieses Änderungsprotokoll, Versionsnummern und eine vollständige Anleitung',
   "This link doesn't exist": 'Diesen Link gibt es nicht',
   'This week': 'Diese Woche',
+  'This week, Next week and Weekends are back when planning a When':
+    '„Diese Woche“, „Nächste Woche“ und „Wochenenden“ sind beim Planen eines When zurück',
   'Three languages: English, German and Croatian': 'Drei Sprachen: Englisch, Deutsch und Kroatisch',
   'Tick the days it should go to, or use Select all.':
     'Hake die Zieltage an oder nutze „Alle auswählen“.',
@@ -594,6 +602,7 @@ export const de: Dictionary = {
   'Your Whens are kept on this device': 'Deine Whens sind auf diesem Gerät gespeichert',
   'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.':
     'Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.',
+  'Your calendar has nothing on these days.': 'In deinem Kalender steht an diesen Tagen nichts.',
   'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
     'Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ganztägige Termine stehen oben am Tag.',
   'Your name': 'Dein Name',
@@ -641,9 +650,14 @@ export const de: Dictionary = {
   '{names} picked {session}': '{names} hat {session} gewählt',
   '{n} answer': { one: '{n} Antwort', other: '{n} Antworten' },
   '{n} answers so far.': 'Bisher {n} Antworten.',
+  '{n} calendar': { one: '{n} Kalender', other: '{n} Kalender' },
   '{n} day': { one: '{n} Tag', other: '{n} Tage' },
   '{n} days ago': 'vor {n} Tagen',
   '{n} event found': { one: '{n} Termin gefunden', other: '{n} Termine gefunden' },
+  '{n} event from your calendar on these days': {
+    one: '{n} Termin aus deinem Kalender an diesen Tagen',
+    other: '{n} Termine aus deinem Kalender an diesen Tagen',
+  },
   '{n} h ago': 'vor {n} Std.',
   '{n} min ago': 'vor {n} Min.',
   '{n} note': { one: '{n} Notiz', other: '{n} Notizen' },

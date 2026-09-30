@@ -167,6 +167,12 @@
                 </button>
               </p>
             }
+            @if (calendarStatus(); as status) {
+              <p class="cal-status muted">
+                <mat-icon>event_available</mat-icon>
+                {{ status }}
+              </p>
+            }
             @if (showCalendarPrompt()) {
               <button type="button" class="pill cal-prompt" (click)="calendar.connect()">
                 <mat-icon>event</mat-icon>

@@ -1,9 +1,13 @@
 <form class="card" [class.editing]="editing()" (submit)="onSubmit($event)">
-  <h1>{{ editing() ? t('Change the plan') : t("What's the plan?") }}</h1>
+  @if (editing()) {
+    <h1>{{ t('Change the plan') }}</h1>
+  }
 
   <div class="fields" [class.pair]="!editing()">
     <label class="wide">
-      <span class="muted">{{ t('Name it') }}</span>
+      <span class="muted" [class.lead]="!editing()">{{
+        editing() ? t('Name it') : t("What's the plan?")
+      }}</span>
       <input
         type="text"
         [formField]="form.title"

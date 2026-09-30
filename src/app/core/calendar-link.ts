@@ -54,6 +54,15 @@ export class CalendarLink {
   readonly problem = signal<string | null>(null);
   /** How many events were found on the days last loaded; null before the first load. */
   readonly found = signal<number | null>(null);
+  /** How many of the person's calendars were read. */
+  readonly calendarsRead = signal(0);
+
+  /**
+   * Google's permission window has to open in the same instant as the tap, or phones
+   * block it as a pop-up. So the client is prepared ahead and only triggered on the tap.
+   */
+  private client: TokenClient | null = null;
+  private pending: { resolve: () => void; reject: (reason: unknown) => void } | null = null;
 
   private readonly token = signal<{ value: string; expires: number } | null>(loadToken());
   readonly connected = computed(() => {
@@ -66,7 +75,41 @@ export class CalendarLink {
   private loadedFor = '';
 
   constructor() {
-    void this.auth.loadConfig();
+    void this.prepare();
+  }
+
+  /** Loads Google's script and sets the client up, so a later tap can open the window at once. */
+  private async prepare(): Promise<TokenClient | null> {
+    if (this.client) return this.client;
+    const clientId = await this.auth.ensureGoogle().catch(() => '');
+    const oauth = (window.google?.accounts as { oauth2?: OAuthApi } | undefined)?.oauth2;
+    if (!clientId || !oauth) return null;
+    this.client = oauth.initTokenClient({
+      client_id: clientId,
+      scope: SCOPE,
+      callback: (response) => {
+        const waiting = this.pending;
+        this.pending = null;
+        if (!response.access_token) return waiting?.reject(new Error(response.error ?? 'denied'));
+        // Google lets people untick single permissions; without events there is nothing to show.
+        if (response.scope && !response.scope.split(' ').includes(EVENTS)) {
+          return waiting?.reject(new Error('scope'));
+        }
+        const token = {
+          value: response.access_token,
+          expires: Date.now() + (response.expires_in ?? 3600) * 1000 - 60_000,
+        };
+        this.token.set(token);
+        saveToken(token);
+        waiting?.resolve();
+      },
+      error_callback: (error) => {
+        const waiting = this.pending;
+        this.pending = null;
+        waiting?.reject(error);
+      },
+    });
+    return this.client;
   }
 
   /** Timed events to draw behind a day's bar, clipped to the hours the When shows. */
@@ -104,40 +147,31 @@ export class CalendarLink {
     this.problem.set(null);
     this.working.set(true);
     try {
-      const clientId = await this.auth.ensureGoogle();
-      const oauth = (window.google?.accounts as { oauth2?: OAuthApi } | undefined)?.oauth2;
-      if (!clientId || !oauth) throw new Error('Google is not available');
+      // Normally ready already, so the window opens within the tap itself.
+      const client = this.client ?? (await this.prepare());
+      if (!client) throw new Error('unavailable');
       const user = this.auth.user();
       await new Promise<void>((resolve, reject) => {
-        oauth
-          .initTokenClient({
-            client_id: clientId,
-            scope: SCOPE,
-            callback: (response) => {
-              if (!response.access_token) return reject(new Error(response.error ?? 'denied'));
-              // Google lets people untick single permissions; without events there is nothing to show.
-              if (response.scope && !response.scope.split(' ').includes(EVENTS)) {
-                return reject(new Error('scope'));
-              }
-              const token = {
-                value: response.access_token,
-                expires: Date.now() + (response.expires_in ?? 3600) * 1000 - 60_000,
-              };
-              this.token.set(token);
-              saveToken(token);
-              resolve();
-            },
-            error_callback: reject,
-          })
-          .requestAccessToken({ hint: user?.kind === 'google' ? user.email : undefined });
+        this.pending = { resolve, reject };
+        client.requestAccessToken({ hint: user?.kind === 'google' ? user.email : undefined });
+        // A window that never reports back must not leave the button stuck.
+        setTimeout(() => {
+          if (this.pending) {
+            this.pending = null;
+            reject(new Error('timeout'));
+          }
+        }, 120_000);
       });
       this.loadedFor = '';
     } catch (err) {
       this.failed.set(true);
+      const kind = err instanceof Error ? err.message : ((err as { type?: string })?.type ?? '');
       this.problem.set(
-        err instanceof Error && err.message === 'scope'
+        kind === 'scope'
           ? t('Calendar access was not ticked. Connect again and tick the calendar box.')
-          : t('Google’s window was closed or blocked. Try again.'),
+          : kind === 'unavailable'
+            ? t('Google could not be loaded. Check your connection and try again.')
+            : t('Google’s window was closed or blocked. Try again.'),
       );
     } finally {
       this.working.set(false);
@@ -152,6 +186,7 @@ export class CalendarLink {
     saveToken(null);
     this.days.set({ timed: {}, allDay: {} });
     this.found.set(null);
+    this.calendarsRead.set(0);
     this.problem.set(null);
     this.loadedFor = '';
   }
@@ -176,6 +211,7 @@ export class CalendarLink {
         fields: 'items(summary,status,start,end)',
       });
       const calendars = await this.calendarIds(headers);
+      this.calendarsRead.set(calendars.length);
       const lists = await Promise.all(
         calendars.map(async (id) => {
           const res = await fetch(`${API}/calendars/${encodeURIComponent(id)}/events?${query}`, {
