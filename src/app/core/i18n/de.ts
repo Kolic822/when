@@ -23,6 +23,8 @@ export const de: Dictionary = {
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Zum Kalender hinzufügen: eine Kalender-Schaltfläche bei jedem möglichen Termin, nicht nur beim festgelegten.',
   'Add {session} to calendar': '{session} zum Kalender hinzufügen',
+  'Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.':
+    'Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü auf „Termine aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.',
   'All day': 'Ganztägig',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: Öffne das Browser-Menü und tippe auf „App installieren“ oder „Zum Startbildschirm hinzufügen“.',
@@ -39,8 +41,8 @@ export const de: Dictionary = {
   Appearance: 'Aussehen',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Aussehen“ ändert die Farben und den hellen oder dunklen Modus. „Datum und Uhrzeit“ wechselt zwischen 30.9. und 30. Sep und legt deine Zeitzone fest.',
-  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders in den Einstellungen ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
+  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders im Menü unter „Kalender“ ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
   'Apple or other calendar': 'Apple- oder anderer Kalender',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Als Gast gibst du in jedem When einen Namen ein. Deine Whens werden nur auf diesem Gerät gemerkt.',
@@ -63,10 +65,13 @@ export const de: Dictionary = {
   'Booking another day adds a session instead of replacing the first.':
     'Ein weiterer Tag fügt einen Termin hinzu, statt den ersten zu ersetzen.',
   Busy: 'Belegt',
+  Calendar: 'Kalender',
   'Calendar access was not ticked. Connect again and tick the calendar box.':
     'Der Kalenderzugriff wurde nicht angehakt. Verbinde erneut und setze den Haken beim Kalender.',
   'Calendar files and notifications use the right time for each person':
     'Kalenderdateien und Benachrichtigungen verwenden für jede Person die richtige Zeit',
+  'Calendar has its own section in the menu, with a Refresh events button':
+    'Der Kalender hat einen eigenen Bereich im Menü, mit der Schaltfläche „Termine aktualisieren“',
   'Calendar link': 'Kalender-Link',
   Cancel: 'Abbrechen',
   'Cancel {session}': '{session} absagen',
@@ -243,8 +248,6 @@ export const de: Dictionary = {
     'Wenn du das Treffen verlängerst oder die Uhrzeiten einschränkst, werden Zeiträume, die nicht mehr passen, gekürzt oder entfernt.',
   'If your clock is different, every time is shown converted to yours, and a note at the top says so.':
     'Wenn deine Uhr anders geht, wird jede Zeit in deine umgerechnet, und ein Hinweis oben sagt das.',
-  'In Settings you can hide the names (every event then says Busy) and hide all-day events.':
-    'In den Einstellungen kannst du die Namen ausblenden (jeder Termin heißt dann „Belegt“) und ganztägige Termine ausblenden.',
   'In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.':
     'Tippe in einem Tag auf „Kopieren nach…“, um alles Markierte zu kopieren, oder auf das Kopiersymbol eines Zeitraums, um nur diesen zu kopieren.',
   'Install it on your phone': 'Auf dem Handy installieren',
@@ -290,7 +293,6 @@ export const de: Dictionary = {
   'My Whens': 'Meine Whens',
   'My Whens lists every When you created or joined on this device, with what is booked or possible.':
     '„Meine Whens“ listet jedes When, das du auf diesem Gerät erstellt hast oder dem du beigetreten bist, mit dem, was festgelegt oder möglich ist.',
-  'My calendar': 'Mein Kalender',
   'My time': 'Meine Zeit',
   'Name it': 'Name des Plans',
   'New When': 'Neues When',
@@ -380,10 +382,14 @@ export const de: Dictionary = {
     'Pro-Vorschau: freie Zeit aus deinem Kalender ausfüllen',
   'Pro previews: connect calendar, add to calendar, join for part of it, history':
     'Pro-Vorschauen: Kalender verbinden, zum Kalender hinzufügen, nur teilweise dabei sein, Verlauf',
+  'Pull down on a When to refresh your calendar and your Whens':
+    'Zieh in einem When nach unten, um deinen Kalender und deine Whens zu aktualisieren',
   'Push notifications': 'Push-Benachrichtigungen',
   'Push notifications when a session is booked and when someone answers a link':
     'Push-Benachrichtigungen, wenn ein Termin festgelegt wird und wenn jemand auf einen Link antwortet',
   'Read the calendar': 'Den Kalender lesen',
+  'Refresh events': 'Termine aktualisieren',
+  'Refreshing…': 'Wird aktualisiert…',
   'Reload to update': 'Neu laden und aktualisieren',
   Remove: 'Entfernen',
   'Remove link': 'Link entfernen',
@@ -439,8 +445,8 @@ export const de: Dictionary = {
   'Sign in with Google to use Pro settings.':
     'Melde dich mit Google an, um die Pro-Einstellungen zu nutzen.',
   'Sign in with Google to use these.': 'Melde dich mit Google an, um diese zu nutzen.',
-  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.':
-    'Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder in den Einstellungen auf „Google Kalender verbinden“ und erlaube es.',
+  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.':
+    'Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder im Menü unter „Kalender“ auf „Google Kalender verbinden“ und erlaube es.',
   'Sign out': 'Abmelden',
   'Signed in with Google: your Whens follow you to every device you sign in on':
     'Mit Google angemeldet: Deine Whens folgen dir auf jedes Gerät, auf dem du dich anmeldest',
@@ -516,6 +522,8 @@ export const de: Dictionary = {
   'The buttons next to the bar save you time.':
     'Die Schaltflächen neben dem Balken sparen dir Zeit.',
   'The calendar': 'Der Kalender',
+  'The calendar also refreshes by itself when you come back to the app':
+    'Der Kalender aktualisiert sich auch von selbst, wenn du zur App zurückkommst',
   'The calendar could not be reached.': 'Der Kalender konnte nicht erreicht werden.',
   'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.':
     'Die Tagesspalten bleiben die Tage des Organisators. Ein kleines ⁺¹ oder ⁻¹ neben einer Zeit bedeutet, dass es für dich der nächste oder vorherige Tag ist.',
@@ -578,6 +586,8 @@ export const de: Dictionary = {
   Tu: 'Di',
   'Two people can’t use the same name in one When.':
     'Zwei Personen können in einem When nicht denselben Namen verwenden.',
+  'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.':
+    'Im Menü unter „Kalender“ kannst du die Namen ausblenden (jeder Termin heißt dann „Belegt“) und ganztägige Termine ausblenden.',
   'Under Possible sessions tap Outsource decision and tick the sessions to offer.':
     'Tippe unter „Mögliche Termine“ auf „Entscheidung abgeben“ und hake die Termine an, die du anbieten willst.',
   Undo: 'Rückgängig',

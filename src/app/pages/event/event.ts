@@ -95,6 +95,50 @@ export class EventPage implements OnDestroy {
   private readonly howTo = inject(HowToState);
   private readonly sync = inject(Sync);
   readonly calendar = inject(CalendarLink);
+  // ---- Pull down to refresh, like a phone app (an installed web app has no reload button).
+  readonly pullNeeded = 64;
+  readonly pull = signal(0);
+  readonly refreshing = signal(false);
+  private pullFrom: { x: number; y: number } | null = null;
+
+  onPullStart(e: TouchEvent): void {
+    const inside = (e.target as HTMLElement | null)?.closest('.drawer, .sheet, app-how-to');
+    this.pullFrom =
+      e.touches.length === 1 && window.scrollY <= 0 && !this.inDayView() && !inside
+        ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+        : null;
+  }
+
+  onPullMove(e: TouchEvent): void {
+    if (!this.pullFrom || this.refreshing()) return;
+    const dy = e.touches[0].clientY - this.pullFrom.y;
+    const dx = Math.abs(e.touches[0].clientX - this.pullFrom.x);
+    // Only a clear downward drag counts; sideways is the calendar scrolling.
+    this.pull.set(dy > 0 && dy > dx * 1.5 && window.scrollY <= 0 ? Math.min(90, dy * 0.5) : 0);
+  }
+
+  onPullEnd(): void {
+    const pulled = this.pull();
+    this.pullFrom = null;
+    this.pull.set(0);
+    if (pulled >= this.pullNeeded) void this.refresh();
+  }
+
+  /** Fetches what may have changed elsewhere: my calendar, my Whens, a newer app version. */
+  async refresh(): Promise<void> {
+    if (this.refreshing()) return;
+    this.refreshing.set(true);
+    try {
+      await Promise.all([
+        this.calendar.refresh(),
+        this.sync.pull(),
+        new Promise((done) => setTimeout(done, 700)),
+      ]);
+    } finally {
+      this.refreshing.set(false);
+    }
+  }
+
   /** Connected and loaded: says how much of my calendar falls on these days. */
   readonly calendarStatus = computed(() => {
     const found = this.calendar.found();

@@ -326,10 +326,40 @@
               </span>
             </li>
           </ul>
+          @if (!pro()) {
+            <p class="muted small">{{ t('Sign in with Google to use Pro settings.') }}</p>
+          }
+        </div>
+      }
+    </section>
 
-          <p class="sub">
-            {{ t('My calendar') }} <span class="pro-badge">{{ t('PRO') }}</span>
-          </p>
+    <section data-section="calendar">
+      <h2>
+        <button
+          type="button"
+          class="fold"
+          (click)="toggleSection('calendar')"
+          [attr.aria-expanded]="!isFolded('calendar')"
+        >
+          <span
+            >{{ t('Calendar') }} <span class="pro-badge">{{ t('PRO') }}</span></span
+          >
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('calendar')) {
+        <div class="sect">
+          @if (pro() && calendar.hasSource()) {
+            <button
+              type="button"
+              class="pill refresh"
+              [disabled]="calendar.refreshing()"
+              (click)="calendar.refresh()"
+            >
+              <mat-icon [class.spin]="calendar.refreshing()">refresh</mat-icon>
+              {{ calendar.refreshing() ? t('Refreshing…') : t('Refresh events') }}
+            </button>
+          }
           <ul class="features" [class.locked]="!pro()">
             <li>
               <mat-slide-toggle

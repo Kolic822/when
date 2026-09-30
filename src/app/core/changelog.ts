@@ -7,9 +7,18 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10';
+export const VERSION = '0.10.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.1',
+    date: '30 Sep 2026',
+    changes: [
+      m('Calendar has its own section in the menu, with a Refresh events button'),
+      m('Pull down on a When to refresh your calendar and your Whens'),
+      m('The calendar also refreshes by itself when you come back to the app'),
+    ],
+  },
   {
     version: '0.10',
     date: '30 Sep 2026',

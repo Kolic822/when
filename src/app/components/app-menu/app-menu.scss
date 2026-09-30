@@ -597,3 +597,27 @@ p {
     color: var(--accent);
   }
 }
+
+.refresh {
+  height: 38px;
+  margin-bottom: 12px;
+  padding: 0 14px;
+  font-size: 13px;
+  color: var(--accent);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

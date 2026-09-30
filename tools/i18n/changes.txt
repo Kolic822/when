@@ -225,3 +225,15 @@ Dodaj Apple, Outlook ili bilo koji drugi kalendar tako da zalijepiš njegovu pov
 Settings lists every calendar that was read and how many events each has
 Die Einstellungen listen jeden gelesenen Kalender und wie viele Termine er hat
 Postavke navode svaki pročitani kalendar i koliko događaja ima
+
+Calendar has its own section in the menu, with a Refresh events button
+Der Kalender hat einen eigenen Bereich im Menü, mit der Schaltfläche „Termine aktualisieren“
+Kalendar ima vlastiti odjeljak u izborniku, s gumbom „Osvježi događaje”
+
+Pull down on a When to refresh your calendar and your Whens
+Zieh in einem When nach unten, um deinen Kalender und deine Whens zu aktualisieren
+Povuci prema dolje u Whenu da osvježiš kalendar i svoje Whenove
+
+The calendar also refreshes by itself when you come back to the app
+Der Kalender aktualisiert sich auch von selbst, wenn du zur App zurückkommst
+Kalendar se osvježava i sam kad se vratiš u aplikaciju

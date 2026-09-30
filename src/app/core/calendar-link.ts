@@ -58,6 +58,10 @@ export class CalendarLink {
   /** Google is configured on the server, so a real calendar can be connected. */
   readonly available = this.auth.googleReady;
   readonly working = signal(false);
+  readonly refreshing = signal(false);
+  /** The days last asked for, so they can be fetched again. */
+  private last: { dates: string[]; zone: string | null } | null = null;
+  private loadedAt = 0;
   readonly failed = signal(false);
   /** Why the calendar could not be shown, in words the person can act on. */
   readonly problem = signal<string | null>(null);
@@ -94,6 +98,24 @@ export class CalendarLink {
 
   constructor() {
     void this.prepare();
+    // Back in the app after a while: the calendar may have changed meanwhile.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && Date.now() - this.loadedAt > 5 * 60_000) {
+        void this.refresh();
+      }
+    });
+  }
+
+  /** Fetches the events again, e.g. after adding something in the calendar app. */
+  async refresh(): Promise<void> {
+    if (!this.last || this.refreshing() || !this.hasSource()) return;
+    this.loadedFor = '';
+    this.refreshing.set(true);
+    try {
+      await this.load(this.last.dates, this.last.zone);
+    } finally {
+      this.refreshing.set(false);
+    }
   }
 
   /** Loads Google's script and sets the client up, so a later tap can open the window at once. */
@@ -236,6 +258,7 @@ export class CalendarLink {
   async load(dates: string[], zone: string | null): Promise<void> {
     const token = this.connected() ? this.token() : null;
     const links = this.links();
+    this.last = { dates, zone };
     if (!dates.length || (!token && !links.length)) return;
     const where = zone ?? viewerZone();
     const stamp = [dates[0], dates[dates.length - 1], where, token?.value.slice(-8), ...links].join(
@@ -243,6 +266,7 @@ export class CalendarLink {
     );
     if (stamp === this.loadedFor) return;
     this.loadedFor = stamp;
+    this.loadedAt = Date.now();
     this.problem.set(null);
 
     const from = toUtc(dates[0], 0, where);

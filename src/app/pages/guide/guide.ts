@@ -253,16 +253,19 @@ export class Guide {
       intro: m('See your own calendar while you mark when you are free.'),
       steps: [
         m(
-          'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.',
+          'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.',
         ),
         m(
           'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.',
         ),
         m(
-          'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',
+          'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',
         ),
         m(
-          'In Settings you can hide the names (every event then says Busy) and hide all-day events.',
+          'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.',
+        ),
+        m(
+          'Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.',
         ),
         m(
           'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.',

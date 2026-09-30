@@ -400,8 +400,8 @@ export class AppMenu {
   });
 }
 
-const FOLDED_KEY = 'when:menu-folded-v2';
-const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'history', 'notify', 'pro'];
+const FOLDED_KEY = 'when:menu-folded-v3';
+const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'calendar', 'history', 'notify', 'pro'];
 
 function loadFolded(): Set<string> {
   try {

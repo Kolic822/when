@@ -254,3 +254,38 @@
     height: 15px;
   }
 }
+
+/* Pull-to-refresh indicator: follows the finger, then spins while fetching. */
+.pull {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) - 40px);
+  left: 50%;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--when-surface);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  color: var(--when-muted);
+  pointer-events: none;
+
+  &.ready,
+  &.busy {
+    color: var(--accent);
+  }
+  &.busy {
+    transition: transform 0.2s ease;
+
+    mat-icon {
+      animation: pull-spin 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes pull-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

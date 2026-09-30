@@ -22,6 +22,8 @@ export const hr: Dictionary = {
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.',
   'Add {session} to calendar': 'Dodaj {session} u kalendar',
+  'Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.':
+    'Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi događaje” u izborniku. Osvježava se i kad se vratiš u aplikaciju.',
   'All day': 'Cijeli dan',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.',
@@ -38,8 +40,8 @@ export const hr: Dictionary = {
   Appearance: 'Izgled',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Izgled” mijenja boje te svijetli ili tamni način. „Datum i vrijeme” prebacuje između 30.9. i 30. ruj te postavlja vremensku zonu.',
-  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u Postavkama. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
+  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u izborniku pod „Kalendar”. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
   'Apple or other calendar': 'Apple ili drugi kalendar',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Kao gost upisuješ ime u svakom Whenu. Tvoji Whenovi pamte se samo na ovom uređaju.',
@@ -62,10 +64,13 @@ export const hr: Dictionary = {
   'Booking another day adds a session instead of replacing the first.':
     'Potvrda drugog dana dodaje termin umjesto da zamijeni prvi.',
   Busy: 'Zauzeto',
+  Calendar: 'Kalendar',
   'Calendar access was not ticked. Connect again and tick the calendar box.':
     'Pristup kalendaru nije označen. Poveži ponovno i označi kućicu za kalendar.',
   'Calendar files and notifications use the right time for each person':
     'Kalendarske datoteke i obavijesti koriste točno vrijeme za svaku osobu',
+  'Calendar has its own section in the menu, with a Refresh events button':
+    'Kalendar ima vlastiti odjeljak u izborniku, s gumbom „Osvježi događaje”',
   'Calendar link': 'Poveznica kalendara',
   Cancel: 'Odustani',
   'Cancel {session}': 'Otkaži {session}',
@@ -248,8 +253,6 @@ export const hr: Dictionary = {
     'Ako produljiš susret ili suziš sate, razdoblja koja više ne odgovaraju skraćuju se ili uklanjaju.',
   'If your clock is different, every time is shown converted to yours, and a note at the top says so.':
     'Ako ti je sat drukčiji, svako se vrijeme prikazuje preračunato u tvoje, a napomena na vrhu to kaže.',
-  'In Settings you can hide the names (every event then says Busy) and hide all-day events.':
-    'U Postavkama možeš sakriti nazive (svaki događaj tada piše „Zauzeto”) i sakriti cjelodnevne događaje.',
   'In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.':
     'U danu dodirni „Kopiraj na…” da kopiraš sve označeno, ili ikonu kopiranja na jednom razdoblju da kopiraš samo njega.',
   'Install it on your phone': 'Instaliraj na mobitel',
@@ -294,7 +297,6 @@ export const hr: Dictionary = {
   'My Whens': 'Moji Whenovi',
   'My Whens lists every When you created or joined on this device, with what is booked or possible.':
     '„Moji Whenovi” prikazuje svaki When koji si stvorio/la ili kojem si se pridružio/la na ovom uređaju, s onim što je potvrđeno ili moguće.',
-  'My calendar': 'Moj kalendar',
   'My time': 'Moje vrijeme',
   'Name it': 'Naziv plana',
   'New When': 'Novi When',
@@ -383,10 +385,14 @@ export const hr: Dictionary = {
     'Pro pregled: popuni slobodno vrijeme iz kalendara',
   'Pro previews: connect calendar, add to calendar, join for part of it, history':
     'Pro pregledi: povezivanje kalendara, dodavanje u kalendar, sudjelovanje dio vremena, povijest',
+  'Pull down on a When to refresh your calendar and your Whens':
+    'Povuci prema dolje u Whenu da osvježiš kalendar i svoje Whenove',
   'Push notifications': 'Push obavijesti',
   'Push notifications when a session is booked and when someone answers a link':
     'Push obavijesti kad se termin potvrdi i kad netko odgovori na poveznicu',
   'Read the calendar': 'Čitanje kalendara',
+  'Refresh events': 'Osvježi događaje',
+  'Refreshing…': 'Osvježavam…',
   'Reload to update': 'Ponovno učitaj za ažuriranje',
   Remove: 'Ukloni',
   'Remove link': 'Ukloni poveznicu',
@@ -440,8 +446,8 @@ export const hr: Dictionary = {
   'Sign in again to read this calendar.': 'Prijavi se ponovno da se ovaj kalendar pročita.',
   'Sign in with Google to use Pro settings.': 'Prijavi se uz Google da koristiš Pro postavke.',
   'Sign in with Google to use these.': 'Prijavi se uz Google da ih koristiš.',
-  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.':
-    'Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u Postavkama „Poveži Google kalendar” i dopusti pristup.',
+  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.':
+    'Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u izborniku pod „Kalendar” dodirni „Poveži Google kalendar” i dopusti pristup.',
   'Sign out': 'Odjava',
   'Signed in with Google: your Whens follow you to every device you sign in on':
     'Prijavljen/a uz Google: tvoji Whenovi prate te na svaki uređaj na kojem se prijaviš',
@@ -514,6 +520,8 @@ export const hr: Dictionary = {
     'Oznaka prikazuje svaki potvrđeni termin, svaki s vlastitim gumbom za kalendar.',
   'The buttons next to the bar save you time.': 'Gumbi pokraj trake štede ti vrijeme.',
   'The calendar': 'Kalendar',
+  'The calendar also refreshes by itself when you come back to the app':
+    'Kalendar se osvježava i sam kad se vratiš u aplikaciju',
   'The calendar could not be reached.': 'Kalendar nije dostupan.',
   'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.':
     'Stupci dana ostaju dani organizatora. Mali ⁺¹ ili ⁻¹ uz vrijeme znači da je za tebe to sljedeći ili prethodni dan.',
@@ -575,6 +583,8 @@ export const hr: Dictionary = {
   Tu: 'Ut',
   'Two people can’t use the same name in one When.':
     'Dvije osobe ne mogu imati isto ime u jednom Whenu.',
+  'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.':
+    'U izborniku pod „Kalendar” možeš sakriti nazive (svaki događaj tada piše „Zauzeto”) i sakriti cjelodnevne događaje.',
   'Under Possible sessions tap Outsource decision and tick the sessions to offer.':
     'Pod „Mogući termini” dodirni „Prepusti odluku” i označi termine koje nudiš.',
   Undo: 'Poništi',

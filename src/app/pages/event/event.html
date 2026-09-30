@@ -1,4 +1,25 @@
-<main class="page" [class.dayview]="stepping() || editingDay()">
+<main
+  class="page"
+  [class.dayview]="stepping() || editingDay()"
+  (touchstart)="onPullStart($event)"
+  (touchmove)="onPullMove($event)"
+  (touchend)="onPullEnd()"
+  (touchcancel)="onPullEnd()"
+>
+  @if (pull() > 0 || refreshing()) {
+    <div
+      class="pull"
+      [class.ready]="pull() >= pullNeeded"
+      [class.busy]="refreshing()"
+      [style.transform]="'translate(-50%, ' + (refreshing() ? pullNeeded : pull()) + 'px)'"
+      role="status"
+      [attr.aria-label]="t('Refreshing…')"
+    >
+      <mat-icon [style.transform]="refreshing() ? null : 'rotate(' + pull() * 3 + 'deg)'"
+        >refresh</mat-icon
+      >
+    </div>
+  }
   <nav class="top">
     <a routerLink="/" class="brand"
       >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a
