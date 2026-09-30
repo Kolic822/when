@@ -381,3 +381,7 @@ Kad si prijavljen/a, tvoji Whenovi te prate: prijavi se na drugom mobitelu ili r
 Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.
 Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal; die Pfeile blättern jeweils vier Wochen weiter.
 Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom; strelice pomiču po četiri tjedna.
+
+Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.
+Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders in den Einstellungen ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.
+Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u Postavkama. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.

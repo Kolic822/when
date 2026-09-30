@@ -217,3 +217,11 @@ When pokazuje koliko tvojih događaja iz kalendara pada na njegove dane
 Connecting the calendar opens Google’s window straight from the tap, which phones require
 Beim Verbinden des Kalenders öffnet sich das Google-Fenster direkt beim Tippen, wie es Handys verlangen
 Pri povezivanju kalendara Googleov prozor otvara se odmah na dodir, kako mobiteli zahtijevaju
+
+Add an Apple, Outlook or any other calendar by pasting its subscription link
+Füge einen Apple-, Outlook- oder anderen Kalender hinzu, indem du seinen Abo-Link einfügst
+Dodaj Apple, Outlook ili bilo koji drugi kalendar tako da zalijepiš njegovu poveznicu za pretplatu
+
+Settings lists every calendar that was read and how many events each has
+Die Einstellungen listen jeden gelesenen Kalender und wie viele Termine er hat
+Postavke navode svaki pročitani kalendar i koliko događaja ima

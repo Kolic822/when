@@ -259,6 +259,9 @@ export class Guide {
           'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.',
         ),
         m(
+          'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',
+        ),
+        m(
           'In Settings you can hide the names (every event then says Busy) and hide all-day events.',
         ),
         m(

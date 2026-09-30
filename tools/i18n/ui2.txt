@@ -650,10 +650,6 @@ Connect again
 Erneut verbinden
 Poveži ponovno
 
-{n} event found
-{n} Termin gefunden || {n} Termine gefunden
-pronađen {n} događaj || pronađena {n} događaja || pronađeno {n} događaja
-
 Google could not be loaded. Check your connection and try again.
 Google konnte nicht geladen werden. Prüfe deine Verbindung und versuch es noch einmal.
 Google se nije mogao učitati. Provjeri vezu i pokušaj ponovno.
@@ -666,6 +662,42 @@ U tvom kalendaru nema ničega tih dana.
 {n} Termin aus deinem Kalender an diesen Tagen || {n} Termine aus deinem Kalender an diesen Tagen
 {n} događaj iz tvog kalendara tih dana || {n} događaja iz tvog kalendara tih dana || {n} događaja iz tvog kalendara tih dana
 
-{n} calendar
-{n} Kalender || {n} Kalender
-{n} kalendar || {n} kalendara || {n} kalendara
+Add
+Hinzufügen
+Dodaj
+
+Anyone who has that link can see that calendar. When keeps it on this device only.
+Wer diesen Link hat, kann diesen Kalender sehen. When behält ihn nur auf diesem Gerät.
+Tko god ima tu poveznicu može vidjeti taj kalendar. When je čuva samo na ovom uređaju.
+
+Apple or other calendar
+Apple- oder anderer Kalender
+Apple ili drugi kalendar
+
+Calendar link
+Kalender-Link
+Poveznica kalendara
+
+Google Calendar
+Google Kalender
+Google kalendar
+
+Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.
+Füge den Abo-Link eines Kalenders ein. In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.
+Zalijepi poveznicu za pretplatu na kalendar. U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.
+
+Sign in again to read this calendar.
+Melde dich erneut an, um diesen Kalender zu lesen.
+Prijavi se ponovno da se ovaj kalendar pročita.
+
+That link is not a calendar.
+Dieser Link ist kein Kalender.
+Ta poveznica nije kalendar.
+
+The calendar could not be reached.
+Der Kalender konnte nicht erreicht werden.
+Kalendar nije dostupan.
+
+{n} event
+{n} Termin || {n} Termine
+{n} događaj || {n} događaja || {n} događaja

@@ -15,6 +15,9 @@ export const hr: Dictionary = {
   'A new version is ready.': 'Nova verzija je spremna.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Napomena na vrhu kaže čije je vrijeme prikazano; jedan dodir ga mijenja',
+  Add: 'Dodaj',
+  'Add an Apple, Outlook or any other calendar by pasting its subscription link':
+    'Dodaj Apple, Outlook ili bilo koji drugi kalendar tako da zalijepiš njegovu poveznicu za pretplatu',
   'Add to calendar': 'Dodaj u kalendar',
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.',
@@ -27,12 +30,17 @@ export const hr: Dictionary = {
   'Answer mode': 'Način odgovora',
   'Any start time suits.': 'Odgovara bilo koje vrijeme početka.',
   'Any time': 'Bilo kada',
+  'Anyone who has that link can see that calendar. When keeps it on this device only.':
+    'Tko god ima tu poveznicu može vidjeti taj kalendar. When je čuva samo na ovom uređaju.',
   App: 'Aplikacija',
   'App checks for a new version and shows what changed.':
     '„Aplikacija” provjerava postoji li nova verzija i pokazuje što se promijenilo.',
   Appearance: 'Izgled',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Izgled” mijenja boje te svijetli ili tamni način. „Datum i vrijeme” prebacuje između 30.9. i 30. ruj te postavlja vremensku zonu.',
+  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u Postavkama. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
+  'Apple or other calendar': 'Apple ili drugi kalendar',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Kao gost upisuješ ime u svakom Whenu. Tvoji Whenovi pamte se samo na ovom uređaju.',
   'Automatic ({city})': 'Automatski ({city})',
@@ -58,6 +66,7 @@ export const hr: Dictionary = {
     'Pristup kalendaru nije označen. Poveži ponovno i označi kućicu za kalendar.',
   'Calendar files and notifications use the right time for each person':
     'Kalendarske datoteke i obavijesti koriste točno vrijeme za svaku osobu',
+  'Calendar link': 'Poveznica kalendara',
   Cancel: 'Odustani',
   'Cancel {session}': 'Otkaži {session}',
   'Change or delete a When (organiser)': 'Promijeni ili obriši When (organizator)',
@@ -196,6 +205,7 @@ export const hr: Dictionary = {
   'Free all day on {day}': 'Cijeli dan slobodan/na: {day}',
   'Get told while the app is closed.': 'Saznaj i kad je aplikacija zatvorena.',
   'Gold shows when everyone can make it.': 'Zlatno pokazuje kad svi mogu.',
+  'Google Calendar': 'Google kalendar',
   'Google asks again after about an hour; Disconnect in the menu withdraws access.':
     'Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.',
   'Google could not be loaded. Check your connection and try again.':
@@ -339,6 +349,8 @@ export const hr: Dictionary = {
   "Other people's free time": 'Slobodno vrijeme ostalih',
   'Outsource decision': 'Prepusti odluku',
   PRO: 'PRO',
+  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Zalijepi poveznicu za pretplatu na kalendar. U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
   People: 'Osobe',
   'People can join for part of it': 'Moguće je sudjelovati i samo dio vremena',
   'Pick a time': 'Odaberi vrijeme',
@@ -410,6 +422,8 @@ export const hr: Dictionary = {
   'Set how long the meetup should be, and the earliest and latest hour people can choose.':
     'Odredi koliko susret treba trajati te najraniji i najkasniji sat koji se može odabrati.',
   Settings: 'Postavke',
+  'Settings lists every calendar that was read and how many events each has':
+    'Postavke navode svaki pročitani kalendar i koliko događaja ima',
   'Settings: choose whether event names and all-day events are shown':
     'Postavke: odaberi prikazuju li se nazivi događaja i cjelodnevni događaji',
   'Share link': 'Podijeli poveznicu',
@@ -423,6 +437,7 @@ export const hr: Dictionary = {
   'Shown in your time': 'Prikazano u tvom vremenu',
   'Shown in {city} time': 'Prikazano po vremenu: {city}',
   'Sign in': 'Prijava',
+  'Sign in again to read this calendar.': 'Prijavi se ponovno da se ovaj kalendar pročita.',
   'Sign in with Google to use Pro settings.': 'Prijavi se uz Google da koristiš Pro postavke.',
   'Sign in with Google to use these.': 'Prijavi se uz Google da ih koristiš.',
   'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.':
@@ -487,6 +502,7 @@ export const hr: Dictionary = {
   'Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.':
     'Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate, sve na jednoj stranici.',
   Th: 'Če',
+  'That link is not a calendar.': 'Ta poveznica nije kalendar.',
   'That session is no longer possible for everyone': 'Taj termin više nije moguć za sve',
   'The Book button shows the day and time itself; repeated text around it is gone':
     'Gumb „Potvrdi” sam prikazuje dan i vrijeme; ponovljeni tekst oko njega je uklonjen',
@@ -498,6 +514,7 @@ export const hr: Dictionary = {
     'Oznaka prikazuje svaki potvrđeni termin, svaki s vlastitim gumbom za kalendar.',
   'The buttons next to the bar save you time.': 'Gumbi pokraj trake štede ti vrijeme.',
   'The calendar': 'Kalendar',
+  'The calendar could not be reached.': 'Kalendar nije dostupan.',
   'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.':
     'Stupci dana ostaju dani organizatora. Mali ⁺¹ ili ⁻¹ uz vrijeme znači da je za tebe to sljedeći ili prethodni dan.',
   'The day picker starts from this week and never shows the past':
@@ -645,14 +662,9 @@ export const hr: Dictionary = {
   '{names} picked {session}': '{names} je odabrao/la {session}',
   '{n} answer': { one: '{n} odgovor', few: '{n} odgovora', other: '{n} odgovora' },
   '{n} answers so far.': 'Dosad odgovora: {n}.',
-  '{n} calendar': { one: '{n} kalendar', few: '{n} kalendara', other: '{n} kalendara' },
   '{n} day': { one: '{n} dan', few: '{n} dana', other: '{n} dana' },
   '{n} days ago': 'prije {n} dana',
-  '{n} event found': {
-    one: 'pronađen {n} događaj',
-    few: 'pronađena {n} događaja',
-    other: 'pronađeno {n} događaja',
-  },
+  '{n} event': { one: '{n} događaj', few: '{n} događaja', other: '{n} događaja' },
   '{n} event from your calendar on these days': {
     one: '{n} događaj iz tvog kalendara tih dana',
     few: '{n} događaja iz tvog kalendara tih dana',

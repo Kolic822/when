@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.9.3';
+export const VERSION = '0.10';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10',
+    date: '30 Sep 2026',
+    changes: [
+      m('Add an Apple, Outlook or any other calendar by pasting its subscription link'),
+      m('Settings lists every calendar that was read and how many events each has'),
+    ],
+  },
   {
     version: '0.9.3',
     date: '30 Sep 2026',

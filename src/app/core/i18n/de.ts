@@ -16,6 +16,9 @@ export const de: Dictionary = {
   'A new version is ready.': 'Eine neue Version ist bereit.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Ein Hinweis oben sagt, wessen Zeit angezeigt wird; ein Tipp wechselt',
+  Add: 'Hinzufügen',
+  'Add an Apple, Outlook or any other calendar by pasting its subscription link':
+    'Füge einen Apple-, Outlook- oder anderen Kalender hinzu, indem du seinen Abo-Link einfügst',
   'Add to calendar': 'Zum Kalender hinzufügen',
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Zum Kalender hinzufügen: eine Kalender-Schaltfläche bei jedem möglichen Termin, nicht nur beim festgelegten.',
@@ -28,12 +31,17 @@ export const de: Dictionary = {
   'Answer mode': 'Antwortart',
   'Any start time suits.': 'Jede Startzeit passt.',
   'Any time': 'Egal wann',
+  'Anyone who has that link can see that calendar. When keeps it on this device only.':
+    'Wer diesen Link hat, kann diesen Kalender sehen. When behält ihn nur auf diesem Gerät.',
   App: 'App',
   'App checks for a new version and shows what changed.':
     '„App“ sucht nach einer neuen Version und zeigt, was sich geändert hat.',
   Appearance: 'Aussehen',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Aussehen“ ändert die Farben und den hellen oder dunklen Modus. „Datum und Uhrzeit“ wechselt zwischen 30.9. und 30. Sep und legt deine Zeitzone fest.',
+  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Settings. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders in den Einstellungen ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
+  'Apple or other calendar': 'Apple- oder anderer Kalender',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Als Gast gibst du in jedem When einen Namen ein. Deine Whens werden nur auf diesem Gerät gemerkt.',
   'Automatic ({city})': 'Automatisch ({city})',
@@ -59,6 +67,7 @@ export const de: Dictionary = {
     'Der Kalenderzugriff wurde nicht angehakt. Verbinde erneut und setze den Haken beim Kalender.',
   'Calendar files and notifications use the right time for each person':
     'Kalenderdateien und Benachrichtigungen verwenden für jede Person die richtige Zeit',
+  'Calendar link': 'Kalender-Link',
   Cancel: 'Abbrechen',
   'Cancel {session}': '{session} absagen',
   'Change or delete a When (organiser)': 'Ein When ändern oder löschen (Organisator)',
@@ -190,6 +199,7 @@ export const de: Dictionary = {
   'Free all day on {day}': 'Am {day} den ganzen Tag frei',
   'Get told while the app is closed.': 'Erfahre es auch, wenn die App geschlossen ist.',
   'Gold shows when everyone can make it.': 'Gold zeigt, wann alle können.',
+  'Google Calendar': 'Google Kalender',
   'Google asks again after about an hour; Disconnect in the menu withdraws access.':
     'Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.',
   'Google could not be loaded. Check your connection and try again.':
@@ -336,6 +346,8 @@ export const de: Dictionary = {
   "Other people's free time": 'Freie Zeiten der anderen',
   'Outsource decision': 'Entscheidung abgeben',
   PRO: 'PRO',
+  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Füge den Abo-Link eines Kalenders ein. In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
   People: 'Personen',
   'People can join for part of it': 'Man kann auch nur teilweise dabei sein',
   'Pick a time': 'Uhrzeit wählen',
@@ -408,6 +420,8 @@ export const de: Dictionary = {
   'Set how long the meetup should be, and the earliest and latest hour people can choose.':
     'Lege fest, wie lange das Treffen dauern soll und zwischen welchen Uhrzeiten man wählen kann.',
   Settings: 'Einstellungen',
+  'Settings lists every calendar that was read and how many events each has':
+    'Die Einstellungen listen jeden gelesenen Kalender und wie viele Termine er hat',
   'Settings: choose whether event names and all-day events are shown':
     'Einstellungen: wähle, ob Terminnamen und ganztägige Termine angezeigt werden',
   'Share link': 'Link teilen',
@@ -421,6 +435,7 @@ export const de: Dictionary = {
   'Shown in your time': 'In deiner Zeit angezeigt',
   'Shown in {city} time': 'In der Zeit von {city} angezeigt',
   'Sign in': 'Anmelden',
+  'Sign in again to read this calendar.': 'Melde dich erneut an, um diesen Kalender zu lesen.',
   'Sign in with Google to use Pro settings.':
     'Melde dich mit Google an, um die Pro-Einstellungen zu nutzen.',
   'Sign in with Google to use these.': 'Melde dich mit Google an, um diese zu nutzen.',
@@ -487,6 +502,7 @@ export const de: Dictionary = {
   'Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.':
     'Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern, alles auf einer Seite.',
   Th: 'Do',
+  'That link is not a calendar.': 'Dieser Link ist kein Kalender.',
   'That session is no longer possible for everyone':
     'Dieser Termin ist nicht mehr für alle möglich',
   'The Book button shows the day and time itself; repeated text around it is gone':
@@ -500,6 +516,7 @@ export const de: Dictionary = {
   'The buttons next to the bar save you time.':
     'Die Schaltflächen neben dem Balken sparen dir Zeit.',
   'The calendar': 'Der Kalender',
+  'The calendar could not be reached.': 'Der Kalender konnte nicht erreicht werden.',
   'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.':
     'Die Tagesspalten bleiben die Tage des Organisators. Ein kleines ⁺¹ oder ⁻¹ neben einer Zeit bedeutet, dass es für dich der nächste oder vorherige Tag ist.',
   'The day picker starts from this week and never shows the past':
@@ -650,10 +667,9 @@ export const de: Dictionary = {
   '{names} picked {session}': '{names} hat {session} gewählt',
   '{n} answer': { one: '{n} Antwort', other: '{n} Antworten' },
   '{n} answers so far.': 'Bisher {n} Antworten.',
-  '{n} calendar': { one: '{n} Kalender', other: '{n} Kalender' },
   '{n} day': { one: '{n} Tag', other: '{n} Tage' },
   '{n} days ago': 'vor {n} Tagen',
-  '{n} event found': { one: '{n} Termin gefunden', other: '{n} Termine gefunden' },
+  '{n} event': { one: '{n} Termin', other: '{n} Termine' },
   '{n} event from your calendar on these days': {
     one: '{n} Termin aus deinem Kalender an diesen Tagen',
     other: '{n} Termine aus deinem Kalender an diesen Tagen',

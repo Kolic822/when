@@ -549,3 +549,51 @@ p {
 .cal-row .count {
   font-weight: 400;
 }
+
+/* Which calendars were read, and what each had. */
+.sources {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  font-size: 12px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 3px 0;
+  }
+  .name {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .bad .muted {
+    color: var(--mat-sys-error);
+  }
+}
+
+.link-form {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    padding: 0 10px;
+    border: 1.5px solid var(--when-border);
+    border-radius: 12px;
+    background: var(--when-surface);
+    color: var(--when-text);
+    font: inherit;
+    /* 16px keeps iOS from zooming in on focus. */
+    font-size: 16px;
+  }
+  .pill {
+    height: 40px;
+    color: var(--accent);
+  }
+}

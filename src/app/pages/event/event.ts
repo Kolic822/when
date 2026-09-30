@@ -98,7 +98,7 @@ export class EventPage implements OnDestroy {
   /** Connected and loaded: says how much of my calendar falls on these days. */
   readonly calendarStatus = computed(() => {
     const found = this.calendar.found();
-    if (!this.features().connect || !this.calendar.connected() || found === null) return '';
+    if (!this.features().connect || !this.calendar.hasSource() || found === null) return '';
     if (this.calendar.problem()) return '';
     return found
       ? tn(
@@ -115,7 +115,7 @@ export class EventPage implements OnDestroy {
       this.features().connect &&
       !!this.meId() &&
       this.calendar.available() &&
-      !this.calendar.connected(),
+      !this.calendar.hasSource(),
   );
   readonly features = computed(() => this.prefsStore.prefs().features);
 
@@ -164,7 +164,9 @@ export class EventPage implements OnDestroy {
     // Connect calendar: fetch my busy times for these days once connected.
     effect(() => {
       const ev = this.event();
-      if (!ev || !this.features().connect || !this.calendar.connected()) return;
+      // Also re-runs when a calendar link is added or removed.
+      this.calendar.links();
+      if (!ev || !this.features().connect || !this.calendar.hasSource()) return;
       void this.calendar.load(ev.dates, ev.timeZone ?? null);
     });
 

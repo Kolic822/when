@@ -361,15 +361,7 @@
               <p class="muted small">{{ t('Showing sample events for now.') }}</p>
             } @else if (calendar.connected()) {
               <p class="cal-row">
-                <span class="ok"
-                  ><mat-icon>check_circle</mat-icon>{{ t('Connected') }}
-                  @if (calendar.found() !== null) {
-                    <span class="muted count"
-                      >· {{ tn(calendar.calendarsRead(), '{n} calendar', '{n} calendars') }},
-                      {{ tn(calendar.found()!, '{n} event found', '{n} events found') }}</span
-                    >
-                  }
-                </span>
+                <span class="ok"><mat-icon>check_circle</mat-icon>{{ t('Connected') }} </span>
                 <button type="button" class="link" (click)="calendar.disconnect()">
                   {{ t('Disconnect') }}
                 </button>
@@ -395,6 +387,57 @@
             }
           } @else {
             <p class="muted small">{{ t('Sign in with Google to use Pro settings.') }}</p>
+          }
+          @if (pro()) {
+            @if (calendar.sources().length) {
+              <ul class="sources">
+                @for (src of calendar.sources(); track $index) {
+                  <li [class.bad]="src.problem">
+                    <span class="name">{{ src.name }}</span>
+                    <span class="muted">{{
+                      src.problem ? src.problem : tn(src.count, '{n} event', '{n} events')
+                    }}</span>
+                  </li>
+                }
+              </ul>
+            }
+            <p class="sub">{{ t('Apple or other calendar') }}</p>
+            <p class="muted small">
+              {{
+                t(
+                  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.'
+                )
+              }}
+            </p>
+            <form class="link-form" (submit)="addCalendarLink($event, linkInput)">
+              <input
+                #linkInput
+                type="url"
+                inputmode="url"
+                autocomplete="off"
+                placeholder="webcal://…"
+                [attr.aria-label]="t('Calendar link')"
+              />
+              <button type="submit" class="pill">{{ t('Add') }}</button>
+            </form>
+            @if (linkError()) {
+              <p class="error small" role="alert">{{ t('That link is not a calendar.') }}</p>
+            }
+            @for (link of calendar.links(); track link) {
+              <p class="cal-row">
+                <span class="ok"><mat-icon>link</mat-icon>{{ linkName(link) }}</span>
+                <button type="button" class="link" (click)="calendar.removeLink(link)">
+                  {{ t('Remove') }}
+                </button>
+              </p>
+            }
+            <p class="muted small">
+              {{
+                t(
+                  'Anyone who has that link can see that calendar. When keeps it on this device only.'
+                )
+              }}
+            </p>
           }
         </div>
       }

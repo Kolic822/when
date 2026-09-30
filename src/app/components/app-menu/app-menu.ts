@@ -69,6 +69,24 @@ export class AppMenu {
   connectCalendar(): void {
     void this.calendar.connect();
   }
+
+  readonly linkError = signal(false);
+
+  addCalendarLink(event: Event, input: HTMLInputElement): void {
+    event.preventDefault();
+    const ok = this.calendar.addLink(input.value);
+    this.linkError.set(!ok);
+    if (ok) input.value = '';
+  }
+
+  linkName(url: string): string {
+    try {
+      const host = new URL(url).hostname;
+      return host.endsWith('icloud.com') ? 'iCloud' : host;
+    } catch {
+      return url;
+    }
+  }
   readonly pushFailed = signal(false);
 
   readonly langs = LANGS;

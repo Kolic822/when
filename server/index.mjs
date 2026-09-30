@@ -9,6 +9,7 @@ import { Store } from './store.mjs';
 import { cleanSubscription, createPush } from './push.mjs';
 import { cleanLang, localeOf, say } from './messages.mjs';
 import { Accounts } from './accounts.mjs';
+import { eventsBetween, fetchCalendar } from './ics.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Hosting platforms set PORT; locally API_PORT keeps the API off the Angular dev server's port.
@@ -357,6 +358,25 @@ app.delete('/api/me/whens/:id', (req, res) => {
   if (!me) return res.status(401).json({ error: 'signed_out' });
   accounts.forget(me, req.params.id);
   res.status(204).end();
+});
+
+/**
+ * Reads a calendar subscription link (Apple, Outlook, …) for someone signed in and
+ * returns its events in a range. Nothing is stored: the link stays on their device.
+ */
+app.post('/api/calendar/link', async (req, res) => {
+  if (!account(req)) return res.status(401).json({ error: 'signed_out' });
+  const from = new Date(String(req.body?.from ?? ''));
+  const to = new Date(String(req.body?.to ?? ''));
+  const span = to.getTime() - from.getTime();
+  if (!(span > 0) || span > 120 * DAY_MS) return res.status(400).json({ error: 'bad_range' });
+  try {
+    const text = await fetchCalendar(req.body?.url);
+    res.json({ events: eventsBetween(text, from, to) });
+  } catch (err) {
+    const code = err?.code ?? (err?.name === 'TimeoutError' ? 'unreachable' : 'unreadable');
+    res.status(code === 'bad_url' ? 400 : 502).json({ error: code });
+  }
 });
 
 // ---- Push notifications

@@ -32,6 +32,15 @@ const LIST = 'https://www.googleapis.com/auth/calendar.calendarlist.readonly';
 const SCOPE = `${EVENTS} ${LIST}`;
 const API = 'https://www.googleapis.com/calendar/v3';
 const KEY = 'when:gcal';
+const LINKS_KEY = 'when:cal-links';
+
+/** One calendar that was read, for the list in Settings. */
+export interface CalendarSource {
+  name: string;
+  /** Events it has on the days last loaded. */
+  count: number;
+  problem?: string;
+}
 
 /**
  * Connect calendar: shows the person's own busy times behind the bars.
@@ -54,8 +63,17 @@ export class CalendarLink {
   readonly problem = signal<string | null>(null);
   /** How many events were found on the days last loaded; null before the first load. */
   readonly found = signal<number | null>(null);
-  /** How many of the person's calendars were read. */
-  readonly calendarsRead = signal(0);
+  /** Every calendar that was read last time, with what it had. */
+  readonly sources = signal<CalendarSource[]>([]);
+  readonly calendarsRead = computed(() => this.sources().length);
+
+  /**
+   * Calendars added by subscription link (Apple Calendar, Outlook, …). Kept on this
+   * device; the server only fetches them on request and stores nothing.
+   */
+  readonly links = signal<string[]>(loadLinks());
+  /** There is something real to show: Google is connected or a link was added. */
+  readonly hasSource = computed(() => this.connected() || this.links().length > 0);
 
   /**
    * Google's permission window has to open in the same instant as the tap, or phones
@@ -115,11 +133,11 @@ export class CalendarLink {
   /** Timed events to draw behind a day's bar, clipped to the hours the When shows. */
   busyOn(date: string, dayStart: number, dayEnd: number): BusyBlock[] {
     const names = this.store.prefs().calendarNames;
-    const source = !this.available()
-      ? sampleBusy(date, dayStart, dayEnd)
-      : this.connected()
-        ? (this.days().timed[date] ?? [])
-        : [];
+    const source = this.hasSource()
+      ? (this.days().timed[date] ?? [])
+      : this.available()
+        ? []
+        : sampleBusy(date, dayStart, dayEnd);
     return source
       .map((b) => ({
         start: Math.max(b.start, dayStart),
@@ -133,11 +151,11 @@ export class CalendarLink {
   allDayOn(date: string): string[] {
     const prefs = this.store.prefs();
     if (!prefs.calendarAllDay) return [];
-    const titles = !this.available()
-      ? sampleAllDay(date)
-      : this.connected()
-        ? (this.days().allDay[date] ?? [])
-        : [];
+    const titles = this.hasSource()
+      ? (this.days().allDay[date] ?? [])
+      : this.available()
+        ? []
+        : sampleAllDay(date);
     return prefs.calendarNames ? titles : titles.map(() => t('Busy'));
   }
 
@@ -186,81 +204,188 @@ export class CalendarLink {
     saveToken(null);
     this.days.set({ timed: {}, allDay: {} });
     this.found.set(null);
-    this.calendarsRead.set(0);
+    this.sources.set([]);
     this.problem.set(null);
     this.loadedFor = '';
   }
 
-  /** Fetches my events for these days from every calendar I keep; `zone` is the When's zone. */
+  /** Adds a calendar by its subscription link. Returns false when it doesn't look like one. */
+  addLink(raw: string): boolean {
+    const url = raw.trim().replace(/^webcals?:/i, 'https:');
+    if (!/^https:\/\/[^\s/]+\/\S+/.test(url)) return false;
+    if (!this.links().includes(url)) {
+      this.links.update((list) => [...list, url].slice(0, 5));
+      saveLinks(this.links());
+    }
+    this.loadedFor = '';
+    return true;
+  }
+
+  removeLink(url: string): void {
+    this.links.update((list) => list.filter((l) => l !== url));
+    saveLinks(this.links());
+    this.loadedFor = '';
+    if (!this.hasSource()) {
+      this.days.set({ timed: {}, allDay: {} });
+      this.found.set(null);
+      this.sources.set([]);
+    }
+  }
+
+  /** Fetches my events for these days from every calendar I have; `zone` is the When's zone. */
   async load(dates: string[], zone: string | null): Promise<void> {
-    const token = this.token();
-    if (!this.connected() || !token || !dates.length) return;
+    const token = this.connected() ? this.token() : null;
+    const links = this.links();
+    if (!dates.length || (!token && !links.length)) return;
     const where = zone ?? viewerZone();
-    const stamp = `${dates[0]}|${dates[dates.length - 1]}|${where}|${token.value.slice(-8)}`;
+    const stamp = [dates[0], dates[dates.length - 1], where, token?.value.slice(-8), ...links].join(
+      '|',
+    );
     if (stamp === this.loadedFor) return;
     this.loadedFor = stamp;
     this.problem.set(null);
-    const headers = { authorization: `Bearer ${token.value}` };
-    try {
-      const query = new URLSearchParams({
-        timeMin: toUtc(dates[0], 0, where).toISOString(),
-        timeMax: toUtc(dates[dates.length - 1], 1440, where).toISOString(),
-        singleEvents: 'true',
-        orderBy: 'startTime',
-        maxResults: '250',
-        fields: 'items(summary,status,start,end)',
-      });
-      const calendars = await this.calendarIds(headers);
-      this.calendarsRead.set(calendars.length);
-      const lists = await Promise.all(
-        calendars.map(async (id) => {
-          const res = await fetch(`${API}/calendars/${encodeURIComponent(id)}/events?${query}`, {
-            headers,
-          });
-          if (res.ok) return ((await res.json()) as { items?: GoogleEvent[] }).items ?? [];
-          // One calendar that can't be read (a shared one, say) shouldn't hide the rest.
-          if (id !== 'primary' && res.status !== 401) return [];
-          throw await failure(res);
-        }),
-      );
-      const events = lists.flat();
-      const wanted = new Set(dates);
-      const days = byDay(events, where, wanted);
-      this.days.set(days);
-      this.found.set(
-        Object.values(days.timed).reduce((n, list) => n + list.length, 0) +
-          Object.values(days.allDay).reduce((n, list) => n + list.length, 0),
-      );
-    } catch (err) {
-      this.loadedFor = '';
-      this.failed.set(true);
-      const status = (err as { status?: number }).status;
-      if (status === 401) {
-        // The hour is up, or access was withdrawn in the Google account.
-        this.token.set(null);
-        saveToken(null);
-        return;
+
+    const from = toUtc(dates[0], 0, where);
+    const to = toUtc(dates[dates.length - 1], 1440, where);
+    const events: GoogleEvent[] = [];
+    const sources: CalendarSource[] = [];
+
+    if (token) {
+      try {
+        await this.fromGoogle(token.value, from, to, events, sources);
+      } catch (err) {
+        this.failed.set(true);
+        if ((err as { status?: number }).status === 401) {
+          // The hour is up, or access was withdrawn in the Google account.
+          this.token.set(null);
+          saveToken(null);
+        } else {
+          this.problem.set(err instanceof Error ? err.message : t('Something went wrong'));
+        }
       }
-      this.problem.set(err instanceof Error ? err.message : t('Something went wrong'));
+    }
+    for (const link of links) {
+      const name = hostOf(link);
+      try {
+        const list = await this.fromLink(link, from, to);
+        events.push(...list);
+        sources.push({ name, count: list.length });
+      } catch (err) {
+        sources.push({ name, count: 0, problem: err instanceof Error ? err.message : '' });
+      }
+    }
+
+    const days = byDay(events, where, new Set(dates));
+    this.days.set(days);
+    this.sources.set(sources);
+    this.found.set(
+      Object.values(days.timed).reduce((n, list) => n + list.length, 0) +
+        Object.values(days.allDay).reduce((n, list) => n + list.length, 0),
+    );
+  }
+
+  private async fromGoogle(
+    token: string,
+    from: Date,
+    to: Date,
+    events: GoogleEvent[],
+    sources: CalendarSource[],
+  ): Promise<void> {
+    const headers = { authorization: `Bearer ${token}` };
+    const query = new URLSearchParams({
+      timeMin: from.toISOString(),
+      timeMax: to.toISOString(),
+      singleEvents: 'true',
+      orderBy: 'startTime',
+      maxResults: '250',
+      fields: 'items(summary,status,start,end)',
+    });
+    for (const calendar of await this.googleCalendars(headers)) {
+      const res = await fetch(
+        `${API}/calendars/${encodeURIComponent(calendar.id)}/events?${query}`,
+        { headers },
+      );
+      if (res.ok) {
+        const items = ((await res.json()) as { items?: GoogleEvent[] }).items ?? [];
+        events.push(...items);
+        sources.push({ name: calendar.name, count: items.length });
+        continue;
+      }
+      // One calendar that can't be read (a shared one, say) shouldn't hide the rest.
+      if (calendar.id !== 'primary' && !calendar.primary && res.status !== 401) {
+        sources.push({ name: calendar.name, count: 0, problem: String(res.status) });
+        continue;
+      }
+      throw await failure(res);
     }
   }
 
   /** The calendars ticked in the person's Google Calendar; just the main one if the list can't be read. */
-  private async calendarIds(headers: Record<string, string>): Promise<string[]> {
+  private async googleCalendars(
+    headers: Record<string, string>,
+  ): Promise<{ id: string; name: string; primary?: boolean }[]> {
+    const fallback = [{ id: 'primary', name: t('Google Calendar'), primary: true }];
     try {
       const res = await fetch(
-        `${API}/users/me/calendarList?minAccessRole=reader&fields=items(id,selected,primary)`,
+        `${API}/users/me/calendarList?minAccessRole=reader&fields=items(id,summary,selected,primary)`,
         { headers },
       );
-      if (!res.ok) return ['primary'];
+      if (!res.ok) return fallback;
       const data = (await res.json()) as {
-        items?: { id: string; selected?: boolean; primary?: boolean }[];
+        items?: { id: string; summary?: string; selected?: boolean; primary?: boolean }[];
       };
-      const ids = (data.items ?? []).filter((c) => c.selected || c.primary).map((c) => c.id);
-      return ids.length ? ids.slice(0, 12) : ['primary'];
+      const list = (data.items ?? [])
+        .filter((c) => c.selected || c.primary)
+        .map((c) => ({ id: c.id, name: c.summary ?? c.id, primary: c.primary }));
+      return list.length ? list.slice(0, 12) : fallback;
     } catch {
-      return ['primary'];
+      return fallback;
     }
+  }
+
+  /** Asks the server to read a subscription link; the link itself is not stored there. */
+  private async fromLink(url: string, from: Date, to: Date): Promise<GoogleEvent[]> {
+    const res = await fetch('/api/calendar/link', {
+      method: 'POST',
+      headers: { ...this.auth.authHeader(), 'content-type': 'application/json' },
+      body: JSON.stringify({ url, from: from.toISOString(), to: to.toISOString() }),
+    });
+    if (!res.ok) {
+      const code = ((await res.json().catch(() => ({}))) as { error?: string }).error;
+      throw new Error(
+        code === 'not_a_calendar' || code === 'bad_url'
+          ? t('That link is not a calendar.')
+          : code === 'signed_out'
+            ? t('Sign in again to read this calendar.')
+            : t('The calendar could not be reached.'),
+      );
+    }
+    const data = (await res.json()) as {
+      events: {
+        summary: string;
+        start?: string;
+        end?: string;
+        startDate?: string;
+        endDate?: string;
+      }[];
+    };
+    return data.events.map((e) =>
+      e.startDate
+        ? { summary: e.summary, start: { date: e.startDate }, end: { date: e.endDate } }
+        : { summary: e.summary, start: { dateTime: e.start }, end: { dateTime: e.end } },
+    );
+  }
+}
+
+/** "p12-caldav.icloud.com" → "iCloud", otherwise the host name. */
+function hostOf(url: string): string {
+  try {
+    const host = new URL(url).hostname;
+    if (host.endsWith('icloud.com')) return 'iCloud';
+    if (host.includes('outlook') || host.includes('office')) return 'Outlook';
+    return host.replace(/^www\./, '');
+  } catch {
+    return url;
   }
 }
 
@@ -354,6 +479,23 @@ function loadToken(): { value: string; expires: number } | null {
     return token && token.expires > Date.now() ? token : null;
   } catch {
     return null;
+  }
+}
+
+function loadLinks(): string[] {
+  try {
+    const list = JSON.parse(localStorage.getItem(LINKS_KEY) ?? '[]') as unknown;
+    return Array.isArray(list) ? list.filter((l): l is string => typeof l === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLinks(links: string[]): void {
+  try {
+    localStorage.setItem(LINKS_KEY, JSON.stringify(links));
+  } catch {
+    /* ignore */
   }
 }
 
