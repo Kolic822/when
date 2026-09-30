@@ -7,9 +7,14 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.9.1';
+export const VERSION = '0.9.2';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.9.2',
+    date: '30 Sep 2026',
+    changes: [m('Signed in with Google: your Whens follow you to every device you sign in on')],
+  },
   {
     version: '0.9.1',
     date: '30 Sep 2026',

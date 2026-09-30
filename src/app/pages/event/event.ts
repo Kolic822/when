@@ -41,6 +41,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
 import { Push } from '../../core/push';
 import { HowToState } from '../../core/how-to-state';
+import { Sync } from '../../core/sync';
 import { CalendarLink } from '../../core/calendar-link';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
@@ -92,6 +93,7 @@ export class EventPage implements OnDestroy {
   private readonly prefsStore = inject(PrefsStore);
   private readonly push = inject(Push);
   private readonly howTo = inject(HowToState);
+  private readonly sync = inject(Sync);
   readonly calendar = inject(CalendarLink);
   /** Pro, Google is set up, and the calendar is not connected (or the hour is up). */
   readonly showCalendarPrompt = computed(
@@ -155,7 +157,10 @@ export class EventPage implements OnDestroy {
     // Notifications are per device; each When still has to be registered once.
     effect(() => {
       const id = this.id();
-      if (this.meId() || this.isCreator()) void this.push.register(id);
+      if (this.meId() || this.isCreator()) {
+        void this.push.register(id);
+        void this.sync.push(id);
+      }
     });
 
     effect(() => this.session.connect(this.id()));

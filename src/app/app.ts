@@ -5,6 +5,7 @@ import { Updates } from './core/updates';
 import { HowToState } from './core/how-to-state';
 import { HowTo } from './components/how-to/how-to';
 import { lang } from './core/i18n/i18n';
+import { Sync } from './core/sync';
 
 @Component({
   imports: [RouterOutlet, HowTo],
@@ -17,6 +18,8 @@ import { lang } from './core/i18n/i18n';
   `,
 })
 export class App {
+  /** Started with the app so a signed-in device fetches its Whens straight away. */
+  private readonly sync = inject(Sync);
   constructor() {
     document.documentElement.lang = lang();
   }

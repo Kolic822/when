@@ -424,6 +424,10 @@ export const hr: Dictionary = {
   'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.':
     'Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u Postavkama „Poveži Google kalendar” i dopusti pristup.',
   'Sign out': 'Odjava',
+  'Signed in with Google: your Whens follow you to every device you sign in on':
+    'Prijavljen/a uz Google: tvoji Whenovi prate te na svaki uređaj na kojem se prijaviš',
+  'Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.':
+    'Kad si prijavljen/a, tvoji Whenovi te prate: prijavi se na drugom mobitelu ili računalu i „Moji Whenovi” su isti, a u svakom Whenu si ista osoba.',
   'Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.':
     'Prijavom uz Google uključuju se i Pro značajke. Ništa ne treba uključivati; označene su s PRO ondje gdje se pojavljuju.',
   Skip: 'Preskoči',

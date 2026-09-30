@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, ElementRef } from '@angular/core';
+import { Component, computed, inject, signal, ElementRef, effect, untracked } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { HistoryEntry } from '../../core/models';
 import { History } from '../history/history';
 import { Push } from '../../core/push';
 import { CalendarLink } from '../../core/calendar-link';
+import { Sync } from '../../core/sync';
 import { Identity, RecentMeetup } from '../../core/identity';
 import { Look, PrefsStore, Theme } from '../../core/prefs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -42,6 +43,18 @@ import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
   styleUrl: './app-menu.scss',
 })
 export class AppMenu {
+  constructor() {
+    // The account's Whens arrived while the menu is open: show them.
+    effect(() => {
+      if (this.sync.pulled() && untracked(() => this.open())) {
+        untracked(() => {
+          this.recent.set(this.identity.recent());
+          this.loadBest();
+        });
+      }
+    });
+  }
+
   readonly t = t;
   readonly tn = tn;
   private readonly identity = inject(Identity);
@@ -51,6 +64,7 @@ export class AppMenu {
   readonly auth = inject(Auth);
   readonly push = inject(Push);
   readonly calendar = inject(CalendarLink);
+  private readonly sync = inject(Sync);
 
   connectCalendar(): void {
     void this.calendar.connect();
@@ -254,6 +268,7 @@ export class AppMenu {
     }
     this.identity.forget(m.id);
     this.identity.clear(m.id);
+    void this.sync.remove(m.id);
     this.recent.set(this.identity.recent());
     this.busyId.set(null);
     this.confirmId.set(null);

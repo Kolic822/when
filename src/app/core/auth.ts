@@ -3,7 +3,8 @@ import { t } from './i18n/i18n';
 
 /** Who is using the app on this device. Guests have no account and type their name per When. */
 export type User =
-  { kind: 'guest' } | { kind: 'google'; name: string; email: string; picture: string };
+  | { kind: 'guest' }
+  | { kind: 'google'; name: string; email: string; picture: string; session: string };
 
 interface GoogleIdApi {
   initialize(options: {
@@ -86,7 +87,17 @@ export class Auth {
     });
   }
 
+  /** Header that proves to the server which account this device is signed in to. */
+  authHeader(): Record<string, string> {
+    const u = this.user();
+    return u?.kind === 'google' ? { authorization: `Bearer ${u.session}` } : {};
+  }
+
   signOut(): void {
+    const headers = this.authHeader();
+    if (headers['authorization']) {
+      void fetch('/api/auth/signout', { method: 'POST', headers }).catch(() => undefined);
+    }
     window.google?.accounts.id.disableAutoSelect();
     this.set(null);
   }
@@ -101,7 +112,12 @@ export class Auth {
         body: JSON.stringify({ credential }),
       });
       if (!res.ok) return false;
-      const profile = (await res.json()) as { name: string; email: string; picture: string };
+      const profile = (await res.json()) as {
+        name: string;
+        email: string;
+        picture: string;
+        session: string;
+      };
       this.set({ kind: 'google', ...profile });
       return true;
     } catch {
@@ -148,6 +164,8 @@ function load(): User | null {
   try {
     const raw = localStorage.getItem(KEY);
     const user = raw ? (JSON.parse(raw) as User) : null;
+    // Signed in before accounts were kept on the server: sign in once more to get a session.
+    if (user?.kind === 'google' && !user.session) return null;
     if (user?.kind === 'guest' || user?.kind === 'google') return user;
     // People who used the app before this screen existed carry on as guests.
     return localStorage.getItem('when:recent') ? { kind: 'guest' } : null;

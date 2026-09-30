@@ -1,0 +1,107 @@
+import { effect, inject, Service, signal } from '@angular/core';
+import { Auth } from './auth';
+import { Identity } from './identity';
+
+interface RemoteWhen {
+  id: string;
+  title: string;
+  dates: string[];
+  participantId: string | null;
+  name: string;
+  creatorToken: string | null;
+  at: string;
+}
+
+/**
+ * Keeps "My Whens" the same on every device signed in with the same Google account.
+ * The account remembers, per When, who the person is in it and whether they organise it;
+ * a device that signs in fetches that list and adds what it did not know yet.
+ * Guests are untouched: their Whens stay on the device.
+ */
+@Service()
+export class Sync {
+  private readonly auth = inject(Auth);
+  private readonly identity = inject(Identity);
+
+  /** Bumped after a pull, so lists built from the device's memory refresh. */
+  readonly pulled = signal(0);
+  private lastSession = '';
+
+  constructor() {
+    // On sign-in (and on start-up when already signed in): send what this device knows, then fetch.
+    effect(() => {
+      const user = this.auth.user();
+      const session = user?.kind === 'google' ? user.session : '';
+      if (session === this.lastSession) return;
+      this.lastSession = session;
+      if (session) void this.exchange();
+    });
+  }
+
+  /** Tells the account about one When this device is part of. */
+  async push(eventId: string): Promise<void> {
+    const headers = this.auth.authHeader();
+    if (!headers['authorization']) return;
+    const me = this.identity.get(eventId);
+    const creatorToken = this.identity.creatorToken(eventId);
+    if (!me && !creatorToken) return;
+    try {
+      await fetch(`/api/me/whens/${encodeURIComponent(eventId)}`, {
+        method: 'PUT',
+        headers: { ...headers, 'content-type': 'application/json' },
+        body: JSON.stringify({ participantId: me?.id ?? null, creatorToken }),
+      });
+    } catch {
+      /* offline: the next visit sends it again */
+    }
+  }
+
+  /** The person deleted or left a When: the account forgets it too. */
+  async remove(eventId: string): Promise<void> {
+    const headers = this.auth.authHeader();
+    if (!headers['authorization']) return;
+    await fetch(`/api/me/whens/${encodeURIComponent(eventId)}`, {
+      method: 'DELETE',
+      headers,
+    }).catch(() => undefined);
+  }
+
+  private async exchange(): Promise<void> {
+    await Promise.all(this.identity.recent().map((m) => this.push(m.id)));
+    await this.pull();
+  }
+
+  /** Adds the account's Whens to this device. What the device already knows is left alone. */
+  async pull(): Promise<void> {
+    const headers = this.auth.authHeader();
+    if (!headers['authorization']) return;
+    try {
+      const res = await fetch('/api/me/whens', { headers });
+      if (res.status === 401) return this.auth.signOut();
+      if (!res.ok) return;
+      const known = new Set(this.identity.recent().map((m) => m.id));
+      for (const w of (await res.json()) as RemoteWhen[]) {
+        if (w.participantId && !this.identity.get(w.id)) {
+          this.identity.set(w.id, { id: w.participantId, name: w.name });
+          // They have been through the day-by-day view on the device where they joined.
+          this.identity.setStepperDone(w.id);
+        }
+        if (w.creatorToken && !this.identity.creatorToken(w.id)) {
+          this.identity.setCreatorToken(w.id, w.creatorToken);
+        }
+        if (!known.has(w.id)) {
+          this.identity.remember({
+            id: w.id,
+            title: w.title,
+            dates: w.dates,
+            name: w.name,
+            role: w.creatorToken ? 'organiser' : 'member',
+          });
+        }
+      }
+      this.pulled.update((n) => n + 1);
+    } catch {
+      /* offline */
+    }
+  }
+}

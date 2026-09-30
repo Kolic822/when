@@ -201,3 +201,7 @@ Connect calendar reads every calendar you keep, not only the main one
 If the calendar cannot be shown, the app now says why
 Wenn der Kalender nicht angezeigt werden kann, sagt die App jetzt, warum
 Ako se kalendar ne može prikazati, aplikacija sada kaže zašto
+
+Signed in with Google: your Whens follow you to every device you sign in on
+Mit Google angemeldet: Deine Whens folgen dir auf jedes Gerät, auf dem du dich anmeldest
+Prijavljen/a uz Google: tvoji Whenovi prate te na svaki uređaj na kojem se prijaviš

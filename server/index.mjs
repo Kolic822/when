@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { Store } from './store.mjs';
 import { cleanSubscription, createPush } from './push.mjs';
 import { cleanLang, localeOf, say } from './messages.mjs';
+import { Accounts } from './accounts.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Hosting platforms set PORT; locally API_PORT keeps the API off the Angular dev server's port.
@@ -21,7 +22,11 @@ const PALETTE = [
 ];
 
 const store = new Store(process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json'));
+const accounts = new Accounts(
+  path.join(path.dirname(process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json')), 'accounts.json'),
+);
 await store.load();
+await accounts.load();
 
 const app = express();
 app.use(express.json());
@@ -282,14 +287,76 @@ app.post('/api/auth/google', async (req, res) => {
     if (info.aud !== GOOGLE_CLIENT_ID || !issuer || !fresh) {
       return res.status(401).json({ error: 'invalid_token' });
     }
-    res.json({
+    const profile = {
       name: cleanName(info.given_name || info.name || String(info.email ?? '').split('@')[0]),
       email: String(info.email ?? ''),
       picture: String(info.picture ?? ''),
-    });
+    };
+    // A session for this device, so its Whens follow the account to other devices.
+    const session = accounts.signIn({ sub: String(info.sub), email: profile.email, name: profile.name });
+    res.json({ ...profile, session });
   } catch {
     res.status(502).json({ error: 'google_unreachable' });
   }
+});
+
+// ---- My Whens, the same on every device signed in with the same Google account.
+function account(req) {
+  const header = req.get('authorization') ?? '';
+  return accounts.bySession(header.startsWith('Bearer ') ? header.slice(7) : '');
+}
+
+app.post('/api/auth/signout', (req, res) => {
+  const header = req.get('authorization') ?? '';
+  accounts.signOut(header.startsWith('Bearer ') ? header.slice(7) : '');
+  res.status(204).end();
+});
+
+app.get('/api/me/whens', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  const list = [];
+  for (const [id, entry] of Object.entries(me.whens)) {
+    const ev = store.get(id);
+    if (!ev) {
+      accounts.forget(me, id);
+      continue;
+    }
+    const participant = ev.participants.find((p) => p.id === entry.participantId);
+    list.push({
+      id,
+      title: ev.title,
+      dates: ev.dates,
+      participantId: participant ? participant.id : null,
+      name: participant ? participant.name : entry.name,
+      creatorToken: entry.creatorToken === ev.creatorToken ? entry.creatorToken : null,
+      at: entry.at,
+    });
+  }
+  res.json(list);
+});
+
+app.put('/api/me/whens/:id', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const participant = ev.participants.find((p) => p.id === req.body?.participantId);
+  const creatorToken = req.body?.creatorToken === ev.creatorToken ? ev.creatorToken : null;
+  if (!participant && !creatorToken) return res.status(400).json({ error: 'nothing_to_remember' });
+  const entry = accounts.remember(me, ev.id, {
+    participantId: participant?.id ?? null,
+    name: participant?.name ?? '',
+    creatorToken,
+  });
+  res.json({ participantId: entry.participantId, name: entry.name, organiser: !!entry.creatorToken });
+});
+
+app.delete('/api/me/whens/:id', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  accounts.forget(me, req.params.id);
+  res.status(204).end();
 });
 
 // ---- Push notifications

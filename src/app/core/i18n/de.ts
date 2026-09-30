@@ -423,6 +423,10 @@ export const de: Dictionary = {
   'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.':
     'Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder in den Einstellungen auf „Google Kalender verbinden“ und erlaube es.',
   'Sign out': 'Abmelden',
+  'Signed in with Google: your Whens follow you to every device you sign in on':
+    'Mit Google angemeldet: Deine Whens folgen dir auf jedes Gerät, auf dem du dich anmeldest',
+  'Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.':
+    'Angemeldet folgen dir deine Whens: Melde dich auf einem anderen Handy oder Computer an, und „Meine Whens“ ist gleich, und du bist in jedem When dieselbe Person.',
   'Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.':
     'Mit der Google-Anmeldung werden auch die Pro-Funktionen aktiv. Es gibt nichts einzuschalten; sie sind dort, wo sie erscheinen, mit PRO markiert.',
   Skip: 'Überspringen',

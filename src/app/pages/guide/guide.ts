@@ -206,6 +206,9 @@ export class Guide {
         ),
         m('With Google your name is filled in for you. Sign in or out from the top of the menu.'),
         m(
+          'Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.',
+        ),
+        m(
           'Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.',
         ),
       ],
