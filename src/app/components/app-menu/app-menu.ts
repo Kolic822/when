@@ -71,12 +71,38 @@ export class AppMenu {
   }
 
   readonly linkError = signal(false);
+  /** The field for adding a calendar link is only shown on request. */
+  readonly addingLink = signal(false);
+
+  /** One line about the Google connection: what was read, or what to do. */
+  readonly googleLine = computed(() => {
+    const problem = this.calendar.problem();
+    if (problem) return problem;
+    if (!this.calendar.connected()) return t('Not connected');
+    const mine = this.calendar.sources().filter((s) => s.kind === 'google');
+    if (!mine.length) return t('Connected');
+    const events = mine.reduce((n, s) => n + s.count, 0);
+    return `${tn(mine.length, '{n} calendar', '{n} calendars')} · ${tn(events, '{n} event', '{n} events')}`;
+  });
+
+  linkProblem(url: string): string {
+    return this.calendar.sources().find((s) => s.url === url)?.problem ?? '';
+  }
+
+  linkLine(url: string): string {
+    const source = this.calendar.sources().find((s) => s.url === url);
+    if (!source) return t('Added');
+    return source.problem || tn(source.count, '{n} event', '{n} events');
+  }
 
   addCalendarLink(event: Event, input: HTMLInputElement): void {
     event.preventDefault();
     const ok = this.calendar.addLink(input.value);
     this.linkError.set(!ok);
-    if (ok) input.value = '';
+    if (ok) {
+      input.value = '';
+      this.addingLink.set(false);
+    }
   }
 
   linkName(url: string): string {

@@ -562,14 +562,6 @@ Disconnect
 Trennen
 Prekini vezu
 
-Connect Google Calendar
-Google Kalender verbinden
-Poveži Google kalendar
-
-Couldn’t connect. Try again.
-Verbindung nicht möglich. Versuch es noch einmal.
-Povezivanje nije uspjelo. Pokušaj ponovno.
-
 All day
 Ganztägig
 Cijeli dan
@@ -605,14 +597,6 @@ Vidi svoje događaje iz kalendara iza traka dok označavaš kad možeš.
 Settings
 Einstellungen
 Postavke
-
-Show all-day events
-Ganztägige Termine anzeigen
-Prikaži cjelodnevne događaje
-
-Show event names
-Terminnamen anzeigen
-Prikaži nazive događaja
 
 Show my calendar
 Meinen Kalender anzeigen
@@ -666,10 +650,6 @@ Anyone who has that link can see that calendar. When keeps it on this device onl
 Wer diesen Link hat, kann diesen Kalender sehen. When behält ihn nur auf diesem Gerät.
 Tko god ima tu poveznicu može vidjeti taj kalendar. When je čuva samo na ovom uređaju.
 
-Apple or other calendar
-Apple- oder anderer Kalender
-Apple ili drugi kalendar
-
 Calendar link
 Kalender-Link
 Poveznica kalendara
@@ -677,10 +657,6 @@ Poveznica kalendara
 Google Calendar
 Google Kalender
 Google kalendar
-
-Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.
-Füge den Abo-Link eines Kalenders ein. In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.
-Zalijepi poveznicu za pretplatu na kalendar. U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.
 
 Sign in again to read this calendar.
 Melde dich erneut an, um diesen Kalender zu lesen.
@@ -702,10 +678,54 @@ Calendar
 Kalender
 Kalendar
 
-Refresh events
-Termine aktualisieren
-Osvježi događaje
-
 Refreshing…
 Wird aktualisiert…
 Osvježavam…
+
+Add Apple or other calendar
+Apple- oder anderen Kalender hinzufügen
+Dodaj Apple ili drugi kalendar
+
+Added
+Hinzugefügt
+Dodano
+
+All-day events
+Ganztägige Termine
+Cjelodnevni događaji
+
+Connect
+Verbinden
+Poveži
+
+Event names
+Terminnamen
+Nazivi događaja
+
+In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link. Paste the link here.
+In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“. Füge den Link hier ein.
+U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu. Zalijepi poveznicu ovdje.
+
+Not connected
+Nicht verbunden
+Nije povezano
+
+Refresh
+Aktualisieren
+Osvježi
+
+See your own calendar behind the bars while you mark when you are free.
+Sieh deinen eigenen Kalender hinter den Balken, während du markierst, wann du Zeit hast.
+Vidi svoj kalendar iza traka dok označavaš kad možeš.
+
+Sign in with Google
+Mit Google anmelden
+Prijavi se uz Google
+
+Your calendars
+Deine Kalender
+Tvoji kalendari
+
+{n} calendar
+{n} Kalender || {n} Kalender
+{n} kalendar || {n} kalendara || {n} kalendara

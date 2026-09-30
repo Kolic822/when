@@ -598,12 +598,94 @@ p {
   }
 }
 
-.refresh {
-  height: 38px;
-  margin-bottom: 12px;
-  padding: 0 14px;
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Calendar section: what is connected, then adding one, then how events are shown. */
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+
+  .sub {
+    margin: 0;
+  }
+  .refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.cal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--when-border);
+  }
+  .kind {
+    flex: none;
+    color: var(--accent);
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+  .label {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .link,
+  .small-pill {
+    flex: none;
+    font-size: 13px;
+  }
+  .small-pill {
+    height: 34px;
+    padding: 0 14px;
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+.add-cal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
   font-size: 13px;
-  color: var(--accent);
 
   mat-icon {
     font-size: 18px;
@@ -612,12 +694,13 @@ p {
   }
 }
 
-.spin {
-  animation: spin 0.9s linear infinite;
-}
+.add-link {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--when-grid);
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  p {
+    margin: 0;
   }
 }

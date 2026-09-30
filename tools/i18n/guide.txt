@@ -354,9 +354,9 @@ See your own calendar while you mark when you are free.
 Sieh deinen eigenen Kalender, während du markierst, wann du Zeit hast.
 Vidi svoj kalendar dok označavaš kad možeš.
 
-Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.
-Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder im Menü unter „Kalender“ auf „Google Kalender verbinden“ und erlaube es.
-Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u izborniku pod „Kalendar” dodirni „Poveži Google kalendar” i dopusti pristup.
+Sign in with Google, then tap Show my calendar above the calendar, or Connect next to Google under Calendar in the menu, and allow it.
+Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder im Menü unter „Kalender“ neben Google auf „Verbinden“ und erlaube es.
+Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u izborniku pod „Kalendar” dodirni „Poveži” pokraj Googlea i dopusti pristup.
 
 Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.
 Mit der Google-Anmeldung werden auch die Pro-Funktionen aktiv. Es gibt nichts einzuschalten; sie sind dort, wo sie erscheinen, mit PRO markiert.
@@ -382,10 +382,10 @@ Tap every day that could work. They don’t have to be next to each other. Use T
 Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal; die Pfeile blättern jeweils vier Wochen weiter.
 Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom; strelice pomiču po četiri tjedna.
 
-Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.
-Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders im Menü unter „Kalender“ ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.
-Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u izborniku pod „Kalendar”. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.
+Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.
+Apple Kalender, Outlook und andere: Tippe im Menü unter „Kalender“ auf „Apple- oder anderen Kalender hinzufügen“ und füge den Abo-Link des Kalenders ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.
+Apple Kalendar, Outlook i drugi: u izborniku pod „Kalendar” dodirni „Dodaj Apple ili drugi kalendar” i zalijepi poveznicu za pretplatu. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.
 
-Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.
-Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü auf „Termine aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.
-Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi događaje” u izborniku. Osvježava se i kad se vratiš u aplikaciju.
+Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.
+Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü unter „Kalender“ auf „Aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.
+Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi” u izborniku pod „Kalendar”. Osvježava se i kad se vratiš u aplikaciju.

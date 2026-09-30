@@ -7,9 +7,14 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.1';
+export const VERSION = '0.10.2';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.2',
+    date: '30 Sep 2026',
+    changes: [m('A tidier Calendar section: your calendars first, display options last')],
+  },
   {
     version: '0.10.1',
     date: '30 Sep 2026',

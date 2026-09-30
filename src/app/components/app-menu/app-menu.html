@@ -349,125 +349,140 @@
       </h2>
       @if (!isFolded('calendar')) {
         <div class="sect">
-          @if (pro() && calendar.hasSource()) {
-            <button
-              type="button"
-              class="pill refresh"
-              [disabled]="calendar.refreshing()"
-              (click)="calendar.refresh()"
-            >
-              <mat-icon [class.spin]="calendar.refreshing()">refresh</mat-icon>
-              {{ calendar.refreshing() ? t('Refreshing…') : t('Refresh events') }}
+          @if (!pro()) {
+            <p class="muted small">
+              {{ t('See your own calendar behind the bars while you mark when you are free.') }}
+            </p>
+            <button type="button" class="pill cal-connect" (click)="signIn()">
+              {{ t('Sign in with Google') }}
             </button>
-          }
-          <ul class="features" [class.locked]="!pro()">
-            <li>
-              <mat-slide-toggle
-                [checked]="pro() && prefs().calendarNames"
-                [disabled]="!pro()"
-                (change)="store.update({ calendarNames: $event.checked })"
-                [attr.aria-label]="t('Show event names')"
-              />
-              <span class="text">
-                <span class="label">{{ t('Show event names') }}</span>
-                <span class="muted small">{{ t('Off: every event just says Busy.') }}</span>
-              </span>
-            </li>
-            <li>
-              <mat-slide-toggle
-                [checked]="pro() && prefs().calendarAllDay"
-                [disabled]="!pro()"
-                (change)="store.update({ calendarAllDay: $event.checked })"
-                [attr.aria-label]="t('Show all-day events')"
-              />
-              <span class="text">
-                <span class="label">{{ t('Show all-day events') }}</span>
-                <span class="muted small">{{ t('Birthdays, holidays, trips.') }}</span>
-              </span>
-            </li>
-          </ul>
-          @if (pro()) {
-            @if (!calendar.available()) {
-              <p class="muted small">{{ t('Showing sample events for now.') }}</p>
-            } @else if (calendar.connected()) {
-              <p class="cal-row">
-                <span class="ok"><mat-icon>check_circle</mat-icon>{{ t('Connected') }} </span>
-                <button type="button" class="link" (click)="calendar.disconnect()">
-                  {{ t('Disconnect') }}
-                </button>
-              </p>
-              @if (calendar.problem(); as problem) {
-                <p class="error small" role="alert">{{ problem }}</p>
-              }
-            } @else {
-              <button
-                type="button"
-                class="pill cal-connect"
-                [disabled]="calendar.working()"
-                (click)="connectCalendar()"
-              >
-                <mat-icon>event</mat-icon>
-                {{ t('Connect Google Calendar') }}
-              </button>
-              @if (calendar.failed()) {
-                <p class="error small" role="alert">
-                  {{ calendar.problem() ?? t('Couldn’t connect. Try again.') }}
-                </p>
-              }
-            }
           } @else {
-            <p class="muted small">{{ t('Sign in with Google to use Pro settings.') }}</p>
-          }
-          @if (pro()) {
-            @if (calendar.sources().length) {
-              <ul class="sources">
-                @for (src of calendar.sources(); track $index) {
-                  <li [class.bad]="src.problem">
-                    <span class="name">{{ src.name }}</span>
-                    <span class="muted">{{
-                      src.problem ? src.problem : tn(src.count, '{n} event', '{n} events')
-                    }}</span>
-                  </li>
-                }
-              </ul>
-            }
-            <p class="sub">{{ t('Apple or other calendar') }}</p>
-            <p class="muted small">
-              {{
-                t(
-                  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.'
-                )
-              }}
-            </p>
-            <form class="link-form" (submit)="addCalendarLink($event, linkInput)">
-              <input
-                #linkInput
-                type="url"
-                inputmode="url"
-                autocomplete="off"
-                placeholder="webcal://…"
-                [attr.aria-label]="t('Calendar link')"
-              />
-              <button type="submit" class="pill">{{ t('Add') }}</button>
-            </form>
-            @if (linkError()) {
-              <p class="error small" role="alert">{{ t('That link is not a calendar.') }}</p>
-            }
-            @for (link of calendar.links(); track link) {
-              <p class="cal-row">
-                <span class="ok"><mat-icon>link</mat-icon>{{ linkName(link) }}</span>
-                <button type="button" class="link" (click)="calendar.removeLink(link)">
-                  {{ t('Remove') }}
+            <!-- 1. What is connected -->
+            <div class="cal-head">
+              <p class="sub">{{ t('Your calendars') }}</p>
+              @if (calendar.hasSource()) {
+                <button
+                  type="button"
+                  class="link refresh"
+                  [disabled]="calendar.refreshing()"
+                  (click)="calendar.refresh()"
+                >
+                  <mat-icon [class.spin]="calendar.refreshing()">refresh</mat-icon>
+                  {{ calendar.refreshing() ? t('Refreshing…') : t('Refresh') }}
                 </button>
-              </p>
+              }
+            </div>
+
+            <ul class="cal-list">
+              @if (calendar.available()) {
+                <li>
+                  <mat-icon class="kind">event</mat-icon>
+                  <span class="text">
+                    <span class="label">Google</span>
+                    <span class="muted small" [class.error]="calendar.problem()">{{
+                      googleLine()
+                    }}</span>
+                  </span>
+                  @if (calendar.connected()) {
+                    <button type="button" class="link" (click)="calendar.disconnect()">
+                      {{ t('Disconnect') }}
+                    </button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="pill small-pill"
+                      [disabled]="calendar.working()"
+                      (click)="connectCalendar()"
+                    >
+                      {{ t('Connect') }}
+                    </button>
+                  }
+                </li>
+              }
+              @for (link of calendar.links(); track link) {
+                <li>
+                  <mat-icon class="kind">link</mat-icon>
+                  <span class="text">
+                    <span class="label">{{ linkName(link) }}</span>
+                    <span class="muted small" [class.error]="linkProblem(link)">{{
+                      linkLine(link)
+                    }}</span>
+                  </span>
+                  <button type="button" class="link" (click)="calendar.removeLink(link)">
+                    {{ t('Remove') }}
+                  </button>
+                </li>
+              }
+              @if (!calendar.available() && !calendar.links().length) {
+                <li class="muted small">{{ t('Showing sample events for now.') }}</li>
+              }
+            </ul>
+
+            <!-- 2. Add one by link, opened on request -->
+            @if (addingLink()) {
+              <div class="add-link">
+                <p class="muted small">
+                  {{
+                    t(
+                      'In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link. Paste the link here.'
+                    )
+                  }}
+                </p>
+                <form class="link-form" (submit)="addCalendarLink($event, linkInput)">
+                  <input
+                    #linkInput
+                    type="url"
+                    inputmode="url"
+                    autocomplete="off"
+                    placeholder="webcal://…"
+                    [attr.aria-label]="t('Calendar link')"
+                  />
+                  <button type="submit" class="pill">{{ t('Add') }}</button>
+                </form>
+                @if (linkError()) {
+                  <p class="error small" role="alert">{{ t('That link is not a calendar.') }}</p>
+                }
+                <p class="muted small">
+                  {{
+                    t(
+                      'Anyone who has that link can see that calendar. When keeps it on this device only.'
+                    )
+                  }}
+                </p>
+              </div>
+            } @else {
+              <button type="button" class="link add-cal" (click)="addingLink.set(true)">
+                <mat-icon>add</mat-icon>
+                {{ t('Add Apple or other calendar') }}
+              </button>
             }
-            <p class="muted small">
-              {{
-                t(
-                  'Anyone who has that link can see that calendar. When keeps it on this device only.'
-                )
-              }}
-            </p>
+
+            <!-- 3. How events are shown -->
+            <p class="sub">{{ t('Show') }}</p>
+            <ul class="features">
+              <li>
+                <mat-slide-toggle
+                  [checked]="prefs().calendarNames"
+                  (change)="store.update({ calendarNames: $event.checked })"
+                  [attr.aria-label]="t('Event names')"
+                />
+                <span class="text">
+                  <span class="label">{{ t('Event names') }}</span>
+                  <span class="muted small">{{ t('Off: every event just says Busy.') }}</span>
+                </span>
+              </li>
+              <li>
+                <mat-slide-toggle
+                  [checked]="prefs().calendarAllDay"
+                  (change)="store.update({ calendarAllDay: $event.checked })"
+                  [attr.aria-label]="t('All-day events')"
+                />
+                <span class="text">
+                  <span class="label">{{ t('All-day events') }}</span>
+                  <span class="muted small">{{ t('Birthdays, holidays, trips.') }}</span>
+                </span>
+              </li>
+            </ul>
           }
         </div>
       }

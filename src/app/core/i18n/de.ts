@@ -16,16 +16,21 @@ export const de: Dictionary = {
   'A new version is ready.': 'Eine neue Version ist bereit.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Ein Hinweis oben sagt, wessen Zeit angezeigt wird; ein Tipp wechselt',
+  'A tidier Calendar section: your calendars first, display options last':
+    'Ein aufgeräumter Kalender-Bereich: zuerst deine Kalender, zuletzt die Anzeigeoptionen',
   Add: 'Hinzufügen',
+  'Add Apple or other calendar': 'Apple- oder anderen Kalender hinzufügen',
   'Add an Apple, Outlook or any other calendar by pasting its subscription link':
     'Füge einen Apple-, Outlook- oder anderen Kalender hinzu, indem du seinen Abo-Link einfügst',
   'Add to calendar': 'Zum Kalender hinzufügen',
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Zum Kalender hinzufügen: eine Kalender-Schaltfläche bei jedem möglichen Termin, nicht nur beim festgelegten.',
   'Add {session} to calendar': '{session} zum Kalender hinzufügen',
-  'Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.':
-    'Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü auf „Termine aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.',
+  Added: 'Hinzugefügt',
+  'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.':
+    'Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü unter „Kalender“ auf „Aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.',
   'All day': 'Ganztägig',
+  'All-day events': 'Ganztägige Termine',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: Öffne das Browser-Menü und tippe auf „App installieren“ oder „Zum Startbildschirm hinzufügen“.',
   Answer: 'Antwort',
@@ -41,9 +46,8 @@ export const de: Dictionary = {
   Appearance: 'Aussehen',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Aussehen“ ändert die Farben und den hellen oder dunklen Modus. „Datum und Uhrzeit“ wechselt zwischen 30.9. und 30. Sep und legt deine Zeitzone fest.',
-  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Apple Kalender, Outlook und andere: Füge den Abo-Link des Kalenders im Menü unter „Kalender“ ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
-  'Apple or other calendar': 'Apple- oder anderer Kalender',
+  'Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalender, Outlook und andere: Tippe im Menü unter „Kalender“ auf „Apple- oder anderen Kalender hinzufügen“ und füge den Abo-Link des Kalenders ein. Tippe in Apple Kalender auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Als Gast gibst du in jedem When einen Namen ein. Deine Whens werden nur auf diesem Gerät gemerkt.',
   'Automatic ({city})': 'Automatisch ({city})',
@@ -94,7 +98,7 @@ export const de: Dictionary = {
   Close: 'Schließen',
   'Close menu': 'Menü schließen',
   Colour: 'Farbe',
-  'Connect Google Calendar': 'Google Kalender verbinden',
+  Connect: 'Verbinden',
   'Connect again': 'Erneut verbinden',
   'Connect calendar': 'Kalender verbinden',
   'Connect calendar reads every calendar you keep, not only the main one':
@@ -136,7 +140,6 @@ export const de: Dictionary = {
   'Could not send your answer': 'Deine Antwort konnte nicht gesendet werden',
   "Couldn't turn on notifications. Try again.":
     'Benachrichtigungen konnten nicht eingeschaltet werden. Versuch es noch einmal.',
-  'Couldn’t connect. Try again.': 'Verbindung nicht möglich. Versuch es noch einmal.',
   'Create a When, share the link, mark when you are free':
     'Ein When erstellen, den Link teilen, markieren, wann du Zeit hast',
   'Create link': 'Link erstellen',
@@ -187,6 +190,7 @@ export const de: Dictionary = {
     'Ein When zu bearbeiten ist eine Seite mit allem darauf, mit „Speichern“ immer griffbereit',
   'Enter your own name so the others know who started it.':
     'Gib deinen eigenen Namen ein, damit die anderen wissen, wer es gestartet hat.',
+  'Event names': 'Terminnamen',
   'Everyone can make it {time}': 'Alle können {time}',
   'Everyone is free {session}.': 'Alle haben Zeit: {session}.',
   'Everything When can do, step by step. Version {version}.':
@@ -248,6 +252,8 @@ export const de: Dictionary = {
     'Wenn du das Treffen verlängerst oder die Uhrzeiten einschränkst, werden Zeiträume, die nicht mehr passen, gekürzt oder entfernt.',
   'If your clock is different, every time is shown converted to yours, and a note at the top says so.':
     'Wenn deine Uhr anders geht, wird jede Zeit in deine umgerechnet, und ein Hinweis oben sagt das.',
+  'In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link. Paste the link here.':
+    'In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“. Füge den Link hier ein.',
   'In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.':
     'Tippe in einem Tag auf „Kopieren nach…“, um alles Markierte zu kopieren, oder auf das Kopiersymbol eines Zeitraums, um nur diesen zu kopieren.',
   'Install it on your phone': 'Auf dem Handy installieren',
@@ -314,6 +320,7 @@ export const de: Dictionary = {
   'None of these work': 'Keiner passt',
   'None yet. Whens you create or join show up here.':
     'Noch keine. Whens, die du erstellst oder denen du beitrittst, erscheinen hier.',
+  'Not connected': 'Nicht verbunden',
   'Not now': 'Nicht jetzt',
   'Note for {time}': 'Notiz für {time}',
   'Nothing fits everyone yet. Try adding a bit more time.':
@@ -348,8 +355,6 @@ export const de: Dictionary = {
   "Other people's free time": 'Freie Zeiten der anderen',
   'Outsource decision': 'Entscheidung abgeben',
   PRO: 'PRO',
-  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Füge den Abo-Link eines Kalenders ein. In Apple Kalender: Tippe auf „Kalender“, dann auf das ⓘ neben einem Kalender, schalte „Öffentlicher Kalender“ ein und tippe auf „Link teilen“.',
   People: 'Personen',
   'People can join for part of it': 'Man kann auch nur teilweise dabei sein',
   'Pick a time': 'Uhrzeit wählen',
@@ -388,7 +393,7 @@ export const de: Dictionary = {
   'Push notifications when a session is booked and when someone answers a link':
     'Push-Benachrichtigungen, wenn ein Termin festgelegt wird und wenn jemand auf einen Link antwortet',
   'Read the calendar': 'Den Kalender lesen',
-  'Refresh events': 'Termine aktualisieren',
+  Refresh: 'Aktualisieren',
   'Refreshing…': 'Wird aktualisiert…',
   'Reload to update': 'Neu laden und aktualisieren',
   Remove: 'Entfernen',
@@ -405,6 +410,8 @@ export const de: Dictionary = {
   'Scroll sideways for more days': 'Seitlich wischen für weitere Tage',
   'Sections marked Pro need you to be signed in with Google.':
     'Für mit „Pro“ markierte Abschnitte musst du mit Google angemeldet sein.',
+  'See your own calendar behind the bars while you mark when you are free.':
+    'Sieh deinen eigenen Kalender hinter den Balken, während du markierst, wann du Zeit hast.',
   'See your own calendar events behind the bars while you mark when you are free.':
     'Sieh deine eigenen Kalendertermine hinter den Balken, während du markierst, wann du Zeit hast.',
   'See your own calendar while you mark when you are free.':
@@ -433,8 +440,6 @@ export const de: Dictionary = {
   'Share link': 'Link teilen',
   Shortcuts: 'Abkürzungen',
   Show: 'Anzeigen',
-  'Show all-day events': 'Ganztägige Termine anzeigen',
-  'Show event names': 'Terminnamen anzeigen',
   'Show less': 'Weniger anzeigen',
   'Show my calendar': 'Meinen Kalender anzeigen',
   'Showing sample events for now.': 'Vorerst werden Beispieltermine angezeigt.',
@@ -442,11 +447,12 @@ export const de: Dictionary = {
   'Shown in {city} time': 'In der Zeit von {city} angezeigt',
   'Sign in': 'Anmelden',
   'Sign in again to read this calendar.': 'Melde dich erneut an, um diesen Kalender zu lesen.',
+  'Sign in with Google': 'Mit Google anmelden',
   'Sign in with Google to use Pro settings.':
     'Melde dich mit Google an, um die Pro-Einstellungen zu nutzen.',
   'Sign in with Google to use these.': 'Melde dich mit Google an, um diese zu nutzen.',
-  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.':
-    'Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder im Menü unter „Kalender“ auf „Google Kalender verbinden“ und erlaube es.',
+  'Sign in with Google, then tap Show my calendar above the calendar, or Connect next to Google under Calendar in the menu, and allow it.':
+    'Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder im Menü unter „Kalender“ neben Google auf „Verbinden“ und erlaube es.',
   'Sign out': 'Abmelden',
   'Signed in with Google: your Whens follow you to every device you sign in on':
     'Mit Google angemeldet: Deine Whens folgen dir auf jedes Gerät, auf dem du dich anmeldest',
@@ -630,6 +636,7 @@ export const de: Dictionary = {
   'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.':
     'Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.',
   'Your calendar has nothing on these days.': 'In deinem Kalender steht an diesen Tagen nichts.',
+  'Your calendars': 'Deine Kalender',
   'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
     'Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ganztägige Termine stehen oben am Tag.',
   'Your name': 'Dein Name',
@@ -677,6 +684,7 @@ export const de: Dictionary = {
   '{names} picked {session}': '{names} hat {session} gewählt',
   '{n} answer': { one: '{n} Antwort', other: '{n} Antworten' },
   '{n} answers so far.': 'Bisher {n} Antworten.',
+  '{n} calendar': { one: '{n} Kalender', other: '{n} Kalender' },
   '{n} day': { one: '{n} Tag', other: '{n} Tage' },
   '{n} days ago': 'vor {n} Tagen',
   '{n} event': { one: '{n} Termin', other: '{n} Termine' },

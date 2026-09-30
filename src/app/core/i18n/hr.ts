@@ -15,16 +15,21 @@ export const hr: Dictionary = {
   'A new version is ready.': 'Nova verzija je spremna.',
   'A note at the top says whose time is shown, with one tap to switch':
     'Napomena na vrhu kaže čije je vrijeme prikazano; jedan dodir ga mijenja',
+  'A tidier Calendar section: your calendars first, display options last':
+    'Pregledniji odjeljak Kalendar: najprije tvoji kalendari, na kraju opcije prikaza',
   Add: 'Dodaj',
+  'Add Apple or other calendar': 'Dodaj Apple ili drugi kalendar',
   'Add an Apple, Outlook or any other calendar by pasting its subscription link':
     'Dodaj Apple, Outlook ili bilo koji drugi kalendar tako da zalijepiš njegovu poveznicu za pretplatu',
   'Add to calendar': 'Dodaj u kalendar',
   'Add to calendar: a calendar button on every possible session, not only on the booked one.':
     'Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.',
   'Add {session} to calendar': 'Dodaj {session} u kalendar',
-  'Added something in your calendar? Pull down on the When, or tap Refresh events in the menu. It also refreshes when you come back to the app.':
-    'Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi događaje” u izborniku. Osvježava se i kad se vratiš u aplikaciju.',
+  Added: 'Dodano',
+  'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.':
+    'Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi” u izborniku pod „Kalendar”. Osvježava se i kad se vratiš u aplikaciju.',
   'All day': 'Cijeli dan',
+  'All-day events': 'Cjelodnevni događaji',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.',
   Answer: 'Odgovor',
@@ -40,9 +45,8 @@ export const hr: Dictionary = {
   Appearance: 'Izgled',
   'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
     '„Izgled” mijenja boje te svijetli ili tamni način. „Datum i vrijeme” prebacuje između 30.9. i 30. ruj te postavlja vremensku zonu.',
-  'Apple Calendar, Outlook and others: paste the calendar’s subscription link under Calendar in the menu. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Apple Kalendar, Outlook i drugi: zalijepi poveznicu za pretplatu na kalendar u izborniku pod „Kalendar”. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
-  'Apple or other calendar': 'Apple ili drugi kalendar',
+  'Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
+    'Apple Kalendar, Outlook i drugi: u izborniku pod „Kalendar” dodirni „Dodaj Apple ili drugi kalendar” i zalijepi poveznicu za pretplatu. U Apple Kalendaru dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
   'As a guest you type a name in each When. Your Whens are remembered on this device only.':
     'Kao gost upisuješ ime u svakom Whenu. Tvoji Whenovi pamte se samo na ovom uređaju.',
   'Automatic ({city})': 'Automatski ({city})',
@@ -93,7 +97,7 @@ export const hr: Dictionary = {
   Close: 'Zatvori',
   'Close menu': 'Zatvori izbornik',
   Colour: 'Boja',
-  'Connect Google Calendar': 'Poveži Google kalendar',
+  Connect: 'Poveži',
   'Connect again': 'Poveži ponovno',
   'Connect calendar': 'Poveži kalendar',
   'Connect calendar reads every calendar you keep, not only the main one':
@@ -143,7 +147,6 @@ export const hr: Dictionary = {
   'Could not send your answer': 'Tvoj odgovor nije moguće poslati',
   "Couldn't turn on notifications. Try again.":
     'Obavijesti se nisu mogle uključiti. Pokušaj ponovno.',
-  'Couldn’t connect. Try again.': 'Povezivanje nije uspjelo. Pokušaj ponovno.',
   'Create a When, share the link, mark when you are free':
     'Stvori When, podijeli poveznicu, označi kad možeš',
   'Create link': 'Stvori poveznicu',
@@ -193,6 +196,7 @@ export const hr: Dictionary = {
     'Uređivanje Whena je jedna stranica sa svime na njoj, a „Spremi” je uvijek pri ruci',
   'Enter your own name so the others know who started it.':
     'Upiši svoje ime da ostali znaju tko je pokrenuo plan.',
+  'Event names': 'Nazivi događaja',
   'Everyone can make it {time}': 'Svi mogu {time}',
   'Everyone is free {session}.': 'Svi su slobodni: {session}.',
   'Everything When can do, step by step. Version {version}.':
@@ -253,6 +257,8 @@ export const hr: Dictionary = {
     'Ako produljiš susret ili suziš sate, razdoblja koja više ne odgovaraju skraćuju se ili uklanjaju.',
   'If your clock is different, every time is shown converted to yours, and a note at the top says so.':
     'Ako ti je sat drukčiji, svako se vrijeme prikazuje preračunato u tvoje, a napomena na vrhu to kaže.',
+  'In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link. Paste the link here.':
+    'U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu. Zalijepi poveznicu ovdje.',
   'In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.':
     'U danu dodirni „Kopiraj na…” da kopiraš sve označeno, ili ikonu kopiranja na jednom razdoblju da kopiraš samo njega.',
   'Install it on your phone': 'Instaliraj na mobitel',
@@ -318,6 +324,7 @@ export const hr: Dictionary = {
   'None of these work': 'Nijedan ne odgovara',
   'None yet. Whens you create or join show up here.':
     'Još nema nijednog. Ovdje se pojavljuju Whenovi koje stvoriš ili kojima se pridružiš.',
+  'Not connected': 'Nije povezano',
   'Not now': 'Ne sada',
   'Note for {time}': 'Bilješka za {time}',
   'Nothing fits everyone yet. Try adding a bit more time.':
@@ -351,8 +358,6 @@ export const hr: Dictionary = {
   "Other people's free time": 'Slobodno vrijeme ostalih',
   'Outsource decision': 'Prepusti odluku',
   PRO: 'PRO',
-  'Paste a calendar’s subscription link. In Apple Calendar: tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.':
-    'Zalijepi poveznicu za pretplatu na kalendar. U Apple Kalendaru: dodirni Kalendari, zatim ⓘ pokraj kalendara, uključi Javni kalendar pa Dijeli poveznicu.',
   People: 'Osobe',
   'People can join for part of it': 'Moguće je sudjelovati i samo dio vremena',
   'Pick a time': 'Odaberi vrijeme',
@@ -391,7 +396,7 @@ export const hr: Dictionary = {
   'Push notifications when a session is booked and when someone answers a link':
     'Push obavijesti kad se termin potvrdi i kad netko odgovori na poveznicu',
   'Read the calendar': 'Čitanje kalendara',
-  'Refresh events': 'Osvježi događaje',
+  Refresh: 'Osvježi',
   'Refreshing…': 'Osvježavam…',
   'Reload to update': 'Ponovno učitaj za ažuriranje',
   Remove: 'Ukloni',
@@ -408,6 +413,8 @@ export const hr: Dictionary = {
   'Scroll sideways for more days': 'Pomakni u stranu za više dana',
   'Sections marked Pro need you to be signed in with Google.':
     'Za odjeljke s oznakom Pro trebaš biti prijavljen/a uz Google.',
+  'See your own calendar behind the bars while you mark when you are free.':
+    'Vidi svoj kalendar iza traka dok označavaš kad možeš.',
   'See your own calendar events behind the bars while you mark when you are free.':
     'Vidi svoje događaje iz kalendara iza traka dok označavaš kad možeš.',
   'See your own calendar while you mark when you are free.':
@@ -435,8 +442,6 @@ export const hr: Dictionary = {
   'Share link': 'Podijeli poveznicu',
   Shortcuts: 'Prečaci',
   Show: 'Prikaži',
-  'Show all-day events': 'Prikaži cjelodnevne događaje',
-  'Show event names': 'Prikaži nazive događaja',
   'Show less': 'Prikaži manje',
   'Show my calendar': 'Prikaži moj kalendar',
   'Showing sample events for now.': 'Zasad se prikazuju primjeri događaja.',
@@ -444,10 +449,11 @@ export const hr: Dictionary = {
   'Shown in {city} time': 'Prikazano po vremenu: {city}',
   'Sign in': 'Prijava',
   'Sign in again to read this calendar.': 'Prijavi se ponovno da se ovaj kalendar pročita.',
+  'Sign in with Google': 'Prijavi se uz Google',
   'Sign in with Google to use Pro settings.': 'Prijavi se uz Google da koristiš Pro postavke.',
   'Sign in with Google to use these.': 'Prijavi se uz Google da ih koristiš.',
-  'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar under Calendar in the menu, and allow it.':
-    'Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u izborniku pod „Kalendar” dodirni „Poveži Google kalendar” i dopusti pristup.',
+  'Sign in with Google, then tap Show my calendar above the calendar, or Connect next to Google under Calendar in the menu, and allow it.':
+    'Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u izborniku pod „Kalendar” dodirni „Poveži” pokraj Googlea i dopusti pristup.',
   'Sign out': 'Odjava',
   'Signed in with Google: your Whens follow you to every device you sign in on':
     'Prijavljen/a uz Google: tvoji Whenovi prate te na svaki uređaj na kojem se prijaviš',
@@ -626,6 +632,7 @@ export const hr: Dictionary = {
   'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.':
     'Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.',
   'Your calendar has nothing on these days.': 'U tvom kalendaru nema ničega tih dana.',
+  'Your calendars': 'Tvoji kalendari',
   'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
     'Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaji navedeni su na vrhu dana.',
   'Your name': 'Tvoje ime',
@@ -672,6 +679,7 @@ export const hr: Dictionary = {
   '{names} picked {session}': '{names} je odabrao/la {session}',
   '{n} answer': { one: '{n} odgovor', few: '{n} odgovora', other: '{n} odgovora' },
   '{n} answers so far.': 'Dosad odgovora: {n}.',
+  '{n} calendar': { one: '{n} kalendar', few: '{n} kalendara', other: '{n} kalendara' },
   '{n} day': { one: '{n} dan', few: '{n} dana', other: '{n} dana' },
   '{n} days ago': 'prije {n} dana',
   '{n} event': { one: '{n} događaj', few: '{n} događaja', other: '{n} događaja' },

@@ -237,3 +237,7 @@ Povuci prema dolje u Whenu da osvježiš kalendar i svoje Whenove
 The calendar also refreshes by itself when you come back to the app
 Der Kalender aktualisiert sich auch von selbst, wenn du zur App zurückkommst
 Kalendar se osvježava i sam kad se vratiš u aplikaciju
+
+A tidier Calendar section: your calendars first, display options last
+Ein aufgeräumter Kalender-Bereich: zuerst deine Kalender, zuletzt die Anzeigeoptionen
+Pregledniji odjeljak Kalendar: najprije tvoji kalendari, na kraju opcije prikaza

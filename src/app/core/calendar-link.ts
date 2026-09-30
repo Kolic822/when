@@ -36,6 +36,10 @@ const LINKS_KEY = 'when:cal-links';
 
 /** One calendar that was read, for the list in Settings. */
 export interface CalendarSource {
+  /** A calendar of the connected Google account, or one added by link. */
+  kind: 'google' | 'link';
+  /** The link it was read from (links only). */
+  url?: string;
   name: string;
   /** Events it has on the days last loaded. */
   count: number;
@@ -293,9 +297,15 @@ export class CalendarLink {
       try {
         const list = await this.fromLink(link, from, to);
         events.push(...list);
-        sources.push({ name, count: list.length });
+        sources.push({ kind: 'link', url: link, name, count: list.length });
       } catch (err) {
-        sources.push({ name, count: 0, problem: err instanceof Error ? err.message : '' });
+        sources.push({
+          kind: 'link',
+          url: link,
+          name,
+          count: 0,
+          problem: err instanceof Error ? err.message : '',
+        });
       }
     }
 
@@ -332,12 +342,17 @@ export class CalendarLink {
       if (res.ok) {
         const items = ((await res.json()) as { items?: GoogleEvent[] }).items ?? [];
         events.push(...items);
-        sources.push({ name: calendar.name, count: items.length });
+        sources.push({ kind: 'google', name: calendar.name, count: items.length });
         continue;
       }
       // One calendar that can't be read (a shared one, say) shouldn't hide the rest.
       if (calendar.id !== 'primary' && !calendar.primary && res.status !== 401) {
-        sources.push({ name: calendar.name, count: 0, problem: String(res.status) });
+        sources.push({
+          kind: 'google',
+          name: calendar.name,
+          count: 0,
+          problem: String(res.status),
+        });
         continue;
       }
       throw await failure(res);
