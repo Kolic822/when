@@ -309,3 +309,11 @@ Zaboravljena lozinka? Poveznica za novu stiže e-poštom
 New accounts confirm their email address with a link
 Neue Konten bestätigen ihre E-Mail-Adresse über einen Link
 Novi računi potvrđuju adresu e-pošte poveznicom
+
+Signing out takes your Whens off the device, so the next account to sign in starts with its own
+Beim Abmelden verschwinden deine Whens vom Gerät, sodass das nächste Konto mit seinen eigenen startet
+Odjavom tvoji Whenovi nestaju s uređaja pa sljedeći račun kreće sa svojima
+
+Delete account, at the end of the menu
+Konto löschen, am Ende des Menüs
+Brisanje računa, na kraju izbornika

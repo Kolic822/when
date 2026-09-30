@@ -139,6 +139,39 @@ export class Identity {
     }
   }
 
+  // ---- Whose Whens these are. A device is shared by whoever signs in on it, one after another.
+  private readonly ownerKey = 'when:whens-owner';
+
+  /**
+   * Someone signed in. Whens left on the device by a different account are not theirs
+   * and are removed from the device first (they stay with that other account). Whens
+   * collected as a guest have no owner yet and become this account's.
+   */
+  claimFor(owner: string): void {
+    try {
+      const before = localStorage.getItem(this.ownerKey);
+      if (before && before !== owner) this.clearAll();
+      localStorage.setItem(this.ownerKey, owner);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  /** Takes every When off this device: who the person was in each, and the list of them. */
+  clearAll(): void {
+    try {
+      const mine = ['when:participant:', 'when:creator:', 'when:stash:', 'when:stepper-done:'];
+      const keys = Array.from({ length: localStorage.length }, (_, i) => localStorage.key(i) ?? '');
+      for (const key of keys) {
+        if (mine.some((prefix) => key.startsWith(prefix))) localStorage.removeItem(key);
+      }
+      localStorage.removeItem(this.recentKey);
+      localStorage.removeItem(this.ownerKey);
+    } catch {
+      /* ignore */
+    }
+  }
+
   /** The organiser token proves you created the event and may change its dates. */
   creatorToken(eventId: string): string | null {
     try {

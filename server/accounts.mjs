@@ -148,6 +148,13 @@ export class Accounts {
     this.#scheduleSave();
   }
 
+  /** Deletes the account. The Whens it was part of are not touched. */
+  remove(account) {
+    for (const s of account.sessions) this.#sessions.delete(s.token);
+    this.#accounts.delete(account.id);
+    this.#scheduleSave();
+  }
+
   bySession(token) {
     const id = token ? this.#sessions.get(token) : null;
     return id ? (this.#accounts.get(id) ?? null) : null;

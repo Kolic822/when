@@ -459,6 +459,17 @@ app.get('/api/me', (req, res) => {
   res.json(profile(me));
 });
 
+/**
+ * Deletes the account: its sign-ins, its list of Whens and its calendar links. The Whens
+ * themselves stay as they are for everyone in them.
+ */
+app.delete('/api/me', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  accounts.remove(me);
+  res.status(204).end();
+});
+
 /** Sends the confirmation email again. */
 app.post('/api/auth/verify/send', (req, res) => {
   const me = account(req);

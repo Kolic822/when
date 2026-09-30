@@ -881,3 +881,11 @@ Pošalji ponovno
 Sent
 Gesendet
 Poslano
+
+Delete account
+Konto löschen
+Izbriši račun
+
+Delete your account? It forgets your Whens and calendar links. The Whens themselves stay for everyone in them.
+Dein Konto löschen? Es vergisst deine Whens und Kalender-Links. Die Whens selbst bleiben für alle Beteiligten bestehen.
+Izbrisati tvoj račun? Zaboravit će tvoje Whenove i poveznice kalendara. Sami Whenovi ostaju svima koji su u njima.

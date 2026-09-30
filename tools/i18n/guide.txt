@@ -397,3 +397,7 @@ U prikazu dana gumb kalendara na vrhu skriva ili prikazuje tvoje događaje. Popu
 Created an account with an email? Open the link we email you to confirm the address. Forgot the password? Tap Forgot password? on the sign-in form and we email you a link to set a new one.
 Konto mit E-Mail erstellt? Öffne den Link, den wir dir mailen, um die Adresse zu bestätigen. Passwort vergessen? Tippe im Anmeldeformular auf Passwort vergessen? und wir mailen dir einen Link für ein neues.
 Račun napravljen e-poštom? Otvori poveznicu koju ti pošaljemo da potvrdiš adresu. Zaboravljena lozinka? Dodirni Zaboravljena lozinka? u obrascu za prijavu i poslat ćemo ti poveznicu za novu.
+
+Signing out takes your Whens off that device; they come back when you sign in again. As a guest, your Whens move into the account you create or sign in to.
+Beim Abmelden verschwinden deine Whens von diesem Gerät; sie kommen zurück, wenn du dich wieder anmeldest. Als Gast wandern deine Whens in das Konto, das du erstellst oder in das du dich anmeldest.
+Odjavom tvoji Whenovi nestaju s tog uređaja; vraćaju se kad se ponovno prijaviš. Kao gost, tvoji Whenovi prelaze u račun koji napraviš ili u koji se prijaviš.

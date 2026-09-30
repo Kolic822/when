@@ -700,6 +700,34 @@
             <a class="link" routerLink="/changes" (click)="close()">{{ t('What’s new') }}</a>
             <a class="link" routerLink="/guide" (click)="close()">{{ t('Guide') }}</a>
           </div>
+          @if (auth.session()) {
+            @if (deleting()) {
+              <div class="delete-account" role="group">
+                <p>
+                  {{
+                    t(
+                      'Delete your account? It forgets your Whens and calendar links. The Whens themselves stay for everyone in them.'
+                    )
+                  }}
+                </p>
+                @if (deleteFailed()) {
+                  <p class="error" role="alert">{{ t('Something went wrong') }}</p>
+                }
+                <div class="actions">
+                  <button type="button" class="pill" (click)="deleting.set(false)">
+                    {{ t('Cancel') }}
+                  </button>
+                  <button type="button" class="pill danger" (click)="deleteAccount()">
+                    {{ t('Delete account') }}
+                  </button>
+                </div>
+              </div>
+            } @else {
+              <button type="button" class="link quiet" (click)="deleting.set(true)">
+                {{ t('Delete account') }}
+              </button>
+            }
+          }
         </div>
       }
     </section>

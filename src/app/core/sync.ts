@@ -84,8 +84,16 @@ export class Sync {
   }
 
   private async exchange(): Promise<void> {
-    await Promise.all(this.identity.recent().map((m) => this.push(m.id)));
+    await this.flush();
     await this.pull();
+  }
+
+  /** Makes sure the account knows every When on this device, e.g. before signing out. */
+  async flush(): Promise<void> {
+    await Promise.race([
+      Promise.all(this.identity.recent().map((m) => this.push(m.id))),
+      new Promise((done) => setTimeout(done, 2500)),
+    ]);
   }
 
   /** Adds the account's Whens to this device. What the device already knows is left alone. */
@@ -95,7 +103,8 @@ export class Sync {
     try {
       this.pulledAt = Date.now();
       const res = await fetch('/api/me/whens', { headers });
-      if (res.status === 401) return this.auth.signOut();
+      // The server no longer knows this session. Nothing on the device is thrown away.
+      if (res.status === 401) return this.auth.signOut({ keepWhens: true });
       if (!res.ok) return;
       const known = new Set(this.identity.recent().map((m) => m.id));
       for (const w of (await res.json()) as RemoteWhen[]) {

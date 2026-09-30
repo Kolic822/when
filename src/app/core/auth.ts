@@ -1,4 +1,5 @@
-import { computed, Service, signal } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
+import { Identity } from './identity';
 import { lang, t } from './i18n/i18n';
 
 /** Who is using the app on this device. Guests have no account and type their name per When. */
@@ -42,6 +43,7 @@ const SCRIPT = 'https://accounts.google.com/gsi/client';
  */
 @Service()
 export class Auth {
+  private readonly identity = inject(Identity);
   readonly user = signal<User | null>(load());
   /** Name to pre-fill wherever the app asks who you are. */
   readonly name = computed(() => {
@@ -62,6 +64,8 @@ export class Auth {
   });
 
   constructor() {
+    const owner = ownerOf(this.user());
+    if (owner) this.identity.claimFor(owner);
     void this.loadConfig().then(() => this.refresh());
     // The confirmation link usually opens in another browser; notice it on the way back.
     document.addEventListener('visibilitychange', () => {
@@ -245,13 +249,36 @@ export class Auth {
       : {};
   }
 
-  signOut(): void {
+  /**
+   * Signing out takes the account's Whens off this device; they stay with the account and
+   * come back on the next sign-in. `keepWhens` is for when the server ended the session by
+   * itself: nothing is removed then, unless a different account signs in afterwards.
+   */
+  signOut(options: { keepWhens?: boolean } = {}): void {
     const headers = this.authHeader();
     if (headers['authorization']) {
       void fetch('/api/auth/signout', { method: 'POST', headers }).catch(() => undefined);
+      if (!options.keepWhens) this.identity.clearAll();
     }
     window.google?.accounts.id.disableAutoSelect();
     this.set(null);
+  }
+
+  /**
+   * Deletes the account on the server and takes its Whens off this device. The Whens
+   * themselves are left alone. Returns false when it did not work.
+   */
+  async deleteAccount(): Promise<boolean> {
+    try {
+      const res = await fetch('/api/me', { method: 'DELETE', headers: this.authHeader() });
+      if (!res.ok && res.status !== 401) return false;
+    } catch {
+      return false;
+    }
+    this.identity.clearAll();
+    window.google?.accounts.id.disableAutoSelect();
+    this.set(null);
+    return true;
   }
 
   /** The server checks Google's token; the browser never decides who someone is. */
@@ -302,6 +329,8 @@ export class Auth {
   }
 
   private set(user: User | null): void {
+    const owner = ownerOf(user);
+    if (owner) this.identity.claimFor(owner);
     this.user.set(user);
     try {
       if (user) localStorage.setItem(KEY, JSON.stringify(user));
@@ -310,6 +339,11 @@ export class Auth {
       /* private mode etc. */
     }
   }
+}
+
+/** Names the account a device's Whens belong to; '' for guests. */
+function ownerOf(user: User | null): string {
+  return user?.kind === 'google' || user?.kind === 'account' ? `${user.kind}:${user.email}` : '';
 }
 
 function load(): User | null {

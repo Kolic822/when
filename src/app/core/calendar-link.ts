@@ -259,6 +259,8 @@ export class CalendarLink {
    */
   private async followAccount(session: string): Promise<void> {
     if (!session) {
+      // The calendar was the account's, not the device's.
+      if (this.token()) this.disconnect();
       if (!flag(LINKS_SYNCED_KEY)) return;
       setFlag(LINKS_SYNCED_KEY, false);
       this.useLinks([]);

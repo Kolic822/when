@@ -7,9 +7,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.12';
+export const VERSION = '0.12.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.12.1',
+    date: '30 Sep 2026',
+    changes: [
+      m(
+        'Signing out takes your Whens off the device, so the next account to sign in starts with its own',
+      ),
+      m('Delete account, at the end of the menu'),
+    ],
+  },
   {
     version: '0.12',
     date: '30 Sep 2026',

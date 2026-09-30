@@ -215,9 +215,23 @@ export class AppMenu {
     if (failed && failed !== 'too_many_tries') this.confirmationSent.set(false);
   }
 
-  signOut(): void {
-    this.auth.signOut();
+  /** The "are you sure" for deleting the account is showing. */
+  readonly deleting = signal(false);
+  readonly deleteFailed = signal(false);
+
+  async deleteAccount(): Promise<void> {
+    this.deleteFailed.set(false);
+    if (!(await this.auth.deleteAccount())) return this.deleteFailed.set(true);
+    this.deleting.set(false);
     this.close();
+    void this.router.navigate(['/welcome']);
+  }
+
+  async signOut(): Promise<void> {
+    this.close();
+    // The Whens leave this device with the account, so hand over anything it has not got yet.
+    await this.sync.flush();
+    this.auth.signOut();
     void this.router.navigate(['/welcome']);
   }
 

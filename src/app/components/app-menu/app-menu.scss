@@ -706,3 +706,42 @@ p {
 .tip {
   margin: 6px 0 0;
 }
+
+/* Deleting the account: tucked away at the very end, and asked twice. */
+.quiet {
+  margin-top: 10px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--when-muted);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.delete-account {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--when-bg);
+  font-size: 13px;
+
+  p {
+    margin: 0 0 8px;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .pill {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+  .danger {
+    background: var(--mat-sys-error);
+    color: var(--mat-sys-on-error);
+  }
+}
