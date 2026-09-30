@@ -199,12 +199,14 @@ export class Guide {
     },
     {
       icon: 'person',
-      title: m('Guest or Google'),
+      title: m('Guest or account'),
       steps: [
         m(
           'As a guest you type a name in each When. Your Whens are remembered on this device only.',
         ),
-        m('With Google your name is filled in for you. Sign in or out from the top of the menu.'),
+        m(
+          'With an account your name is filled in for you: sign in with Google, or create one with an email, a username and a password. Sign in or out from the top of the menu.',
+        ),
         m(
           'Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.',
         ),

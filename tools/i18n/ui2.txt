@@ -486,9 +486,9 @@ Continue as guest
 Als Gast fortfahren
 Nastavi kao gost
 
-Guests type a name for each When. With Google, your name is filled in for you.
-Gäste geben für jedes When einen Namen ein. Mit Google wird dein Name automatisch ausgefüllt.
-Gosti upisuju ime za svaki When. Uz Google se tvoje ime ispunjava samo.
+With an account your Whens follow you to every device. Guests keep them on this device only.
+Mit einem Konto hast du deine Whens auf jedem Gerät. Als Gast bleiben sie nur auf diesem Gerät.
+S računom te tvoji Whenovi prate na svakom uređaju. Gostima ostaju samo na ovom uređaju.
 
 Google sign-in didn't work. Try again, or carry on as a guest.
 Die Google-Anmeldung hat nicht geklappt. Versuch es noch einmal oder mach als Gast weiter.
@@ -646,9 +646,9 @@ Add
 Hinzufügen
 Dodaj
 
-Anyone who has that link can see that calendar. When keeps it on this device only.
-Wer diesen Link hat, kann diesen Kalender sehen. When behält ihn nur auf diesem Gerät.
-Tko god ima tu poveznicu može vidjeti taj kalendar. When je čuva samo na ovom uređaju.
+Anyone who has that link can see that calendar. When keeps it with your account, so your other devices show it too.
+Wer diesen Link hat, kann diesen Kalender sehen. When speichert ihn bei deinem Konto, damit ihn auch deine anderen Geräte zeigen.
+Tko god ima tu poveznicu može vidjeti taj kalendar. When je čuva uz tvoj račun, pa je vide i tvoji drugi uređaji.
 
 Calendar link
 Kalender-Link
@@ -745,3 +745,67 @@ Jedna poveznica vrijedi za jedan kalendar. Dodaj po jednu za svaki kalendar koji
 {n} event on these days
 {n} Termin an diesen Tagen || {n} Termine an diesen Tagen
 {n} događaj tih dana || {n} događaja tih dana || {n} događaja tih dana
+
+Continue with email
+Weiter mit E-Mail
+Nastavi s e-poštom
+
+Create account
+Konto erstellen
+Napravi račun
+
+Email
+E-Mail
+E-pošta
+
+Email or username
+E-Mail oder Benutzername
+E-pošta ili korisničko ime
+
+Username
+Benutzername
+Korisničko ime
+
+Password
+Passwort
+Lozinka
+
+At least 8 characters.
+Mindestens 8 Zeichen.
+Najmanje 8 znakova.
+
+That doesn’t look like an email address.
+Das sieht nicht nach einer E-Mail-Adresse aus.
+To ne izgleda kao adresa e-pošte.
+
+Pick a username of at least 2 characters.
+Wähle einen Benutzernamen mit mindestens 2 Zeichen.
+Odaberi korisničko ime od najmanje 2 znaka.
+
+The password needs at least 8 characters.
+Das Passwort braucht mindestens 8 Zeichen.
+Lozinka treba najmanje 8 znakova.
+
+There is already an account with that email. Sign in instead.
+Mit dieser E-Mail gibt es schon ein Konto. Melde dich stattdessen an.
+Račun s tom e-poštom već postoji. Umjesto toga se prijavi.
+
+That username is taken. Try another.
+Dieser Benutzername ist vergeben. Probier einen anderen.
+To korisničko ime je zauzeto. Probaj neko drugo.
+
+Wrong email or password.
+E-Mail oder Passwort ist falsch.
+Pogrešna e-pošta ili lozinka.
+
+Too many tries. Wait a few minutes and try again.
+Zu viele Versuche. Warte ein paar Minuten und versuch es noch einmal.
+Previše pokušaja. Pričekaj nekoliko minuta pa probaj ponovno.
+
+No connection. Try again.
+Keine Verbindung. Versuch es noch einmal.
+Nema veze. Probaj ponovno.
+
+Already use When as an app? Links open in the browser. Sign in here too and you carry on as the same person.
+Du nutzt When schon als App? Links öffnen sich im Browser. Melde dich auch hier an, dann machst du als dieselbe Person weiter.
+Već koristiš When kao aplikaciju? Poveznice se otvaraju u pregledniku. Prijavi se i ovdje pa nastavljaš kao ista osoba.

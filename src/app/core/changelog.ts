@@ -7,9 +7,21 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.8';
+export const VERSION = '0.11';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.11',
+    date: '30 Sep 2026',
+    changes: [
+      m('Create an account with an email, a username and a password, or sign in with them'),
+      m('Whens follow any account, not only Google ones, to every device'),
+      m(
+        'A link opened in the browser while you use the installed app: sign in there and you carry on as the same person',
+      ),
+      m('Calendar links are kept with your account, so every device shows them'),
+    ],
+  },
   {
     version: '0.10.8',
     date: '30 Sep 2026',

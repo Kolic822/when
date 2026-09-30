@@ -3,6 +3,7 @@ import { ClientMessage, EventPatch, MeetEvent, ServerMessage, Slot } from './mod
 import { Auth } from './auth';
 import { eventZone } from './zone';
 import { Identity } from './identity';
+import { Sync } from './sync';
 import { mergeSlots } from './availability';
 import { t } from './i18n/i18n';
 
@@ -16,6 +17,7 @@ export type ConnectionStatus = 'connecting' | 'online' | 'offline';
 export class EventSession {
   private readonly identity = inject(Identity);
   private readonly auth = inject(Auth);
+  private readonly sync = inject(Sync);
 
   readonly event = signal<MeetEvent | null>(null);
   readonly meId = signal<string | null>(null);
@@ -49,9 +51,19 @@ export class EventSession {
     this.online.set(new Set());
     this.meId.set(this.identity.get(eventId)?.id ?? null);
     this.pendingName = this.identity.takePendingName(eventId);
-    // Signed in with Google: join under that name straight away instead of asking.
-    if (!this.pendingName && !this.meId() && this.auth.name()) this.pendingName = this.auth.name();
-    this.open();
+    if (this.pendingName || this.meId() || !this.auth.session()) {
+      this.open();
+      return;
+    }
+    // Signed in, and new to this When on this device. They may have joined it on another
+    // device (or in the installed app), so ask the account who they are here before joining.
+    void this.sync.ask().then(() => {
+      if (this.stopped || this.eventId !== eventId) return;
+      this.meId.set(this.identity.get(eventId)?.id ?? null);
+      // Not in it yet: join under the account's name straight away instead of asking.
+      if (!this.meId()) this.pendingName = this.auth.name() || null;
+      this.open();
+    });
   }
 
   disconnect(): void {

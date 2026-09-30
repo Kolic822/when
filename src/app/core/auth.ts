@@ -4,7 +4,9 @@ import { t } from './i18n/i18n';
 /** Who is using the app on this device. Guests have no account and type their name per When. */
 export type User =
   | { kind: 'guest' }
-  | { kind: 'google'; name: string; email: string; picture: string; session: string };
+  | { kind: 'google'; name: string; email: string; picture: string; session: string }
+  /** Registered with an email and password. */
+  | { kind: 'account'; name: string; email: string; session: string };
 
 interface GoogleIdApi {
   initialize(options: {
@@ -37,7 +39,7 @@ export class Auth {
   /** Name to pre-fill wherever the app asks who you are. */
   readonly name = computed(() => {
     const u = this.user();
-    return u?.kind === 'google' ? u.name : '';
+    return u?.kind === 'google' || u?.kind === 'account' ? u.name : '';
   });
 
   /** null while unknown, '' when the server has no client id. */
@@ -56,6 +58,47 @@ export class Auth {
       .catch(() => this.clientId.set(''));
     return this.configRequest;
   }
+
+  /**
+   * Creates an account with an email and password, or signs in to one.
+   * Returns '' on success, otherwise a code saying what was wrong.
+   */
+  async withEmail(
+    mode: 'register' | 'login',
+    fields: { email: string; username: string; password: string },
+  ): Promise<string> {
+    try {
+      const res = await fetch(mode === 'register' ? '/api/auth/register' : '/api/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(
+          mode === 'register' ? fields : { login: fields.email, password: fields.password },
+        ),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        name?: string;
+        email?: string;
+        session?: string;
+      };
+      if (!res.ok || !body.session) return body.error ?? 'failed';
+      this.set({
+        kind: 'account',
+        name: body.name ?? '',
+        email: body.email ?? '',
+        session: body.session,
+      });
+      return '';
+    } catch {
+      return 'offline';
+    }
+  }
+
+  /** The session of whoever is signed in; empty for guests. */
+  readonly session = computed(() => {
+    const u = this.user();
+    return u?.kind === 'google' || u?.kind === 'account' ? u.session : '';
+  });
 
   continueAsGuest(): void {
     this.set({ kind: 'guest' });
@@ -90,7 +133,9 @@ export class Auth {
   /** Header that proves to the server which account this device is signed in to. */
   authHeader(): Record<string, string> {
     const u = this.user();
-    return u?.kind === 'google' ? { authorization: `Bearer ${u.session}` } : {};
+    return u?.kind === 'google' || u?.kind === 'account'
+      ? { authorization: `Bearer ${u.session}` }
+      : {};
   }
 
   signOut(): void {
@@ -166,6 +211,7 @@ function load(): User | null {
     const user = raw ? (JSON.parse(raw) as User) : null;
     // Signed in before accounts were kept on the server: sign in once more to get a session.
     if (user?.kind === 'google' && !user.session) return null;
+    if (user?.kind === 'account' && user.session) return user;
     if (user?.kind === 'guest' || user?.kind === 'google') return user;
     // People who used the app before this screen existed carry on as guests.
     return localStorage.getItem('when:recent') ? { kind: 'guest' } : null;

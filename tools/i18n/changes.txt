@@ -269,3 +269,19 @@ Povezani kalendar sada kaže je li prazan ili samo nema ništa na dane ovog When
 All-day calendar events fill the whole day in grey
 Ganztägige Kalendertermine füllen den ganzen Tag in Grau
 Cjelodnevni događaji iz kalendara ispunjavaju cijeli dan sivom bojom
+
+Create an account with an email, a username and a password, or sign in with them
+Konto mit E-Mail, Benutzername und Passwort erstellen oder dich damit anmelden
+Napravi račun e-poštom, korisničkim imenom i lozinkom ili se njima prijavi
+
+Whens follow any account, not only Google ones, to every device
+Whens sind mit jedem Konto auf allen Geräten dabei, nicht nur mit Google
+Whenovi te prate na svim uređajima uz bilo koji račun, ne samo Googleov
+
+A link opened in the browser while you use the installed app: sign in there and you carry on as the same person
+Link im Browser geöffnet, obwohl du die installierte App nutzt: Melde dich dort an und mach als dieselbe Person weiter
+Poveznica otvorena u pregledniku dok koristiš instaliranu aplikaciju: prijavi se ondje i nastavljaš kao ista osoba
+
+Calendar links are kept with your account, so every device shows them
+Kalender-Links werden bei deinem Konto gespeichert, damit jedes Gerät sie zeigt
+Poveznice kalendara čuvaju se uz tvoj račun pa ih prikazuje svaki uređaj

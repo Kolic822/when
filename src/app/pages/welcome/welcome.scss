@@ -168,3 +168,111 @@
     }
   }
 }
+
+.email {
+  background: var(--when-surface);
+  box-shadow: var(--card-shadow);
+  color: var(--when-text);
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--when-surface);
+  box-shadow: var(--card-shadow);
+  text-align: left;
+  animation: rise 0.2s ease both;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12px;
+  }
+  input {
+    height: 44px;
+    padding: 0 12px;
+    border: 1.5px solid var(--when-border);
+    border-radius: 12px;
+    background: var(--when-surface);
+    color: var(--when-text);
+    font: inherit;
+    /* 16px keeps iOS from zooming in on focus. */
+    font-size: 16px;
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+  }
+  .hint {
+    font-size: 11px;
+  }
+  .error {
+    text-align: left;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--when-grid);
+
+  button {
+    flex: 1;
+    height: 34px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: var(--when-muted);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.on {
+      background: var(--when-surface);
+      color: var(--when-text);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+.back-link {
+  align-self: center;
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: var(--when-muted);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.invited {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--when-text);
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: left;
+
+  mat-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    color: var(--accent);
+  }
+}

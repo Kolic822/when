@@ -22,6 +22,11 @@ export class HowToState {
 
   close(): void {
     this.open.set(false);
+    this.markSeen();
+  }
+
+  /** They know the app already, e.g. from another device of theirs. */
+  markSeen(): void {
     try {
       localStorage.setItem(KEY, '1');
     } catch {

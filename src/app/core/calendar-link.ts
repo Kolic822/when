@@ -1,4 +1,4 @@
-import { computed, inject, Service, signal } from '@angular/core';
+import { Service, computed, effect, inject, signal, untracked } from '@angular/core';
 import { Auth } from './auth';
 import { BusyBlock, sampleAllDay, sampleBusy } from './busy';
 import { PrefsStore } from './prefs';
@@ -33,6 +33,9 @@ const SCOPE = `${EVENTS} ${LIST}`;
 const API = 'https://www.googleapis.com/calendar/v3';
 const KEY = 'when:gcal';
 const LINKS_KEY = 'when:cal-links';
+/** Set once this device's links have been matched with the account's. */
+const LINKS_SYNCED_KEY = 'when:cal-links-synced';
+const MAX_LINKS = 5;
 
 /** One calendar that was read, for the list in Settings. */
 export interface CalendarSource {
@@ -78,8 +81,8 @@ export class CalendarLink {
   readonly calendarsRead = computed(() => this.sources().length);
 
   /**
-   * Calendars added by subscription link (Apple Calendar, Outlook, …). Kept on this
-   * device; the server only fetches them on request and stores nothing.
+   * Calendars added by subscription link (Apple Calendar, Outlook, …). Kept with the
+   * account, so every device the person signs in on shows them; the events are not stored.
    */
   readonly links = signal<string[]>(loadLinks());
   /** There is something real to show: Google is connected or a link was added. */
@@ -104,6 +107,10 @@ export class CalendarLink {
 
   constructor() {
     void this.prepare();
+    effect(() => {
+      const session = this.auth.session();
+      untracked(() => void this.followAccount(session));
+    });
     // Back in the app after a while: the calendar may have changed meanwhile.
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible' && Date.now() - this.loadedAt > 5 * 60_000) {
@@ -246,12 +253,64 @@ export class CalendarLink {
   }
 
   /** Adds a calendar by its subscription link. Returns false when it doesn't look like one. */
+  /**
+   * Signed in: the account's links are the ones shown here. The first time, links added
+   * on this device before accounts kept them are handed over. Signed out: they go with
+   * the account, since anyone with a link can read that calendar.
+   */
+  private async followAccount(session: string): Promise<void> {
+    if (!session) {
+      if (!flag(LINKS_SYNCED_KEY)) return;
+      setFlag(LINKS_SYNCED_KEY, false);
+      this.useLinks([]);
+      return;
+    }
+    try {
+      const res = await fetch('/api/me/calendars', { headers: this.auth.authHeader() });
+      if (!res.ok) return;
+      const remote = ((await res.json()) as { links?: string[] }).links ?? [];
+      if (flag(LINKS_SYNCED_KEY)) return this.useLinks(remote);
+      const merged = [...new Set([...remote, ...this.links()])].slice(0, MAX_LINKS);
+      this.useLinks(merged);
+      if (merged.length !== remote.length) await this.sendLinks();
+      setFlag(LINKS_SYNCED_KEY, true);
+    } catch {
+      /* offline: the links this device has keep working */
+    }
+  }
+
+  private useLinks(links: string[]): void {
+    const now = this.links();
+    if (links.length === now.length && links.every((l, i) => l === now[i])) return;
+    this.links.set(links);
+    saveLinks(links);
+    this.loadedFor = '';
+    if (this.hasSource()) {
+      if (this.last) void this.load(this.last.dates, this.last.zone);
+    } else {
+      this.days.set({ timed: {}, allDay: {} });
+      this.found.set(null);
+      this.sources.set([]);
+    }
+  }
+
+  private async sendLinks(): Promise<void> {
+    const headers = this.auth.authHeader();
+    if (!headers['authorization']) return;
+    await fetch('/api/me/calendars', {
+      method: 'PUT',
+      headers: { ...headers, 'content-type': 'application/json' },
+      body: JSON.stringify({ links: this.links() }),
+    }).catch(() => undefined);
+  }
+
   addLink(raw: string): boolean {
     const url = raw.trim().replace(/^webcals?:/i, 'https:');
     if (!/^https:\/\/[^\s/]+\/\S+/.test(url)) return false;
     if (!this.links().includes(url)) {
-      this.links.update((list) => [...list, url].slice(0, 5));
+      this.links.update((list) => [...list, url].slice(0, MAX_LINKS));
       saveLinks(this.links());
+      void this.sendLinks();
     }
     this.loadedFor = '';
     return true;
@@ -260,6 +319,7 @@ export class CalendarLink {
   removeLink(url: string): void {
     this.links.update((list) => list.filter((l) => l !== url));
     saveLinks(this.links());
+    void this.sendLinks();
     this.loadedFor = '';
     if (!this.hasSource()) {
       this.days.set({ timed: {}, allDay: {} });
@@ -543,6 +603,23 @@ function loadLinks(): string[] {
     return Array.isArray(list) ? list.filter((l): l is string => typeof l === 'string') : [];
   } catch {
     return [];
+  }
+}
+
+function flag(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function setFlag(key: string, on: boolean): void {
+  try {
+    if (on) localStorage.setItem(key, '1');
+    else localStorage.removeItem(key);
+  } catch {
+    /* ignore */
   }
 }
 

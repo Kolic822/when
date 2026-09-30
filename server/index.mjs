@@ -301,7 +301,58 @@ app.post('/api/auth/google', async (req, res) => {
   }
 });
 
-// ---- My Whens, the same on every device signed in with the same Google account.
+// ---- Accounts with an email and password
+const loginTries = new Map(); // what was tried -> timestamps of recent failures
+const TRY_WINDOW_MS = 15 * 60 * 1000;
+const MAX_TRIES = 8;
+
+/** Slows down guessing: a handful of wrong passwords per address and per visitor, then a pause. */
+function tooManyTries(keys) {
+  const now = Date.now();
+  return keys.some((key) => (loginTries.get(key) ?? []).filter((t) => now - t < TRY_WINDOW_MS).length >= MAX_TRIES);
+}
+function noteFailure(keys) {
+  const now = Date.now();
+  for (const key of keys) {
+    loginTries.set(key, [...(loginTries.get(key) ?? []).filter((t) => now - t < TRY_WINDOW_MS), now]);
+  }
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, times] of loginTries) {
+    if (!times.some((t) => now - t < TRY_WINDOW_MS)) loginTries.delete(key);
+  }
+}, TRY_WINDOW_MS).unref();
+
+const cleanEmail = (v) => String(v ?? '').trim().toLowerCase().slice(0, 254);
+const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+app.post('/api/auth/register', async (req, res) => {
+  const email = cleanEmail(req.body?.email);
+  const username = cleanName(req.body?.username);
+  const password = String(req.body?.password ?? '');
+  if (!isEmail(email)) return res.status(400).json({ error: 'bad_email' });
+  if (username.length < 2) return res.status(400).json({ error: 'bad_username' });
+  if (password.length < 8 || password.length > 200) return res.status(400).json({ error: 'bad_password' });
+  const made = await accounts.register({ email, username, password });
+  if (made.error) return res.status(409).json({ error: made.error });
+  res.status(201).json({ name: made.account.name, email, session: made.session });
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  const login = cleanEmail(req.body?.login);
+  const password = String(req.body?.password ?? '').slice(0, 200);
+  const keys = [`who:${login}`, `ip:${req.ip}`];
+  if (tooManyTries(keys)) return res.status(429).json({ error: 'too_many_tries' });
+  const found = login && password ? await accounts.logIn(login, password) : null;
+  if (!found) {
+    noteFailure(keys);
+    return res.status(401).json({ error: 'wrong_login' });
+  }
+  res.json({ name: found.account.name, email: found.account.email, session: found.session });
+});
+
+// ---- My Whens, the same on every device signed in with the same account.
 function account(req) {
   const header = req.get('authorization') ?? '';
   return accounts.bySession(header.startsWith('Bearer ') ? header.slice(7) : '');
@@ -360,9 +411,28 @@ app.delete('/api/me/whens/:id', (req, res) => {
   res.status(204).end();
 });
 
+/** The calendar links someone added, kept with their account so every device shows them. */
+app.get('/api/me/calendars', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  res.json({ links: me.calendars ?? [] });
+});
+
+app.put('/api/me/calendars', (req, res) => {
+  const me = account(req);
+  if (!me) return res.status(401).json({ error: 'signed_out' });
+  const given = Array.isArray(req.body?.links) ? req.body.links : null;
+  if (!given) return res.status(400).json({ error: 'bad_links' });
+  const links = [...new Set(given)]
+    .filter((l) => typeof l === 'string' && l.length <= 600 && /^https:\/\/[^\s/]+\/\S+$/.test(l))
+    .slice(0, 5);
+  accounts.setCalendars(me, links);
+  res.json({ links });
+});
+
 /**
  * Reads a calendar subscription link (Apple, Outlook, …) for someone signed in and
- * returns its events in a range. Nothing is stored: the link stays on their device.
+ * returns its events in a range. The events themselves are never stored.
  */
 app.post('/api/calendar/link', async (req, res) => {
   if (!account(req)) return res.status(401).json({ error: 'signed_out' });

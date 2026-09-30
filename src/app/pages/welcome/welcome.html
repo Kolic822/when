@@ -13,6 +13,17 @@
     {{ t('Pick some days, share the link, find a time that works for everyone.') }}
   </p>
 
+  @if (invited()) {
+    <p class="invited">
+      <mat-icon aria-hidden="true">install_mobile</mat-icon>
+      <span>{{
+        t(
+          'Already use When as an app? Links open in the browser. Sign in here too and you carry on as the same person.'
+        )
+      }}</span>
+    </p>
+  }
+
   <div class="choices">
     <div class="google">
       <div #google class="google-button"></div>
@@ -32,18 +43,86 @@
       </p>
     }
 
-    <div class="or muted" aria-hidden="true">
-      <span>{{ t('or') }}</span>
-    </div>
+    @if (emailMode(); as mode) {
+      <form class="email-form" (submit)="submitEmail($event)">
+        <div class="tabs">
+          <button
+            type="button"
+            [class.on]="mode === 'login'"
+            [attr.aria-pressed]="mode === 'login'"
+            (click)="setEmailMode('login')"
+          >
+            {{ t('Sign in') }}
+          </button>
+          <button
+            type="button"
+            [class.on]="mode === 'register'"
+            [attr.aria-pressed]="mode === 'register'"
+            (click)="setEmailMode('register')"
+          >
+            {{ t('Create account') }}
+          </button>
+        </div>
+        <label>
+          <span class="muted">{{ mode === 'login' ? t('Email or username') : t('Email') }}</span>
+          <input
+            [formField]="form.email"
+            type="text"
+            inputmode="email"
+            autocomplete="username"
+            autocapitalize="none"
+          />
+        </label>
+        @if (mode === 'register') {
+          <label>
+            <span class="muted">{{ t('Username') }}</span>
+            <input type="text" [formField]="form.username" autocomplete="nickname" />
+          </label>
+        }
+        <label>
+          <span class="muted">{{ t('Password') }}</span>
+          <input
+            [formField]="form.password"
+            type="password"
+            [attr.autocomplete]="mode === 'login' ? 'current-password' : 'new-password'"
+          />
+          @if (mode === 'register') {
+            <span class="muted hint">{{ t('At least 8 characters.') }}</span>
+          }
+        </label>
+        @if (emailError()) {
+          <p class="error" role="alert">{{ emailError() }}</p>
+        }
+        <button type="submit" class="pill guest" [disabled]="emailBusy()">
+          {{ mode === 'login' ? t('Sign in') : t('Create account') }}
+        </button>
+        <button type="button" class="back-link" (click)="emailMode.set(null)">
+          {{ t('Back') }}
+        </button>
+      </form>
+    } @else {
+      <button type="button" class="pill email" (click)="setEmailMode('login')">
+        <mat-icon>mail</mat-icon>
+        {{ t('Continue with email') }}
+      </button>
 
-    <button type="button" class="pill guest" (click)="guest()">
-      {{ t('Continue as guest') }}
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
+      <div class="or muted" aria-hidden="true">
+        <span>{{ t('or') }}</span>
+      </div>
+
+      <button type="button" class="pill guest" (click)="guest()">
+        {{ t('Continue as guest') }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    }
   </div>
 
   <p class="small muted">
-    {{ t('Guests type a name for each When. With Google, your name is filled in for you.') }}
+    {{
+      t(
+        'With an account your Whens follow you to every device. Guests keep them on this device only.'
+      )
+    }}
   </p>
   <div class="langs" role="radiogroup" [attr.aria-label]="t('Language')">
     @for (l of langs; track l.value) {

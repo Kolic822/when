@@ -22,7 +22,10 @@ source in `src/app/pages/guide/guide.ts`). The change log is next to it
 - **See**: one coloured bar per person per day, gold bands where everyone fits, live for everyone
 - **Decide**: possible sessions as chips; the organiser picks a start time and books
 - **Notifications**: everyone answered, booked, moved, cancelled; answers to sent links
-- **Welcome**: continue as a guest or with Google (`GOOGLE_CLIENT_ID`)
+- **Welcome**: continue as a guest, with Google (`GOOGLE_CLIENT_ID`), or with an email, username
+  and password (hashed with scrypt in `accounts.json`; no email verification or password reset yet)
+- **Accounts**: My Whens, who you are in each When and your calendar links follow the account to
+  every device, including the browser next to the installed app
 - **Pro previews** (menu toggles): let someone else pick via a link, book several sessions,
   connect calendar and fill from it (sample events), add to calendar, join for part of it, history
 
