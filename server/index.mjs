@@ -206,6 +206,44 @@ app.delete('/api/events/:id/participants/:pid', (req, res) => {
   res.status(204).end();
 });
 
+// ---- Housekeeping: old Whens go, a snapshot of the rest is kept.
+const RETENTION_DAYS = Number(process.env.RETENTION_DAYS) || 60;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** Removes Whens whose last day is longer ago than the retention period. */
+function removeOld() {
+  const cutoff = new Date(Date.now() - RETENTION_DAYS * DAY_MS).toISOString().slice(0, 10);
+  let removed = 0;
+  for (const ev of store.all()) {
+    const last = ev.dates[ev.dates.length - 1] ?? ev.createdAt.slice(0, 10);
+    if (last < cutoff) {
+      store.delete(ev.id);
+      rooms.delete(ev.id);
+      removed++;
+    }
+  }
+  if (removed) console.log(`removed ${removed} When(s) older than ${RETENTION_DAYS} days`);
+}
+
+async function housekeeping() {
+  try {
+    removeOld();
+    await store.backup();
+  } catch (err) {
+    console.error('housekeeping failed', err);
+  }
+}
+setTimeout(housekeeping, 5000);
+setInterval(housekeeping, DAY_MS).unref();
+
+/** The whole data set, for keeping a copy elsewhere. Needs ADMIN_TOKEN to be set. */
+app.get('/api/admin/export', (req, res) => {
+  const token = process.env.ADMIN_TOKEN;
+  if (!token || req.get('x-admin-token') !== token) return res.status(403).json({ error: 'forbidden' });
+  res.setHeader('content-disposition', `attachment; filename="when-${new Date().toISOString().slice(0, 10)}.json"`);
+  res.json(store.all());
+});
+
 // ---- Signing in with Google
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? '';
 
