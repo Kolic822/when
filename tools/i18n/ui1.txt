@@ -1,0 +1,707 @@
+Answer from {names}
+Antwort von {names}
+Odgovor: {names}
+
+Show
+Anzeigen
+Prikaži
+
+Answer
+Antwort
+Odgovor
+
+Not now
+Nicht jetzt
+Ne sada
+
+Book
+Festlegen
+Potvrdi
+
+Pick a time
+Uhrzeit wählen
+Odaberi vrijeme
+
+{n} answers so far.
+Bisher {n} Antworten.
+Dosad odgovora: {n}.
+
+{names} can’t make any of the sessions you sent
+{names} kann an keinem der gesendeten Termine
+{names} ne može ni u jednom od poslanih termina
+
+{names} picked a session
+{names} hat einen Termin gewählt
+{names} je odabrao/la termin
+
+{names} can do this one
+Dieser Termin passt für {names}
+Ovaj termin odgovara: {names}
+
+They prefer different start times.
+Sie bevorzugen unterschiedliche Startzeiten.
+Žele različita vremena početka.
+
+Any start time suits.
+Jede Startzeit passt.
+Odgovara bilo koje vrijeme početka.
+
+{names} picked {session}
+{names} hat {session} gewählt
+{names} je odabrao/la {session}
+
+{names} can do {session}
+{session} passt für {names}
+{session} odgovara: {names}
+
+Menu
+Menü
+Izbornik
+
+When
+When
+When
+
+Close menu
+Menü schließen
+Zatvori izbornik
+
+Sign out
+Abmelden
+Odjava
+
+Guest
+Gast
+Gost
+
+Your Whens are kept on this device
+Deine Whens sind auf diesem Gerät gespeichert
+Tvoji Whenovi spremljeni su na ovom uređaju
+
+Sign in
+Anmelden
+Prijava
+
+My Whens
+Meine Whens
+Moji Whenovi
+
+Checking…
+Wird geprüft…
+Provjeravam…
+
+No possible sessions yet
+Noch keine möglichen Termine
+Još nema mogućih termina
+
+organiser as {name}
+Organisator als {name}
+organizator kao {name}
+
+joined as {name}
+dabei als {name}
+sudjeluješ kao {name}
+
+Delete this When
+Dieses When löschen
+Obriši ovaj When
+
+Leave this When
+Dieses When verlassen
+Napusti ovaj When
+
+Delete “{title}” for everyone? Nobody will be able to open it again.
+„{title}“ für alle löschen? Niemand kann es danach mehr öffnen.
+Obrisati „{title}” za sve? Nitko ga više neće moći otvoriti.
+
+Leave “{title}”? Your times will be removed and you’ll need the link to come back.
+„{title}“ verlassen? Deine Zeiten werden entfernt, und du brauchst den Link, um zurückzukommen.
+Napustiti „{title}”? Tvoja vremena bit će uklonjena, a za povratak će ti trebati poveznica.
+
+Cancel
+Abbrechen
+Odustani
+
+Delete
+Löschen
+Obriši
+
+Leave
+Verlassen
+Napusti
+
+None yet. Whens you create or join show up here.
+Noch keine. Whens, die du erstellst oder denen du beitrittst, erscheinen hier.
+Još nema nijednog. Ovdje se pojavljuju Whenovi koje stvoriš ili kojima se pridružiš.
+
+New When
+Neues When
+Novi When
+
+How it works
+So funktioniert’s
+Kako radi
+
+Appearance
+Aussehen
+Izgled
+
+Colour
+Farbe
+Boja
+
+Theme
+Design
+Tema
+
+Date and time
+Datum und Uhrzeit
+Datum i vrijeme
+
+Date format
+Datumsformat
+Format datuma
+
+Time zone
+Zeitzone
+Vremenska zona
+
+Automatic ({city})
+Automatisch ({city})
+Automatski ({city})
+
+Defaults for new Whens
+Standardwerte für neue Whens
+Zadane postavke za nove Whenove
+
+Meetup length
+Dauer des Treffens
+Trajanje susreta
+
+Earliest
+Frühestens
+Najranije
+
+Latest
+Spätestens
+Najkasnije
+
+The hours must leave room for the meetup length.
+Zwischen den Uhrzeiten muss Platz für die Dauer des Treffens sein.
+Između tih sati mora stati trajanje susreta.
+
+Used to pre-fill the form when you plan a new When.
+Damit wird das Formular vorausgefüllt, wenn du ein neues When planst.
+Time se unaprijed ispunjava obrazac kad planiraš novi When.
+
+History
+Verlauf
+Povijest
+
+pro
+Pro
+pro
+
+Which When
+Welches When
+Koji When
+
+Loading…
+Wird geladen…
+Učitavam…
+
+Open or create a When first.
+Öffne oder erstelle zuerst ein When.
+Najprije otvori ili stvori When.
+
+Notifications
+Benachrichtigungen
+Obavijesti
+
+On iPhone, add When to your Home Screen first: tap Share, then “Add to Home Screen”, and open it from there.
+Füge When auf dem iPhone zuerst zum Home-Bildschirm hinzu: Tippe auf Teilen, dann auf „Zum Home-Bildschirm“, und öffne es von dort.
+Na iPhoneu najprije dodaj When na početni zaslon: dodirni Dijeli, zatim „Dodaj na početni zaslon” i otvori ga odande.
+
+Notifications are blocked for When in your browser settings. Allow them there, then come back.
+Benachrichtigungen für When sind in den Browser-Einstellungen blockiert. Erlaube sie dort und komm dann zurück.
+Obavijesti za When blokirane su u postavkama preglednika. Dopusti ih ondje pa se vrati.
+
+Push notifications
+Push-Benachrichtigungen
+Push obavijesti
+
+When a session is booked, moved or cancelled, when everyone has answered, and about answers to links you sent.
+Wenn ein Termin festgelegt, verschoben oder abgesagt wird, wenn alle geantwortet haben, und bei Antworten auf Links, die du gesendet hast.
+Kad se termin potvrdi, pomakne ili otkaže, kad svi odgovore te o odgovorima na poveznice koje pošalješ.
+
+Pro features
+Pro-Funktionen
+Pro značajke
+
+preview
+Vorschau
+pregled
+
+App
+App
+Aplikacija
+
+Reload to update
+Neu laden und aktualisieren
+Ponovno učitaj za ažuriranje
+
+Check for updates
+Nach Updates suchen
+Provjeri ažuriranja
+
+Version {version}
+Version {version}
+Verzija {version}
+
+Hide changes
+Änderungen ausblenden
+Sakrij promjene
+
+What’s new
+Was ist neu
+Što je novo
+
+Guide
+Anleitung
+Vodič
+
+Delete {title}
+{title} löschen
+Obriši {title}
+
+Leave {title}
+{title} verlassen
+Napusti {title}
+
+System
+System
+Sustav
+
+Light
+Hell
+Svijetla
+
+Dark
+Dunkel
+Tamna
+
++{n} more
++{n} weitere
+još {n}
+
+Booked
+Festgelegt
+Potvrđeno
+
+Grape
+Traube
+Grožđe
+
+Sunset
+Sonnenuntergang
+Zalazak
+
+Lagoon
+Lagune
+Laguna
+
+Connect calendar
+Kalender verbinden
+Poveži kalendar
+
+See your own events behind the bars. Sample events for now.
+Sieh deine eigenen Termine hinter den Balken. Vorerst mit Beispielterminen.
+Vidi vlastite događaje iza traka. Zasad s primjerima događaja.
+
+Book several sessions
+Mehrere Termine festlegen
+Potvrdi više termina
+
+The organiser can book more than one session for a When.
+Der Organisator kann für ein When mehr als einen Termin festlegen.
+Organizator može potvrditi više termina za jedan When.
+
+Let someone else pick
+Jemand anderen wählen lassen
+Neka odabere netko drugi
+
+Send a link with only the possible sessions.
+Sende einen Link, der nur die möglichen Termine zeigt.
+Pošalji poveznicu samo s mogućim terminima.
+
+Add to calendar
+Zum Kalender hinzufügen
+Dodaj u kalendar
+
+A calendar button on every possible session.
+Eine Kalender-Schaltfläche bei jedem möglichen Termin.
+Gumb za kalendar uz svaki mogući termin.
+
+Join for part of it
+Nur teilweise dabei sein
+Sudjelovanje samo dio vremena
+
+Let people mark less than the full length.
+Lass andere weniger als die volle Dauer markieren.
+Dopusti da se označi manje od punog trajanja.
+
+A History section in this menu: who changed what, and when.
+Ein Bereich „Verlauf“ in diesem Menü: wer was wann geändert hat.
+Odjeljak Povijest u ovom izborniku: tko je što promijenio i kada.
+
+Updates apply automatically when opened in a browser.
+Im Browser werden Updates automatisch übernommen.
+U pregledniku se ažuriranja primjenjuju automatski.
+
+You have the latest version.
+Du hast die neueste Version.
+Imaš najnoviju verziju.
+
+A new version is ready.
+Eine neue Version ist bereit.
+Nova verzija je spremna.
+
+Could not check right now.
+Prüfung gerade nicht möglich.
+Trenutačno nije moguće provjeriti.
+
+Link ready
+Link bereit
+Poveznica spremna
+
+Copied
+Kopiert
+Kopirano
+
+Copy link
+Link kopieren
+Kopiraj poveznicu
+
+Close
+Schließen
+Zatvori
+
+They get a link with only these sessions. Which ones?
+Sie bekommen einen Link nur mit diesen Terminen. Welche?
+Dobit će poveznicu samo s ovim terminima. S kojima?
+
+Sessions to include
+Enthaltene Termine
+Termini koje uključuješ
+
+They can pick
+Sie dürfen wählen
+Mogu odabrati
+
+Answer mode
+Antwortart
+Način odgovora
+
+Just one
+Nur einen
+Samo jedan
+
+One or more
+Einen oder mehrere
+Jedan ili više
+
+Creating…
+Wird erstellt…
+Stvaram…
+
+Create link
+Link erstellen
+Stvori poveznicu
+
+Something went wrong
+Etwas ist schiefgelaufen
+Nešto je pošlo po zlu
+
+Add {session} to calendar
+{session} zum Kalender hinzufügen
+Dodaj {session} u kalendar
+
+Cancel {session}
+{session} absagen
+Otkaži {session}
+
+Undo
+Rückgängig
+Poništi
+
+Planned with When: {url}
+Geplant mit When: {url}
+Planirano uz When: {url}
+
+Copy to…
+Kopieren nach…
+Kopiraj na…
+
+Copy {what} to
+{what} kopieren nach
+Kopiraj {what} na
+
+Select none
+Keine auswählen
+Poništi odabir
+
+Select all
+Alle auswählen
+Odaberi sve
+
+Copy ({n})
+Kopieren ({n})
+Kopiraj ({n})
+
+Back to all days
+Zurück zu allen Tagen
+Natrag na sve dane
+
+Previous day
+Vorheriger Tag
+Prethodni dan
+
+Next day
+Nächster Tag
+Sljedeći dan
+
+Drag edges to resize · hold to move · tap for a note
+Ränder ziehen: Länge · halten: verschieben · tippen: Notiz
+Povuci rub: duljina · drži: pomakni · dodirni: bilješka
+
+Free all day
+Ganzer Tag frei
+Cijeli dan
+
+Clear day
+Tag leeren
+Očisti dan
+
+Note for {time}
+Notiz für {time}
+Bilješka za {time}
+
+e.g. have to leave 20 min early
+z. B. muss 20 Min. früher gehen
+npr. moram otići 20 min ranije
+
+Save note
+Notiz speichern
+Spremi bilješku
+
+Other people's free time
+Freie Zeiten der anderen
+Slobodno vrijeme ostalih
+
+Drag to select the hours you are free
+Ziehe, um die Stunden zu markieren, in denen du Zeit hast
+Povuci za odabir sati kad si slobodan/na
+
+tap to add a note
+tippen für eine Notiz
+dodirni za bilješku
+
+Copy this period to other days
+Diesen Zeitraum auf andere Tage kopieren
+Kopiraj ovo razdoblje na druge dane
+
+Copy to other days
+Auf andere Tage kopieren
+Kopiraj na druge dane
+
+Remove this period
+Diesen Zeitraum entfernen
+Ukloni ovo razdoblje
+
+Remove
+Entfernen
+Ukloni
+
+Hold and drag to add your free time
+Halten und ziehen, um deine freie Zeit einzutragen
+Drži i povuci za unos slobodnog vremena
+
+Drag to add your free time
+Ziehen, um deine freie Zeit einzutragen
+Povuci za unos slobodnog vremena
+
+at least {length}
+mindestens {length}
+najmanje {length}
+
+Keep holding, then drag…
+Weiter halten, dann ziehen…
+Drži još malo pa povuci…
+
+Done
+Fertig
+Gotovo
+
+Minimum is {length} – the meetup length. Your period was extended.
+Das Minimum ist {length} – die Dauer des Treffens. Dein Zeitraum wurde verlängert.
+Minimum je {length} – trajanje susreta. Tvoje razdoblje je produljeno.
+
+Removed {time}
+{time} entfernt
+Uklonjeno: {time}
+
+Clear
+Leeren
+Očisti
+
+Earlier weeks
+Frühere Wochen
+Raniji tjedni
+
+Jump to today
+Zu heute springen
+Skoči na danas
+
+Later weeks
+Spätere Wochen
+Kasniji tjedni
+
+Mo
+Mo
+Po
+
+Tu
+Di
+Ut
+
+We
+Mi
+Sr
+
+Th
+Do
+Če
+
+Fr
+Fr
+Pe
+
+Sa
+Sa
+Su
+
+Su
+So
+Ne
+
+This week
+Diese Woche
+Ovaj tjedan
+
+Next week
+Nächste Woche
+Sljedeći tjedan
+
+Weekends
+Wochenenden
+Vikendi
+
+Day {n} of {total}
+Tag {n} von {total}
+Dan {n} od {total}
+
+Whole day
+Ganzer Tag
+Cijeli dan
+
+Days to copy to
+Zieltage
+Dani na koje se kopira
+
+Prev
+Zurück
+Preth.
+
+Finish
+Fertig
+Završi
+
+Next
+Weiter
+Dalje
+
+Nothing yet.
+Noch nichts.
+Još ništa.
+
+You
+Du
+Ti
+
+joined
+ist beigetreten
+pridružio/la se
+
+left
+hat verlassen
+napustio/la
+
+changed name from {name}
+hat den Namen geändert (vorher {name})
+promijenio/la ime (prije {name})
+
+changed name
+hat den Namen geändert
+promijenio/la ime
+
+added {session}
+hat {session} hinzugefügt
+dodao/la {session}
+
+removed {session}
+hat {session} entfernt
+uklonio/la {session}
+
+moved {day} to {time}
+hat {day} auf {time} verschoben
+pomaknuo/la {day} na {time}
+
+cleared {day}
+hat {day} geleert
+očistio/la {day}
+
+updated the When
+hat das When aktualisiert
+ažurirao/la When
+
+just now
+gerade eben
+upravo sad
+
+{n} min ago
+vor {n} Min.
+prije {n} min
+
+{n} h ago
+vor {n} Std.
+prije {n} h
+
+yesterday
+gestern
+jučer
+
+{n} days ago
+vor {n} Tagen
+prije {n} dana
+
+Skip
+Überspringen
+Preskoči
+
+Back
+Zurück
+Natrag
+
+Got it
+Verstanden
+Jasno

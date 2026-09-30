@@ -422,3 +422,14 @@ p {
 .zone-pick {
   margin: 12px 0 0;
 }
+
+.langs {
+  margin: 0 0 12px;
+
+  .pill {
+    flex: 1;
+    height: 34px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+}

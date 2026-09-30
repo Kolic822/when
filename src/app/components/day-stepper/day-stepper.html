@@ -1,6 +1,8 @@
 <div class="stepper">
   <header class="head card">
-    <span class="progress muted">Day {{ index() + 1 }} of {{ dates().length }}</span>
+    <span class="progress muted">{{
+      t('Day {n} of {total}', { n: index() + 1, total: dates().length })
+    }}</span>
     <h2>{{ dayLabel() }}</h2>
     <div
       class="bar-track"
@@ -8,7 +10,7 @@
       [attr.aria-valuenow]="index() + 1"
       aria-valuemin="1"
       [attr.aria-valuemax]="dates().length"
-      [attr.aria-label]="'Day ' + (index() + 1) + ' of ' + dates().length"
+      [attr.aria-label]="t('Day {n} of {total}', { n: index() + 1, total: dates().length })"
     >
       <div class="bar-fill" [style.width.%]="((index() + 1) / dates().length) * 100"></div>
     </div>
@@ -29,9 +31,9 @@
       <div actions class="side" [class.copying]="copyTarget()">
         @if (copyTarget(); as target) {
           <span class="side-title muted"
-            >{{ target.kind === 'slot' ? slotLabel(target.slot) : 'Whole day' }} →</span
+            >{{ target.kind === 'slot' ? slotLabel(target.slot) : t('Whole day') }} →</span
           >
-          <div class="day-list" role="group" aria-label="Days to copy to">
+          <div class="day-list" role="group" [attr.aria-label]="t('Days to copy to')">
             @for (d of otherDates(); track d) {
               <button
                 type="button"
@@ -47,7 +49,7 @@
           <span class="spacer"></span>
           <button type="button" class="side-btn" (click)="toggleAll()">
             <mat-icon>{{ allChosen() ? 'deselect' : 'select_all' }}</mat-icon>
-            <span>{{ allChosen() ? 'Select none' : 'Select all' }}</span>
+            <span>{{ allChosen() ? t('Select none') : t('Select all') }}</span>
           </button>
         } @else {
           <span class="spacer"></span>
@@ -59,16 +61,16 @@
               [disabled]="!hasTimes()"
             >
               <mat-icon>content_copy</mat-icon>
-              <span>Copy to…</span>
+              <span>{{ t('Copy to…') }}</span>
             </button>
           }
           <button type="button" class="side-btn" (click)="clearDay()" [disabled]="!hasTimes()">
             <mat-icon>delete_outline</mat-icon>
-            <span>Clear day</span>
+            <span>{{ t('Clear day') }}</span>
           </button>
           <button type="button" class="side-btn" [class.active]="isAllDay()" (click)="freeAllDay()">
             <mat-icon>wb_sunny</mat-icon>
-            <span>Free all day</span>
+            <span>{{ t('Free all day') }}</span>
           </button>
         }
       </div>
@@ -79,7 +81,7 @@
     @if (copyTarget()) {
       <button type="button" class="pill nav-btn" (click)="cancelCopy()">
         <mat-icon>close</mat-icon>
-        Cancel
+        {{ t('Cancel') }}
       </button>
       <button
         mat-flat-button
@@ -88,20 +90,20 @@
         (click)="applyCopy()"
         [disabled]="!chosen().size"
       >
-        Copy ({{ chosen().size }})
+        {{ t('Copy ({n})', { n: chosen().size }) }}
         <mat-icon iconPositionEnd>check</mat-icon>
       </button>
     } @else {
       <button type="button" class="pill nav-btn" (click)="prev()" [disabled]="index() === 0">
         <mat-icon>arrow_back</mat-icon>
-        Prev
+        {{ t('Prev') }}
       </button>
       <button type="button" class="pill nav-btn done" (click)="finished.emit()">
         <mat-icon>check</mat-icon>
-        Done
+        {{ t('Done') }}
       </button>
       <button mat-flat-button type="button" class="nav-btn" (click)="next()">
-        {{ isLast() ? 'Finish' : 'Next' }}
+        {{ isLast() ? t('Finish') : t('Next') }}
         <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
       </button>
     }

@@ -6,8 +6,12 @@
     <span class="gold"></span>
   </div>
 
-  <h1 class="brand">When <span class="tagline">are you free?</span></h1>
-  <p class="lead muted">Pick some days, share the link, find a time that works for everyone.</p>
+  <h1 class="brand">
+    {{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span>
+  </h1>
+  <p class="lead muted">
+    {{ t('Pick some days, share the link, find a time that works for everyone.') }}
+  </p>
 
   <div class="choices">
     <div class="google">
@@ -17,26 +21,42 @@
       } @else if (!auth.googleReady()) {
         <button type="button" class="pill soon" disabled>
           <mat-icon>account_circle</mat-icon>
-          Continue with Google
-          <span class="tag">soon</span>
+          {{ t('Continue with Google') }}
+          <span class="tag">{{ t('soon') }}</span>
         </button>
       }
     </div>
     @if (failed()) {
       <p class="error" role="alert">
-        Google sign-in didn't work. Try again, or carry on as a guest.
+        {{ t("Google sign-in didn't work. Try again, or carry on as a guest.") }}
       </p>
     }
 
-    <div class="or muted" aria-hidden="true"><span>or</span></div>
+    <div class="or muted" aria-hidden="true">
+      <span>{{ t('or') }}</span>
+    </div>
 
     <button type="button" class="pill guest" (click)="guest()">
-      Continue as guest
+      {{ t('Continue as guest') }}
       <mat-icon>arrow_forward</mat-icon>
     </button>
   </div>
 
   <p class="small muted">
-    Guests type a name for each When. With Google, your name is filled in for you.
+    {{ t('Guests type a name for each When. With Google, your name is filled in for you.') }}
   </p>
+  <div class="langs" role="radiogroup" [attr.aria-label]="t('Language')">
+    @for (l of langs; track l.value) {
+      <button
+        type="button"
+        role="radio"
+        [class.on]="lang() === l.value"
+        [attr.aria-checked]="lang() === l.value"
+        [attr.lang]="l.value"
+        (click)="setLang(l.value)"
+      >
+        {{ l.label }}
+      </button>
+    }
+  </div>
 </main>

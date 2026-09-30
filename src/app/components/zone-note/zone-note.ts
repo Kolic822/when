@@ -9,6 +9,7 @@ import {
   zoneMode,
   zoneOffset,
 } from '../../core/zone';
+import { t } from '../../core/i18n/i18n';
 
 /**
  * Shown only to someone whose clock differs from the When's: says whose time is
@@ -19,14 +20,14 @@ import {
   imports: [MatIconModule],
   template: `
     @if (info(); as i) {
-      <div class="zone" role="group" aria-label="Time zone">
+      <div class="zone" role="group" [attr.aria-label]="t('Time zone')">
         <mat-icon>public</mat-icon>
         <span class="text">
-          {{ i.mine ? 'Shown in your time' : 'Shown in ' + i.eventCity + ' time' }}
+          {{ i.mine ? t('Shown in your time') : t('Shown in {city} time', { city: i.eventCity }) }}
           <span class="muted">· {{ i.mine ? i.myCity : i.gap }}</span>
         </span>
         <button type="button" class="switch" (click)="flip()">
-          {{ i.mine ? i.eventCity + ' time' : 'My time' }}
+          {{ i.mine ? t('{city} time', { city: i.eventCity }) : t('My time') }}
         </button>
       </div>
     }
@@ -77,6 +78,7 @@ import {
   `,
 })
 export class ZoneNote {
+  readonly t = t;
   /** The days of the When, to tell whether the clocks differ on any of them. */
   readonly dates = input.required<string[]>();
 
@@ -90,7 +92,8 @@ export class ZoneNote {
       mine: zoneMode() === 'mine',
       myCity: zoneCity(viewerZone()),
       eventCity: zoneCity(zone),
-      gap: hours > 0 ? `${amount} behind you` : `${amount} ahead of you`,
+      gap:
+        hours > 0 ? t('{amount} behind you', { amount }) : t('{amount} ahead of you', { amount }),
     };
   });
 

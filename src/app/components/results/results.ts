@@ -10,6 +10,7 @@ import { Features, NO_FEATURES } from '../../core/prefs';
 import { formatDuration, formatMinutes, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { AskPanel } from '../ask-panel/ask-panel';
+import { t, tn, listOf } from '../../core/i18n/i18n';
 
 interface Row {
   key: string;
@@ -52,6 +53,8 @@ const LIMIT = 6;
   styleUrl: './results.scss',
 })
 export class Results {
+  readonly t = t;
+  readonly tn = tn;
   readonly result = input.required<AvailabilityResult>();
   readonly durationHours = input.required<number>();
   readonly partialOk = input(false);
@@ -99,7 +102,10 @@ export class Results {
       time: spanAt(w.date, w.start, w.end),
       length: formatDuration(w.end - w.start),
       partial: w.partial?.length
-        ? `${w.partial.join(', ')} can't stay the full ${this.durationLabel()}`
+        ? t('{names} can’t stay the full {length}', {
+            names: w.partial.join(', '),
+            length: this.durationLabel(),
+          })
         : '',
       notes: w.notes ?? [],
       window: w,
@@ -120,9 +126,7 @@ export class Results {
   );
 
   readonly pendingNames = computed(() => {
-    const names = this.result().pending.map((p) => p.name);
-    if (names.length <= 2) return names.join(' and ');
-    return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+    return listOf(this.result().pending.map((p) => p.name));
   });
 
   /** Shortlists already sent, with who said yes to what. */
@@ -221,8 +225,8 @@ export class Results {
     const end = Math.min(w.end, start + this.minutes());
     const notes = [
       this.description(),
-      w.end > end ? `Everyone is free ${r.day} ${r.time}.` : '',
-      this.url() ? `Planned with When: ${this.url()}` : '',
+      w.end > end ? t('Everyone is free {session}.', { session: `${r.day} ${r.time}` }) : '',
+      this.url() ? t('Planned with When: {url}', { url: this.url() }) : '',
     ]
       .filter(Boolean)
       .join('\n\n');

@@ -1,7 +1,12 @@
 <section class="editor card" [style.--color]="color()" [style.--hours]="range().hours">
   @if (mode() === 'full') {
     <header>
-      <button mat-icon-button type="button" (click)="closed.emit()" aria-label="Back to all days">
+      <button
+        mat-icon-button
+        type="button"
+        (click)="closed.emit()"
+        [attr.aria-label]="t('Back to all days')"
+      >
         <mat-icon>arrow_back</mat-icon>
       </button>
       <div class="title">
@@ -14,8 +19,8 @@
           class="icon-btn"
           (click)="goTo(prevDate())"
           [disabled]="!prevDate()"
-          aria-label="Previous day"
-          title="Previous day"
+          [attr.aria-label]="t('Previous day')"
+          [title]="t('Previous day')"
         >
           <mat-icon>chevron_left</mat-icon>
         </button>
@@ -25,8 +30,8 @@
           class="icon-btn"
           (click)="goTo(nextDate())"
           [disabled]="!nextDate()"
-          aria-label="Next day"
-          title="Next day"
+          [attr.aria-label]="t('Next day')"
+          [title]="t('Next day')"
         >
           <mat-icon>chevron_right</mat-icon>
         </button>
@@ -36,19 +41,19 @@
 
   <!-- Always takes its line so nothing jumps when the first block appears. -->
   <p class="hint muted" [class.ghost]="!mine().length">
-    Drag edges to resize · hold to move · tap for a note
+    {{ t('Drag edges to resize · hold to move · tap for a note') }}
   </p>
 
   @if (mode() === 'full') {
     <div class="quick">
       <button type="button" class="pill" (click)="freeAllDay()" [class.active]="allDay()">
         <mat-icon>{{ allDay() ? 'check' : 'wb_sunny' }}</mat-icon>
-        Free all day
+        {{ t('Free all day') }}
       </button>
       @if (mine().length) {
         <button type="button" class="pill danger" (click)="clearDay()">
           <mat-icon>delete_outline</mat-icon>
-          Clear day
+          {{ t('Clear day') }}
         </button>
       }
       @if (event().dates.length > 1) {
@@ -82,12 +87,12 @@
     (submit)="$event.preventDefault(); saveNote()"
   >
     <label>
-      <span class="muted"
-        >Note for
-        {{
-          noteEditing() !== null && mine()[noteEditing()!] ? label(mine()[noteEditing()!]) : ''
-        }}</span
-      >
+      <span class="muted">{{
+        t('Note for {time}', {
+          time:
+            noteEditing() !== null && mine()[noteEditing()!] ? label(mine()[noteEditing()!]) : '',
+        })
+      }}</span>
       <input
         #noteInput
         type="text"
@@ -95,15 +100,15 @@
         (input)="noteDraft.set($any($event.target).value)"
         (keydown.escape)="cancelNote()"
         maxlength="120"
-        placeholder="e.g. have to leave 20 min early"
+        [placeholder]="t('e.g. have to leave 20 min early')"
         autocomplete="off"
         enterkeyhint="done"
         [tabindex]="noteEditing() === null ? -1 : 0"
       />
     </label>
     <div class="actions">
-      <button type="button" class="pill" (click)="cancelNote()">Cancel</button>
-      <button mat-flat-button type="submit">Save note</button>
+      <button type="button" class="pill" (click)="cancelNote()">{{ t('Cancel') }}</button>
+      <button mat-flat-button type="submit">{{ t('Save note') }}</button>
     </div>
   </form>
 
@@ -115,7 +120,7 @@
     </div>
 
     @if (others().length) {
-      <div class="others" aria-label="Other people's free time">
+      <div class="others" [attr.aria-label]="t('Other people\'s free time')">
         @for (p of others(); track p.id) {
           <div class="lane" [title]="p.name">
             @for (s of othersBlocks(p.id); track s.start) {
@@ -139,7 +144,7 @@
       [class.morphing]="morphing()"
       [class.holding]="holding()"
       role="application"
-      aria-label="Drag to select the hours you are free"
+      [attr.aria-label]="t('Drag to select the hours you are free')"
       (pointerdown)="onDown($event)"
       (pointermove)="onMove($event)"
       (pointerup)="onUp($event)"
@@ -165,7 +170,7 @@
             @if (s.note) {
               <span class="note">{{ s.note }}</span>
             } @else {
-              <span class="note hint-note">tap to add a note</span>
+              <span class="note hint-note">{{ t('tap to add a note') }}</span>
             }
           </span>
           <span class="icons">
@@ -173,13 +178,18 @@
               <span
                 class="copy-one"
                 role="button"
-                aria-label="Copy this period to other days"
-                title="Copy to other days"
+                [attr.aria-label]="t('Copy this period to other days')"
+                [title]="t('Copy to other days')"
               >
                 <mat-icon>content_copy</mat-icon>
               </span>
             }
-            <span class="x" role="button" aria-label="Remove this period" title="Remove">
+            <span
+              class="x"
+              role="button"
+              [attr.aria-label]="t('Remove this period')"
+              [title]="t('Remove')"
+            >
               <mat-icon>close</mat-icon>
             </span>
           </span>
@@ -189,9 +199,11 @@
       @if (!mine().length && !drag()) {
         <span class="empty-prompt muted" aria-hidden="true">
           <mat-icon>touch_app</mat-icon>
-          <span>{{ coarse ? 'Hold and drag' : 'Drag' }}<br />to add your free time</span>
+          <span>{{
+            coarse ? t('Hold and drag to add your free time') : t('Drag to add your free time')
+          }}</span>
           @if (strict()) {
-            <small>at least {{ minLabel() }}</small>
+            <small>{{ t('at least {length}', { length: minLabel() }) }}</small>
           }
         </span>
       }
@@ -212,7 +224,7 @@
       [style.left.px]="holdPoint().x"
       [style.top.px]="holdPoint().y"
     >
-      <span class="txt">Keep holding, then drag…</span>
+      <span class="txt">{{ t('Keep holding, then drag…') }}</span>
       <span class="progress" [style.animation-duration.ms]="holdProgressMs"></span>
     </span>
   }
@@ -221,7 +233,7 @@
     <div class="done-bar">
       <button mat-flat-button type="button" (click)="closed.emit()">
         <mat-icon>check</mat-icon>
-        Done
+        {{ t('Done') }}
       </button>
     </div>
   }

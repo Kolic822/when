@@ -2,7 +2,7 @@
   type="button"
   class="icon-btn trigger"
   (click)="toggle()"
-  aria-label="Menu"
+  [attr.aria-label]="t('Menu')"
   [attr.aria-expanded]="open()"
 >
   <mat-icon>menu</mat-icon>
@@ -10,10 +10,10 @@
 
 @if (open()) {
   <div class="backdrop" (click)="close()"></div>
-  <aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+  <aside class="drawer" role="dialog" aria-modal="true" [attr.aria-label]="t('Menu')">
     <header>
-      <span class="brand">When</span>
-      <button type="button" class="icon-btn" (click)="close()" aria-label="Close menu">
+      <span class="brand">{{ t('When') }}</span>
+      <button type="button" class="icon-btn" (click)="close()" [attr.aria-label]="t('Close menu')">
         <mat-icon>close</mat-icon>
       </button>
     </header>
@@ -25,14 +25,34 @@
             <span class="name">{{ u.name }}</span>
             <span class="muted small">{{ u.email }}</span>
           </span>
-          <button type="button" class="pill small-pill" (click)="signOut()">Sign out</button>
+          <button type="button" class="pill small-pill" (click)="signOut()">
+            {{ t('Sign out') }}
+          </button>
         } @else {
           <span class="who">
-            <span class="name">Guest</span>
-            <span class="muted small">Your Whens are kept on this device</span>
+            <span class="name">{{ t('Guest') }}</span>
+            <span class="muted small">{{ t('Your Whens are kept on this device') }}</span>
           </span>
-          <button type="button" class="pill small-pill" (click)="signIn()">Sign in</button>
+          <button type="button" class="pill small-pill" (click)="signIn()">
+            {{ t('Sign in') }}
+          </button>
         }
+      }
+    </div>
+
+    <div class="segments langs" role="radiogroup" [attr.aria-label]="t('Language')">
+      @for (l of langs; track l.value) {
+        <button
+          type="button"
+          class="pill"
+          role="radio"
+          [class.active]="lang() === l.value"
+          [attr.aria-checked]="lang() === l.value"
+          [attr.lang]="l.value"
+          (click)="setLang(l.value)"
+        >
+          {{ l.label }}
+        </button>
       }
     </div>
 
@@ -44,7 +64,7 @@
           (click)="toggleSection('whens')"
           [attr.aria-expanded]="!isFolded('whens')"
         >
-          <span>My Whens</span>
+          <span>{{ t('My Whens') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
@@ -61,23 +81,29 @@
                     </span>
                     <span class="best">
                       @if (best()[m.id] === '') {
-                        <span class="muted">Checking…</span>
+                        <span class="muted">{{ t('Checking…') }}</span>
                       } @else if (best()[m.id]) {
                         {{ best()[m.id] }}
                       } @else {
-                        <span class="muted">No possible sessions yet</span>
+                        <span class="muted">{{ t('No possible sessions yet') }}</span>
                       }
                     </span>
                     <span class="muted small">
-                      {{ m.role === 'organiser' ? 'organiser' : 'joined' }} as {{ m.name }}
+                      {{
+                        m.role === 'organiser'
+                          ? t('organiser as {name}', { name: m.name })
+                          : t('joined as {name}', { name: m.name })
+                      }}
                     </span>
                   </a>
                   <button
                     type="button"
                     class="icon-btn"
                     (click)="askRemove(m, $event)"
-                    [attr.aria-label]="(isOrganiser(m) ? 'Delete ' : 'Leave ') + m.title"
-                    [title]="isOrganiser(m) ? 'Delete this When' : 'Leave this When'"
+                    [attr.aria-label]="
+                      t(isOrganiser(m) ? 'Delete {title}' : 'Leave {title}', { title: m.title })
+                    "
+                    [title]="isOrganiser(m) ? t('Delete this When') : t('Leave this When')"
                   >
                     <mat-icon>close</mat-icon>
                   </button>
@@ -85,16 +111,28 @@
                     <div class="confirm">
                       <p>
                         @if (isOrganiser(m)) {
-                          Delete <strong>{{ m.title }}</strong> for everyone? Nobody will be able to
-                          open it again.
+                          {{
+                            t(
+                              'Delete “{title}” for everyone? Nobody will be able to open it again.',
+                              {
+                                title: m.title,
+                              }
+                            )
+                          }}
                         } @else {
-                          Leave <strong>{{ m.title }}</strong
-                          >? Your times will be removed and you'll need the link to come back.
+                          {{
+                            t(
+                              'Leave “{title}”? Your times will be removed and you’ll need the link to come back.',
+                              {
+                                title: m.title,
+                              }
+                            )
+                          }}
                         }
                       </p>
                       <div class="actions">
                         <button type="button" class="pill" (click)="confirmId.set(null)">
-                          Cancel
+                          {{ t('Cancel') }}
                         </button>
                         <button
                           mat-flat-button
@@ -103,7 +141,7 @@
                           (click)="confirmRemove(m)"
                           [disabled]="busyId() === m.id"
                         >
-                          {{ isOrganiser(m) ? 'Delete' : 'Leave' }}
+                          {{ isOrganiser(m) ? t('Delete') : t('Leave') }}
                         </button>
                       </div>
                     </div>
@@ -112,15 +150,15 @@
               }
             </ul>
           } @else {
-            <p class="muted">None yet. Whens you create or join show up here.</p>
+            <p class="muted">{{ t('None yet. Whens you create or join show up here.') }}</p>
           }
           <button type="button" class="pill new" (click)="goHome()">
             <mat-icon>add</mat-icon>
-            New When
+            {{ t('New When') }}
           </button>
           <button type="button" class="pill new" (click)="showHowTo()">
             <mat-icon>help_outline</mat-icon>
-            How it works
+            {{ t('How it works') }}
           </button>
         </div>
       }
@@ -134,13 +172,13 @@
           (click)="toggleSection('look')"
           [attr.aria-expanded]="!isFolded('look')"
         >
-          <span>Appearance</span>
+          <span>{{ t('Appearance') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
       @if (!isFolded('look')) {
         <div class="sect">
-          <div class="segments looks" role="radiogroup" aria-label="Colour">
+          <div class="segments looks" role="radiogroup" [attr.aria-label]="t('Colour')">
             @for (l of looks; track l.value) {
               <button
                 type="button"
@@ -151,22 +189,22 @@
                 (click)="setLook(l.value)"
               >
                 <span class="swatch" [style.background]="l.color"></span>
-                {{ l.label }}
+                {{ t(l.label) }}
               </button>
             }
           </div>
-          <div class="segments" role="radiogroup" aria-label="Theme">
-            @for (t of themes; track t.value) {
+          <div class="segments" role="radiogroup" [attr.aria-label]="t('Theme')">
+            @for (th of themes; track th.value) {
               <button
                 type="button"
                 class="pill"
                 role="radio"
-                [class.active]="prefs().theme === t.value"
-                [attr.aria-checked]="prefs().theme === t.value"
-                (click)="setTheme(t.value)"
+                [class.active]="prefs().theme === th.value"
+                [attr.aria-checked]="prefs().theme === th.value"
+                (click)="setTheme(th.value)"
               >
-                <mat-icon>{{ t.icon }}</mat-icon>
-                {{ t.label }}
+                <mat-icon>{{ th.icon }}</mat-icon>
+                {{ t(th.label) }}
               </button>
             }
           </div>
@@ -182,13 +220,13 @@
           (click)="toggleSection('dates')"
           [attr.aria-expanded]="!isFolded('dates')"
         >
-          <span>Date and time</span>
+          <span>{{ t('Date and time') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
       @if (!isFolded('dates')) {
         <div class="sect">
-          <div class="segments" role="radiogroup" aria-label="Date format">
+          <div class="segments" role="radiogroup" [attr.aria-label]="t('Date format')">
             @for (d of dateStyles; track d.value) {
               <button
                 type="button"
@@ -203,9 +241,14 @@
             }
           </div>
           <label class="pick-when zone-pick">
-            <span class="muted small">Time zone</span>
-            <select aria-label="Time zone" (change)="setZone($any($event.target).value)">
-              <option value="" [selected]="!zoneOverride()">Automatic ({{ deviceCity }})</option>
+            <span class="muted small">{{ t('Time zone') }}</span>
+            <select
+              [attr.aria-label]="t('Time zone')"
+              (change)="setZone($any($event.target).value)"
+            >
+              <option value="" [selected]="!zoneOverride()">
+                {{ t('Automatic ({city})', { city: deviceCity }) }}
+              </option>
               @for (z of zones; track z) {
                 <option [value]="z" [selected]="z === zoneOverride()">{{ z }}</option>
               }
@@ -223,26 +266,26 @@
           (click)="toggleSection('defaults')"
           [attr.aria-expanded]="!isFolded('defaults')"
         >
-          <span>Defaults for new Whens</span>
+          <span>{{ t('Defaults for new Whens') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
       @if (!isFolded('defaults')) {
         <div class="sect">
           <mat-form-field appearance="outline">
-            <mat-label>Meetup length</mat-label>
+            <mat-label>{{ t('Meetup length') }}</mat-label>
             <mat-select
               [value]="prefs().durationHours"
               (valueChange)="store.update({ durationHours: $event })"
             >
               @for (d of durations; track d) {
-                <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+                <mat-option [value]="d">{{ tn(d, '{n} hour', '{n} hours') }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
           <div class="row">
             <mat-form-field appearance="outline">
-              <mat-label>Earliest</mat-label>
+              <mat-label>{{ t('Earliest') }}</mat-label>
               <mat-select
                 [value]="prefs().dayStart"
                 (valueChange)="store.update({ dayStart: $event })"
@@ -253,7 +296,7 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Latest</mat-label>
+              <mat-label>{{ t('Latest') }}</mat-label>
               <mat-select [value]="prefs().dayEnd" (valueChange)="store.update({ dayEnd: $event })">
                 @for (h of endOptions; track h.value) {
                   <mat-option [value]="h.value">{{ h.label }}</mat-option>
@@ -262,9 +305,9 @@
             </mat-form-field>
           </div>
           @if (!rangeValid()) {
-            <p class="warn">The hours must leave room for the meetup length.</p>
+            <p class="warn">{{ t('The hours must leave room for the meetup length.') }}</p>
           }
-          <p class="muted small">Used to pre-fill the form when you plan a new When.</p>
+          <p class="muted small">{{ t('Used to pre-fill the form when you plan a new When.') }}</p>
         </div>
       }
     </section>
@@ -278,7 +321,9 @@
             (click)="toggleSection('history')"
             [attr.aria-expanded]="!isFolded('history')"
           >
-            <span>History <span class="preview">pro</span></span>
+            <span
+              >{{ t('History') }} <span class="preview">{{ t('pro') }}</span></span
+            >
             <mat-icon>expand_more</mat-icon>
           </button>
         </h2>
@@ -286,8 +331,11 @@
           <div class="sect">
             @if (recent().length) {
               <label class="pick-when">
-                <span class="muted small">When</span>
-                <select aria-label="Which When" (change)="showHistory($any($event.target).value)">
+                <span class="muted small">{{ t('When') }}</span>
+                <select
+                  [attr.aria-label]="t('Which When')"
+                  (change)="showHistory($any($event.target).value)"
+                >
                   @for (m of recent(); track m.id) {
                     <option [value]="m.id" [selected]="m.id === historyId()">{{ m.title }}</option>
                   }
@@ -296,10 +344,10 @@
               @if (historyEntries(); as entries) {
                 <app-history bare [entries]="entries" [meId]="historyMe()" [zone]="historyZone()" />
               } @else {
-                <p class="muted small">Loading…</p>
+                <p class="muted small">{{ t('Loading…') }}</p>
               }
             } @else {
-              <p class="muted small">Open or create a When first.</p>
+              <p class="muted small">{{ t('Open or create a When first.') }}</p>
             }
           </div>
         }
@@ -314,7 +362,7 @@
           (click)="toggleSection('notify')"
           [attr.aria-expanded]="!isFolded('notify')"
         >
-          <span>Notifications</span>
+          <span>{{ t('Notifications') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
@@ -323,17 +371,23 @@
           @switch (push.state()) {
             @case ('install') {
               <p class="muted small">
-                On iPhone, add When to your Home Screen first: tap Share, then “Add to Home Screen”,
-                and open it from there.
+                {{
+                  t(
+                    'On iPhone, add When to your Home Screen first: tap Share, then “Add to Home Screen”, and open it from there.'
+                  )
+                }}
               </p>
             }
             @case ('unsupported') {
-              <p class="muted small">This browser can't show notifications.</p>
+              <p class="muted small">{{ t("This browser can't show notifications.") }}</p>
             }
             @case ('blocked') {
               <p class="muted small">
-                Notifications are blocked for When in your browser settings. Allow them there, then
-                come back.
+                {{
+                  t(
+                    'Notifications are blocked for When in your browser settings. Allow them there, then come back.'
+                  )
+                }}
               </p>
             }
             @default {
@@ -343,19 +397,22 @@
                     [checked]="push.state() === 'on'"
                     [disabled]="push.busy()"
                     (change)="togglePush($event.checked)"
-                    aria-label="Push notifications"
+                    [attr.aria-label]="t('Push notifications')"
                   />
                   <span class="text">
-                    <span class="label">Push notifications</span>
-                    <span class="muted small"
-                      >When a session is booked, moved or cancelled, when everyone has answered, and
-                      about answers to links you sent.</span
-                    >
+                    <span class="label">{{ t('Push notifications') }}</span>
+                    <span class="muted small">{{
+                      t(
+                        'When a session is booked, moved or cancelled, when everyone has answered, and about answers to links you sent.'
+                      )
+                    }}</span>
                   </span>
                 </li>
               </ul>
               @if (pushFailed()) {
-                <p class="error small" role="alert">Couldn't turn on notifications. Try again.</p>
+                <p class="error small" role="alert">
+                  {{ t("Couldn't turn on notifications. Try again.") }}
+                </p>
               }
             }
           }
@@ -371,7 +428,9 @@
           (click)="toggleSection('pro')"
           [attr.aria-expanded]="!isFolded('pro')"
         >
-          <span>Pro features <span class="preview">preview</span></span>
+          <span
+            >{{ t('Pro features') }} <span class="preview">{{ t('preview') }}</span></span
+          >
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
@@ -383,11 +442,11 @@
                 <mat-slide-toggle
                   [checked]="prefs().features[f.key]"
                   (change)="setFeature(f.key, $event.checked)"
-                  [attr.aria-label]="f.label"
+                  [attr.aria-label]="t(f.label)"
                 />
                 <span class="text">
-                  <span class="label">{{ f.label }}</span>
-                  <span class="muted small">{{ f.hint }}</span>
+                  <span class="label">{{ t(f.label) }}</span>
+                  <span class="muted small">{{ t(f.hint) }}</span>
                 </span>
               </li>
             }
@@ -404,7 +463,7 @@
           (click)="toggleSection('app')"
           [attr.aria-expanded]="!isFolded('app')"
         >
-          <span>App</span>
+          <span>{{ t('App') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
@@ -414,7 +473,7 @@
             @if (updates.status() === 'ready') {
               <button type="button" class="pill active" (click)="updates.reload()">
                 <mat-icon>refresh</mat-icon>
-                Reload to update
+                {{ t('Reload to update') }}
               </button>
             } @else {
               <button
@@ -424,22 +483,22 @@
                 [disabled]="updates.status() === 'checking' || updates.status() === 'unsupported'"
               >
                 <mat-icon>system_update</mat-icon>
-                Check for updates
+                {{ t('Check for updates') }}
               </button>
             }
             <span class="muted small">{{ updateText() }}</span>
           </div>
           <div class="about">
-            <span class="ver">Version {{ version }}</span>
+            <span class="ver">{{ t('Version {version}', { version }) }}</span>
             <button
               type="button"
               class="link"
               (click)="showChanges.set(!showChanges())"
               [attr.aria-expanded]="showChanges()"
             >
-              {{ showChanges() ? 'Hide changes' : 'What’s new' }}
+              {{ showChanges() ? t('Hide changes') : t('What’s new') }}
             </button>
-            <a class="link" routerLink="/guide" (click)="close()">Guide</a>
+            <a class="link" routerLink="/guide" (click)="close()">{{ t('Guide') }}</a>
           </div>
           @if (showChanges()) {
             <ol class="changes">
@@ -450,7 +509,7 @@
                   </p>
                   <ul>
                     @for (c of r.changes; track c) {
-                      <li>{{ c }}</li>
+                      <li>{{ t(c) }}</li>
                     }
                   </ul>
                 </li>
@@ -461,7 +520,7 @@
       }
     </section>
   </aside>
-  <button type="button" class="fab-close" (click)="close()" aria-label="Close menu">
+  <button type="button" class="fab-close" (click)="close()" [attr.aria-label]="t('Close menu')">
     <mat-icon>close</mat-icon>
   </button>
 }

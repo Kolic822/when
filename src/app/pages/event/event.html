@@ -1,8 +1,10 @@
 <main class="page" [class.dayview]="stepping() || editingDay()">
   <nav class="top">
-    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
+    <a routerLink="/" class="brand"
+      >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a
+    >
     @if (status() === 'offline') {
-      <span class="conn offline"><span class="dot"></span>reconnecting…</span>
+      <span class="conn offline"><span class="dot"></span>{{ t('reconnecting…') }}</span>
     }
     @if (!stepping() && !editingDay()) {
       <button
@@ -10,14 +12,14 @@
         class="icon-btn bell"
         [class.on]="notifyOn()"
         (click)="menu.openSection('notify')"
-        [attr.aria-label]="notifyOn() ? 'Notifications are on' : 'Notifications are off'"
-        [title]="notifyOn() ? 'Notifications are on' : 'Notifications are off'"
+        [attr.aria-label]="notifyOn() ? t('Notifications are on') : t('Notifications are off')"
+        [title]="notifyOn() ? t('Notifications are on') : t('Notifications are off')"
       >
         <mat-icon>{{ notifyOn() ? 'notifications_active' : 'notifications_off' }}</mat-icon>
       </button>
-      <a routerLink="/" class="pill new-when" title="Plan a new When">
+      <a routerLink="/" class="pill new-when" [title]="t('Plan a new When')">
         <mat-icon>add</mat-icon>
-        <span class="txt">New When</span>
+        <span class="txt">{{ t('New When') }}</span>
       </a>
       <app-menu #menu />
     }
@@ -25,9 +27,9 @@
 
   @if (session.notFound()) {
     <section class="card empty">
-      <h1>This When doesn't exist</h1>
-      <p class="muted">It may have been deleted, or the link is incomplete.</p>
-      <a mat-flat-button routerLink="/">Start a new one</a>
+      <h1>{{ t("This When doesn't exist") }}</h1>
+      <p class="muted">{{ t('It may have been deleted, or the link is incomplete.') }}</p>
+      <a mat-flat-button routerLink="/">{{ t('Start a new one') }}</a>
     </section>
   } @else if (!event(); as ev) {
     <div class="loading"><mat-spinner diameter="36" /></div>
@@ -41,8 +43,8 @@
               type="button"
               class="icon-btn"
               (click)="settingsOpen() ? settingsOpen.set(false) : openSettings()"
-              aria-label="Edit meetup"
-              title="Edit meetup"
+              [attr.aria-label]="t('Edit meetup')"
+              [title]="t('Edit meetup')"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -59,18 +61,18 @@
 
     @if (session.needsName()) {
       <app-name-prompt
-        heading="What's your name?"
-        hint="So the others know who's who."
+        [heading]="t('What\'s your name?')"
+        [hint]="t('So the others know who\'s who.')"
         [error]="session.nameError()"
         (submitted)="join($event)"
       />
     } @else {
       @if (renaming()) {
         <app-name-prompt
-          heading="Change your name"
+          [heading]="t('Change your name')"
           [hint]="null"
           [initialName]="me()?.name ?? ''"
-          submitLabel="Save"
+          [submitLabel]="t('Save')"
           [cancellable]="true"
           [error]="session.nameError()"
           (submitted)="rename($event)"
@@ -80,9 +82,9 @@
 
       @if (settingsOpen()) {
         <section class="card settings">
-          <h2>Edit meetup</h2>
+          <h2>{{ t('Edit meetup') }}</h2>
           <mat-form-field appearance="outline">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ t('Title') }}</mat-label>
             <input
               matInput
               [value]="draftTitle()"
@@ -91,29 +93,29 @@
             />
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <mat-label>Description (optional)</mat-label>
+            <mat-label>{{ t('Description (optional)') }}</mat-label>
             <textarea
               matInput
               rows="2"
               maxlength="600"
               [value]="draftDescription()"
               (input)="draftDescription.set($any($event.target).value)"
-              placeholder="Where, what to bring, anything the group should know…"
+              [placeholder]="t('Where, what to bring, anything the group should know…')"
             ></textarea>
           </mat-form-field>
-          <h3>Days in the running</h3>
+          <h3>{{ t('Days in the running') }}</h3>
           <app-day-picker [(selected)]="draftDates" />
           <div class="fields">
             <mat-form-field appearance="outline">
-              <mat-label>Meetup length</mat-label>
+              <mat-label>{{ t('Meetup length') }}</mat-label>
               <mat-select [value]="draftDuration()" (valueChange)="draftDuration.set($event)">
                 @for (d of durations; track d) {
-                  <mat-option [value]="d">{{ d }} {{ d === 1 ? 'hour' : 'hours' }}</mat-option>
+                  <mat-option [value]="d">{{ tn(d, '{n} hour', '{n} hours') }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Earliest</mat-label>
+              <mat-label>{{ t('Earliest') }}</mat-label>
               <mat-select [value]="draftDayStart()" (valueChange)="draftDayStart.set($event)">
                 @for (h of startOptions; track h.value) {
                   <mat-option [value]="h.value">{{ h.label }}</mat-option>
@@ -121,7 +123,7 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Latest</mat-label>
+              <mat-label>{{ t('Latest') }}</mat-label>
               <mat-select [value]="draftDayEnd()" (valueChange)="draftDayEnd.set($event)">
                 @for (h of endOptions; track h.value) {
                   <mat-option [value]="h.value">{{ h.label }}</mat-option>
@@ -134,25 +136,32 @@
               [checked]="draftPartialOk()"
               (change)="draftPartialOk.set($event.checked)"
             >
-              People can join for part of it
+              {{ t('People can join for part of it') }}
             </mat-slide-toggle>
           }
           @if (draftDayEnd() - draftDayStart() < draftDuration() * 60) {
-            <p class="warn">The hours must leave room for a {{ draftDuration() }} h meetup.</p>
+            <p class="warn">
+              {{ t('The hours must leave room for a {n} h meetup.', { n: draftDuration() }) }}
+            </p>
           }
           <p class="muted note">
-            Times outside the new range, or shorter than the meetup, are removed from everyone's
-            answers.
+            {{
+              t(
+                "Times outside the new range, or shorter than the meetup, are removed from everyone's answers."
+              )
+            }}
           </p>
           <div class="actions">
-            <button type="button" class="pill" (click)="settingsOpen.set(false)">Cancel</button>
+            <button type="button" class="pill" (click)="settingsOpen.set(false)">
+              {{ t('Cancel') }}
+            </button>
             <button
               mat-flat-button
               type="button"
               (click)="saveSettings()"
               [disabled]="!draftValid()"
             >
-              Save
+              {{ t('Save') }}
             </button>
           </div>
         </section>
@@ -227,17 +236,17 @@
           <section class="card chart">
             @if (features().connect && meId()) {
               @if (fillAsking()) {
-                <div class="fill ask" role="group" aria-label="Fill from my calendar">
-                  <span class="muted">You already marked some times.</span>
+                <div class="fill ask" role="group" [attr.aria-label]="t('Fill from my calendar')">
+                  <span class="muted">{{ t('You already marked some times.') }}</span>
                   <span class="fill-acts">
                     <button type="button" class="pill small" (click)="fillAsking.set(false)">
-                      Cancel
+                      {{ t('Cancel') }}
                     </button>
                     <button type="button" class="pill small" (click)="fillFromCalendar('replace')">
-                      Replace
+                      {{ t('Replace') }}
                     </button>
                     <button type="button" class="pill small go" (click)="fillFromCalendar('add')">
-                      Add to them
+                      {{ t('Add to them') }}
                     </button>
                   </span>
                 </div>
@@ -245,7 +254,7 @@
                 <div class="fill">
                   <button type="button" class="pill small go" (click)="fillFromCalendar()">
                     <mat-icon>auto_awesome</mat-icon>
-                    Fill from my calendar
+                    {{ t('Fill from my calendar') }}
                   </button>
                 </div>
               }

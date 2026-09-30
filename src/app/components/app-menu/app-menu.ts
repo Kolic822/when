@@ -33,6 +33,7 @@ import {
 import { EventApi } from '../../core/event-api';
 import { findCommonWindows } from '../../core/availability';
 import { DURATIONS } from '../../pages/home/durations';
+import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */
 @Component({
@@ -50,6 +51,8 @@ import { DURATIONS } from '../../pages/home/durations';
   styleUrl: './app-menu.scss',
 })
 export class AppMenu {
+  readonly t = t;
+  readonly tn = tn;
   private readonly identity = inject(Identity);
   private readonly router = inject(Router);
   readonly store = inject(PrefsStore);
@@ -57,6 +60,14 @@ export class AppMenu {
   readonly auth = inject(Auth);
   readonly push = inject(Push);
   readonly pushFailed = signal(false);
+
+  readonly langs = LANGS;
+  readonly lang = lang;
+
+  setLang(value: Lang): void {
+    setLang(value);
+    this.loadBest();
+  }
 
   // ---- Time zone: the device's own, or one picked by hand (travelling, or to try it out).
   readonly deviceCity = zoneCity(deviceZone);
@@ -149,9 +160,9 @@ export class AppMenu {
   readonly prefs = this.store.prefs;
 
   readonly themes: { value: Theme; label: string; icon: string }[] = [
-    { value: 'system', label: 'System', icon: 'brightness_auto' },
-    { value: 'light', label: 'Light', icon: 'light_mode' },
-    { value: 'dark', label: 'Dark', icon: 'dark_mode' },
+    { value: 'system', label: m('System'), icon: 'brightness_auto' },
+    { value: 'light', label: m('Light'), icon: 'light_mode' },
+    { value: 'dark', label: m('Dark'), icon: 'dark_mode' },
   ];
   readonly durations = DURATIONS;
   readonly startOptions = HOUR_OPTIONS.slice(0, 24);
@@ -187,9 +198,9 @@ export class AppMenu {
           const booked = ev?.bookings ?? (ev?.booked ? [ev.booked] : []);
           const w = booked[0] ?? windows[0] ?? null;
           const rest = (booked.length || windows.length) - 1;
-          const more = rest > 0 ? ` +${rest} more` : '';
+          const more = rest > 0 ? ' ' + t('+{n} more', { n: rest }) : '';
           const text = w
-            ? `${booked.length ? 'Booked · ' : ''}${shortDate(dayOf(w.date, w.start, zone))} · ${spanAt(w.date, w.start, w.end, zone)}${more}`
+            ? `${booked.length ? t('Booked') + ' · ' : ''}${shortDate(dayOf(w.date, w.start, zone))} · ${spanAt(w.date, w.start, w.end, zone)}${more}`
             : null;
           this.best.update((b) => ({ ...b, [m.id]: text }));
           if (ev && (ev.title !== m.title || ev.dates.join() !== m.dates.join())) {
@@ -261,9 +272,9 @@ export class AppMenu {
   }
 
   readonly looks: { value: Look; label: string; color: string }[] = [
-    { value: 'grape', label: 'Grape', color: '#6d5ef5' },
-    { value: 'sunset', label: 'Sunset', color: '#f4516c' },
-    { value: 'lagoon', label: 'Lagoon', color: '#00a389' },
+    { value: 'grape', label: m('Grape'), color: '#6d5ef5' },
+    { value: 'sunset', label: m('Sunset'), color: '#f4516c' },
+    { value: 'lagoon', label: m('Lagoon'), color: '#00a389' },
   ];
 
   setLook(look: Look): void {
@@ -273,33 +284,33 @@ export class AppMenu {
   readonly proFeatures: { key: keyof Features; label: string; hint: string }[] = [
     {
       key: 'connect',
-      label: 'Connect calendar',
-      hint: 'See your own events behind the bars. Sample events for now.',
+      label: m('Connect calendar'),
+      hint: m('See your own events behind the bars. Sample events for now.'),
     },
     {
       key: 'multiBook',
-      label: 'Book several sessions',
-      hint: 'The organiser can book more than one session for a When.',
+      label: m('Book several sessions'),
+      hint: m('The organiser can book more than one session for a When.'),
     },
     {
       key: 'shortlist',
-      label: 'Let someone else pick',
-      hint: 'Send a link with only the possible sessions.',
+      label: m('Let someone else pick'),
+      hint: m('Send a link with only the possible sessions.'),
     },
     {
       key: 'calendar',
-      label: 'Add to calendar',
-      hint: 'A calendar button on every possible session.',
+      label: m('Add to calendar'),
+      hint: m('A calendar button on every possible session.'),
     },
     {
       key: 'partial',
-      label: 'Join for part of it',
-      hint: 'Let people mark less than the full length.',
+      label: m('Join for part of it'),
+      hint: m('Let people mark less than the full length.'),
     },
     {
       key: 'history',
-      label: 'History',
-      hint: 'A History section in this menu: who changed what, and when.',
+      label: m('History'),
+      hint: m('A History section in this menu: who changed what, and when.'),
     },
   ];
 
@@ -335,15 +346,15 @@ export class AppMenu {
   readonly updateText = computed(() => {
     switch (this.updates.status()) {
       case 'unsupported':
-        return 'Updates apply automatically when opened in a browser.';
+        return t('Updates apply automatically when opened in a browser.');
       case 'checking':
-        return 'Checking…';
+        return t('Checking…');
       case 'uptodate':
-        return 'You have the latest version.';
+        return t('You have the latest version.');
       case 'ready':
-        return 'A new version is ready.';
+        return t('A new version is ready.');
       case 'error':
-        return 'Could not check right now.';
+        return t('Could not check right now.');
       default:
         return '';
     }

@@ -1,12 +1,14 @@
 <main class="page">
   <nav class="top">
-    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
+    <a routerLink="/" class="brand"
+      >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a
+    >
   </nav>
 
   @if (missing()) {
     <section class="card empty">
-      <h1>This link doesn't exist</h1>
-      <p class="muted">It may have been deleted, or the link is incomplete.</p>
+      <h1>{{ t("This link doesn't exist") }}</h1>
+      <p class="muted">{{ t('It may have been deleted, or the link is incomplete.') }}</p>
     </section>
   } @else if (!list()) {
     <div class="loading"><mat-spinner diameter="36" /></div>
@@ -17,7 +19,9 @@
         <p class="description">{{ list()!.description }}</p>
       }
       <p class="ask muted">
-        {{ single() ? 'Pick the one that works for you.' : 'Tap every time that works for you.' }}
+        {{
+          single() ? t('Pick the one that works for you.') : t('Tap every time that works for you.')
+        }}
       </p>
     </header>
 
@@ -25,18 +29,22 @@
 
     <form (submit)="send($event)">
       <label class="name">
-        <span class="muted">Your name</span>
+        <span class="muted">{{ t('Your name') }}</span>
         <input
           type="text"
           [value]="name()"
           (input)="name.set($any($event.target).value); sent.set(false)"
           maxlength="40"
           autocomplete="given-name"
-          placeholder="So they know who answered"
+          [placeholder]="t('So they know who answered')"
         />
       </label>
 
-      <div class="cards" [attr.role]="single() ? 'radiogroup' : 'group'" aria-label="Sessions">
+      <div
+        class="cards"
+        [attr.role]="single() ? 'radiogroup' : 'group'"
+        [attr.aria-label]="t('Sessions')"
+      >
         @for (c of cards(); track $index; let i = $index) {
           <div class="session" [class.on]="picks().has($index)">
             <button
@@ -60,12 +68,12 @@
             @if (picks().has($index) && c.options.length) {
               <div class="window">
                 <span class="muted">
-                  {{ lengthLabel() }} needed. When should it start?
+                  {{ t('{length} needed. When should it start?', { length: lengthLabel() }) }}
                   @if (c.chosen) {
                     <strong>{{ c.chosen }}</strong>
                   }
                 </span>
-                <div class="starts" role="radiogroup" aria-label="Start time">
+                <div class="starts" role="radiogroup" [attr.aria-label]="t('Start time')">
                   <button
                     type="button"
                     class="pill start"
@@ -74,7 +82,7 @@
                     [attr.aria-checked]="c.start === undefined"
                     (click)="setStart(i, undefined)"
                   >
-                    Any time
+                    {{ t('Any time') }}
                   </button>
                   @for (o of c.options; track o) {
                     <button
@@ -102,11 +110,15 @@
       @if (sent()) {
         <p class="thanks" role="status">
           <mat-icon>check_circle</mat-icon>
-          Sent. Thanks, {{ name().trim() }}! You can change your answer any time.
+          {{
+            t('Sent. Thanks, {name}! You can change your answer any time.', { name: name().trim() })
+          }}
         </p>
       } @else {
         <button mat-flat-button type="submit" class="send" [disabled]="!canSend()">
-          {{ busy() ? 'Sending…' : picks().size ? 'Send my answer' : 'None of these work' }}
+          {{
+            busy() ? t('Sending…') : picks().size ? t('Send my answer') : t('None of these work')
+          }}
         </button>
       }
     </form>

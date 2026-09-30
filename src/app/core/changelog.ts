@@ -1,3 +1,5 @@
+import { m } from './i18n/i18n';
+
 /** What changed in each version, newest first. Shown in the menu under App. */
 export interface Release {
   version: string;
@@ -5,80 +7,89 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.6';
+export const VERSION = '0.7';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.7',
+    date: '30 Sep 2026',
+    changes: [
+      m('Three languages: English, German and Croatian'),
+      m('Switch language at the top of the menu or on the welcome screen'),
+      m('Days, months and notifications follow your language'),
+    ],
+  },
   {
     version: '0.6',
     date: '30 Sep 2026',
     changes: [
-      'Time zones: a When keeps the organiser’s zone and everyone else sees their own time',
-      'A note at the top says whose time is shown, with one tap to switch',
-      'Pick your time zone by hand under Date and time in the menu',
-      'Calendar files and notifications use the right time for each person',
+      m('Time zones: a When keeps the organiser’s zone and everyone else sees their own time'),
+      m('A note at the top says whose time is shown, with one tap to switch'),
+      m('Pick your time zone by hand under Date and time in the menu'),
+      m('Calendar files and notifications use the right time for each person'),
     ],
   },
   {
     version: '0.5.1',
     date: '30 Sep 2026',
     changes: [
-      'New app icon and browser icon',
-      'The Book button shows the day and time itself; repeated text around it is gone',
-      'One booked session per day: booking a day again replaces it',
-      '“Notify me” is now “Push notifications”',
+      m('New app icon and browser icon'),
+      m('The Book button shows the day and time itself; repeated text around it is gone'),
+      m('One booked session per day: booking a day again replaces it'),
+      m('“Notify me” is now “Push notifications”'),
     ],
   },
   {
     version: '0.5',
     date: '30 Sep 2026',
     changes: [
-      'Possible sessions are chips: tap one to see notes, pick the start time and book',
-      '“Let someone else pick” replaces “Ask someone”; sent links can be removed',
-      'Notifications are one switch in the menu, with a bell at the top of each When',
-      'New notifications: everyone has answered, session moved or cancelled, answer changed',
-      'Pro preview: book more than one session',
-      'History moved into the menu (Pro preview), for any of your Whens',
-      'This change log, version numbers and a full guide',
+      m('Possible sessions are chips: tap one to see notes, pick the start time and book'),
+      m('“Let someone else pick” replaces “Ask someone”; sent links can be removed'),
+      m('Notifications are one switch in the menu, with a bell at the top of each When'),
+      m('New notifications: everyone has answered, session moved or cancelled, answer changed'),
+      m('Pro preview: book more than one session'),
+      m('History moved into the menu (Pro preview), for any of your Whens'),
+      m('This change log, version numbers and a full guide'),
     ],
   },
   {
     version: '0.4',
     date: '30 Sep 2026',
     changes: [
-      'Push notifications when a session is booked and when someone answers a link',
-      'Welcome screen: continue with Google or as a guest',
-      'Old Whens are removed after 60 days; daily backups of everything else',
+      m('Push notifications when a session is booked and when someone answers a link'),
+      m('Welcome screen: continue with Google or as a guest'),
+      m('Old Whens are removed after 60 days; daily backups of everything else'),
     ],
   },
   {
     version: '0.3',
     date: '29 Sep 2026',
     changes: [
-      'Creating a When is two short steps that fit on one screen',
-      'The day picker starts from this week and never shows the past',
-      'Layout fits an installed phone app: no cut-off buttons, less wasted space',
-      'Pro preview: fill your free time from your calendar',
+      m('Creating a When is two short steps that fit on one screen'),
+      m('The day picker starts from this week and never shows the past'),
+      m('Layout fits an installed phone app: no cut-off buttons, less wasted space'),
+      m('Pro preview: fill your free time from your calendar'),
     ],
   },
   {
     version: '0.2',
     date: '29 Sep 2026',
     changes: [
-      'The organiser can book a session, from the list or by tapping a gold band',
-      'Send a link with only the possible sessions and let someone choose',
-      'New look with three colour themes, light and dark',
-      'How-it-works guide on first visit',
-      'Pro previews: connect calendar, add to calendar, join for part of it, history',
+      m('The organiser can book a session, from the list or by tapping a gold band'),
+      m('Send a link with only the possible sessions and let someone choose'),
+      m('New look with three colour themes, light and dark'),
+      m('How-it-works guide on first visit'),
+      m('Pro previews: connect calendar, add to calendar, join for part of it, history'),
     ],
   },
   {
     version: '0.1',
     date: '25 Sep 2026',
     changes: [
-      'Create a When, share the link, mark when you are free',
-      'Everything syncs live; gold bands show when everyone can make it',
-      'Day-by-day view with copy to other days, notes and free all day',
-      'Works as an installed app on your phone',
+      m('Create a When, share the link, mark when you are free'),
+      m('Everything syncs live; gold bands show when everyone can make it'),
+      m('Day-by-day view with copy to other days, notes and free all day'),
+      m('Works as an installed app on your phone'),
     ],
   },
 ];

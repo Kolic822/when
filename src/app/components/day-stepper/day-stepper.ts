@@ -5,6 +5,7 @@ import { MeetEvent, Slot } from '../../core/models';
 import { dayMonth, formatMinutes, shortDate, weekdayLong } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { DayEditor } from '../day-editor/day-editor';
+import { t } from '../../core/i18n/i18n';
 
 /**
  * Guided first pass: one day at a time with "Free all day" / "Not free" shortcuts,
@@ -17,6 +18,7 @@ import { DayEditor } from '../day-editor/day-editor';
   styleUrl: './day-stepper.scss',
 })
 export class DayStepper {
+  readonly t = t;
   readonly event = input.required<MeetEvent>();
   readonly meId = input.required<string>();
   /** Day to open first (when a day was tapped in the overview). */

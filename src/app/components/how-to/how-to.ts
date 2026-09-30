@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HowToState } from '../../core/how-to-state';
+import { t, m } from '../../core/i18n/i18n';
 
 interface Tip {
   icon: string;
@@ -34,38 +35,42 @@ const COARSE = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)
   host: { '(keydown.escape)': 'skip()' },
 })
 export class HowTo {
+  readonly t = t;
   private readonly state = inject(HowToState);
   private readonly primary = viewChild.required<ElementRef<HTMLButtonElement>>('primary');
 
   readonly steps: Step[] = [
     {
       key: 'calendar',
-      title: 'The calendar',
-      lead: 'One bar per day. Every colour is a person.',
+      title: m('The calendar'),
+      lead: m('One bar per day. Every colour is a person.'),
       tips: [
-        { icon: 'touch_app', text: 'Tap a day to add your free time.' },
-        { icon: 'star', text: 'Gold shows when everyone can make it.' },
-        { icon: 'wb_sunny', text: 'The sun under a day means free all day.' },
+        { icon: 'touch_app', text: m('Tap a day to add your free time.') },
+        { icon: 'star', text: m('Gold shows when everyone can make it.') },
+        { icon: 'wb_sunny', text: m('The sun under a day means free all day.') },
       ],
     },
     {
       key: 'day',
-      title: 'Day by day',
-      lead: 'Mark when you are free, one day at a time.',
+      title: m('Day by day'),
+      lead: m('Mark when you are free, one day at a time.'),
       tips: [
-        { icon: 'add', text: COARSE ? 'Hold, then drag to add a block.' : 'Drag to add a block.' },
-        { icon: 'unfold_more', text: 'Drag its edges to resize, hold it to move.' },
-        { icon: 'edit_note', text: 'Tap a block for a note. × removes it.' },
+        {
+          icon: 'add',
+          text: COARSE ? m('Hold, then drag to add a block.') : m('Drag to add a block.'),
+        },
+        { icon: 'unfold_more', text: m('Drag its edges to resize, hold it to move.') },
+        { icon: 'edit_note', text: m('Tap a block for a note. × removes it.') },
       ],
     },
     {
       key: 'actions',
-      title: 'Shortcuts',
-      lead: 'The buttons next to the bar save you time.',
+      title: m('Shortcuts'),
+      lead: m('The buttons next to the bar save you time.'),
       tips: [
-        { icon: 'wb_sunny', text: 'Free all day fills the whole day.' },
-        { icon: 'content_copy', text: 'Copy to… repeats your times on other days.' },
-        { icon: 'check', text: 'Next moves on. Done takes you back to the calendar.' },
+        { icon: 'wb_sunny', text: m('Free all day fills the whole day.') },
+        { icon: 'content_copy', text: m('Copy to… repeats your times on other days.') },
+        { icon: 'check', text: m('Next moves on. Done takes you back to the calendar.') },
       ],
     },
   ];

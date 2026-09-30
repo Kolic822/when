@@ -1,4 +1,5 @@
 import { computed, Service, signal } from '@angular/core';
+import { t } from './i18n/i18n';
 
 /** Who is using the app on this device. Guests have no account and type their name per When. */
 export type User =
@@ -116,7 +117,7 @@ export class Auth {
       script.onload = () => resolve();
       script.onerror = () => {
         this.scriptRequest = null;
-        reject(new Error('Could not load Google sign-in'));
+        reject(new Error(t('Could not load Google sign-in')));
       };
       document.head.appendChild(script);
     });

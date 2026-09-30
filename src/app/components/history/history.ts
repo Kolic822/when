@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HistoryEntry } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+import { t } from '../../core/i18n/i18n';
 
 interface Row {
   id: string;
@@ -34,7 +35,7 @@ interface Row {
           [attr.aria-expanded]="open()"
         >
           <mat-icon>history</mat-icon>
-          <span class="title">History</span>
+          <span class="title">{{ t('History') }}</span>
           <span class="count muted">{{ rows().length }}</span>
           <mat-icon class="chev">{{ open() ? 'expand_less' : 'expand_more' }}</mat-icon>
         </button>
@@ -53,7 +54,7 @@ interface Row {
             }
           </ol>
         } @else {
-          <p class="muted empty">Nothing yet.</p>
+          <p class="muted empty">{{ t('Nothing yet.') }}</p>
         }
       }
     </section>
@@ -130,6 +131,7 @@ interface Row {
   `,
 })
 export class History {
+  readonly t = t;
   readonly entries = input.required<HistoryEntry[]>();
   readonly meId = input<string | null>(null);
   /** Zone of the When this history belongs to. */
@@ -150,7 +152,7 @@ export class History {
     return [...this.entries()].reverse().map((e) => ({
       id: e.id,
       color: e.color ?? '#9ca3af',
-      name: e.participantId && e.participantId === this.meId() ? 'You' : e.name,
+      name: e.participantId && e.participantId === this.meId() ? t('You') : e.name,
       text: describe(e, this.zone()),
       when: relative(e.at, now),
     }));
@@ -165,30 +167,30 @@ function describe(e: HistoryEntry, zone: string | null): string {
       : '';
   switch (e.kind) {
     case 'joined':
-      return 'joined';
+      return t('joined');
     case 'left':
-      return 'left';
+      return t('left');
     case 'renamed':
-      return e.text ? `changed name from ${e.text}` : 'changed name';
+      return e.text ? t('changed name from {name}', { name: e.text }) : t('changed name');
     case 'added':
-      return `added ${day}, ${span}`;
+      return t('added {session}', { session: `${day}, ${span}` });
     case 'removed':
-      return `removed ${day}, ${span}`;
+      return t('removed {session}', { session: `${day}, ${span}` });
     case 'changed':
-      return `moved ${day} to ${span}`;
+      return t('moved {day} to {time}', { day, time: span });
     case 'cleared':
-      return `cleared ${day}`;
+      return t('cleared {day}', { day });
     case 'settings':
-      return 'updated the When';
+      return t('updated the When');
   }
 }
 
 function relative(iso: string, now: number): string {
   const min = Math.round(Math.max(0, now - new Date(iso).getTime()) / 60_000);
-  if (min < 1) return 'just now';
-  if (min < 60) return `${min} min ago`;
+  if (min < 1) return t('just now');
+  if (min < 60) return t('{n} min ago', { n: min });
   const h = Math.round(min / 60);
-  if (h < 24) return `${h} h ago`;
+  if (h < 24) return t('{n} h ago', { n: h });
   const d = Math.round(h / 24);
-  return d === 1 ? 'yesterday' : `${d} days ago`;
+  return d === 1 ? t('yesterday') : t('{n} days ago', { n: d });
 }

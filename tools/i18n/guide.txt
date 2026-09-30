@@ -1,0 +1,355 @@
+Plan a When
+Ein When planen
+Planiraj When
+
+A When is one thing you want to find a time for: a rehearsal, a dinner, a trip.
+Ein When ist eine Sache, für die du einen Termin suchst: eine Probe, ein Abendessen, ein Ausflug.
+When je jedna stvar za koju tražiš termin: proba, večera, izlet.
+
+Tap + and give it a name. A description is optional: where, what to bring.
+Tippe auf + und gib ihm einen Namen. Eine Beschreibung ist optional: wo, was mitbringen.
+Dodirni + i daj mu naziv. Opis nije obavezan: gdje, što ponijeti.
+
+Enter your own name so the others know who started it.
+Gib deinen eigenen Namen ein, damit die anderen wissen, wer es gestartet hat.
+Upiši svoje ime da ostali znaju tko je pokrenuo plan.
+
+Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once.
+Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Mit „Diese Woche“, „Nächste Woche“ oder „Wochenenden“ wählst du mehrere auf einmal.
+Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom.
+
+Set how long the meetup should be, and the earliest and latest hour people can choose.
+Lege fest, wie lange das Treffen dauern soll und zwischen welchen Uhrzeiten man wählen kann.
+Odredi koliko susret treba trajati te najraniji i najkasniji sat koji se može odabrati.
+
+Tap Create my When. You are the organiser.
+Tippe auf „Mein When erstellen“. Du bist der Organisator.
+Dodirni „Stvori moj When”. Ti si organizator.
+
+Invite people
+Leute einladen
+Pozovi ljude
+
+Tap Copy link at the top of the When and send it in any chat.
+Tippe oben im When auf „Link kopieren“ und schick ihn in einem beliebigen Chat.
+Dodirni „Kopiraj poveznicu” na vrhu Whena i pošalji je u bilo kojem chatu.
+
+Whoever opens it enters a name and gets their own colour. No account is needed.
+Wer ihn öffnet, gibt einen Namen ein und bekommt eine eigene Farbe. Ein Konto ist nicht nötig.
+Tko je otvori, upiše ime i dobije svoju boju. Račun nije potreban.
+
+Two people can’t use the same name in one When.
+Zwei Personen können in einem When nicht denselben Namen verwenden.
+Dvije osobe ne mogu imati isto ime u jednom Whenu.
+
+Mark when you are free
+Markiere, wann du Zeit hast
+Označi kad možeš
+
+The first time you open a When it walks you through the days one by one.
+Beim ersten Öffnen führt dich ein When Tag für Tag durch.
+Kad prvi put otvoriš When, vodi te kroz dane jedan po jedan.
+
+Tap a day in the calendar to open it.
+Tippe im Kalender auf einen Tag, um ihn zu öffnen.
+Dodirni dan u kalendaru da ga otvoriš.
+
+Hold your finger on the bar for a moment, then drag to mark a period. A period can’t be shorter than the meetup.
+Halte den Finger kurz auf dem Balken und ziehe dann, um einen Zeitraum zu markieren. Ein Zeitraum kann nicht kürzer sein als das Treffen.
+Zadrži prst na traci trenutak pa povuci da označiš razdoblje. Razdoblje ne može biti kraće od susreta.
+
+Drag the top or bottom edge to make it longer or shorter. Hold the middle and drag to move it.
+Ziehe den oberen oder unteren Rand, um ihn zu verlängern oder zu verkürzen. Halte die Mitte und ziehe, um ihn zu verschieben.
+Povuci gornji ili donji rub da ga produljiš ili skratiš. Drži sredinu i povuci da ga pomakneš.
+
+Tap a period to write a note, for example “only if it doesn’t rain”. Tap × to remove it.
+Tippe auf einen Zeitraum, um eine Notiz zu schreiben, zum Beispiel „nur wenn es nicht regnet“. Tippe auf ×, um ihn zu entfernen.
+Dodirni razdoblje da napišeš bilješku, na primjer „samo ako ne pada kiša”. Dodirni × da ga ukloniš.
+
+Free all day marks the whole day. Tap it again to get your earlier periods back.
+„Ganzer Tag frei“ markiert den ganzen Tag. Tippe erneut, um deine früheren Zeiträume zurückzubekommen.
+„Cijeli dan” označava cijeli dan. Dodirni ponovno da vratiš prijašnja razdoblja.
+
+Clear day removes everything you marked on that day. In the calendar you can also hold a day to clear it.
+„Tag leeren“ entfernt alles, was du an dem Tag markiert hast. Im Kalender kannst du einen Tag auch gedrückt halten, um ihn zu leeren.
+„Očisti dan” uklanja sve što si označio/la tog dana. U kalendaru možeš i držati dan da ga očistiš.
+
+Prev and Next move between days. Done returns to the calendar.
+„Zurück“ und „Weiter“ wechseln zwischen den Tagen. „Fertig“ führt zurück zum Kalender.
+„Preth.” i „Dalje” prelaze između dana. „Gotovo” vraća na kalendar.
+
+Copy times to other days
+Zeiten auf andere Tage kopieren
+Kopiraj vremena na druge dane
+
+In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.
+Tippe in einem Tag auf „Kopieren nach…“, um alles Markierte zu kopieren, oder auf das Kopiersymbol eines Zeitraums, um nur diesen zu kopieren.
+U danu dodirni „Kopiraj na…” da kopiraš sve označeno, ili ikonu kopiranja na jednom razdoblju da kopiraš samo njega.
+
+Tick the days it should go to, or use Select all.
+Hake die Zieltage an oder nutze „Alle auswählen“.
+Označi dane na koje ide ili upotrijebi „Odaberi sve”.
+
+Tap Copy. What those days already had is kept; overlapping periods are joined.
+Tippe auf „Kopieren“. Was diese Tage schon hatten, bleibt erhalten; überlappende Zeiträume werden zusammengefügt.
+Dodirni „Kopiraj”. Ono što su ti dani već imali ostaje; razdoblja koja se preklapaju spajaju se.
+
+Read the calendar
+Den Kalender lesen
+Čitanje kalendara
+
+Each day is a column and each person is a coloured bar inside it. Your bar is always on the right.
+Jeder Tag ist eine Spalte, jede Person ein farbiger Balken darin. Dein Balken ist immer rechts.
+Svaki dan je stupac, a svaka osoba obojena traka u njemu. Tvoja je traka uvijek desno.
+
+A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.
+Ein goldenes Band markiert einen möglichen Termin: eine Zeit, in der alle, die geantwortet haben, mindestens für die Dauer des Treffens Zeit haben.
+Zlatna traka označava mogući termin: vrijeme kad su svi koji su odgovorili slobodni barem koliko traje susret.
+
+Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.
+Tippe unter dem Kalender auf einen Namen, um die Person hervorzuheben; tippe erneut, um es auszuschalten. Ein grüner Punkt bedeutet, dass sie gerade in der App ist.
+Dodirni ime ispod kalendara da istakneš tu osobu; dodirni ponovno da isključiš. Zelena točka znači da je upravo u aplikaciji.
+
+With more than five days, swipe sideways. An arrow on the edge shows there is more.
+Bei mehr als fünf Tagen wische seitlich. Ein Pfeil am Rand zeigt, dass es weitergeht.
+Ako ima više od pet dana, pomakni u stranu. Strelica na rubu pokazuje da ima još.
+
+The sun button under a day marks you free all day.
+Die Sonnen-Schaltfläche unter einem Tag markiert dich als ganztägig frei.
+Gumb sa suncem ispod dana označava da možeš cijeli dan.
+
+They appear above the calendar once at least two people have answered, in date order.
+Sie erscheinen über dem Kalender, sobald mindestens zwei Personen geantwortet haben, nach Datum sortiert.
+Pojavljuju se iznad kalendara čim odgovore barem dvije osobe, poredani po datumu.
+
+Tap a session to see the notes people left on the times it covers.
+Tippe auf einen Termin, um die Notizen zu sehen, die zu diesen Zeiten hinterlassen wurden.
+Dodirni termin da vidiš bilješke ostavljene uz vremena koja pokriva.
+
+Tap the header to fold the list down to one line.
+Tippe auf die Überschrift, um die Liste auf eine Zeile einzuklappen.
+Dodirni zaglavlje da sklopiš popis na jedan redak.
+
+“Waiting for …” tells you who hasn’t answered yet.
+„Es fehlt noch …“ zeigt dir, wer noch nicht geantwortet hat.
+„Čeka se …” govori ti tko još nije odgovorio.
+
+Book a session (organiser)
+Einen Termin festlegen (Organisator)
+Potvrdi termin (organizator)
+
+Tap a possible session, or its gold band in the calendar.
+Tippe auf einen möglichen Termin oder auf sein goldenes Band im Kalender.
+Dodirni mogući termin ili njegovu zlatnu traku u kalendaru.
+
+If it is longer than the meetup, choose when the meetup should start.
+Ist er länger als das Treffen, wähle, wann das Treffen beginnen soll.
+Ako je dulji od susreta, odaberi kada susret počinje.
+
+Tap Book. Everyone sees the Booked banner at the top and can add it to their calendar.
+Tippe auf „Festlegen“. Alle sehen oben das Banner „Festgelegt“ und können den Termin in ihren Kalender übernehmen.
+Dodirni „Potvrdi”. Svi na vrhu vide oznaku „Potvrđeno” i mogu termin dodati u svoj kalendar.
+
+Undo on the banner takes the booking back.
+„Rückgängig“ im Banner nimmt die Festlegung zurück.
+„Poništi” na oznaci povlači potvrdu.
+
+Change or delete a When (organiser)
+Ein When ändern oder löschen (Organisator)
+Promijeni ili obriši When (organizator)
+
+Tap the pencil next to the title to change the name, description, days, length or hours.
+Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern.
+Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate.
+
+If you make the meetup longer or the hours narrower, periods that no longer fit are trimmed or removed.
+Wenn du das Treffen verlängerst oder die Uhrzeiten einschränkst, werden Zeiträume, die nicht mehr passen, gekürzt oder entfernt.
+Ako produljiš susret ili suziš sate, razdoblja koja više ne odgovaraju skraćuju se ili uklanjaju.
+
+To delete a When, open the menu and tap × on it under My Whens. Everyone loses access.
+Um ein When zu löschen, öffne das Menü und tippe unter „Meine Whens“ auf das ×. Alle verlieren den Zugriff.
+Da obrišeš When, otvori izbornik i dodirni × uz njega pod „Moji Whenovi”. Svi gube pristup.
+
+If you are not the organiser, × makes you leave: your answers are removed.
+Wenn du nicht der Organisator bist, verlässt du es mit ×: Deine Antworten werden entfernt.
+Ako nisi organizator, × znači da napuštaš When: tvoji se odgovori uklanjaju.
+
+Get told while the app is closed.
+Erfahre es auch, wenn die App geschlossen ist.
+Saznaj i kad je aplikacija zatvorena.
+
+Tap the bell at the top of a When, or open Notifications in the menu, and switch Push notifications on.
+Tippe oben in einem When auf die Glocke oder öffne im Menü „Benachrichtigungen“ und schalte Push-Benachrichtigungen ein.
+Dodirni zvono na vrhu Whena ili otvori „Obavijesti” u izborniku pa uključi Push obavijesti.
+
+On an iPhone, first add When to your Home Screen (Share, then Add to Home Screen) and open it from there.
+Auf dem iPhone füge When zuerst zum Home-Bildschirm hinzu (Teilen, dann „Zum Home-Bildschirm“) und öffne es von dort.
+Na iPhoneu najprije dodaj When na početni zaslon (Dijeli pa „Dodaj na početni zaslon”) i otvori ga odande.
+
+You are told when everyone has answered, and when a session is booked, moved or cancelled.
+Du erfährst, wenn alle geantwortet haben und wenn ein Termin festgelegt, verschoben oder abgesagt wird.
+Dobivaš obavijest kad svi odgovore te kad se termin potvrdi, pomakne ili otkaže.
+
+The organiser is also told when someone answers, changes or withdraws an answer on a link they sent.
+Der Organisator erfährt außerdem, wenn jemand über einen gesendeten Link antwortet, die Antwort ändert oder zurückzieht.
+Organizator saznaje i kad netko odgovori, promijeni ili povuče odgovor na poslanoj poveznici.
+
+The switch is per device and covers all your Whens.
+Der Schalter gilt pro Gerät und für alle deine Whens.
+Prekidač vrijedi po uređaju i za sve tvoje Whenove.
+
+Time zones
+Zeitzonen
+Vremenske zone
+
+A When keeps its times in the organiser’s time zone.
+Ein When speichert seine Zeiten in der Zeitzone des Organisators.
+When čuva vremena u vremenskoj zoni organizatora.
+
+If your clock is different, every time is shown converted to yours, and a note at the top says so.
+Wenn deine Uhr anders geht, wird jede Zeit in deine umgerechnet, und ein Hinweis oben sagt das.
+Ako ti je sat drukčiji, svako se vrijeme prikazuje preračunato u tvoje, a napomena na vrhu to kaže.
+
+Tap the button in that note to see the organiser’s time instead, and again to go back.
+Tippe auf die Schaltfläche in diesem Hinweis, um stattdessen die Zeit des Organisators zu sehen, und erneut, um zurückzuwechseln.
+Dodirni gumb u toj napomeni da vidiš vrijeme organizatora, i ponovno za povratak.
+
+The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.
+Die Tagesspalten bleiben die Tage des Organisators. Ein kleines ⁺¹ oder ⁻¹ neben einer Zeit bedeutet, dass es für dich der nächste oder vorherige Tag ist.
+Stupci dana ostaju dani organizatora. Mali ⁺¹ ili ⁻¹ uz vrijeme znači da je za tebe to sljedeći ili prethodni dan.
+
+Booked sessions, calendar files and notifications always use your own time and date.
+Festgelegte Termine, Kalenderdateien und Benachrichtigungen verwenden immer deine eigene Zeit und dein Datum.
+Potvrđeni termini, kalendarske datoteke i obavijesti uvijek koriste tvoje vrijeme i datum.
+
+Travelling, or planning for somewhere else? Choose a time zone under Date and time in the menu.
+Unterwegs, oder planst du für einen anderen Ort? Wähle im Menü unter „Datum und Uhrzeit“ eine Zeitzone.
+Putuješ ili planiraš za drugo mjesto? Odaberi vremensku zonu u izborniku pod „Datum i vrijeme”.
+
+The menu
+Das Menü
+Izbornik
+
+My Whens lists every When you created or joined on this device, with what is booked or possible.
+„Meine Whens“ listet jedes When, das du auf diesem Gerät erstellt hast oder dem du beigetreten bist, mit dem, was festgelegt oder möglich ist.
+„Moji Whenovi” prikazuje svaki When koji si stvorio/la ili kojem si se pridružio/la na ovom uređaju, s onim što je potvrđeno ili moguće.
+
+Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.
+„Aussehen“ ändert die Farben und den hellen oder dunklen Modus. „Datum und Uhrzeit“ wechselt zwischen 30.9. und 30. Sep und legt deine Zeitzone fest.
+„Izgled” mijenja boje te svijetli ili tamni način. „Datum i vrijeme” prebacuje između 30.9. i 30. ruj te postavlja vremensku zonu.
+
+Defaults for new Whens pre-fills the length and hours when you plan the next one.
+„Standardwerte für neue Whens“ füllt Dauer und Uhrzeiten vor, wenn du das nächste planst.
+„Zadane postavke za nove Whenove” unaprijed ispunjavaju trajanje i sate kad planiraš sljedeći.
+
+App checks for a new version and shows what changed.
+„App“ sucht nach einer neuen Version und zeigt, was sich geändert hat.
+„Aplikacija” provjerava postoji li nova verzija i pokazuje što se promijenilo.
+
+Install it on your phone
+Auf dem Handy installieren
+Instaliraj na mobitel
+
+iPhone: open the link in Safari, tap Share, then Add to Home Screen.
+iPhone: Öffne den Link in Safari, tippe auf Teilen und dann auf „Zum Home-Bildschirm“.
+iPhone: otvori poveznicu u Safariju, dodirni Dijeli pa „Dodaj na početni zaslon”.
+
+Android: open the browser menu and tap Install app or Add to Home screen.
+Android: Öffne das Browser-Menü und tippe auf „App installieren“ oder „Zum Startbildschirm hinzufügen“.
+Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.
+
+It then opens full screen like any other app.
+Danach öffnet es sich im Vollbild wie jede andere App.
+Zatim se otvara preko cijelog zaslona kao svaka druga aplikacija.
+
+Guest or Google
+Gast oder Google
+Gost ili Google
+
+As a guest you type a name in each When. Your Whens are remembered on this device only.
+Als Gast gibst du in jedem When einen Namen ein. Deine Whens werden nur auf diesem Gerät gemerkt.
+Kao gost upisuješ ime u svakom Whenu. Tvoji Whenovi pamte se samo na ovom uređaju.
+
+With Google your name is filled in for you. Sign in or out from the top of the menu.
+Mit Google wird dein Name automatisch ausgefüllt. An- und abmelden kannst du dich oben im Menü.
+Uz Google se tvoje ime ispunjava samo. Prijava i odjava nalaze se na vrhu izbornika.
+
+For when the group has options and one more person has to choose, like a teacher or a guest.
+Für den Fall, dass die Gruppe Optionen hat und noch eine Person entscheiden muss, etwa ein Lehrer oder ein Gast.
+Za slučaj kad grupa ima opcije, a odlučiti mora još jedna osoba, poput učitelja ili gosta.
+
+Under Possible sessions tap Let someone else pick and tick the sessions to offer.
+Tippe unter „Mögliche Termine“ auf „Jemand anderen wählen lassen“ und hake die Termine an, die du anbieten willst.
+Pod „Mogući termini” dodirni „Neka odabere netko drugi” i označi termine koje nudiš.
+
+Choose whether they may pick just one or several, then create and copy the link.
+Wähle, ob nur einer oder mehrere gewählt werden dürfen, erstelle dann den Link und kopiere ihn.
+Odaberi smije li se odabrati samo jedan ili više, zatim stvori i kopiraj poveznicu.
+
+They see only those sessions, enter a name and tap what works. They never see the calendar.
+Die Person sieht nur diese Termine, gibt einen Namen ein und tippt auf das, was passt. Den Kalender sieht sie nie.
+Osoba vidi samo te termine, upiše ime i dodirne ono što joj odgovara. Kalendar nikad ne vidi.
+
+If a session is longer than the meetup they can also choose the start time.
+Ist ein Termin länger als das Treffen, kann auch die Startzeit gewählt werden.
+Ako je termin dulji od susreta, može se odabrati i vrijeme početka.
+
+Their answer appears as a card at the top of your When, and their choice is outlined in the calendar. Book it from the card.
+Die Antwort erscheint als Karte oben in deinem When, und die Wahl ist im Kalender umrandet. Lege den Termin direkt über die Karte fest.
+Odgovor se pojavljuje kao kartica na vrhu tvog Whena, a odabir je uokviren u kalendaru. Potvrdi ga izravno s kartice.
+
+Sent to the wrong person? Tap the bin next to the link to remove it.
+An die falsche Person geschickt? Tippe auf den Papierkorb neben dem Link, um ihn zu entfernen.
+Poslano krivoj osobi? Dodirni koš pokraj poveznice da je ukloniš.
+
+With this on, booking a session on another day adds it instead of replacing the first.
+Ist dies eingeschaltet, wird ein Termin an einem anderen Tag hinzugefügt, statt den ersten zu ersetzen.
+Kad je ovo uključeno, potvrda termina na drugi dan dodaje ga umjesto da zamijeni prvi.
+
+One session per day: booking the same day again replaces that day’s session.
+Ein Termin pro Tag: Legst du denselben Tag erneut fest, wird der Termin dieses Tages ersetzt.
+Jedan termin po danu: ponovna potvrda istog dana zamjenjuje termin tog dana.
+
+The banner lists every booked session, each with its own calendar button.
+Das Banner listet jeden festgelegten Termin, jeweils mit eigener Kalender-Schaltfläche.
+Oznaka prikazuje svaki potvrđeni termin, svaki s vlastitim gumbom za kalendar.
+
+The organiser removes one with its × button.
+Der Organisator entfernt einen mit dessen ×.
+Organizator pojedini termin uklanja njegovim ×.
+
+Connect calendar and fill from it
+Kalender verbinden und daraus ausfüllen
+Poveži kalendar i popuni iz njega
+
+A preview with sample events; your real calendar is not read yet.
+Eine Vorschau mit Beispielterminen; dein echter Kalender wird noch nicht gelesen.
+Pregled s primjerima događaja; tvoj pravi kalendar još se ne čita.
+
+Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.
+Deine eigenen Termine erscheinen als grau gestreifte Blöcke hinter den Balken, damit du Überschneidungen beim Markieren siehst.
+Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.
+
+Fill from my calendar marks you free in every gap between events that is long enough for the meetup.
+„Aus meinem Kalender ausfüllen“ markiert dich in jeder Lücke zwischen Terminen als frei, die lang genug für das Treffen ist.
+„Popuni iz mog kalendara” označava te slobodnim/om u svakom razmaku između događaja koji je dovoljno dug za susret.
+
+If you already marked times it asks whether to add to them or replace them. Undo is offered afterwards.
+Hast du schon Zeiten markiert, wirst du gefragt, ob sie ergänzt oder ersetzt werden sollen. Danach kannst du es rückgängig machen.
+Ako već imaš označena vremena, pita treba li ih dopuniti ili zamijeniti. Nakon toga nudi poništavanje.
+
+Other Pro previews
+Weitere Pro-Vorschauen
+Ostali Pro pregledi
+
+Add to calendar: a calendar button on every possible session, not only on the booked one.
+Zum Kalender hinzufügen: eine Kalender-Schaltfläche bei jedem möglichen Termin, nicht nur beim festgelegten.
+Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.
+
+Join for part of it: people may mark less than the full length; a session then needs everyone together for at least half of it.
+Nur teilweise dabei sein: Man darf weniger als die volle Dauer markieren; ein Termin braucht dann alle gemeinsam für mindestens die Hälfte.
+Sudjelovanje samo dio vremena: može se označiti manje od punog trajanja; termin tada traži da su svi zajedno barem polovicu vremena.
+
+History: a section in the menu showing who changed what in any of your Whens.
+Verlauf: ein Bereich im Menü, der zeigt, wer in einem deiner Whens was geändert hat.
+Povijest: odjeljak u izborniku koji pokazuje tko je što promijenio u bilo kojem tvom Whenu.

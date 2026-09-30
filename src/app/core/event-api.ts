@@ -7,6 +7,7 @@ import {
   ShortlistAnswer,
   ShortlistView,
 } from './models';
+import { t } from './i18n/i18n';
 
 @Service()
 export class EventApi {
@@ -16,7 +17,7 @@ export class EventApi {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error(`Could not create event (${res.status})`);
+    if (!res.ok) throw new Error(`${t('Could not create event')} (${res.status})`);
     return res.json();
   }
 
@@ -26,7 +27,7 @@ export class EventApi {
       method: 'DELETE',
       headers: { 'x-creator-token': creatorToken },
     });
-    if (!res.ok && res.status !== 404) throw new Error(`Could not delete (${res.status})`);
+    if (!res.ok && res.status !== 404) throw new Error(`${t('Could not delete')} (${res.status})`);
   }
 
   /** Removes this participant and their answers from the When. */
@@ -35,7 +36,7 @@ export class EventApi {
       `/api/events/${encodeURIComponent(id)}/participants/${encodeURIComponent(participantId)}`,
       { method: 'DELETE' },
     );
-    if (!res.ok && res.status !== 404) throw new Error(`Could not leave (${res.status})`);
+    if (!res.ok && res.status !== 404) throw new Error(`${t('Could not leave')} (${res.status})`);
   }
 
   /** Organiser only: a link with just these sessions, answered with yes/no. */
@@ -50,7 +51,7 @@ export class EventApi {
       headers: { 'content-type': 'application/json', 'x-creator-token': creatorToken },
       body: JSON.stringify({ mode, sessions }),
     });
-    if (!res.ok) throw new Error(`Could not create the link (${res.status})`);
+    if (!res.ok) throw new Error(`${t('Could not create the link')} (${res.status})`);
     return res.json();
   }
 
@@ -59,13 +60,14 @@ export class EventApi {
       `/api/events/${encodeURIComponent(id)}/shortlists/${encodeURIComponent(sid)}`,
       { method: 'DELETE', headers: { 'x-creator-token': creatorToken } },
     );
-    if (!res.ok && res.status !== 404) throw new Error(`Could not remove the link (${res.status})`);
+    if (!res.ok && res.status !== 404)
+      throw new Error(`${t('Could not remove the link')} (${res.status})`);
   }
 
   async getShortlist(sid: string): Promise<ShortlistView | null> {
     const res = await fetch(`/api/shortlists/${encodeURIComponent(sid)}`);
     if (res.status === 404) return null;
-    if (!res.ok) throw new Error(`Could not load (${res.status})`);
+    if (!res.ok) throw new Error(`${t('Could not load')} (${res.status})`);
     return res.json();
   }
 
@@ -80,14 +82,14 @@ export class EventApi {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ name, picks, starts }),
     });
-    if (!res.ok) throw new Error(`Could not send your answer (${res.status})`);
+    if (!res.ok) throw new Error(`${t('Could not send your answer')} (${res.status})`);
     return res.json();
   }
 
   async get(id: string): Promise<MeetEvent | null> {
     const res = await fetch(`/api/events/${encodeURIComponent(id)}`);
     if (res.status === 404) return null;
-    if (!res.ok) throw new Error(`Could not load event (${res.status})`);
+    if (!res.ok) throw new Error(`${t('Could not load event')} (${res.status})`);
     return res.json();
   }
 }

@@ -2,6 +2,7 @@ import { effect, inject, Service, signal } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
 import { Identity } from './identity';
+import { lang } from './i18n/i18n';
 import { viewerZone } from './zone';
 
 /**
@@ -107,6 +108,7 @@ export class Push {
         participantId,
         creatorToken,
         timeZone: viewerZone(),
+        lang: lang(),
       }),
     }).catch(() => undefined);
   }

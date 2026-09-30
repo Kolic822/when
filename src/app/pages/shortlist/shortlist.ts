@@ -8,6 +8,7 @@ import { ShortlistView } from '../../core/models';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
 import { dayOf, eventZone, spanAt, timeAt } from '../../core/zone';
 import { ZoneNote } from '../../components/zone-note/zone-note';
+import { t } from '../../core/i18n/i18n';
 
 /**
  * What someone sees when they open a shortlist link: only the listed sessions.
@@ -20,6 +21,7 @@ import { ZoneNote } from '../../components/zone-note/zone-note';
   styleUrl: './shortlist.scss',
 })
 export class ShortlistPage {
+  readonly t = t;
   private readonly api = inject(EventApi);
 
   /** Route param. */
@@ -107,7 +109,7 @@ export class ShortlistPage {
       saveName(name);
       this.sent.set(true);
     } catch (err) {
-      this.error.set(err instanceof Error ? err.message : 'Something went wrong');
+      this.error.set(err instanceof Error ? err.message : t('Something went wrong'));
     } finally {
       this.busy.set(false);
     }

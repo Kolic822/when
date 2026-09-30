@@ -11,7 +11,7 @@
 >
   <header>
     <span class="count muted">{{ index() + 1 }} / {{ steps.length }}</span>
-    <button type="button" class="pill skip" (click)="skip()">Skip</button>
+    <button type="button" class="pill skip" (click)="skip()">{{ t('Skip') }}</button>
   </header>
 
   @for (s of [step()]; track s.key) {
@@ -66,16 +66,16 @@
         }
       </div>
 
-      <h2 id="howto-title">{{ step().title }}</h2>
-      <p class="lead muted">{{ step().lead }}</p>
+      <h2 id="howto-title">{{ t(step().title) }}</h2>
+      <p class="lead muted">{{ t(step().lead) }}</p>
 
       <ul>
-        @for (t of step().tips; track t.text) {
+        @for (tip of step().tips; track tip.text) {
           <li>
             <span class="ico"
-              ><mat-icon>{{ t.icon }}</mat-icon></span
+              ><mat-icon>{{ tip.icon }}</mat-icon></span
             >
-            <span>{{ t.text }}</span>
+            <span>{{ t(tip.text) }}</span>
           </li>
         }
       </ul>
@@ -90,10 +90,10 @@
 
   <footer>
     @if (index() > 0) {
-      <button type="button" class="pill" (click)="back()">Back</button>
+      <button type="button" class="pill" (click)="back()">{{ t('Back') }}</button>
     }
     <button #primary mat-flat-button type="button" class="go" (click)="next()">
-      {{ isLast() ? 'Got it' : 'Next' }}
+      {{ isLast() ? t('Got it') : t('Next') }}
       <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
     </button>
   </footer>

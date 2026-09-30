@@ -15,6 +15,7 @@ import { AppMenu } from '../../components/app-menu/app-menu';
 import { DURATIONS } from './durations';
 import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
 import { DayPicker } from '../../components/day-picker/day-picker';
+import { t } from '../../core/i18n/i18n';
 
 interface CreateModel {
   title: string;
@@ -44,6 +45,7 @@ export { DURATIONS } from './durations';
   styleUrl: './home.scss',
 })
 export class Home {
+  readonly t = t;
   private readonly api = inject(EventApi);
   private readonly identity = inject(Identity);
   private readonly router = inject(Router);
@@ -124,7 +126,7 @@ export class Home {
       this.identity.setPendingName(created.id, m.name.trim());
       await this.router.navigate(['/e', created.id]);
     } catch (err) {
-      this.error.set(err instanceof Error ? err.message : 'Something went wrong');
+      this.error.set(err instanceof Error ? err.message : t('Something went wrong'));
       this.busy.set(false);
     }
   }

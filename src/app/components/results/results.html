@@ -1,11 +1,11 @@
 <section class="card results" [class.folded]="isFolded()">
   <button type="button" class="head" (click)="toggleFold()" [attr.aria-expanded]="!isFolded()">
     <mat-icon class="lead">event_available</mat-icon>
-    <h2>Possible sessions</h2>
+    <h2>{{ t('Possible sessions') }}</h2>
     @if (rows().length) {
       <span class="count">{{ rows().length }}</span>
     }
-    <span class="length" title="Meetup length">
+    <span class="length" [title]="t('Meetup length')">
       <mat-icon>schedule</mat-icon>
       {{ durationLabel() }}
     </span>
@@ -18,14 +18,14 @@
         <span class="day">{{ top.day }}</span>
         <span class="time">{{ top.time }}</span>
         @if (rows().length > 1) {
-          <span class="muted">+{{ rows().length - 1 }} more</span>
+          <span class="muted">{{ t('+{n} more', { n: rows().length - 1 }) }}</span>
         }
       </p>
     }
   } @else {
     <div class="body">
       @if (rows().length) {
-        <div class="chips" role="group" aria-label="Possible sessions">
+        <div class="chips" role="group" [attr.aria-label]="t('Possible sessions')">
           @for (r of visible(); track r.key) {
             <button
               type="button"
@@ -38,7 +38,10 @@
               <span class="day">{{ r.day }}</span>
               <span class="time">{{ r.time }}</span>
               @if (r.notes.length) {
-                <span class="notes-n" [attr.aria-label]="r.notes.length + ' notes'">
+                <span
+                  class="notes-n"
+                  [attr.aria-label]="tn(r.notes.length, '{n} note', '{n} notes')"
+                >
                   <mat-icon>chat_bubble</mat-icon>
                 </span>
               }
@@ -51,7 +54,11 @@
               (click)="expanded.set(!expanded())"
               [attr.aria-expanded]="expanded()"
             >
-              {{ expanded() ? 'Show less' : '+' + (rows().length - visible().length) + ' more' }}
+              {{
+                expanded()
+                  ? t('Show less')
+                  : t('+{n} more', { n: rows().length - visible().length })
+              }}
             </button>
           }
         </div>
@@ -67,8 +74,8 @@
               <p class="note muted">{{ r.partial }}</p>
             }
             @if (organiser() && r.starts.length > 1) {
-              <p class="chooser-title muted">Start at</p>
-              <div class="grid" role="radiogroup" aria-label="Start time">
+              <p class="chooser-title muted">{{ t('Start at') }}</p>
+              <div class="grid" role="radiogroup" [attr.aria-label]="t('Start time')">
                 @for (s of r.starts; track s) {
                   <button
                     type="button"
@@ -87,7 +94,7 @@
               <div class="acts">
                 @if (organiser()) {
                   <button type="button" class="pill book-full" (click)="confirmBooking(r)">
-                    Book
+                    {{ t('Book') }}
                     <span class="d">{{ r.day }}</span>
                     <span class="t">{{ chosen(r) }}</span>
                     <mat-icon>check</mat-icon>
@@ -98,11 +105,13 @@
                     type="button"
                     class="pill cal"
                     (click)="addToCalendar(r)"
-                    [attr.aria-label]="'Add ' + r.day + ' ' + r.time + ' to calendar'"
+                    [attr.aria-label]="
+                      t('Add {session} to calendar', { session: r.day + ' ' + r.time })
+                    "
                   >
                     <mat-icon>event</mat-icon>
                     @if (!organiser()) {
-                      Add to calendar
+                      {{ t('Add to calendar') }}
                     }
                   </button>
                 }
@@ -111,15 +120,15 @@
           </div>
         }
       } @else if (result().answered.length === 0) {
-        <p class="muted">Nothing yet. Tap a day to add your times.</p>
+        <p class="muted">{{ t('Nothing yet. Tap a day to add your times.') }}</p>
       } @else if (result().answered.length === 1) {
-        <p class="muted">Waiting for one more person to answer.</p>
+        <p class="muted">{{ t('Waiting for one more person to answer.') }}</p>
       } @else {
-        <p class="muted">Nothing fits everyone yet. Try adding a bit more time.</p>
+        <p class="muted">{{ t('Nothing fits everyone yet. Try adding a bit more time.') }}</p>
       }
 
       @if (result().pending.length && result().answered.length) {
-        <p class="pending muted">Waiting for {{ pendingNames() }}.</p>
+        <p class="pending muted">{{ t('Waiting for {names}.', { names: pendingNames() }) }}</p>
       }
 
       @if (features().shortlist && organiser() && rows().length) {
@@ -132,7 +141,7 @@
         } @else {
           <button type="button" class="ask" (click)="asking.set(true)">
             <mat-icon>forward_to_inbox</mat-icon>
-            Let someone else pick
+            {{ t('Let someone else pick') }}
           </button>
         }
       }
@@ -143,29 +152,29 @@
             <div class="list">
               <div class="list-head">
                 <span class="muted">
-                  Link sent · {{ a.answered }} {{ a.answered === 1 ? 'answer' : 'answers' }}
+                  {{ t('Link sent') }} · {{ tn(a.answered, '{n} answer', '{n} answers') }}
                 </span>
                 @if (removing() === a.id) {
                   <span class="confirm">
                     <button type="button" class="pill mini" (click)="removing.set(null)">
-                      Keep
+                      {{ t('Keep') }}
                     </button>
                     <button type="button" class="pill mini danger" (click)="remove(a.id)">
-                      Remove link
+                      {{ t('Remove link') }}
                     </button>
                   </span>
                 } @else {
                   <span class="confirm">
                     <button type="button" class="pill mini" (click)="copy(a.url)">
                       <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
-                      {{ copied() === a.url ? 'Copied' : 'Copy link' }}
+                      {{ copied() === a.url ? t('Copied') : t('Copy link') }}
                     </button>
                     <button
                       type="button"
                       class="icon-btn mini-icon"
                       (click)="removing.set(a.id)"
-                      aria-label="Remove this link"
-                      title="Remove this link"
+                      [attr.aria-label]="t('Remove this link')"
+                      [title]="t('Remove this link')"
                     >
                       <mat-icon>delete_outline</mat-icon>
                     </button>
@@ -190,10 +199,12 @@
                 }
               }
               @if (a.none.length) {
-                <div class="ans none muted">None fit: {{ a.none.join(', ') }}</div>
+                <div class="ans none muted">
+                  {{ t('None fit: {names}', { names: a.none.join(', ') }) }}
+                </div>
               }
               @if (!a.answered) {
-                <div class="ans none muted">No answer yet.</div>
+                <div class="ans none muted">{{ t('No answer yet.') }}</div>
               }
             </div>
           }

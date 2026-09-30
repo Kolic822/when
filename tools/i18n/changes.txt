@@ -1,0 +1,139 @@
+Time zones: a When keeps the organiser’s zone and everyone else sees their own time
+Zeitzonen: Ein When behält die Zone des Organisators, alle anderen sehen ihre eigene Zeit
+Vremenske zone: When čuva zonu organizatora, a svi ostali vide svoje vrijeme
+
+A note at the top says whose time is shown, with one tap to switch
+Ein Hinweis oben sagt, wessen Zeit angezeigt wird; ein Tipp wechselt
+Napomena na vrhu kaže čije je vrijeme prikazano; jedan dodir ga mijenja
+
+Pick your time zone by hand under Date and time in the menu
+Zeitzone von Hand wählen: im Menü unter „Datum und Uhrzeit“
+Ručni odabir vremenske zone u izborniku pod „Datum i vrijeme”
+
+Calendar files and notifications use the right time for each person
+Kalenderdateien und Benachrichtigungen verwenden für jede Person die richtige Zeit
+Kalendarske datoteke i obavijesti koriste točno vrijeme za svaku osobu
+
+New app icon and browser icon
+Neues App-Symbol und Browser-Symbol
+Nova ikona aplikacije i preglednika
+
+The Book button shows the day and time itself; repeated text around it is gone
+Die Schaltfläche „Festlegen“ zeigt selbst Tag und Uhrzeit; doppelter Text drumherum ist weg
+Gumb „Potvrdi” sam prikazuje dan i vrijeme; ponovljeni tekst oko njega je uklonjen
+
+One booked session per day: booking a day again replaces it
+Ein festgelegter Termin pro Tag: erneutes Festlegen ersetzt ihn
+Jedan potvrđeni termin po danu: ponovna potvrda ga zamjenjuje
+
+“Notify me” is now “Push notifications”
+„Benachrichtige mich“ heißt jetzt „Push-Benachrichtigungen“
+„Obavijesti me” sada je „Push obavijesti”
+
+Possible sessions are chips: tap one to see notes, pick the start time and book
+Mögliche Termine sind Chips: antippen, Notizen sehen, Startzeit wählen und festlegen
+Mogući termini su čipovi: dodirni jedan da vidiš bilješke, odabereš početak i potvrdiš
+
+“Let someone else pick” replaces “Ask someone”; sent links can be removed
+„Jemand anderen wählen lassen“ ersetzt „Jemanden fragen“; gesendete Links lassen sich entfernen
+„Neka odabere netko drugi” zamjenjuje „Pitaj nekoga”; poslane poveznice mogu se ukloniti
+
+Notifications are one switch in the menu, with a bell at the top of each When
+Benachrichtigungen sind ein Schalter im Menü, mit einer Glocke oben in jedem When
+Obavijesti su jedan prekidač u izborniku, sa zvonom na vrhu svakog Whena
+
+New notifications: everyone has answered, session moved or cancelled, answer changed
+Neue Benachrichtigungen: alle haben geantwortet, Termin verschoben oder abgesagt, Antwort geändert
+Nove obavijesti: svi su odgovorili, termin pomaknut ili otkazan, odgovor promijenjen
+
+Pro preview: book more than one session
+Pro-Vorschau: mehr als einen Termin festlegen
+Pro pregled: potvrda više termina
+
+History moved into the menu (Pro preview), for any of your Whens
+Der Verlauf ist ins Menü gewandert (Pro-Vorschau), für jedes deiner Whens
+Povijest je premještena u izbornik (Pro pregled), za bilo koji tvoj When
+
+This change log, version numbers and a full guide
+Dieses Änderungsprotokoll, Versionsnummern und eine vollständige Anleitung
+Ovaj popis promjena, brojevi verzija i potpun vodič
+
+Push notifications when a session is booked and when someone answers a link
+Push-Benachrichtigungen, wenn ein Termin festgelegt wird und wenn jemand auf einen Link antwortet
+Push obavijesti kad se termin potvrdi i kad netko odgovori na poveznicu
+
+Welcome screen: continue with Google or as a guest
+Willkommensbildschirm: weiter mit Google oder als Gast
+Zaslon dobrodošlice: nastavi uz Google ili kao gost
+
+Old Whens are removed after 60 days; daily backups of everything else
+Alte Whens werden nach 60 Tagen entfernt; tägliche Sicherungen von allem anderen
+Stari Whenovi uklanjaju se nakon 60 dana; dnevne sigurnosne kopije svega ostalog
+
+Creating a When is two short steps that fit on one screen
+Ein When zu erstellen sind zwei kurze Schritte, die auf einen Bildschirm passen
+Stvaranje Whena su dva kratka koraka koja stanu na jedan zaslon
+
+The day picker starts from this week and never shows the past
+Die Tagesauswahl beginnt mit dieser Woche und zeigt nie die Vergangenheit
+Odabir dana počinje od ovog tjedna i nikad ne prikazuje prošlost
+
+Layout fits an installed phone app: no cut-off buttons, less wasted space
+Das Layout passt zur installierten Handy-App: keine abgeschnittenen Schaltflächen, weniger verschenkter Platz
+Raspored odgovara instaliranoj aplikaciji na mobitelu: bez odsječenih gumba, manje praznog prostora
+
+Pro preview: fill your free time from your calendar
+Pro-Vorschau: freie Zeit aus deinem Kalender ausfüllen
+Pro pregled: popuni slobodno vrijeme iz kalendara
+
+The organiser can book a session, from the list or by tapping a gold band
+Der Organisator kann einen Termin festlegen, aus der Liste oder durch Tippen auf ein goldenes Band
+Organizator može potvrditi termin, s popisa ili dodirom na zlatnu traku
+
+Send a link with only the possible sessions and let someone choose
+Sende einen Link nur mit den möglichen Terminen und lass jemanden wählen
+Pošalji poveznicu samo s mogućim terminima i prepusti nekome odabir
+
+New look with three colour themes, light and dark
+Neues Aussehen mit drei Farbthemen, hell und dunkel
+Novi izgled s tri teme boja, svijetlo i tamno
+
+How-it-works guide on first visit
+Kurzanleitung beim ersten Besuch
+Kratki vodič pri prvom posjetu
+
+Pro previews: connect calendar, add to calendar, join for part of it, history
+Pro-Vorschauen: Kalender verbinden, zum Kalender hinzufügen, nur teilweise dabei sein, Verlauf
+Pro pregledi: povezivanje kalendara, dodavanje u kalendar, sudjelovanje dio vremena, povijest
+
+Create a When, share the link, mark when you are free
+Ein When erstellen, den Link teilen, markieren, wann du Zeit hast
+Stvori When, podijeli poveznicu, označi kad možeš
+
+Everything syncs live; gold bands show when everyone can make it
+Alles wird live synchronisiert; goldene Bänder zeigen, wann alle können
+Sve se sinkronizira uživo; zlatne trake pokazuju kad svi mogu
+
+Day-by-day view with copy to other days, notes and free all day
+Tagesansicht mit Kopieren auf andere Tage, Notizen und „Ganzer Tag frei“
+Prikaz dan po dan s kopiranjem na druge dane, bilješkama i opcijom „Cijeli dan”
+
+Works as an installed app on your phone
+Funktioniert als installierte App auf deinem Handy
+Radi kao instalirana aplikacija na mobitelu
+
+Three languages: English, German and Croatian
+Drei Sprachen: Englisch, Deutsch und Kroatisch
+Tri jezika: engleski, njemački i hrvatski
+
+Switch language at the top of the menu or on the welcome screen
+Sprache oben im Menü oder auf dem Willkommensbildschirm wechseln
+Jezik se mijenja na vrhu izbornika ili na zaslonu dobrodošlice
+
+Days, months and notifications follow your language
+Tage, Monate und Benachrichtigungen folgen deiner Sprache
+Dani, mjeseci i obavijesti prate tvoj jezik
+
+Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in your phone’s language when it is one of the three.
+Wähle oben im Menü English, Deutsch oder Hrvatski. Die App startet in der Sprache deines Handys, wenn es eine der drei ist.
+Na vrhu izbornika odaberi English, Deutsch ili Hrvatski. Aplikacija se pokreće na jeziku tvog mobitela ako je jedan od ta tri.

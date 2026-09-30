@@ -6,6 +6,7 @@ import { Identity } from '../../core/identity';
 import { Session } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+import { t } from '../../core/i18n/i18n';
 
 /**
  * "Ask someone": the organiser picks which possible sessions to send and whether the
@@ -18,6 +19,7 @@ import { dayOf, spanAt, timeAt } from '../../core/zone';
   styleUrl: './ask-panel.scss',
 })
 export class AskPanel {
+  readonly t = t;
   private readonly api = inject(EventApi);
   private readonly identity = inject(Identity);
 
@@ -55,7 +57,7 @@ export class AskPanel {
       const list = await this.api.createShortlist(this.eventId(), token, this.mode(), sessions);
       this.link.set(`${location.origin}/s/${list.id}`);
     } catch (e) {
-      this.error.set(e instanceof Error ? e.message : 'Something went wrong');
+      this.error.set(e instanceof Error ? e.message : t('Something went wrong'));
     } finally {
       this.busy.set(false);
     }

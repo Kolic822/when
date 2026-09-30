@@ -1,17 +1,17 @@
 <div class="panel">
   @if (link(); as url) {
     <div class="ready">
-      <span class="title">Link ready</span>
+      <span class="title">{{ t('Link ready') }}</span>
       <button mat-flat-button type="button" class="copy" (click)="copy()">
         <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
-        {{ copied() ? 'Copied' : 'Copy link' }}
+        {{ copied() ? t('Copied') : t('Copy link') }}
       </button>
-      <button type="button" class="pill close" (click)="closed.emit()">Close</button>
+      <button type="button" class="pill close" (click)="closed.emit()">{{ t('Close') }}</button>
     </div>
   } @else {
-    <p class="title">Let someone else pick</p>
-    <p class="muted">They get a link with only these sessions. Which ones?</p>
-    <div class="chips" role="group" aria-label="Sessions to include">
+    <p class="title">{{ t('Let someone else pick') }}</p>
+    <p class="muted">{{ t('They get a link with only these sessions. Which ones?') }}</p>
+    <div class="chips" role="group" [attr.aria-label]="t('Sessions to include')">
       @for (s of sessions(); track $index) {
         <button
           type="button"
@@ -28,8 +28,8 @@
       }
     </div>
 
-    <p class="muted">They can pick</p>
-    <div class="segments" role="radiogroup" aria-label="Answer mode">
+    <p class="muted">{{ t('They can pick') }}</p>
+    <div class="segments" role="radiogroup" [attr.aria-label]="t('Answer mode')">
       <button
         type="button"
         class="pill"
@@ -38,7 +38,7 @@
         [attr.aria-checked]="mode() === 'one'"
         (click)="mode.set('one')"
       >
-        Just one
+        {{ t('Just one') }}
       </button>
       <button
         type="button"
@@ -48,7 +48,7 @@
         [attr.aria-checked]="mode() === 'many'"
         (click)="mode.set('many')"
       >
-        One or more
+        {{ t('One or more') }}
       </button>
     </div>
 
@@ -57,14 +57,14 @@
     }
 
     <div class="actions">
-      <button type="button" class="pill" (click)="closed.emit()">Cancel</button>
+      <button type="button" class="pill" (click)="closed.emit()">{{ t('Cancel') }}</button>
       <button
         mat-flat-button
         type="button"
         (click)="create()"
         [disabled]="!picked().size || busy()"
       >
-        {{ busy() ? 'Creating…' : 'Create link' }}
+        {{ busy() ? t('Creating…') : t('Create link') }}
       </button>
     </div>
   }

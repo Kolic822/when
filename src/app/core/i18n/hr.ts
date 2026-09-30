@@ -1,0 +1,607 @@
+import type { Dictionary } from './i18n';
+
+/** Keys are the English texts; see i18n.ts. */
+export const hr: Dictionary = {
+  '+{n} more': 'još {n}',
+  'A History section in this menu: who changed what, and when.':
+    'Odjeljak Povijest u ovom izborniku: tko je što promijenio i kada.',
+  'A When is one thing you want to find a time for: a rehearsal, a dinner, a trip.':
+    'When je jedna stvar za koju tražiš termin: proba, večera, izlet.',
+  'A When keeps its times in the organiser’s time zone.':
+    'When čuva vremena u vremenskoj zoni organizatora.',
+  'A calendar button on every possible session.': 'Gumb za kalendar uz svaki mogući termin.',
+  'A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.':
+    'Zlatna traka označava mogući termin: vrijeme kad su svi koji su odgovorili slobodni barem koliko traje susret.',
+  'A new version is ready.': 'Nova verzija je spremna.',
+  'A note at the top says whose time is shown, with one tap to switch':
+    'Napomena na vrhu kaže čije je vrijeme prikazano; jedan dodir ga mijenja',
+  'A preview with sample events; your real calendar is not read yet.':
+    'Pregled s primjerima događaja; tvoj pravi kalendar još se ne čita.',
+  'Add to calendar': 'Dodaj u kalendar',
+  'Add to calendar: a calendar button on every possible session, not only on the booked one.':
+    'Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.',
+  'Add to them': 'Dodaj njima',
+  'Add {session} to calendar': 'Dodaj {session} u kalendar',
+  'Android: open the browser menu and tap Install app or Add to Home screen.':
+    'Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.',
+  Answer: 'Odgovor',
+  'Answer from {names}': 'Odgovor: {names}',
+  'Answer mode': 'Način odgovora',
+  'Any start time suits.': 'Odgovara bilo koje vrijeme početka.',
+  'Any time': 'Bilo kada',
+  App: 'Aplikacija',
+  'App checks for a new version and shows what changed.':
+    '„Aplikacija” provjerava postoji li nova verzija i pokazuje što se promijenilo.',
+  Appearance: 'Izgled',
+  'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.':
+    '„Izgled” mijenja boje te svijetli ili tamni način. „Datum i vrijeme” prebacuje između 30.9. i 30. ruj te postavlja vremensku zonu.',
+  'As a guest you type a name in each When. Your Whens are remembered on this device only.':
+    'Kao gost upisuješ ime u svakom Whenu. Tvoji Whenovi pamte se samo na ovom uređaju.',
+  'Automatic ({city})': 'Automatski ({city})',
+  Back: 'Natrag',
+  'Back to all days': 'Natrag na sve dane',
+  'Band rehearsal, drinks, hike…': 'Proba benda, piće, planinarenje…',
+  Book: 'Potvrdi',
+  'Book a session (organiser)': 'Potvrdi termin (organizator)',
+  'Book several sessions': 'Potvrdi više termina',
+  Booked: 'Potvrđeno',
+  'Booked sessions, calendar files and notifications always use your own time and date.':
+    'Potvrđeni termini, kalendarske datoteke i obavijesti uvijek koriste tvoje vrijeme i datum.',
+  'Calendar files and notifications use the right time for each person':
+    'Kalendarske datoteke i obavijesti koriste točno vrijeme za svaku osobu',
+  Cancel: 'Odustani',
+  'Cancel {session}': 'Otkaži {session}',
+  'Change or delete a When (organiser)': 'Promijeni ili obriši When (organizator)',
+  'Change your name': 'Promijeni ime',
+  'Check for updates': 'Provjeri ažuriranja',
+  'Checking…': 'Provjeravam…',
+  'Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in your phone’s language when it is one of the three.':
+    'Na vrhu izbornika odaberi English, Deutsch ili Hrvatski. Aplikacija se pokreće na jeziku tvog mobitela ako je jedan od ta tri.',
+  'Choose whether they may pick just one or several, then create and copy the link.':
+    'Odaberi smije li se odabrati samo jedan ili više, zatim stvori i kopiraj poveznicu.',
+  Clear: 'Očisti',
+  'Clear day': 'Očisti dan',
+  'Clear day removes everything you marked on that day. In the calendar you can also hold a day to clear it.':
+    '„Očisti dan” uklanja sve što si označio/la tog dana. U kalendaru možeš i držati dan da ga očistiš.',
+  'Clear your times on {day}?': 'Obrisati tvoja vremena za {day}?',
+  'Clear {day}': 'Očisti {day}',
+  'Cleared {day}': 'Očišćeno: {day}',
+  Close: 'Zatvori',
+  'Close menu': 'Zatvori izbornik',
+  Colour: 'Boja',
+  'Connect calendar': 'Poveži kalendar',
+  'Connect calendar and fill from it': 'Poveži kalendar i popuni iz njega',
+  'Continue as guest': 'Nastavi kao gost',
+  'Continue with Google': 'Nastavi uz Google',
+  Copied: 'Kopirano',
+  'Copied to {n} day': {
+    one: 'Kopirano na {n} dan',
+    few: 'Kopirano na {n} dana',
+    other: 'Kopirano na {n} dana',
+  },
+  Copy: 'Kopiraj',
+  'Copy ({n})': 'Kopiraj ({n})',
+  'Copy link': 'Kopiraj poveznicu',
+  'Copy the link to this When': 'Kopiraj poveznicu na ovaj When',
+  'Copy this period to other days': 'Kopiraj ovo razdoblje na druge dane',
+  'Copy times to other days': 'Kopiraj vremena na druge dane',
+  'Copy to other days': 'Kopiraj na druge dane',
+  'Copy to {n} day': {
+    one: 'Kopiraj na {n} dan',
+    few: 'Kopiraj na {n} dana',
+    other: 'Kopiraj na {n} dana',
+  },
+  'Copy to…': 'Kopiraj na…',
+  'Copy to… repeats your times on other days.':
+    '„Kopiraj na…” ponavlja tvoja vremena na drugim danima.',
+  'Copy {what} to': 'Kopiraj {what} na',
+  'Could not check right now.': 'Trenutačno nije moguće provjeriti.',
+  'Could not copy. Long-press the link to copy it.':
+    'Kopiranje nije uspjelo. Dugo pritisni poveznicu da je kopiraš.',
+  'Could not create event': 'When nije moguće stvoriti',
+  'Could not create the link': 'Poveznicu nije moguće stvoriti',
+  'Could not delete': 'Brisanje nije uspjelo',
+  'Could not leave': 'Napuštanje nije uspjelo',
+  'Could not load': 'Učitavanje nije uspjelo',
+  'Could not load Google sign-in': 'Google prijava nije se mogla učitati',
+  'Could not load event': 'When nije moguće učitati',
+  'Could not remove the link': 'Poveznicu nije moguće ukloniti',
+  'Could not send your answer': 'Tvoj odgovor nije moguće poslati',
+  "Couldn't turn on notifications. Try again.":
+    'Obavijesti se nisu mogle uključiti. Pokušaj ponovno.',
+  'Create a When, share the link, mark when you are free':
+    'Stvori When, podijeli poveznicu, označi kad možeš',
+  'Create link': 'Stvori poveznicu',
+  'Create my When': 'Stvori moj When',
+  'Creating a When is two short steps that fit on one screen':
+    'Stvaranje Whena su dva kratka koraka koja stanu na jedan zaslon',
+  'Creating…': 'Stvaram…',
+  Dark: 'Tamna',
+  'Date and time': 'Datum i vrijeme',
+  'Date format': 'Format datuma',
+  'Day by day': 'Dan po dan',
+  'Day {n} of {total}': 'Dan {n} od {total}',
+  'Day-by-day view with copy to other days, notes and free all day':
+    'Prikaz dan po dan s kopiranjem na druge dane, bilješkama i opcijom „Cijeli dan”',
+  'Days in the running': 'Dani u igri',
+  'Days to copy to': 'Dani na koje se kopira',
+  'Days, months and notifications follow your language':
+    'Dani, mjeseci i obavijesti prate tvoj jezik',
+  'Defaults for new Whens': 'Zadane postavke za nove Whenove',
+  'Defaults for new Whens pre-fills the length and hours when you plan the next one.':
+    '„Zadane postavke za nove Whenove” unaprijed ispunjavaju trajanje i sate kad planiraš sljedeći.',
+  Delete: 'Obriši',
+  'Delete this When': 'Obriši ovaj When',
+  'Delete {title}': 'Obriši {title}',
+  'Delete “{title}” for everyone? Nobody will be able to open it again.':
+    'Obrisati „{title}” za sve? Nitko ga više neće moći otvoriti.',
+  'Description (optional)': 'Opis (neobavezno)',
+  Done: 'Gotovo',
+  'Drag edges to resize · hold to move · tap for a note':
+    'Povuci rub: duljina · drži: pomakni · dodirni: bilješka',
+  'Drag its edges to resize, hold it to move.':
+    'Povuci rubove za promjenu duljine, drži za pomicanje.',
+  'Drag the top or bottom edge to make it longer or shorter. Hold the middle and drag to move it.':
+    'Povuci gornji ili donji rub da ga produljiš ili skratiš. Drži sredinu i povuci da ga pomakneš.',
+  'Drag to add a block.': 'Povuci da dodaš blok.',
+  'Drag to add your free time': 'Povuci za unos slobodnog vremena',
+  'Drag to select the hours you are free': 'Povuci za odabir sati kad si slobodan/na',
+  'Each day is a column and each person is a coloured bar inside it. Your bar is always on the right.':
+    'Svaki dan je stupac, a svaka osoba obojena traka u njemu. Tvoja je traka uvijek desno.',
+  'Earlier weeks': 'Raniji tjedni',
+  Earliest: 'Najranije',
+  'Earliest time': 'Najranije vrijeme',
+  'Earliest to latest must leave room for a {n} h meetup.':
+    'Između najranijeg i najkasnijeg mora stati susret od {n} h.',
+  'Edit meetup': 'Uredi susret',
+  'Enter your own name so the others know who started it.':
+    'Upiši svoje ime da ostali znaju tko je pokrenuo plan.',
+  'Everyone can make it {time}': 'Svi mogu {time}',
+  'Everyone is free {session}.': 'Svi su slobodni: {session}.',
+  'Everything When can do, step by step. Version {version}.':
+    'Sve što When može, korak po korak. Verzija {version}.',
+  'Everything syncs live; gold bands show when everyone can make it':
+    'Sve se sinkronizira uživo; zlatne trake pokazuju kad svi mogu',
+  'Fill from my calendar': 'Popuni iz mog kalendara',
+  'Fill from my calendar marks you free in every gap between events that is long enough for the meetup.':
+    '„Popuni iz mog kalendara” označava te slobodnim/om u svakom razmaku između događaja koji je dovoljno dug za susret.',
+  'Filled {n} day from your calendar': {
+    one: 'Popunjen {n} dan iz kalendara',
+    few: 'Popunjena {n} dana iz kalendara',
+    other: 'Popunjeno {n} dana iz kalendara',
+  },
+  Finish: 'Završi',
+  'For when the group has options and one more person has to choose, like a teacher or a guest.':
+    'Za slučaj kad grupa ima opcije, a odlučiti mora još jedna osoba, poput učitelja ili gosta.',
+  Fr: 'Pe',
+  'Free all day': 'Cijeli dan',
+  'Free all day fills the whole day.': '„Cijeli dan” ispunjava cijeli dan.',
+  'Free all day marks the whole day. Tap it again to get your earlier periods back.':
+    '„Cijeli dan” označava cijeli dan. Dodirni ponovno da vratiš prijašnja razdoblja.',
+  'Free all day on {day}': 'Cijeli dan slobodan/na: {day}',
+  'Get told while the app is closed.': 'Saznaj i kad je aplikacija zatvorena.',
+  'Give it a name': 'Upiši naziv',
+  'Gold shows when everyone can make it.': 'Zlatno pokazuje kad svi mogu.',
+  "Google sign-in didn't work. Try again, or carry on as a guest.":
+    'Google prijava nije uspjela. Pokušaj ponovno ili nastavi kao gost.',
+  'Got it': 'Jasno',
+  Grape: 'Grožđe',
+  Guest: 'Gost',
+  'Guest or Google': 'Gost ili Google',
+  'Guests type a name for each When. With Google, your name is filled in for you.':
+    'Gosti upisuju ime za svaki When. Uz Google se tvoje ime ispunjava samo.',
+  Guide: 'Vodič',
+  'Hide changes': 'Sakrij promjene',
+  'Highlight {name}': 'Istakni: {name}',
+  History: 'Povijest',
+  'History moved into the menu (Pro preview), for any of your Whens':
+    'Povijest je premještena u izbornik (Pro pregled), za bilo koji tvoj When',
+  'History: a section in the menu showing who changed what in any of your Whens.':
+    'Povijest: odjeljak u izborniku koji pokazuje tko je što promijenio u bilo kojem tvom Whenu.',
+  'Hold and drag to add your free time': 'Drži i povuci za unos slobodnog vremena',
+  'Hold your finger on the bar for a moment, then drag to mark a period. A period can’t be shorter than the meetup.':
+    'Zadrži prst na traci trenutak pa povuci da označiš razdoblje. Razdoblje ne može biti kraće od susreta.',
+  'Hold, then drag to add a block.': 'Drži pa povuci da dodaš blok.',
+  'Hours are in {city} time. People elsewhere see their own.':
+    'Sati su po vremenu: {city}. Tko je drugdje, vidi svoje vrijeme.',
+  'How it works': 'Kako radi',
+  'How-it-works guide on first visit': 'Kratki vodič pri prvom posjetu',
+  'If a session is longer than the meetup they can also choose the start time.':
+    'Ako je termin dulji od susreta, može se odabrati i vrijeme početka.',
+  'If it is longer than the meetup, choose when the meetup should start.':
+    'Ako je dulji od susreta, odaberi kada susret počinje.',
+  'If you already marked times it asks whether to add to them or replace them. Undo is offered afterwards.':
+    'Ako već imaš označena vremena, pita treba li ih dopuniti ili zamijeniti. Nakon toga nudi poništavanje.',
+  'If you are not the organiser, × makes you leave: your answers are removed.':
+    'Ako nisi organizator, × znači da napuštaš When: tvoji se odgovori uklanjaju.',
+  'If you make the meetup longer or the hours narrower, periods that no longer fit are trimmed or removed.':
+    'Ako produljiš susret ili suziš sate, razdoblja koja više ne odgovaraju skraćuju se ili uklanjaju.',
+  'If your clock is different, every time is shown converted to yours, and a note at the top says so.':
+    'Ako ti je sat drukčiji, svako se vrijeme prikazuje preračunato u tvoje, a napomena na vrhu to kaže.',
+  'In a day, tap Copy to… to copy everything you marked, or the copy icon on one period to copy just that one.':
+    'U danu dodirni „Kopiraj na…” da kopiraš sve označeno, ili ikonu kopiranja na jednom razdoblju da kopiraš samo njega.',
+  'Install it on your phone': 'Instaliraj na mobitel',
+  'Invite people': 'Pozovi ljude',
+  'It may have been deleted, or the link is incomplete.':
+    'Možda je obrisan ili poveznica nije potpuna.',
+  'It then opens full screen like any other app.':
+    'Zatim se otvara preko cijelog zaslona kao svaka druga aplikacija.',
+  'Join for part of it': 'Sudjelovanje samo dio vremena',
+  'Join for part of it: people may mark less than the full length; a session then needs everyone together for at least half of it.':
+    'Sudjelovanje samo dio vremena: može se označiti manje od punog trajanja; termin tada traži da su svi zajedno barem polovicu vremena.',
+  'Jump to today': 'Skoči na danas',
+  'Just one': 'Samo jedan',
+  Keep: 'Zadrži',
+  'Keep holding, then drag…': 'Drži još malo pa povuci…',
+  Lagoon: 'Laguna',
+  Language: 'Jezik',
+  'Later weeks': 'Kasniji tjedni',
+  Latest: 'Najkasnije',
+  'Latest time': 'Najkasnije vrijeme',
+  'Layout fits an installed phone app: no cut-off buttons, less wasted space':
+    'Raspored odgovara instaliranoj aplikaciji na mobitelu: bez odsječenih gumba, manje praznog prostora',
+  Leave: 'Napusti',
+  'Leave this When': 'Napusti ovaj When',
+  'Leave {title}': 'Napusti {title}',
+  'Leave “{title}”? Your times will be removed and you’ll need the link to come back.':
+    'Napustiti „{title}”? Tvoja vremena bit će uklonjena, a za povratak će ti trebati poveznica.',
+  Length: 'Trajanje',
+  'Let people mark less than the full length.': 'Dopusti da se označi manje od punog trajanja.',
+  'Let someone else pick': 'Neka odabere netko drugi',
+  'Let’s go': 'Krenimo',
+  Light: 'Svijetla',
+  'Link copied – send it to your group': 'Poveznica kopirana – pošalji je svojoj grupi',
+  'Link ready': 'Poveznica spremna',
+  'Link sent': 'Poveznica poslana',
+  'Loading…': 'Učitavam…',
+  'Mark when you are free': 'Označi kad možeš',
+  'Mark when you are free, one day at a time.': 'Označi kad možeš, dan po dan.',
+  'Meetup length': 'Trajanje susreta',
+  Menu: 'Izbornik',
+  'Minimum is {length} – the meetup length. Your period was extended.':
+    'Minimum je {length} – trajanje susreta. Tvoje razdoblje je produljeno.',
+  Mo: 'Po',
+  'My Whens': 'Moji Whenovi',
+  'My Whens lists every When you created or joined on this device, with what is booked or possible.':
+    '„Moji Whenovi” prikazuje svaki When koji si stvorio/la ili kojem si se pridružio/la na ovom uređaju, s onim što je potvrđeno ili moguće.',
+  'My time': 'Moje vrijeme',
+  'Name it': 'Naziv plana',
+  'New When': 'Novi When',
+  'New app icon and browser icon': 'Nova ikona aplikacije i preglednika',
+  'New look with three colour themes, light and dark':
+    'Novi izgled s tri teme boja, svijetlo i tamno',
+  'New notifications: everyone has answered, session moved or cancelled, answer changed':
+    'Nove obavijesti: svi su odgovorili, termin pomaknut ili otkazan, odgovor promijenjen',
+  Next: 'Dalje',
+  'Next day': 'Sljedeći dan',
+  'Next moves on. Done takes you back to the calendar.':
+    '„Dalje” vodi na sljedeći dan. „Gotovo” te vraća na kalendar.',
+  'Next week': 'Sljedeći tjedan',
+  'No answer yet.': 'Još nema odgovora.',
+  'No days picked': 'Nema odabranih dana',
+  'No possible sessions yet': 'Još nema mogućih termina',
+  'Nobody here yet.': 'Još nema nikoga.',
+  'None fit: {names}': 'Nijedan ne odgovara: {names}',
+  'None of these work': 'Nijedan ne odgovara',
+  'None yet. Whens you create or join show up here.':
+    'Još nema nijednog. Ovdje se pojavljuju Whenovi koje stvoriš ili kojima se pridružiš.',
+  'Not now': 'Ne sada',
+  'Note for {time}': 'Bilješka za {time}',
+  'Nothing fits everyone yet. Try adding a bit more time.':
+    'Još ništa ne odgovara svima. Pokušaj dodati malo više vremena.',
+  'Nothing yet.': 'Još ništa.',
+  'Nothing yet. Tap a day to add your times.': 'Još ništa. Dodirni dan da uneseš svoja vremena.',
+  Notifications: 'Obavijesti',
+  'Notifications are blocked for When in your browser settings. Allow them there, then come back.':
+    'Obavijesti za When blokirane su u postavkama preglednika. Dopusti ih ondje pa se vrati.',
+  'Notifications are off': 'Obavijesti su isključene',
+  'Notifications are on': 'Obavijesti su uključene',
+  'Notifications are one switch in the menu, with a bell at the top of each When':
+    'Obavijesti su jedan prekidač u izborniku, sa zvonom na vrhu svakog Whena',
+  'Old Whens are removed after 60 days; daily backups of everything else':
+    'Stari Whenovi uklanjaju se nakon 60 dana; dnevne sigurnosne kopije svega ostalog',
+  'On an iPhone, first add When to your Home Screen (Share, then Add to Home Screen) and open it from there.':
+    'Na iPhoneu najprije dodaj When na početni zaslon (Dijeli pa „Dodaj na početni zaslon”) i otvori ga odande.',
+  'On iPhone, add When to your Home Screen first: tap Share, then “Add to Home Screen”, and open it from there.':
+    'Na iPhoneu najprije dodaj When na početni zaslon: dodirni Dijeli, zatim „Dodaj na početni zaslon” i otvori ga odande.',
+  'One bar per day. Every colour is a person.': 'Jedna traka po danu. Svaka boja je jedna osoba.',
+  'One booked session per day: booking a day again replaces it':
+    'Jedan potvrđeni termin po danu: ponovna potvrda ga zamjenjuje',
+  'One or more': 'Jedan ili više',
+  'One session per day: booking the same day again replaces that day’s session.':
+    'Jedan termin po danu: ponovna potvrda istog dana zamjenjuje termin tog dana.',
+  'Only the organiser can book a session': 'Samo organizator može potvrditi termin',
+  'Only the organiser can change the days': 'Samo organizator može mijenjati dane',
+  'Open or create a When first.': 'Najprije otvori ili stvori When.',
+  'Other Pro previews': 'Ostali Pro pregledi',
+  "Other people's free time": 'Slobodno vrijeme ostalih',
+  People: 'Osobe',
+  'People can join for part of it': 'Moguće je sudjelovati i samo dio vremena',
+  'Pick a time': 'Odaberi vrijeme',
+  'Pick some days, share the link, find a time that works for everyone.':
+    'Odaberi nekoliko dana, podijeli poveznicu, pronađite vrijeme koje odgovara svima.',
+  'Pick some days, share the link, find a time that works.':
+    'Odaberi nekoliko dana, podijeli poveznicu, pronađite vrijeme koje odgovara.',
+  'Pick the one that works for you.': 'Odaberi termin koji ti odgovara.',
+  'Pick your time zone by hand under Date and time in the menu':
+    'Ručni odabir vremenske zone u izborniku pod „Datum i vrijeme”',
+  'Plan a When': 'Planiraj When',
+  'Plan a new When': 'Planiraj novi When',
+  'Planned with When: {url}': 'Planirano uz When: {url}',
+  'Possible sessions': 'Mogući termini',
+  'Possible sessions are chips: tap one to see notes, pick the start time and book':
+    'Mogući termini su čipovi: dodirni jedan da vidiš bilješke, odabereš početak i potvrdiš',
+  Prev: 'Preth.',
+  'Prev and Next move between days. Done returns to the calendar.':
+    '„Preth.” i „Dalje” prelaze između dana. „Gotovo” vraća na kalendar.',
+  'Previous day': 'Prethodni dan',
+  Pro: 'Pro',
+  'Pro features': 'Pro značajke',
+  'Pro preview: book more than one session': 'Pro pregled: potvrda više termina',
+  'Pro preview: fill your free time from your calendar':
+    'Pro pregled: popuni slobodno vrijeme iz kalendara',
+  'Pro previews: connect calendar, add to calendar, join for part of it, history':
+    'Pro pregledi: povezivanje kalendara, dodavanje u kalendar, sudjelovanje dio vremena, povijest',
+  'Push notifications': 'Push obavijesti',
+  'Push notifications when a session is booked and when someone answers a link':
+    'Push obavijesti kad se termin potvrdi i kad netko odgovori na poveznicu',
+  'Read the calendar': 'Čitanje kalendara',
+  'Reload to update': 'Ponovno učitaj za ažuriranje',
+  Remove: 'Ukloni',
+  'Remove link': 'Ukloni poveznicu',
+  'Remove this link': 'Ukloni ovu poveznicu',
+  'Remove this period': 'Ukloni ovo razdoblje',
+  'Removed {time}': 'Uklonjeno: {time}',
+  Replace: 'Zamijeni',
+  Sa: 'Su',
+  Save: 'Spremi',
+  'Save note': 'Spremi bilješku',
+  'Scroll sideways for more days': 'Pomakni u stranu za više dana',
+  'Sections marked Pro are previews. Switch them on under Pro features in the menu.':
+    'Odjeljci s oznakom Pro su pregledi. Uključi ih u izborniku pod Pro značajke.',
+  'See your own events behind the bars. Sample events for now.':
+    'Vidi vlastite događaje iza traka. Zasad s primjerima događaja.',
+  'Select all': 'Odaberi sve',
+  'Select none': 'Poništi odabir',
+  'Send a link with only the possible sessions and let someone choose':
+    'Pošalji poveznicu samo s mogućim terminima i prepusti nekome odabir',
+  'Send a link with only the possible sessions.': 'Pošalji poveznicu samo s mogućim terminima.',
+  'Send my answer': 'Pošalji odgovor',
+  'Sending…': 'Šaljem…',
+  'Sent to the wrong person? Tap the bin next to the link to remove it.':
+    'Poslano krivoj osobi? Dodirni koš pokraj poveznice da je ukloniš.',
+  'Sent. Thanks, {name}! You can change your answer any time.':
+    'Poslano. Hvala, {name}! Odgovor možeš promijeniti kad god želiš.',
+  Sessions: 'Termini',
+  'Sessions to include': 'Termini koje uključuješ',
+  'Set how long the meetup should be, and the earliest and latest hour people can choose.':
+    'Odredi koliko susret treba trajati te najraniji i najkasniji sat koji se može odabrati.',
+  'Share link': 'Podijeli poveznicu',
+  Shortcuts: 'Prečaci',
+  Show: 'Prikaži',
+  'Show less': 'Prikaži manje',
+  'Shown in your time': 'Prikazano u tvom vremenu',
+  'Shown in {city} time': 'Prikazano po vremenu: {city}',
+  'Sign in': 'Prijava',
+  'Sign out': 'Odjava',
+  Skip: 'Preskoči',
+  "So the others know who's who.": 'Da ostali znaju tko je tko.',
+  'So they know who answered': 'Da znaju tko je odgovorio',
+  'Someone here is already called {name}. Add a last initial or pick another name.':
+    'Netko se ovdje već zove {name}. Dodaj početno slovo prezimena ili odaberi drugo ime.',
+  'Something went wrong': 'Nešto je pošlo po zlu',
+  'Start a new one': 'Započni novi',
+  'Start at': 'Početak u',
+  'Start time': 'Vrijeme početka',
+  'Step {n} of 2': 'Korak {n} od 2',
+  'Stop highlighting {name}': 'Prestani isticati: {name}',
+  Su: 'Ne',
+  Sunset: 'Zalazak',
+  'Switch language at the top of the menu or on the welcome screen':
+    'Jezik se mijenja na vrhu izbornika ili na zaslonu dobrodošlice',
+  'Switch off all day (brings back your earlier times)':
+    'Isključi „cijeli dan” (vraća tvoja prijašnja vremena)',
+  'Switch off all day on {day}': 'Isključi „cijeli dan” za {day}',
+  System: 'Sustav',
+  'Tap + and give it a name. A description is optional: where, what to bring.':
+    'Dodirni + i daj mu naziv. Opis nije obavezan: gdje, što ponijeti.',
+  'Tap Book. Everyone sees the Booked banner at the top and can add it to their calendar.':
+    'Dodirni „Potvrdi”. Svi na vrhu vide oznaku „Potvrđeno” i mogu termin dodati u svoj kalendar.',
+  'Tap Copy link at the top of the When and send it in any chat.':
+    'Dodirni „Kopiraj poveznicu” na vrhu Whena i pošalji je u bilo kojem chatu.',
+  'Tap Copy. What those days already had is kept; overlapping periods are joined.':
+    'Dodirni „Kopiraj”. Ono što su ti dani već imali ostaje; razdoblja koja se preklapaju spajaju se.',
+  'Tap Create my When. You are the organiser.': 'Dodirni „Stvori moj When”. Ti si organizator.',
+  'Tap a block for a note. × removes it.': 'Dodirni blok za bilješku. × ga uklanja.',
+  'Tap a day in the calendar to open it.': 'Dodirni dan u kalendaru da ga otvoriš.',
+  'Tap a day to add your free time.': 'Dodirni dan da uneseš slobodno vrijeme.',
+  'Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.':
+    'Dodirni ime ispod kalendara da istakneš tu osobu; dodirni ponovno da isključiš. Zelena točka znači da je upravo u aplikaciji.',
+  'Tap a period to write a note, for example “only if it doesn’t rain”. Tap × to remove it.':
+    'Dodirni razdoblje da napišeš bilješku, na primjer „samo ako ne pada kiša”. Dodirni × da ga ukloniš.',
+  'Tap a possible session, or its gold band in the calendar.':
+    'Dodirni mogući termin ili njegovu zlatnu traku u kalendaru.',
+  'Tap a session to see the notes people left on the times it covers.':
+    'Dodirni termin da vidiš bilješke ostavljene uz vremena koja pokriva.',
+  'Tap any days you like.': 'Dodirni dane koje želiš.',
+  'Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once.':
+    'Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom.',
+  'Tap every time that works for you.': 'Dodirni sve termine koji ti odgovaraju.',
+  'Tap the bell at the top of a When, or open Notifications in the menu, and switch Push notifications on.':
+    'Dodirni zvono na vrhu Whena ili otvori „Obavijesti” u izborniku pa uključi Push obavijesti.',
+  'Tap the button in that note to see the organiser’s time instead, and again to go back.':
+    'Dodirni gumb u toj napomeni da vidiš vrijeme organizatora, i ponovno za povratak.',
+  'Tap the header to fold the list down to one line.':
+    'Dodirni zaglavlje da sklopiš popis na jedan redak.',
+  'Tap the pencil next to the title to change the name, description, days, length or hours.':
+    'Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate.',
+  'Tell others who you are': 'Reci ostalima tko si',
+  Th: 'Če',
+  'That session is no longer possible for everyone': 'Taj termin više nije moguć za sve',
+  'The Book button shows the day and time itself; repeated text around it is gone':
+    'Gumb „Potvrdi” sam prikazuje dan i vrijeme; ponovljeni tekst oko njega je uklonjen',
+  'The banner lists every booked session, each with its own calendar button.':
+    'Oznaka prikazuje svaki potvrđeni termin, svaki s vlastitim gumbom za kalendar.',
+  'The buttons next to the bar save you time.': 'Gumbi pokraj trake štede ti vrijeme.',
+  'The calendar': 'Kalendar',
+  'The day columns stay the organiser’s days. A small ⁺¹ or ⁻¹ next to a time means it is the next or previous day for you.':
+    'Stupci dana ostaju dani organizatora. Mali ⁺¹ ili ⁻¹ uz vrijeme znači da je za tebe to sljedeći ili prethodni dan.',
+  'The day picker starts from this week and never shows the past':
+    'Odabir dana počinje od ovog tjedna i nikad ne prikazuje prošlost',
+  'The first time you open a When it walks you through the days one by one.':
+    'Kad prvi put otvoriš When, vodi te kroz dane jedan po jedan.',
+  'The hours must leave room for a {n} h meetup.': 'Između tih sati mora stati susret od {n} h.',
+  'The hours must leave room for the meetup length.':
+    'Između tih sati mora stati trajanje susreta.',
+  'The menu': 'Izbornik',
+  'The organiser can book a session, from the list or by tapping a gold band':
+    'Organizator može potvrditi termin, s popisa ili dodirom na zlatnu traku',
+  'The organiser can book more than one session for a When.':
+    'Organizator može potvrditi više termina za jedan When.',
+  'The organiser is also told when someone answers, changes or withdraws an answer on a link they sent.':
+    'Organizator saznaje i kad netko odgovori, promijeni ili povuče odgovor na poslanoj poveznici.',
+  'The organiser removes one with its × button.': 'Organizator pojedini termin uklanja njegovim ×.',
+  'The sun button under a day marks you free all day.':
+    'Gumb sa suncem ispod dana označava da možeš cijeli dan.',
+  'The sun under a day means free all day.': 'Sunce ispod dana znači da si slobodan/na cijeli dan.',
+  'The switch is per device and covers all your Whens.':
+    'Prekidač vrijedi po uređaju i za sve tvoje Whenove.',
+  'Their answer appears as a card at the top of your When, and their choice is outlined in the calendar. Book it from the card.':
+    'Odgovor se pojavljuje kao kartica na vrhu tvog Whena, a odabir je uokviren u kalendaru. Potvrdi ga izravno s kartice.',
+  Theme: 'Tema',
+  'They appear above the calendar once at least two people have answered, in date order.':
+    'Pojavljuju se iznad kalendara čim odgovore barem dvije osobe, poredani po datumu.',
+  'They can pick': 'Mogu odabrati',
+  'They get a link with only these sessions. Which ones?':
+    'Dobit će poveznicu samo s ovim terminima. S kojima?',
+  'They prefer different start times.': 'Žele različita vremena početka.',
+  'They see only those sessions, enter a name and tap what works. They never see the calendar.':
+    'Osoba vidi samo te termine, upiše ime i dodirne ono što joj odgovara. Kalendar nikad ne vidi.',
+  "This When doesn't exist": 'Ovaj When ne postoji',
+  "This browser can't show notifications.": 'Ovaj preglednik ne može prikazivati obavijesti.',
+  'This change log, version numbers and a full guide':
+    'Ovaj popis promjena, brojevi verzija i potpun vodič',
+  "This link doesn't exist": 'Ova poveznica ne postoji',
+  'This week': 'Ovaj tjedan',
+  'Three languages: English, German and Croatian': 'Tri jezika: engleski, njemački i hrvatski',
+  'Tick the days it should go to, or use Select all.':
+    'Označi dane na koje ide ili upotrijebi „Odaberi sve”.',
+  'Time zone': 'Vremenska zona',
+  'Time zones': 'Vremenske zone',
+  'Time zones: a When keeps the organiser’s zone and everyone else sees their own time':
+    'Vremenske zone: When čuva zonu organizatora, a svi ostali vide svoje vrijeme',
+  "Times outside the new range, or shorter than the meetup, are removed from everyone's answers.":
+    'Vremena izvan novog raspona ili kraća od susreta uklanjaju se iz svih odgovora.',
+  Title: 'Naziv',
+  'To delete a When, open the menu and tap × on it under My Whens. Everyone loses access.':
+    'Da obrišeš When, otvori izbornik i dodirni × uz njega pod „Moji Whenovi”. Svi gube pristup.',
+  'Travelling, or planning for somewhere else? Choose a time zone under Date and time in the menu.':
+    'Putuješ ili planiraš za drugo mjesto? Odaberi vremensku zonu u izborniku pod „Datum i vrijeme”.',
+  Tu: 'Ut',
+  'Two people can’t use the same name in one When.':
+    'Dvije osobe ne mogu imati isto ime u jednom Whenu.',
+  'Under Possible sessions tap Let someone else pick and tick the sessions to offer.':
+    'Pod „Mogući termini” dodirni „Neka odabere netko drugi” i označi termine koje nudiš.',
+  Undo: 'Poništi',
+  'Undo on the banner takes the booking back.': '„Poništi” na oznaci povlači potvrdu.',
+  'Updates apply automatically when opened in a browser.':
+    'U pregledniku se ažuriranja primjenjuju automatski.',
+  'Used to pre-fill the form when you plan a new When.':
+    'Time se unaprijed ispunjava obrazac kad planiraš novi When.',
+  'Version {version}': 'Verzija {version}',
+  'Waiting for one more person to answer.': 'Čeka se odgovor još jedne osobe.',
+  'Waiting for {names}.': 'Čeka se: {names}.',
+  We: 'Sr',
+  Weekends: 'Vikendi',
+  'Welcome screen: continue with Google or as a guest':
+    'Zaslon dobrodošlice: nastavi uz Google ili kao gost',
+  "What's the plan?": 'Kakav je plan?',
+  "What's your name?": 'Kako se zoveš?',
+  'What’s new': 'Što je novo',
+  When: 'When',
+  'When a session is booked, moved or cancelled, when everyone has answered, and about answers to links you sent.':
+    'Kad se termin potvrdi, pomakne ili otkaže, kad svi odgovore te o odgovorima na poveznice koje pošalješ.',
+  'When are you free? Mark your times here:': 'Kad možeš? Označi svoja vremena ovdje:',
+  'Where, what to bring, anything the group should know…':
+    'Gdje, što ponijeti, sve što grupa treba znati…',
+  'Where, what to bring…': 'Gdje, što ponijeti…',
+  'Which When': 'Koji When',
+  'Which days could work?': 'Koji bi dani mogli odgovarati?',
+  'Who are you?': 'Tko si ti?',
+  'Whoever opens it enters a name and gets their own colour. No account is needed.':
+    'Tko je otvori, upiše ime i dobije svoju boju. Račun nije potreban.',
+  'Whole day': 'Cijeli dan',
+  'With Google your name is filled in for you. Sign in or out from the top of the menu.':
+    'Uz Google se tvoje ime ispunjava samo. Prijava i odjava nalaze se na vrhu izbornika.',
+  'With more than five days, swipe sideways. An arrow on the edge shows there is more.':
+    'Ako ima više od pet dana, pomakni u stranu. Strelica na rubu pokazuje da ima još.',
+  'With this on, booking a session on another day adds it instead of replacing the first.':
+    'Kad je ovo uključeno, potvrda termina na drugi dan dodaje ga umjesto da zamijeni prvi.',
+  'Works as an installed app on your phone': 'Radi kao instalirana aplikacija na mobitelu',
+  You: 'Ti',
+  'You already marked some times.': 'Već imaš označena vremena.',
+  'You are told when everyone has answered, and when a session is booked, moved or cancelled.':
+    'Dobivaš obavijest kad svi odgovore te kad se termin potvrdi, pomakne ili otkaže.',
+  'You have the latest version.': 'Imaš najnoviju verziju.',
+  'Your Whens are kept on this device': 'Tvoji Whenovi spremljeni su na ovom uređaju',
+  'Your calendar leaves no gap long enough':
+    'U tvom kalendaru nema dovoljno dugog slobodnog razmaka',
+  'Your name': 'Tvoje ime',
+  'Your name is shown to the others in the group.': 'Tvoje ime vide ostali u grupi.',
+  'Your own events appear as grey striped blocks behind the bars, so you see clashes while marking.':
+    'Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.',
+  'added {session}': 'dodao/la {session}',
+  'are you free?': 'kad možeš?',
+  'at least {length}': 'najmanje {length}',
+  'changed name': 'promijenio/la ime',
+  'changed name from {name}': 'promijenio/la ime (prije {name})',
+  'cleared {day}': 'očistio/la {day}',
+  'e.g. have to leave 20 min early': 'npr. moram otići 20 min ranije',
+  'iPhone: open the link in Safari, tap Share, then Add to Home Screen.':
+    'iPhone: otvori poveznicu u Safariju, dodirni Dijeli pa „Dodaj na početni zaslon”.',
+  joined: 'pridružio/la se',
+  'joined as {name}': 'sudjeluješ kao {name}',
+  'just now': 'upravo sad',
+  left: 'napustio/la',
+  'moved {day} to {time}': 'pomaknuo/la {day} na {time}',
+  'no times yet': 'još bez vremena',
+  online: 'na mreži',
+  or: 'ili',
+  'organiser as {name}': 'organizator kao {name}',
+  preview: 'pregled',
+  pro: 'pro',
+  'reconnecting…': 'ponovno povezivanje…',
+  'removed {session}': 'uklonio/la {session}',
+  soon: 'uskoro',
+  'tap to add a note': 'dodirni za bilješku',
+  'updated the When': 'ažurirao/la When',
+  yesterday: 'jučer',
+  you: 'ti',
+  '{amount} ahead of you': '{amount} ispred tebe',
+  '{amount} behind you': '{amount} iza tebe',
+  '{city} time': 'Vrijeme: {city}',
+  '{day} – tap to mark when you’re free, hold to clear':
+    '{day} – dodirni za unos slobodnog vremena, drži za brisanje',
+  '{length} needed. When should it start?': 'Potrebno je {length}. Kada da počne?',
+  '{names} can do this one': 'Ovaj termin odgovara: {names}',
+  '{names} can do {session}': '{session} odgovara: {names}',
+  '{names} can’t make any of the sessions you sent':
+    '{names} ne može ni u jednom od poslanih termina',
+  '{names} can’t stay the full {length}': '{names} ne može ostati punih {length}',
+  '{names} picked a session': '{names} je odabrao/la termin',
+  '{names} picked {session}': '{names} je odabrao/la {session}',
+  '{n} answer': { one: '{n} odgovor', few: '{n} odgovora', other: '{n} odgovora' },
+  '{n} answers so far.': 'Dosad odgovora: {n}.',
+  '{n} day': { one: '{n} dan', few: '{n} dana', other: '{n} dana' },
+  '{n} days ago': 'prije {n} dana',
+  '{n} h ago': 'prije {n} h',
+  '{n} hour': { one: '{n} sat', few: '{n} sata', other: '{n} sati' },
+  '{n} min ago': 'prije {n} min',
+  '{n} note': { one: '{n} bilješka', few: '{n} bilješke', other: '{n} bilješki' },
+  '{n} of {total} answered': 'odgovorilo {n} od {total}',
+  '“Let someone else pick” replaces “Ask someone”; sent links can be removed':
+    '„Neka odabere netko drugi” zamjenjuje „Pitaj nekoga”; poslane poveznice mogu se ukloniti',
+  '“Notify me” is now “Push notifications”': '„Obavijesti me” sada je „Push obavijesti”',
+  '“Waiting for …” tells you who hasn’t answered yet.':
+    '„Čeka se …” govori ti tko još nije odgovorio.',
+};

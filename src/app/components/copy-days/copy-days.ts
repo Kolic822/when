@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { shortDate } from '../../core/time';
+import { t, tn } from '../../core/i18n/i18n';
 
 /** "Same times on other days": pick which of the other days should get a copy. */
 @Component({
@@ -19,14 +20,14 @@ import { shortDate } from '../../core/time';
         [disabled]="disabled()"
       >
         <mat-icon>content_copy</mat-icon>
-        Copy to…
+        {{ t('Copy to…') }}
       </button>
     } @else {
       <div class="picker">
         <div class="head">
-          <strong>Copy {{ what() || fromLabel() }} to</strong>
+          <strong>{{ t('Copy {what} to', { what: what() || fromLabel() }) }}</strong>
           <button type="button" class="linkish" (click)="toggleAll()">
-            {{ allChosen() ? 'Select none' : 'Select all' }}
+            {{ allChosen() ? t('Select none') : t('Select all') }}
           </button>
         </div>
         <ul>
@@ -39,12 +40,12 @@ import { shortDate } from '../../core/time';
           }
         </ul>
         <div class="actions">
-          <button type="button" class="pill" (click)="cancel()">Cancel</button>
+          <button type="button" class="pill" (click)="cancel()">{{ t('Cancel') }}</button>
           <button mat-flat-button type="button" (click)="apply()" [disabled]="!chosen().size">
             @if (compact()) {
-              Copy ({{ chosen().size }})
+              {{ t('Copy ({n})', { n: chosen().size }) }}
             } @else {
-              Copy to {{ chosen().size }} {{ chosen().size === 1 ? 'day' : 'days' }}
+              {{ tn(chosen().size, 'Copy to {n} day', 'Copy to {n} days') }}
             }
           </button>
         </div>
@@ -130,6 +131,8 @@ import { shortDate } from '../../core/time';
   `,
 })
 export class CopyDays {
+  readonly t = t;
+  readonly tn = tn;
   readonly dates = input.required<string[]>();
   readonly from = input.required<string>();
   readonly disabled = input(false);

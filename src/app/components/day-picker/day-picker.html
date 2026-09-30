@@ -7,11 +7,11 @@
         (click)="applyShortcut(s.days)"
         [class.active]="shortcutActive(s.days)"
       >
-        {{ s.label }}
+        {{ t(s.label) }}
       </button>
     }
     @if (selected().length) {
-      <button type="button" class="pill" (click)="clear()">Clear</button>
+      <button type="button" class="pill" (click)="clear()">{{ t('Clear') }}</button>
     }
   </div>
 
@@ -21,21 +21,21 @@
       type="button"
       (click)="shift(-1)"
       [disabled]="atStart()"
-      aria-label="Earlier weeks"
+      [attr.aria-label]="t('Earlier weeks')"
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <button type="button" class="month-label" (click)="goToday()" title="Jump to today">
+    <button type="button" class="month-label" (click)="goToday()" [title]="t('Jump to today')">
       {{ monthLabel() }}
     </button>
-    <button mat-icon-button type="button" (click)="shift(1)" aria-label="Later weeks">
+    <button mat-icon-button type="button" (click)="shift(1)" [attr.aria-label]="t('Later weeks')">
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
 
   <div class="grid" role="grid" [attr.aria-label]="monthLabel()">
     @for (w of weekdays; track w) {
-      <span class="wd" role="columnheader">{{ w }}</span>
+      <span class="wd" role="columnheader">{{ t(w) }}</span>
     }
     @for (c of cells(); track c.key) {
       <button

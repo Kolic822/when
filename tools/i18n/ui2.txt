@@ -1,0 +1,603 @@
+The calendar
+Der Kalender
+Kalendar
+
+One bar per day. Every colour is a person.
+Ein Balken pro Tag. Jede Farbe ist eine Person.
+Jedna traka po danu. Svaka boja je jedna osoba.
+
+Tap a day to add your free time.
+Tippe auf einen Tag, um deine freie Zeit einzutragen.
+Dodirni dan da uneseš slobodno vrijeme.
+
+Gold shows when everyone can make it.
+Gold zeigt, wann alle können.
+Zlatno pokazuje kad svi mogu.
+
+The sun under a day means free all day.
+Die Sonne unter einem Tag bedeutet: ganzer Tag frei.
+Sunce ispod dana znači da si slobodan/na cijeli dan.
+
+Day by day
+Tag für Tag
+Dan po dan
+
+Mark when you are free, one day at a time.
+Markiere Tag für Tag, wann du Zeit hast.
+Označi kad možeš, dan po dan.
+
+Hold, then drag to add a block.
+Halten, dann ziehen, um einen Block hinzuzufügen.
+Drži pa povuci da dodaš blok.
+
+Drag to add a block.
+Ziehen, um einen Block hinzuzufügen.
+Povuci da dodaš blok.
+
+Drag its edges to resize, hold it to move.
+Ränder ziehen zum Ändern der Länge, halten zum Verschieben.
+Povuci rubove za promjenu duljine, drži za pomicanje.
+
+Tap a block for a note. × removes it.
+Tippe auf einen Block für eine Notiz. × entfernt ihn.
+Dodirni blok za bilješku. × ga uklanja.
+
+Shortcuts
+Abkürzungen
+Prečaci
+
+The buttons next to the bar save you time.
+Die Schaltflächen neben dem Balken sparen dir Zeit.
+Gumbi pokraj trake štede ti vrijeme.
+
+Free all day fills the whole day.
+„Ganzer Tag frei“ füllt den ganzen Tag.
+„Cijeli dan” ispunjava cijeli dan.
+
+Copy to… repeats your times on other days.
+„Kopieren nach…“ wiederholt deine Zeiten an anderen Tagen.
+„Kopiraj na…” ponavlja tvoja vremena na drugim danima.
+
+Next moves on. Done takes you back to the calendar.
+„Weiter“ geht zum nächsten Tag. „Fertig“ bringt dich zurück zum Kalender.
+„Dalje” vodi na sljedeći dan. „Gotovo” te vraća na kalendar.
+
+People
+Personen
+Osobe
+
+online
+online
+na mreži
+
+you
+du
+ti
+
+no times yet
+noch keine Zeiten
+još bez vremena
+
+Change your name
+Namen ändern
+Promijeni ime
+
+Nobody here yet.
+Noch niemand da.
+Još nema nikoga.
+
+{n} of {total} answered
+{n} von {total} haben geantwortet
+odgovorilo {n} od {total}
+
+Stop highlighting {name}
+{name} nicht mehr hervorheben
+Prestani isticati: {name}
+
+Highlight {name}
+{name} hervorheben
+Istakni: {name}
+
+Your name
+Dein Name
+Tvoje ime
+
+Your name is shown to the others in the group.
+Dein Name wird den anderen in der Gruppe angezeigt.
+Tvoje ime vide ostali u grupi.
+
+Who are you?
+Wer bist du?
+Tko si ti?
+
+Let’s go
+Los geht’s
+Krenimo
+
+Possible sessions
+Mögliche Termine
+Mogući termini
+
+Show less
+Weniger anzeigen
+Prikaži manje
+
+Start at
+Beginn um
+Početak u
+
+Start time
+Startzeit
+Vrijeme početka
+
+Nothing yet. Tap a day to add your times.
+Noch nichts. Tippe auf einen Tag, um deine Zeiten einzutragen.
+Još ništa. Dodirni dan da uneseš svoja vremena.
+
+Waiting for one more person to answer.
+Es fehlt noch die Antwort einer weiteren Person.
+Čeka se odgovor još jedne osobe.
+
+Nothing fits everyone yet. Try adding a bit more time.
+Noch passt nichts für alle. Versuch, etwas mehr Zeit einzutragen.
+Još ništa ne odgovara svima. Pokušaj dodati malo više vremena.
+
+Waiting for {names}.
+Es fehlt noch: {names}.
+Čeka se: {names}.
+
+Link sent
+Link gesendet
+Poveznica poslana
+
+Keep
+Behalten
+Zadrži
+
+Remove link
+Link entfernen
+Ukloni poveznicu
+
+Remove this link
+Diesen Link entfernen
+Ukloni ovu poveznicu
+
+None fit: {names}
+Keiner passt: {names}
+Nijedan ne odgovara: {names}
+
+No answer yet.
+Noch keine Antwort.
+Još nema odgovora.
+
+{names} can’t stay the full {length}
+{names} kann nicht die vollen {length} bleiben
+{names} ne može ostati punih {length}
+
+Everyone is free {session}.
+Alle haben Zeit: {session}.
+Svi su slobodni: {session}.
+
+Copy the link to this When
+Link zu diesem When kopieren
+Kopiraj poveznicu na ovaj When
+
+Copy
+Kopieren
+Kopiraj
+
+Share link
+Link teilen
+Podijeli poveznicu
+
+Link copied – send it to your group
+Link kopiert – schick ihn an deine Gruppe
+Poveznica kopirana – pošalji je svojoj grupi
+
+Could not copy. Long-press the link to copy it.
+Kopieren nicht möglich. Halte den Link gedrückt, um ihn zu kopieren.
+Kopiranje nije uspjelo. Dugo pritisni poveznicu da je kopiraš.
+
+When are you free? Mark your times here:
+Wann hast du Zeit? Trag deine Zeiten hier ein:
+Kad možeš? Označi svoja vremena ovdje:
+
+Clear {day}
+{day} leeren
+Očisti {day}
+
+Clear your times on {day}?
+Deine Zeiten am {day} löschen?
+Obrisati tvoja vremena za {day}?
+
+Switch off all day on {day}
+„Ganzer Tag“ am {day} ausschalten
+Isključi „cijeli dan” za {day}
+
+Free all day on {day}
+Am {day} den ganzen Tag frei
+Cijeli dan slobodan/na: {day}
+
+Switch off all day (brings back your earlier times)
+„Ganzer Tag“ ausschalten (stellt deine früheren Zeiten wieder her)
+Isključi „cijeli dan” (vraća tvoja prijašnja vremena)
+
+Scroll sideways for more days
+Seitlich wischen für weitere Tage
+Pomakni u stranu za više dana
+
+{day} – tap to mark when you’re free, hold to clear
+{day} – tippen, um freie Zeit zu markieren, halten zum Leeren
+{day} – dodirni za unos slobodnog vremena, drži za brisanje
+
+Everyone can make it {time}
+Alle können {time}
+Svi mogu {time}
+
+Shown in your time
+In deiner Zeit angezeigt
+Prikazano u tvom vremenu
+
+Shown in {city} time
+In der Zeit von {city} angezeigt
+Prikazano po vremenu: {city}
+
+{city} time
+Zeit in {city}
+Vrijeme: {city}
+
+My time
+Meine Zeit
+Moje vrijeme
+
+{amount} behind you
+{amount} hinter dir
+{amount} iza tebe
+
+{amount} ahead of you
+{amount} vor dir
+{amount} ispred tebe
+
+Could not load Google sign-in
+Google-Anmeldung konnte nicht geladen werden
+Google prijava nije se mogla učitati
+
+Could not create event
+When konnte nicht erstellt werden
+When nije moguće stvoriti
+
+Could not delete
+Löschen nicht möglich
+Brisanje nije uspjelo
+
+Could not leave
+Verlassen nicht möglich
+Napuštanje nije uspjelo
+
+Could not create the link
+Link konnte nicht erstellt werden
+Poveznicu nije moguće stvoriti
+
+Could not remove the link
+Link konnte nicht entfernt werden
+Poveznicu nije moguće ukloniti
+
+Could not load
+Laden nicht möglich
+Učitavanje nije uspjelo
+
+Could not send your answer
+Deine Antwort konnte nicht gesendet werden
+Tvoj odgovor nije moguće poslati
+
+Could not load event
+When konnte nicht geladen werden
+When nije moguće učitati
+
+Someone here is already called {name}. Add a last initial or pick another name.
+Hier heißt schon jemand {name}. Füge einen Anfangsbuchstaben hinzu oder wähle einen anderen Namen.
+Netko se ovdje već zove {name}. Dodaj početno slovo prezimena ili odaberi drugo ime.
+
+No days picked
+Keine Tage gewählt
+Nema odabranih dana
+
+are you free?
+hast du Zeit?
+kad možeš?
+
+reconnecting…
+Verbindung wird wiederhergestellt…
+ponovno povezivanje…
+
+Notifications are on
+Benachrichtigungen sind an
+Obavijesti su uključene
+
+Notifications are off
+Benachrichtigungen sind aus
+Obavijesti su isključene
+
+Plan a new When
+Neues When planen
+Planiraj novi When
+
+It may have been deleted, or the link is incomplete.
+Es wurde vielleicht gelöscht, oder der Link ist unvollständig.
+Možda je obrisan ili poveznica nije potpuna.
+
+Start a new one
+Neues starten
+Započni novi
+
+Edit meetup
+Treffen bearbeiten
+Uredi susret
+
+What's your name?
+Wie heißt du?
+Kako se zoveš?
+
+So the others know who's who.
+Damit die anderen wissen, wer wer ist.
+Da ostali znaju tko je tko.
+
+Save
+Speichern
+Spremi
+
+Title
+Titel
+Naziv
+
+Description (optional)
+Beschreibung (optional)
+Opis (neobavezno)
+
+Where, what to bring, anything the group should know…
+Wo, was mitbringen, alles, was die Gruppe wissen sollte…
+Gdje, što ponijeti, sve što grupa treba znati…
+
+Days in the running
+Mögliche Tage
+Dani u igri
+
+People can join for part of it
+Man kann auch nur teilweise dabei sein
+Moguće je sudjelovati i samo dio vremena
+
+The hours must leave room for a {n} h meetup.
+Zwischen den Uhrzeiten muss Platz für ein Treffen von {n} Std. sein.
+Između tih sati mora stati susret od {n} h.
+
+Fill from my calendar
+Aus meinem Kalender ausfüllen
+Popuni iz mog kalendara
+
+You already marked some times.
+Du hast schon Zeiten markiert.
+Već imaš označena vremena.
+
+Replace
+Ersetzen
+Zamijeni
+
+Add to them
+Hinzufügen
+Dodaj njima
+
+Only the organiser can book a session
+Nur der Organisator kann einen Termin festlegen
+Samo organizator može potvrditi termin
+
+Your calendar leaves no gap long enough
+Dein Kalender lässt keine ausreichend lange Lücke
+U tvom kalendaru nema dovoljno dugog slobodnog razmaka
+
+That session is no longer possible for everyone
+Dieser Termin ist nicht mehr für alle möglich
+Taj termin više nije moguć za sve
+
+Cleared {day}
+{day} geleert
+Očišćeno: {day}
+
+Only the organiser can change the days
+Nur der Organisator kann die Tage ändern
+Samo organizator može mijenjati dane
+
+Everything When can do, step by step. Version {version}.
+Alles, was When kann, Schritt für Schritt. Version {version}.
+Sve što When može, korak po korak. Verzija {version}.
+
+Sections marked Pro are previews. Switch them on under Pro features in the menu.
+Mit „Pro“ markierte Abschnitte sind Vorschauen. Schalte sie im Menü unter Pro-Funktionen ein.
+Odjeljci s oznakom Pro su pregledi. Uključi ih u izborniku pod Pro značajke.
+
+Pro
+Pro
+Pro
+
+Step {n} of 2
+Schritt {n} von 2
+Korak {n} od 2
+
+Pick some days, share the link, find a time that works.
+Wähle ein paar Tage, teile den Link, findet eine Zeit, die passt.
+Odaberi nekoliko dana, podijeli poveznicu, pronađite vrijeme koje odgovara.
+
+Name it
+Name des Plans
+Naziv plana
+
+Band rehearsal, drinks, hike…
+Bandprobe, Drinks, Wanderung…
+Proba benda, piće, planinarenje…
+
+Give it a name
+Gib ihm einen Namen
+Upiši naziv
+
+Where, what to bring…
+Wo, was mitbringen…
+Gdje, što ponijeti…
+
+Tell others who you are
+Sag den anderen, wer du bist
+Reci ostalima tko si
+
+What's the plan?
+Was ist der Plan?
+Kakav je plan?
+
+Which days could work?
+Welche Tage könnten passen?
+Koji bi dani mogli odgovarati?
+
+Tap any days you like.
+Tippe auf beliebige Tage.
+Dodirni dane koje želiš.
+
+Length
+Dauer
+Trajanje
+
+Earliest time
+Früheste Uhrzeit
+Najranije vrijeme
+
+Latest time
+Späteste Uhrzeit
+Najkasnije vrijeme
+
+Hours are in {city} time. People elsewhere see their own.
+Die Uhrzeiten gelten für {city}. Wer woanders ist, sieht die eigene Zeit.
+Sati su po vremenu: {city}. Tko je drugdje, vidi svoje vrijeme.
+
+Earliest to latest must leave room for a {n} h meetup.
+Zwischen frühestens und spätestens muss Platz für ein Treffen von {n} Std. sein.
+Između najranijeg i najkasnijeg mora stati susret od {n} h.
+
+Create my When
+Mein When erstellen
+Stvori moj When
+
+This link doesn't exist
+Diesen Link gibt es nicht
+Ova poveznica ne postoji
+
+This When doesn't exist
+Dieses When gibt es nicht
+Ovaj When ne postoji
+
+This browser can't show notifications.
+Dieser Browser kann keine Benachrichtigungen anzeigen.
+Ovaj preglednik ne može prikazivati obavijesti.
+
+Pick the one that works for you.
+Wähle den Termin, der dir passt.
+Odaberi termin koji ti odgovara.
+
+Tap every time that works for you.
+Tippe auf alle Termine, die dir passen.
+Dodirni sve termine koji ti odgovaraju.
+
+So they know who answered
+Damit sie wissen, wer geantwortet hat
+Da znaju tko je odgovorio
+
+Sessions
+Termine
+Termini
+
+{length} needed. When should it start?
+Es werden {length} gebraucht. Wann soll es beginnen?
+Potrebno je {length}. Kada da počne?
+
+Any time
+Egal wann
+Bilo kada
+
+Sent. Thanks, {name}! You can change your answer any time.
+Gesendet. Danke, {name}! Du kannst deine Antwort jederzeit ändern.
+Poslano. Hvala, {name}! Odgovor možeš promijeniti kad god želiš.
+
+Sending…
+Wird gesendet…
+Šaljem…
+
+Send my answer
+Antwort senden
+Pošalji odgovor
+
+None of these work
+Keiner passt
+Nijedan ne odgovara
+
+Pick some days, share the link, find a time that works for everyone.
+Wähle ein paar Tage, teile den Link, findet eine Zeit, die für alle passt.
+Odaberi nekoliko dana, podijeli poveznicu, pronađite vrijeme koje odgovara svima.
+
+Continue with Google
+Weiter mit Google
+Nastavi uz Google
+
+soon
+bald
+uskoro
+
+or
+oder
+ili
+
+Continue as guest
+Als Gast fortfahren
+Nastavi kao gost
+
+Guests type a name for each When. With Google, your name is filled in for you.
+Gäste geben für jedes When einen Namen ein. Mit Google wird dein Name automatisch ausgefüllt.
+Gosti upisuju ime za svaki When. Uz Google se tvoje ime ispunjava samo.
+
+Google sign-in didn't work. Try again, or carry on as a guest.
+Die Google-Anmeldung hat nicht geklappt. Versuch es noch einmal oder mach als Gast weiter.
+Google prijava nije uspjela. Pokušaj ponovno ili nastavi kao gost.
+
+Couldn't turn on notifications. Try again.
+Benachrichtigungen konnten nicht eingeschaltet werden. Versuch es noch einmal.
+Obavijesti se nisu mogle uključiti. Pokušaj ponovno.
+
+Times outside the new range, or shorter than the meetup, are removed from everyone's answers.
+Zeiten außerhalb des neuen Bereichs oder kürzer als das Treffen werden aus allen Antworten entfernt.
+Vremena izvan novog raspona ili kraća od susreta uklanjaju se iz svih odgovora.
+
+{n} hour
+{n} Stunde || {n} Stunden
+{n} sat || {n} sata || {n} sati
+
+Copy to {n} day
+Auf {n} Tag kopieren || Auf {n} Tage kopieren
+Kopiraj na {n} dan || Kopiraj na {n} dana || Kopiraj na {n} dana
+
+{n} note
+{n} Notiz || {n} Notizen
+{n} bilješka || {n} bilješke || {n} bilješki
+
+{n} answer
+{n} Antwort || {n} Antworten
+{n} odgovor || {n} odgovora || {n} odgovora
+
+{n} day
+{n} Tag || {n} Tage
+{n} dan || {n} dana || {n} dana
+
+Filled {n} day from your calendar
+{n} Tag aus deinem Kalender ausgefüllt || {n} Tage aus deinem Kalender ausgefüllt
+Popunjen {n} dan iz kalendara || Popunjena {n} dana iz kalendara || Popunjeno {n} dana iz kalendara
+
+Copied to {n} day
+Auf {n} Tag kopiert || Auf {n} Tage kopiert
+Kopirano na {n} dan || Kopirano na {n} dana || Kopirano na {n} dana
+
+Language
+Sprache
+Jezik

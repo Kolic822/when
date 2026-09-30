@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Auth } from '../../core/auth';
+import { LANGS, lang, setLang, t } from '../../core/i18n/i18n';
 
 /** First screen on a new device: come in with Google, or carry on as a guest. */
 @Component({
@@ -20,6 +21,7 @@ import { Auth } from '../../core/auth';
   styleUrl: './welcome.scss',
 })
 export class Welcome {
+  readonly t = t;
   readonly auth = inject(Auth);
   private readonly router = inject(Router);
 
@@ -28,6 +30,10 @@ export class Welcome {
 
   private readonly googleHost = viewChild<ElementRef<HTMLElement>>('google');
   readonly failed = signal(false);
+
+  readonly langs = LANGS;
+  readonly lang = lang;
+  readonly setLang = setLang;
 
   constructor() {
     afterNextRender(() => {

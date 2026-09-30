@@ -4,6 +4,7 @@ import { buildIcs, openInCalendar } from '../../core/calendar';
 import { Session } from '../../core/models';
 import { formatMinutes, weekdayLong, weekdayShort, dayMonth } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+import { t } from '../../core/i18n/i18n';
 
 /** The session the organiser settled on, shown to everyone at the top of the When. */
 @Component({
@@ -11,7 +12,7 @@ import { dayOf, spanAt, timeAt } from '../../core/zone';
   imports: [MatIconModule],
   template: `
     <section class="booked">
-      <span class="badge"><mat-icon>check_circle</mat-icon>Booked</span>
+      <span class="badge"><mat-icon>check_circle</mat-icon>{{ t('Booked') }}</span>
       @for (row of rows(); track row.key) {
         <div class="row" [class.single]="rows().length === 1">
           <p class="when">
@@ -23,11 +24,13 @@ import { dayOf, spanAt, timeAt } from '../../core/zone';
               type="button"
               class="pill"
               (click)="addToCalendar(row.session)"
-              [attr.aria-label]="'Add ' + row.day + ' ' + row.time + ' to calendar'"
+              [attr.aria-label]="
+                t('Add {session} to calendar', { session: row.day + ' ' + row.time })
+              "
             >
               <mat-icon>event</mat-icon>
               @if (rows().length === 1) {
-                Add to calendar
+                {{ t('Add to calendar') }}
               }
             </button>
             @if (organiser()) {
@@ -35,10 +38,10 @@ import { dayOf, spanAt, timeAt } from '../../core/zone';
                 type="button"
                 class="pill ghost"
                 (click)="unbooked.emit(row.session)"
-                [attr.aria-label]="'Cancel ' + row.day + ' ' + row.time"
+                [attr.aria-label]="t('Cancel {session}', { session: row.day + ' ' + row.time })"
               >
                 @if (rows().length === 1) {
-                  Undo
+                  {{ t('Undo') }}
                 } @else {
                   <mat-icon>close</mat-icon>
                 }
@@ -132,6 +135,7 @@ import { dayOf, spanAt, timeAt } from '../../core/zone';
   `,
 })
 export class Booked {
+  readonly t = t;
   readonly sessions = input.required<Session[]>();
   readonly title = input('Meetup');
   readonly description = input('');
@@ -150,7 +154,10 @@ export class Booked {
   );
 
   addToCalendar(s: Session): void {
-    const notes = [this.description(), this.url() ? `Planned with When: ${this.url()}` : '']
+    const notes = [
+      this.description(),
+      this.url() ? t('Planned with When: {url}', { url: this.url() }) : '',
+    ]
       .filter(Boolean)
       .join('\n\n');
     openInCalendar(

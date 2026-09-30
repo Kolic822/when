@@ -2,26 +2,39 @@ import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { t } from '../../core/i18n/i18n';
 
 @Component({
   selector: 'app-share-link',
   imports: [MatButtonModule, MatIconModule],
   template: `
     @if (compact()) {
-      <button type="button" class="pill copy" (click)="copy()" title="Copy the link to this When">
+      <button
+        type="button"
+        class="pill copy"
+        (click)="copy()"
+        [title]="t('Copy the link to this When')"
+      >
         <mat-icon>content_copy</mat-icon>
-        Copy link
+        {{ t('Copy link') }}
       </button>
     } @else {
       <div class="share">
         <mat-icon class="muted">link</mat-icon>
-        <button type="button" class="url" (click)="copy()" title="Copy link">{{ url() }}</button>
+        <button type="button" class="url" (click)="copy()" [title]="t('Copy link')">
+          {{ url() }}
+        </button>
         <button mat-flat-button type="button" (click)="copy()">
           <mat-icon>content_copy</mat-icon>
-          Copy
+          {{ t('Copy') }}
         </button>
         @if (canShare) {
-          <button mat-icon-button type="button" (click)="share()" aria-label="Share link">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="share()"
+            [attr.aria-label]="t('Share link')"
+          >
             <mat-icon>ios_share</mat-icon>
           </button>
         }
@@ -68,6 +81,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   `,
 })
 export class ShareLink {
+  readonly t = t;
   readonly url = input.required<string>();
   readonly title = input('When');
   /** Only the copy button, for tight spots like the title row. */
@@ -78,9 +92,9 @@ export class ShareLink {
   async copy(): Promise<void> {
     try {
       await navigator.clipboard.writeText(this.url());
-      this.snack.open('Link copied – send it to your group', undefined, { duration: 2500 });
+      this.snack.open(t('Link copied – send it to your group'), undefined, { duration: 2500 });
     } catch {
-      this.snack.open('Could not copy. Long-press the link to copy it.', undefined, {
+      this.snack.open(t('Could not copy. Long-press the link to copy it.'), undefined, {
         duration: 3000,
       });
     }
@@ -90,7 +104,7 @@ export class ShareLink {
     try {
       await navigator.share({
         title: this.title(),
-        text: 'When are you free? Mark your times here:',
+        text: t('When are you free? Mark your times here:'),
         url: this.url(),
       });
     } catch {

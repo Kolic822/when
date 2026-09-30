@@ -44,6 +44,7 @@ import { freeAround, sampleBusy } from '../../core/busy';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
 import { DURATIONS } from '../home/durations';
+import { t, tn } from '../../core/i18n/i18n';
 
 @Component({
   selector: 'app-event',
@@ -72,6 +73,8 @@ import { DURATIONS } from '../home/durations';
   styleUrl: './event.scss',
 })
 export class EventPage implements OnDestroy {
+  readonly t = t;
+  readonly tn = tn;
   /** Route param, bound via withComponentInputBinding(). */
   readonly id = input.required<string>();
 
@@ -209,7 +212,7 @@ export class EventPage implements OnDestroy {
       : [];
     const ok = this.session.updateEvent({ bookings: [...keep, session] });
     if (!ok)
-      this.snack.open('Only the organiser can book a session', undefined, { duration: 3000 });
+      this.snack.open(t('Only the organiser can book a session'), undefined, { duration: 3000 });
     else window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -240,14 +243,18 @@ export class EventPage implements OnDestroy {
     );
     const days = new Set(found.map((s) => s.date)).size;
     if (!found.length) {
-      this.snack.open('Your calendar leaves no gap long enough', undefined, this.toastOpts(3500));
+      this.snack.open(
+        t('Your calendar leaves no gap long enough'),
+        undefined,
+        this.toastOpts(3500),
+      );
       return;
     }
     this.session.setSlots(mergeSlots(mode === 'add' ? [...before, ...found] : found));
     this.snack
       .open(
-        `Filled ${days} ${days === 1 ? 'day' : 'days'} from your calendar`,
-        'Undo',
+        tn(days, 'Filled {n} day from your calendar', 'Filled {n} days from your calendar'),
+        t('Undo'),
         this.toastOpts(5000),
       )
       .onAction()
@@ -258,7 +265,7 @@ export class EventPage implements OnDestroy {
   onChooseTime(session: Session): void {
     const opened = this.resultsCard()?.openFor(session.date, session.start);
     if (!opened) {
-      this.snack.open('That session is no longer possible for everyone', undefined, {
+      this.snack.open(t('That session is no longer possible for everyone'), undefined, {
         duration: 3500,
       });
     }
@@ -282,7 +289,7 @@ export class EventPage implements OnDestroy {
     this.session.copySlot(e.slot, e.to);
     if (this.inDayView()) return;
     this.snack.open(
-      `Copied to ${e.to.length} ${e.to.length === 1 ? 'day' : 'days'}`,
+      tn(e.to.length, 'Copied to {n} day', 'Copied to {n} days'),
       undefined,
       this.toastOpts(2500),
     );
@@ -292,7 +299,7 @@ export class EventPage implements OnDestroy {
     this.session.copyDay(e.from, e.to);
     if (this.inDayView()) return;
     this.snack.open(
-      `Copied to ${e.to.length} ${e.to.length === 1 ? 'day' : 'days'}`,
+      tn(e.to.length, 'Copied to {n} day', 'Copied to {n} days'),
       undefined,
       this.toastOpts(2500),
     );
@@ -321,7 +328,7 @@ export class EventPage implements OnDestroy {
     if (!removed.length) return;
     if (this.inDayView()) return;
     this.snack
-      .open(`Cleared ${shortDate(date)}`, 'Undo', this.toastOpts(4000))
+      .open(t('Cleared {day}', { day: shortDate(date) }), t('Undo'), this.toastOpts(4000))
       .onAction()
       .subscribe(() => this.session.setSlots(before));
   }
@@ -351,7 +358,7 @@ export class EventPage implements OnDestroy {
       partialOk: this.draftPartialOk(),
     });
     if (!ok)
-      this.snack.open('Only the organiser can change the days', undefined, { duration: 3000 });
+      this.snack.open(t('Only the organiser can change the days'), undefined, { duration: 3000 });
     this.settingsOpen.set(false);
   }
 }

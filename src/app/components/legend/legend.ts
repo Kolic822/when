@@ -1,13 +1,14 @@
 import { Component, computed, input, model, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Participant } from '../../core/models';
+import { t } from '../../core/i18n/i18n';
 
 /** People chips with colour, online badge and answer status. */
 @Component({
   selector: 'app-legend',
   imports: [MatIconModule],
   template: `
-    <ul class="legend" aria-label="People">
+    <ul class="legend" [attr.aria-label]="t('People')">
       @for (p of ordered(); track p.id) {
         <li>
           <button
@@ -18,9 +19,9 @@ import { Participant } from '../../core/models';
             [style.--c]="p.color"
             [attr.aria-pressed]="selected() === p.id"
             [title]="
-              (selected() === p.id ? 'Stop highlighting ' : 'Highlight ') +
-              p.name +
-              (online().has(p.id) ? ' (online)' : '')
+              t(selected() === p.id ? 'Stop highlighting {name}' : 'Highlight {name}', {
+                name: p.name,
+              }) + (online().has(p.id) ? ' · ' + t('online') : '')
             "
             (click)="toggle(p.id)"
             (pointerenter)="onHover($event, p.id)"
@@ -34,9 +35,9 @@ import { Participant } from '../../core/models';
             ></span>
             <span class="name">{{ p.name }}</span>
             @if (p.id === meId()) {
-              <span class="you">you</span>
+              <span class="you">{{ t('you') }}</span>
             } @else if (!p.slots.length) {
-              <span class="status">no times yet</span>
+              <span class="status">{{ t('no times yet') }}</span>
             }
           </button>
           @if (p.id === meId()) {
@@ -44,8 +45,8 @@ import { Participant } from '../../core/models';
               type="button"
               class="icon-btn edit"
               (click)="renameRequested.emit()"
-              aria-label="Change your name"
-              title="Change your name"
+              [attr.aria-label]="t('Change your name')"
+              [title]="t('Change your name')"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -53,10 +54,12 @@ import { Participant } from '../../core/models';
         </li>
       }
       @if (!participants().length) {
-        <li class="muted">Nobody here yet.</li>
+        <li class="muted">{{ t('Nobody here yet.') }}</li>
       }
       @if (answeredCount() < participants().length) {
-        <li class="count muted">{{ answeredCount() }} of {{ participants().length }} answered</li>
+        <li class="count muted">
+          {{ t('{n} of {total} answered', { n: answeredCount(), total: participants().length }) }}
+        </li>
       }
     </ul>
   `,
@@ -154,6 +157,7 @@ import { Participant } from '../../core/models';
   `,
 })
 export class Legend {
+  readonly t = t;
   readonly participants = input.required<Participant[]>();
   readonly meId = input<string | null>(null);
   readonly online = input<ReadonlySet<string>>(new Set());

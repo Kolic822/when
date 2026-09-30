@@ -26,6 +26,14 @@ source in `src/app/pages/guide/guide.ts`). The change log is next to it
 - **Pro previews** (menu toggles): let someone else pick via a link, book several sessions,
   connect calendar and fill from it (sample events), add to calendar, join for part of it, history
 
+## Languages
+
+English, German and Croatian. In code, wrap every visible text in `t('…')` (or `tn` for
+counts, `m` where a text is only defined); the English text is the key. Add the German and
+Croatian lines to `tools/i18n/*.txt`, then run `python3 tools/i18n.py`: it lists anything
+untranslated and rebuilds `src/app/core/i18n/de.ts` and `hr.ts`. Notification texts sent by
+the server are in `server/messages.mjs`.
+
 ## Server settings
 
 | Variable | Purpose |

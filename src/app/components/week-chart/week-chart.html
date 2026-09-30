@@ -4,16 +4,15 @@
     class="sheet card"
     role="dialog"
     aria-modal="true"
-    [attr.aria-label]="'Clear ' + d.longLabel"
+    [attr.aria-label]="t('Clear {day}', { day: d.longLabel })"
   >
     <p>
-      Clear your times on <strong>{{ d.longLabel }}</strong
-      >?
+      {{ t('Clear your times on {day}?', { day: d.longLabel }) }}
     </p>
     <div class="actions">
-      <button type="button" class="pill" (click)="confirmClear.set(null)">Cancel</button>
+      <button type="button" class="pill" (click)="confirmClear.set(null)">{{ t('Cancel') }}</button>
       <button mat-flat-button type="button" class="danger" (click)="clearConfirmed(d)">
-        Clear day
+        {{ t('Clear day') }}
       </button>
     </div>
   </div>
@@ -124,10 +123,14 @@
               [class.active]="d.allDay"
               [attr.aria-pressed]="d.allDay"
               [attr.aria-label]="
-                (d.allDay ? 'Switch off all day on ' : 'Free all day on ') + d.longLabel
+                t(d.allDay ? 'Switch off all day on {day}' : 'Free all day on {day}', {
+                  day: d.longLabel,
+                })
               "
               [title]="
-                d.allDay ? 'Switch off all day (brings back your earlier times)' : 'Free all day'
+                d.allDay
+                  ? t('Switch off all day (brings back your earlier times)')
+                  : t('Free all day')
               "
               (click)="toggleAllDay(d)"
             >
@@ -142,5 +145,5 @@
 
 @if (overflows() && !scrolledToEnd()) {
   <span class="more-days" aria-hidden="true"><mat-icon>chevron_right</mat-icon></span>
-  <span class="sr-only" aria-live="polite">Scroll sideways for more days</span>
+  <span class="sr-only" aria-live="polite">{{ t('Scroll sideways for more days') }}</span>
 }

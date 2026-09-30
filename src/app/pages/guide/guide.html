@@ -1,41 +1,44 @@
 <main class="page guide">
   <nav class="top">
-    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
+    <a routerLink="/" class="brand"
+      >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a
+    >
     <a routerLink="/" class="pill back">
       <mat-icon>close</mat-icon>
-      Close
+      {{ t('Close') }}
     </a>
   </nav>
 
   <header>
-    <h1>Guide</h1>
-    <p class="muted">Everything When can do, step by step. Version {{ version }}.</p>
+    <h1>{{ t('Guide') }}</h1>
+    <p class="muted">
+      {{ t('Everything When can do, step by step. Version {version}.', { version }) }}
+    </p>
   </header>
 
   <p class="note">
     <mat-icon>workspace_premium</mat-icon>
-    <span
-      >Sections marked <span class="tag">Pro</span> are previews. Switch them on under Pro features
-      in the menu.</span
-    >
+    <span>{{
+      t('Sections marked Pro are previews. Switch them on under Pro features in the menu.')
+    }}</span>
   </p>
 
-  @for (t of topics; track t.title) {
+  @for (topic of topics; track topic.title) {
     <details class="card topic">
       <summary>
-        <mat-icon class="icon">{{ t.icon }}</mat-icon>
-        <span class="title">{{ t.title }}</span>
-        @if (t.pro) {
-          <span class="tag">Pro</span>
+        <mat-icon class="icon">{{ topic.icon }}</mat-icon>
+        <span class="title">{{ t(topic.title) }}</span>
+        @if (topic.pro) {
+          <span class="tag">{{ t('Pro') }}</span>
         }
         <mat-icon class="chev">expand_more</mat-icon>
       </summary>
-      @if (t.intro) {
-        <p class="intro muted">{{ t.intro }}</p>
+      @if (topic.intro) {
+        <p class="intro muted">{{ t(topic.intro) }}</p>
       }
       <ol>
-        @for (s of t.steps; track s) {
-          <li>{{ s }}</li>
+        @for (s of topic.steps; track s) {
+          <li>{{ t(s) }}</li>
         }
       </ol>
     </details>

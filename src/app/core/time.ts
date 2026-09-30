@@ -1,4 +1,5 @@
 import { signal } from '@angular/core';
+import { lang, locale, t, tn } from './i18n/i18n';
 
 export const MINUTES_PER_DAY = 1440;
 
@@ -6,17 +7,7 @@ export type DateStyle = 'numeric' | 'name';
 /** How dates are written: "30.9." or "30 Sep". Set from the user's preferences. */
 export const dateStyle = signal<DateStyle>('numeric');
 
-export const WEEKDAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-export const WEEKDAYS_LONG = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
-const MONTHS_SHORT = [
+const MONTHS_SHORT_EN = [
   'Jan',
   'Feb',
   'Mar',
@@ -30,6 +21,19 @@ const MONTHS_SHORT = [
   'Nov',
   'Dec',
 ];
+
+const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** "Oct", "Okt", "lis": short month name in the chosen language, without a trailing dot. */
+export function monthShort(d: Date): string {
+  if (lang() === 'en') return MONTHS_SHORT_EN[d.getMonth()];
+  return new Intl.DateTimeFormat(locale(), { month: 'short' }).format(d).replace(/\.$/, '');
+}
+
+/** "October 2026" in the chosen language. */
+export function monthLong(d: Date): string {
+  return capital(new Intl.DateTimeFormat(locale(), { month: 'long' }).format(d));
+}
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -75,11 +79,12 @@ export function isContiguous(dates: string[]): boolean {
 }
 
 export function weekdayShort(key: string): string {
-  return WEEKDAYS_SHORT[fromDateKey(key).getDay()];
+  const name = new Intl.DateTimeFormat(locale(), { weekday: 'short' }).format(fromDateKey(key));
+  return capital(name.replace(/\.$/, ''));
 }
 
 export function weekdayLong(key: string): string {
-  return WEEKDAYS_LONG[fromDateKey(key).getDay()];
+  return capital(new Intl.DateTimeFormat(locale(), { weekday: 'long' }).format(fromDateKey(key)));
 }
 
 /** "24.9." or "24 Sep", depending on the chosen date style. */
@@ -87,7 +92,9 @@ export function dayMonth(key: string): string {
   const d = fromDateKey(key);
   return dateStyle() === 'numeric'
     ? `${d.getDate()}.${d.getMonth() + 1}.`
-    : `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
+    : lang() === 'en'
+      ? `${d.getDate()} ${monthShort(d)}`
+      : `${d.getDate()}. ${monthShort(d)}`;
 }
 
 /** Joins a date and a year: "24.9.2026" or "24 Sep 2026". */
@@ -103,13 +110,13 @@ export function shortDate(key: string): string {
 
 /** "23 Sep – 29 Sep 2026", or "5 days · 23 Sep – 12 Oct 2026" when the days are not consecutive. */
 export function rangeLabel(dates: string[]): string {
-  if (dates.length === 0) return 'No days picked';
+  if (dates.length === 0) return t('No days picked');
   const first = dates[0];
   const last = dates[dates.length - 1];
   if (dates.length === 1) return `${weekdayShort(first)} ${withYear(first)}`;
   const sameYear = fromDateKey(first).getFullYear() === fromDateKey(last).getFullYear();
   const span = `${sameYear ? dayMonth(first) : withYear(first)} – ${withYear(last)}`;
-  return isContiguous(dates) ? span : `${dates.length} days · ${span}`;
+  return isContiguous(dates) ? span : `${tn(dates.length, '{n} day', '{n} days')} · ${span}`;
 }
 
 /** Hour choices for the organiser's "between" pickers: { value: minutes, label: "08:00" }. */

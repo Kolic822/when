@@ -21,6 +21,7 @@ import { PrefsStore } from '../../core/prefs';
 import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
 import { CopyDays } from '../copy-days/copy-days';
+import { t } from '../../core/i18n/i18n';
 
 interface Interval {
   start: number;
@@ -51,6 +52,7 @@ const MOVE_TOLERANCE_PX = 8;
   styleUrl: './day-editor.scss',
 })
 export class DayEditor {
+  readonly t = t;
   private readonly prefs = inject(PrefsStore);
   /** Own calendar events behind the bar (Connect calendar preview, sample data). */
   readonly busy = computed(() => {
@@ -449,7 +451,9 @@ export class DayEditor {
   private warnIfExtended(dragged: number): void {
     if (dragged >= this.minLen() || this.mode() === 'step') return;
     this.snack.open(
-      `Minimum is ${this.minLabel()} – the meetup length. Your period was extended.`,
+      t('Minimum is {length} – the meetup length. Your period was extended.', {
+        length: this.minLabel(),
+      }),
       undefined,
       {
         duration: 3500,
@@ -508,7 +512,10 @@ export class DayEditor {
     this.commit(before.filter((s) => s !== iv));
     if (this.mode() === 'step') return;
     this.snack
-      .open(`Removed ${this.label(iv)}`, 'Undo', { duration: 4000, panelClass: 'above-bar' })
+      .open(t('Removed {time}', { time: this.label(iv) }), t('Undo'), {
+        duration: 4000,
+        panelClass: 'above-bar',
+      })
       .onAction()
       .subscribe(() => this.commit(before));
   }

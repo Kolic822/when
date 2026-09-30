@@ -1,7 +1,16 @@
 import { Component, computed, model, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { addDays, dateRange, fromDateKey, startOfWeek, toDateKey } from '../../core/time';
+import {
+  addDays,
+  dateRange,
+  fromDateKey,
+  monthLong,
+  monthShort,
+  startOfWeek,
+  toDateKey,
+} from '../../core/time';
+import { t, m } from '../../core/i18n/i18n';
 
 interface Cell {
   key: string;
@@ -10,21 +19,6 @@ interface Cell {
   past: boolean;
   today: boolean;
 }
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 /**
  * Month calendar where the organiser taps the days that should be up for
@@ -39,6 +33,7 @@ const WEEKS = 5;
   styleUrl: './day-picker.scss',
 })
 export class DayPicker {
+  readonly t = t;
   /** Sorted list of selected YYYY-MM-DD keys. */
   readonly selected = model<string[]>([]);
 
@@ -54,13 +49,12 @@ export class DayPicker {
     const from = fromDateKey(this.start());
     // Named after the first four weeks; a lone day of a third month doesn't rename the view.
     const to = fromDateKey(addDays(this.start(), 27));
-    if (from.getMonth() === to.getMonth())
-      return `${MONTHS[from.getMonth()]} ${from.getFullYear()}`;
+    if (from.getMonth() === to.getMonth()) return `${monthLong(from)} ${from.getFullYear()}`;
     const year = from.getFullYear() === to.getFullYear() ? '' : ` ${from.getFullYear()}`;
-    return `${MONTHS[from.getMonth()].slice(0, 3)}${year} – ${MONTHS[to.getMonth()].slice(0, 3)} ${to.getFullYear()}`;
+    return `${monthShort(from)}${year} – ${monthShort(to)} ${to.getFullYear()}`;
   });
 
-  readonly weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  readonly weekdays = [m('Mo'), m('Tu'), m('We'), m('Th'), m('Fr'), m('Sa'), m('Su')];
 
   readonly cells = computed<Cell[]>(() =>
     dateRange(this.start(), WEEKS * 7).map((key) => {
@@ -69,7 +63,7 @@ export class DayPicker {
         key,
         day: d.getDate(),
         // The first of a month carries its name, so the change of month is easy to spot.
-        month: d.getDate() === 1 ? MONTHS[d.getMonth()].slice(0, 3) : '',
+        month: d.getDate() === 1 ? monthShort(d) : '',
         past: key < this.today,
         today: key === this.today,
       };
@@ -79,10 +73,10 @@ export class DayPicker {
   readonly selectedSet = computed(() => new Set(this.selected()));
 
   readonly shortcuts = [
-    { label: 'This week', days: dateRange(this.thisWeek, 7).filter((d) => d >= this.today) },
-    { label: 'Next week', days: dateRange(addDays(this.thisWeek, 7), 7) },
+    { label: m('This week'), days: dateRange(this.thisWeek, 7).filter((d) => d >= this.today) },
+    { label: m('Next week'), days: dateRange(addDays(this.thisWeek, 7), 7) },
     {
-      label: 'Weekends',
+      label: m('Weekends'),
       days: dateRange(this.thisWeek, 28).filter(
         (d) => d >= this.today && [0, 6].includes(fromDateKey(d).getDay()),
       ),

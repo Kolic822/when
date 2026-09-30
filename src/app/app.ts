@@ -4,6 +4,7 @@ import { PrefsStore } from './core/prefs';
 import { Updates } from './core/updates';
 import { HowToState } from './core/how-to-state';
 import { HowTo } from './components/how-to/how-to';
+import { lang } from './core/i18n/i18n';
 
 @Component({
   imports: [RouterOutlet, HowTo],
@@ -16,6 +17,10 @@ import { HowTo } from './components/how-to/how-to';
   `,
 })
 export class App {
+  constructor() {
+    document.documentElement.lang = lang();
+  }
+
   // Instantiated here so the saved theme is applied before any page renders.
   private readonly prefs = inject(PrefsStore);
   // Starts update checks for the installed PWA.

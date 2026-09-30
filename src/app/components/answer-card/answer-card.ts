@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Session, Shortlist } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+import { t, listOf } from '../../core/i18n/i18n';
 
 export interface Verdict {
   /** Who answered, e.g. "Mia and Zed". */
@@ -28,22 +29,24 @@ export interface Verdict {
     @if (minimised(); as m) {
       <button type="button" class="mini" (click)="restore(m.stamp)">
         <mat-icon>mark_email_read</mat-icon>
-        <span>Answer from {{ m.names }}</span>
-        <span class="show">Show</span>
+        <span>{{ t('Answer from {names}', { names: m.names }) }}</span>
+        <span class="show">{{ t('Show') }}</span>
       </button>
     }
     @if (verdict(); as v) {
       <section class="card answer" role="status">
-        <span class="badge"><mat-icon>mark_email_read</mat-icon>Answer</span>
+        <span class="badge"><mat-icon>mark_email_read</mat-icon>{{ t('Answer') }}</span>
         <p class="headline">{{ v.headline }}</p>
         @if (v.detail) {
           <p class="muted detail">{{ v.detail }}</p>
         }
         <div class="acts">
-          <button type="button" class="pill later" (click)="dismiss(v.stamp)">Not now</button>
+          <button type="button" class="pill later" (click)="dismiss(v.stamp)">
+            {{ t('Not now') }}
+          </button>
           @if (v.window; as w) {
             <button type="button" class="pill book-full" (click)="book.emit(w)">
-              Book
+              {{ t('Book') }}
               <span class="d">{{ day(w) }}</span>
               <span class="t">{{ span(w) }}</span>
               <mat-icon>check</mat-icon>
@@ -51,7 +54,7 @@ export interface Verdict {
           } @else if (v.session; as s) {
             <button type="button" class="pill go" (click)="choose.emit(s)">
               <mat-icon>schedule</mat-icon>
-              Pick a time
+              {{ t('Pick a time') }}
             </button>
           }
         </div>
@@ -155,6 +158,7 @@ export interface Verdict {
   `,
 })
 export class AnswerCard {
+  readonly t = t;
   readonly shortlists = input<Shortlist[]>([]);
   /** Meetup length in minutes, for links made before the length was stored on them. */
   readonly minutes = input.required<number>();
@@ -206,7 +210,7 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
   const stamp = `${list.id}:${newest(list)}`;
 
   const count = list.answers.length;
-  const counted = count === 1 ? '' : `${count} answers so far.`;
+  const counted = count === 1 ? '' : t('{n} answers so far.', { n: count });
   const yes = list.sessions.map((_, i) => list.answers.filter((a) => a.picks.includes(i)));
   const top = yes.reduce((best, who, i) => (who.length > yes[best].length ? i : best), 0);
   if (!yes[top].length) {
@@ -214,7 +218,7 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
     return {
       stamp,
       names,
-      headline: `${names} can't make any of the sessions you sent`,
+      headline: t('{names} can’t make any of the sessions you sent', { names }),
       detail: '',
       session: null,
       window: null,
@@ -236,7 +240,10 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
     return {
       stamp,
       names,
-      headline: `${names} ${verb === 'picked' ? 'picked a session' : 'can do this one'}`,
+      headline:
+        verb === 'picked'
+          ? t('{names} picked a session', { names })
+          : t('{names} can do this one', { names }),
       detail: counted,
       session,
       window: { date: session.date, start, end: start + len },
@@ -245,9 +252,12 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
   return {
     stamp,
     names,
-    headline: `${names} ${verb} ${day} · ${spanAt(session.date, session.start, session.end)}`,
+    headline: t(verb === 'picked' ? '{names} picked {session}' : '{names} can do {session}', {
+      names,
+      session: `${day} · ${spanAt(session.date, session.start, session.end)}`,
+    }),
     detail: [
-      starts.size > 1 ? 'They prefer different start times.' : 'Any start time suits.',
+      starts.size > 1 ? t('They prefer different start times.') : t('Any start time suits.'),
       counted,
     ]
       .filter(Boolean)
@@ -262,8 +272,7 @@ function newest(list: Shortlist): string {
 }
 
 function join(names: string[]): string {
-  if (names.length <= 2) return names.join(' and ');
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+  return listOf(names);
 }
 
 const KEY = 'when:answers-seen';

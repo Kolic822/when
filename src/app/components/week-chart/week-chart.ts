@@ -12,11 +12,12 @@ import {
   toDateKey,
   weekdayLong,
   weekdayShort,
+  monthShort,
 } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+import { t } from '../../core/i18n/i18n';
 
 const LONG_PRESS_MS = 500;
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /** At most this many days are visible at once; more scroll sideways. */
 const MAX_VISIBLE = 5;
 const MANY_DAYS = MAX_VISIBLE;
@@ -64,6 +65,7 @@ interface DayColumn {
   styleUrl: './week-chart.scss',
 })
 export class WeekChart {
+  readonly t = t;
   private readonly prefs = inject(PrefsStore);
   readonly showBusy = computed(() => this.prefs.prefs().features.connect);
 
@@ -136,10 +138,12 @@ export class WeekChart {
         key,
         weekday: weekdayShort(key),
         dayNum: d.getDate(),
-        month: MONTHS[d.getMonth()],
+        month: monthShort(d),
         dateText: `${d.getDate()}.${d.getMonth() + 1}.`,
         today: key === today,
-        label: `${weekdayLong(key)} ${dayMonth(key)} – tap to mark when you're free, hold to clear`,
+        label: t('{day} – tap to mark when you’re free, hold to clear', {
+          day: `${weekdayLong(key)} ${dayMonth(key)}`,
+        }),
         longLabel: `${weekdayLong(key)} ${dayMonth(key)}`,
         blocks,
         picked:
@@ -152,7 +156,11 @@ export class WeekChart {
         common: this.windows()
           .filter((w) => w.date === key)
           .map((w) => ({
-            ...this.block(w.start, w.end, `Everyone can make it ${spanAt(w.date, w.start, w.end)}`),
+            ...this.block(
+              w.start,
+              w.end,
+              t('Everyone can make it {time}', { time: spanAt(w.date, w.start, w.end) }),
+            ),
             start: w.start,
             ...(w.end - w.start >= 90
               ? { from: timeAt(w.date, w.start), to: timeAt(w.date, w.end) }

@@ -4,6 +4,7 @@ import { Auth } from './auth';
 import { eventZone } from './zone';
 import { Identity } from './identity';
 import { mergeSlots } from './availability';
+import { t } from './i18n/i18n';
 
 export type ConnectionStatus = 'connecting' | 'online' | 'offline';
 
@@ -221,7 +222,9 @@ export class EventSession {
       case 'nameTaken':
         this.pendingName = null;
         this.nameError.set(
-          `Someone here is already called ${msg.name}. Add a last initial or pick another name.`,
+          t('Someone here is already called {name}. Add a last initial or pick another name.', {
+            name: msg.name,
+          }),
         );
         break;
       case 'joined': {
