@@ -204,6 +204,8 @@ export const hr: Dictionary = {
   'Everything syncs live; gold bands show when everyone can make it':
     'Sve se sinkronizira uživo; zlatne trake pokazuju kad svi mogu',
   Finish: 'Završi',
+  'Fixed: the arrows in the day picker now move to later and earlier weeks':
+    'Ispravljeno: strelice u odabiru dana sada prelaze na kasnije i ranije tjedne',
   'For when the group has options and one more person has to choose, like a teacher or a guest.':
     'Za slučaj kad grupa ima opcije, a odlučiti mora još jedna osoba, poput učitelja ili gosta.',
   Fr: 'Pe',

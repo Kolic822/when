@@ -241,3 +241,7 @@ Kalendar se osvježava i sam kad se vratiš u aplikaciju
 A tidier Calendar section: your calendars first, display options last
 Ein aufgeräumter Kalender-Bereich: zuerst deine Kalender, zuletzt die Anzeigeoptionen
 Pregledniji odjeljak Kalendar: najprije tvoji kalendari, na kraju opcije prikaza
+
+Fixed: the arrows in the day picker now move to later and earlier weeks
+Behoben: Die Pfeile in der Tagesauswahl blättern jetzt zu späteren und früheren Wochen
+Ispravljeno: strelice u odabiru dana sada prelaze na kasnije i ranije tjedne

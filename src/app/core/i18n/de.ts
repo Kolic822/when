@@ -198,6 +198,8 @@ export const de: Dictionary = {
   'Everything syncs live; gold bands show when everyone can make it':
     'Alles wird live synchronisiert; goldene Bänder zeigen, wann alle können',
   Finish: 'Fertig',
+  'Fixed: the arrows in the day picker now move to later and earlier weeks':
+    'Behoben: Die Pfeile in der Tagesauswahl blättern jetzt zu späteren und früheren Wochen',
   'For when the group has options and one more person has to choose, like a teacher or a guest.':
     'Für den Fall, dass die Gruppe Optionen hat und noch eine Person entscheiden muss, etwa ein Lehrer oder ein Gast.',
   Fr: 'Fr',

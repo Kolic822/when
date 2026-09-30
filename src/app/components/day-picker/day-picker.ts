@@ -115,7 +115,8 @@ export class DayPicker {
 
   /** Moves the view four weeks back or forward, never before this week. */
   shift(direction: -1 | 1): void {
-    this.show(addDays(this.start(), direction * 28));
+    const next = addDays(this.start(), direction * 28);
+    this.start.set(next < this.thisWeek ? this.thisWeek : next);
   }
 
   goToday(): void {
