@@ -166,13 +166,21 @@ export class CalendarLink {
       : this.available()
         ? []
         : sampleBusy(date, dayStart, dayEnd);
-    return source
+    const timed = source
       .map((b) => ({
         start: Math.max(b.start, dayStart),
         end: Math.min(b.end, dayEnd),
         title: names ? b.title : t('Busy'),
       }))
       .filter((b) => b.end > b.start);
+    // All-day events fill the whole bar, as one block behind the timed ones.
+    const wholeDay = this.allDayOn(date);
+    return wholeDay.length
+      ? [
+          { start: dayStart, end: dayEnd, title: [...new Set(wholeDay)].join(', '), allDay: true },
+          ...timed,
+        ]
+      : timed;
   }
 
   /** Names of the events that last the whole of that day; empty when switched off in Settings. */

@@ -438,23 +438,3 @@
   overflow: hidden;
   clip-path: inset(50%);
 }
-
-/* An all-day event of my own: a small label at the top of the day. */
-.whole-day {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  z-index: 2;
-  padding: 1px 4px;
-  overflow: hidden;
-  border-radius: 5px;
-  background: color-mix(in srgb, var(--when-muted) 28%, var(--when-surface));
-  color: var(--when-text);
-  font-size: 9px;
-  font-weight: 600;
-  line-height: 1.3;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  pointer-events: none;
-}

@@ -370,9 +370,9 @@ Your calendar goes straight from Google to your phone. When never stores it and 
 Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.
 Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.
 
-Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.
-Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ganztägige Termine stehen oben am Tag.
-Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaji navedeni su na vrhu dana.
+Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. An all-day event fills the whole day.
+Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ein ganztägiger Termin füllt den ganzen Tag.
+Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaj ispunjava cijeli dan.
 
 Signed in, your Whens follow you: sign in on another phone or computer and My Whens is the same, and you are the same person in each When.
 Angemeldet folgen dir deine Whens: Melde dich auf einem anderen Handy oder Computer an, und „Meine Whens“ ist gleich, und du bist in jedem When dieselbe Person.

@@ -576,30 +576,3 @@ header {
   text-overflow: ellipsis;
   opacity: 0.8;
 }
-
-/* My all-day calendar events, named above the bar. */
-.whole-day {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0 0 6px;
-  padding: 4px 8px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--when-muted) 14%, transparent);
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  mat-icon {
-    flex: none;
-    color: var(--when-muted);
-    font-size: 15px;
-    width: 15px;
-    height: 15px;
-  }
-  .muted {
-    font-weight: 400;
-  }
-}

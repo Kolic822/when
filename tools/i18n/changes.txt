@@ -265,3 +265,7 @@ Dugi pritisak više ne označava tekst
 A linked calendar now says whether it is empty or just has nothing on the days of this When
 Ein verlinkter Kalender sagt jetzt, ob er leer ist oder nur an den Tagen dieses When nichts hat
 Povezani kalendar sada kaže je li prazan ili samo nema ništa na dane ovog Whena
+
+All-day calendar events fill the whole day in grey
+Ganztägige Kalendertermine füllen den ganzen Tag in Grau
+Cjelodnevni događaji iz kalendara ispunjavaju cijeli dan sivom bojom

@@ -34,6 +34,8 @@ export const hr: Dictionary = {
   'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.':
     'Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi” u izborniku pod „Kalendar”. Osvježava se i kad se vratiš u aplikaciju.',
   'All day': 'Cijeli dan',
+  'All-day calendar events fill the whole day in grey':
+    'Cjelodnevni događaji iz kalendara ispunjavaju cijeli dan sivom bojom',
   'All-day events': 'Cjelodnevni događaji',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.',
@@ -649,8 +651,8 @@ export const hr: Dictionary = {
     'Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.',
   'Your calendar has nothing on these days.': 'U tvom kalendaru nema ničega tih dana.',
   'Your calendars': 'Tvoji kalendari',
-  'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
-    'Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaji navedeni su na vrhu dana.',
+  'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. An all-day event fills the whole day.':
+    'Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaj ispunjava cijeli dan.',
   'Your name': 'Tvoje ime',
   'Your name is shown to the others in the group.': 'Tvoje ime vide ostali u grupi.',
   'You’re in. Nice one!': 'Unutra si. Bravo!',

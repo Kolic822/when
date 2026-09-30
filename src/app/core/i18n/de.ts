@@ -35,6 +35,8 @@ export const de: Dictionary = {
   'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.':
     'Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü unter „Kalender“ auf „Aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.',
   'All day': 'Ganztägig',
+  'All-day calendar events fill the whole day in grey':
+    'Ganztägige Kalendertermine füllen den ganzen Tag in Grau',
   'All-day events': 'Ganztägige Termine',
   'Android: open the browser menu and tap Install app or Add to Home screen.':
     'Android: Öffne das Browser-Menü und tippe auf „App installieren“ oder „Zum Startbildschirm hinzufügen“.',
@@ -653,8 +655,8 @@ export const de: Dictionary = {
     'Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.',
   'Your calendar has nothing on these days.': 'In deinem Kalender steht an diesen Tagen nichts.',
   'Your calendars': 'Deine Kalender',
-  'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.':
-    'Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ganztägige Termine stehen oben am Tag.',
+  'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. An all-day event fills the whole day.':
+    'Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ein ganztägiger Termin füllt den ganzen Tag.',
   'Your name': 'Dein Name',
   'Your name is shown to the others in the group.':
     'Dein Name wird den anderen in der Gruppe angezeigt.',

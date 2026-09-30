@@ -256,7 +256,7 @@ export class Guide {
           'Sign in with Google, then tap Show my calendar above the calendar, or Connect next to Google under Calendar in the menu, and allow it.',
         ),
         m(
-          'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.',
+          'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. An all-day event fills the whole day.',
         ),
         m(
           'Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',

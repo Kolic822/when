@@ -61,14 +61,9 @@ export class DayEditor {
     const { dayStart, dayEnd } = this.event();
     return this.calendar.busyOn(this.date(), dayStart, dayEnd).map((b) => ({
       ...b,
-      label: `${b.title} · ${spanAt(this.date(), b.start, b.end)}`,
+      label: `${b.title} · ${b.allDay ? t('All day') : spanAt(this.date(), b.start, b.end)}`,
     }));
   });
-
-  /** My all-day calendar events on this day. */
-  readonly wholeDay = computed(() =>
-    this.prefs.prefs().features.connect ? this.calendar.allDayOn(this.date()) : [],
-  );
 
   readonly event = input.required<MeetEvent>();
   readonly meId = input.required<string>();

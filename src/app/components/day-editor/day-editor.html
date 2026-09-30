@@ -112,14 +112,6 @@
     </div>
   </form>
 
-  @if (wholeDay().length) {
-    <p class="whole-day">
-      <mat-icon>event</mat-icon>
-      <span class="muted">{{ t('All day') }}:</span>
-      {{ wholeDay().join(', ') }}
-    </p>
-  }
-
   <div class="body">
     <div class="axis" aria-hidden="true">
       @for (h of hours(); track h.min) {
@@ -159,7 +151,7 @@
       (pointercancel)="onCancel()"
       (contextmenu)="$event.preventDefault()"
     >
-      @for (b of busy(); track b.start) {
+      @for (b of busy(); track $index) {
         <span class="busy" [style.top.%]="pct(b.start)" [style.height.%]="height(b)">
           <span class="busy-t">{{ b.label }}</span>
         </span>
