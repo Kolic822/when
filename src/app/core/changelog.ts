@@ -5,9 +5,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.5';
+export const VERSION = '0.5.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.5.1',
+    date: '30 Sep 2026',
+    changes: [
+      'New app icon and browser icon',
+      'The Book button shows the day and time itself; repeated text around it is gone',
+      'One booked session per day: booking a day again replaces it',
+      '“Notify me” is now “Push notifications”',
+    ],
+  },
   {
     version: '0.5',
     date: '30 Sep 2026',

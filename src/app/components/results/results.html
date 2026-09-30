@@ -58,11 +58,6 @@
 
         @if (selected(); as r) {
           <div class="detail">
-            <p class="detail-title">
-              <strong>{{ r.day }}</strong>
-              <span>{{ r.time }}</span>
-              <span class="muted len">{{ r.length }}</span>
-            </p>
             @for (n of r.notes; track $index) {
               <p class="note">
                 <strong>{{ n.name }}</strong> {{ n.note }}
@@ -72,7 +67,7 @@
               <p class="note muted">{{ r.partial }}</p>
             }
             @if (organiser() && r.starts.length > 1) {
-              <p class="chooser-title muted">When should the {{ durationLabel() }} start?</p>
+              <p class="chooser-title muted">Start at</p>
               <div class="grid" role="radiogroup" aria-label="Start time">
                 @for (s of r.starts; track s) {
                   <button
@@ -91,9 +86,11 @@
             @if (organiser() || features().calendar) {
               <div class="acts">
                 @if (organiser()) {
-                  <button type="button" class="pill book" (click)="confirmBooking(r)">
+                  <button type="button" class="pill book-full" (click)="confirmBooking(r)">
+                    Book
+                    <span class="d">{{ r.day }}</span>
+                    <span class="t">{{ chosen(r) }}</span>
                     <mat-icon>check</mat-icon>
-                    Book {{ chosen(r) }}
                   </button>
                 }
                 @if (features().calendar) {
@@ -176,7 +173,7 @@
                 }
               </div>
               @for (row of a.rows; track $index) {
-                @if (row.yes.length) {
+                @if (row.yes.length && a.answered > 1) {
                   <div class="ans">
                     <span>{{ row.text }}</span>
                     <span class="who">

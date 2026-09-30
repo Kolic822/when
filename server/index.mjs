@@ -643,10 +643,12 @@ wss.on('connection', (ws, req) => {
         const before = ev.bookings ?? [];
         if (patch.bookings !== undefined || patch.booked !== undefined) {
           const wanted = patch.bookings !== undefined ? patch.bookings : [patch.booked];
-          const seen = new Set();
-          ev.bookings = (Array.isArray(wanted) ? wanted : [])
-            .map(cleanSession)
-            .filter((s) => s && !seen.has(JSON.stringify(s)) && seen.add(JSON.stringify(s)))
+          // One session per day: a later one for the same day replaces the earlier.
+          const byDay = new Map();
+          for (const s of (Array.isArray(wanted) ? wanted : []).map(cleanSession)) {
+            if (s) byDay.set(s.date, s);
+          }
+          ev.bookings = [...byDay.values()]
             .sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start)
             .slice(0, 12);
           ev.booked = ev.bookings[0] ?? null;

@@ -201,7 +201,10 @@ export class EventPage implements OnDestroy {
 
   /** Organiser settles on a session; with the Pro option it is added to what is already booked. */
   onBook(session: Session): void {
-    const keep = this.features().multiBook ? this.bookings() : [];
+    // One per day: booking a day again replaces what that day had.
+    const keep = this.features().multiBook
+      ? this.bookings().filter((b) => b.date !== session.date)
+      : [];
     const ok = this.session.updateEvent({ bookings: [...keep, session] });
     if (!ok)
       this.snack.open('Only the organiser can book a session', undefined, { duration: 3000 });

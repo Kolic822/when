@@ -395,3 +395,30 @@ h3 {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* The booking button says everything itself: what, which day, what time. */
+.book-full {
+  flex: 1;
+  justify-content: center;
+  gap: 7px;
+  height: 46px;
+  padding: 0 14px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+
+  .d {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+  .t {
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}

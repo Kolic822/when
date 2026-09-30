@@ -41,9 +41,11 @@ export interface Verdict {
         <div class="acts">
           <button type="button" class="pill later" (click)="dismiss(v.stamp)">Not now</button>
           @if (v.window; as w) {
-            <button type="button" class="pill go" (click)="book.emit(w)">
+            <button type="button" class="pill book-full" (click)="book.emit(w)">
+              Book
+              <span class="d">{{ day(w.date) }}</span>
+              <span class="t">{{ fmt(w.start) }} – {{ fmt(w.end) }}</span>
               <mat-icon>check</mat-icon>
-              Book {{ fmt(w.start) }} – {{ fmt(w.end) }}
             </button>
           } @else if (v.session; as s) {
             <button type="button" class="pill go" (click)="choose.emit(s)">
@@ -163,6 +165,7 @@ export class AnswerCard {
   private readonly dismissed = signal<Set<string>>(loadDismissed());
 
   fmt = formatMinutes;
+  day = shortDate;
 
   private readonly latest = computed(() => latestVerdict(this.shortlists(), this.minutes()));
   readonly verdict = computed(() => {
@@ -232,7 +235,7 @@ export function latestVerdict(shortlists: Shortlist[], minutes: number): Verdict
     return {
       stamp,
       names,
-      headline: `${names} ${verb} ${day} · ${formatMinutes(start)} – ${formatMinutes(start + len)}`,
+      headline: `${names} ${verb === 'picked' ? 'picked a session' : 'can do this one'}`,
       detail: counted,
       session,
       window: { date: session.date, start, end: start + len },

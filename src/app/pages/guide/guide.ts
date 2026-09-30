@@ -112,7 +112,7 @@ export class Guide {
       title: 'Notifications',
       intro: 'Get told while the app is closed.',
       steps: [
-        'Tap the bell at the top of a When, or open Notifications in the menu, and switch Notify me on.',
+        'Tap the bell at the top of a When, or open Notifications in the menu, and switch Push notifications on.',
         'On an iPhone, first add When to your Home Screen (Share, then Add to Home Screen) and open it from there.',
         'You are told when everyone has answered, and when a session is booked, moved or cancelled.',
         'The organiser is also told when someone answers, changes or withdraws an answer on a link they sent.',
@@ -166,7 +166,8 @@ export class Guide {
       title: 'Book several sessions',
       pro: true,
       steps: [
-        'With this on, booking a second session adds it instead of replacing the first.',
+        'With this on, booking a session on another day adds it instead of replacing the first.',
+        'One session per day: booking the same day again replaces that day’s session.',
         'The banner lists every booked session, each with its own calendar button.',
         'The organiser removes one with its × button.',
       ],
