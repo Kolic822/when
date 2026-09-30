@@ -36,7 +36,7 @@
       }
     </div>
 
-    <section>
+    <section data-section="whens">
       <h2>
         <button
           type="button"
@@ -126,7 +126,7 @@
       }
     </section>
 
-    <section>
+    <section data-section="look">
       <h2>
         <button
           type="button"
@@ -174,7 +174,7 @@
       }
     </section>
 
-    <section>
+    <section data-section="dates">
       <h2>
         <button
           type="button"
@@ -206,7 +206,7 @@
       }
     </section>
 
-    <section>
+    <section data-section="defaults">
       <h2>
         <button
           type="button"
@@ -260,7 +260,44 @@
       }
     </section>
 
-    <section>
+    @if (prefs().features.history) {
+      <section data-section="history">
+        <h2>
+          <button
+            type="button"
+            class="fold"
+            (click)="toggleSection('history')"
+            [attr.aria-expanded]="!isFolded('history')"
+          >
+            <span>History <span class="preview">pro</span></span>
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </h2>
+        @if (!isFolded('history')) {
+          <div class="sect">
+            @if (recent().length) {
+              <label class="pick-when">
+                <span class="muted small">When</span>
+                <select aria-label="Which When" (change)="showHistory($any($event.target).value)">
+                  @for (m of recent(); track m.id) {
+                    <option [value]="m.id" [selected]="m.id === historyId()">{{ m.title }}</option>
+                  }
+                </select>
+              </label>
+              @if (historyEntries(); as entries) {
+                <app-history bare [entries]="entries" [meId]="historyMe()" />
+              } @else {
+                <p class="muted small">Loading…</p>
+              }
+            } @else {
+              <p class="muted small">Open or create a When first.</p>
+            }
+          </div>
+        }
+      </section>
+    }
+
+    <section data-section="notify">
       <h2>
         <button
           type="button"
@@ -317,7 +354,7 @@
       }
     </section>
 
-    <section>
+    <section data-section="pro">
       <h2>
         <button
           type="button"
@@ -350,7 +387,7 @@
       }
     </section>
 
-    <section>
+    <section data-section="app">
       <h2>
         <button
           type="button"
@@ -383,6 +420,34 @@
             }
             <span class="muted small">{{ updateText() }}</span>
           </div>
+          <div class="about">
+            <span class="ver">Version {{ version }}</span>
+            <button
+              type="button"
+              class="link"
+              (click)="showChanges.set(!showChanges())"
+              [attr.aria-expanded]="showChanges()"
+            >
+              {{ showChanges() ? 'Hide changes' : 'What’s new' }}
+            </button>
+            <a class="link" routerLink="/guide" (click)="close()">Guide</a>
+          </div>
+          @if (showChanges()) {
+            <ol class="changes">
+              @for (r of changelog; track r.version) {
+                <li>
+                  <p class="rel">
+                    <strong>v{{ r.version }}</strong> <span class="muted">{{ r.date }}</span>
+                  </p>
+                  <ul>
+                    @for (c of r.changes; track c) {
+                      <li>{{ c }}</li>
+                    }
+                  </ul>
+                </li>
+              }
+            </ol>
+          }
         </div>
       }
     </section>

@@ -1,4 +1,12 @@
-import { Component, computed, DestroyRef, inject, input, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { HistoryEntry } from '../../core/models';
 import { formatMinutes, shortDate } from '../../core/time';
@@ -16,19 +24,21 @@ interface Row {
   selector: 'app-history',
   imports: [MatIconModule],
   template: `
-    <section class="card history">
-      <button
-        type="button"
-        class="toggle"
-        (click)="open.set(!open())"
-        [attr.aria-expanded]="open()"
-      >
-        <mat-icon>history</mat-icon>
-        <span class="title">History</span>
-        <span class="count muted">{{ rows().length }}</span>
-        <mat-icon class="chev">{{ open() ? 'expand_less' : 'expand_more' }}</mat-icon>
-      </button>
-      @if (open()) {
+    <section class="history" [class.card]="!bare()">
+      @if (!bare()) {
+        <button
+          type="button"
+          class="toggle"
+          (click)="open.set(!open())"
+          [attr.aria-expanded]="open()"
+        >
+          <mat-icon>history</mat-icon>
+          <span class="title">History</span>
+          <span class="count muted">{{ rows().length }}</span>
+          <mat-icon class="chev">{{ open() ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      }
+      @if (open() || bare()) {
         @if (rows().length) {
           <ol>
             @for (r of rows(); track r.id) {
@@ -48,8 +58,12 @@ interface Row {
     </section>
   `,
   styles: `
-    .history {
+    .history.card {
       padding: 4px 8px;
+    }
+    .history:not(.card) ol {
+      padding: 0;
+      max-height: 260px;
     }
     .toggle {
       display: flex;
@@ -117,6 +131,8 @@ interface Row {
 export class History {
   readonly entries = input.required<HistoryEntry[]>();
   readonly meId = input<string | null>(null);
+  /** Just the list, for use inside another panel such as the menu. */
+  readonly bare = input(false, { transform: booleanAttribute });
 
   readonly open = signal(false);
   private readonly now = signal(Date.now());

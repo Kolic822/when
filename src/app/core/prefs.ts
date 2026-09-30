@@ -9,6 +9,8 @@ export type Look = 'grape' | 'sunset' | 'lagoon';
 export interface Features {
   /** Preview of the calendar overlay, drawn with sample events. */
   connect: boolean;
+  /** The organiser may book more than one session. */
+  multiBook: boolean;
   calendar: boolean;
   shortlist: boolean;
   partial: boolean;
@@ -17,6 +19,7 @@ export interface Features {
 
 export const NO_FEATURES: Features = {
   connect: false,
+  multiBook: false,
   calendar: false,
   shortlist: false,
   partial: false,

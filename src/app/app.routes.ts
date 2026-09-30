@@ -23,7 +23,11 @@ export const routes: Routes = [
     canActivate: [entered],
     loadComponent: () => import('./pages/event/event').then((m) => m.EventPage),
   },
-  // Someone answering an "Ask someone" link only needs a name, never an account.
+  {
+    path: 'guide',
+    loadComponent: () => import('./pages/guide/guide').then((m) => m.Guide),
+  },
+  // Someone answering an "Let someone else pick" link only needs a name, never an account.
   {
     path: 's/:sid',
     loadComponent: () => import('./pages/shortlist/shortlist').then((m) => m.ShortlistPage),

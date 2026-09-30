@@ -107,6 +107,7 @@ for (const ev of store.all()) {
   ev.booked ??= null;
   ev.shortlists ??= [];
   ev.push ??= [];
+  ev.bookings ??= ev.booked ? [ev.booked] : [];
   if (ev.dayStart === undefined || ev.dayEnd === undefined) {
     [ev.dayStart, ev.dayEnd] = cleanRange(ev.dayStart, ev.dayEnd);
     for (const p of ev.participants) p.slots = sanitizeSlots(ev, p.slots);
@@ -162,6 +163,7 @@ app.post('/api/events', (req, res) => {
     participants: [],
     history: [],
     booked: null,
+    bookings: [],
     shortlists: [],
     push: [],
     createdAt: new Date().toISOString(),
@@ -637,17 +639,35 @@ wss.on('connection', (ws, req) => {
         if (typeof patch.title === 'string' && patch.title.trim()) ev.title = patch.title.trim().slice(0, 80);
         if (typeof patch.description === 'string') ev.description = cleanDescription(patch.description);
         if (typeof patch.partialOk === 'boolean') ev.partialOk = patch.partialOk;
-        const bookedBefore = JSON.stringify(ev.booked ?? null);
-        if (patch.booked !== undefined) ev.booked = cleanSession(patch.booked);
-        if (JSON.stringify(ev.booked ?? null) !== bookedBefore) {
+        // One booked session, or several (a Pro feature); `booked` stays the first for older clients.
+        const before = ev.bookings ?? [];
+        if (patch.bookings !== undefined || patch.booked !== undefined) {
+          const wanted = patch.bookings !== undefined ? patch.bookings : [patch.booked];
+          const seen = new Set();
+          ev.bookings = (Array.isArray(wanted) ? wanted : [])
+            .map(cleanSession)
+            .filter((s) => s && !seen.has(JSON.stringify(s)) && seen.add(JSON.stringify(s)))
+            .sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start)
+            .slice(0, 12);
+          ev.booked = ev.bookings[0] ?? null;
+        }
+        const key = (s) => JSON.stringify(s);
+        const added = ev.bookings.filter((s) => !before.some((b) => key(b) === key(s)));
+        const removed = before.filter((b) => !ev.bookings.some((s) => key(b) === key(s)));
+        if (added.length || removed.length) {
           // Everyone but the organiser, who just did it.
           const others = (t) => !t.organiser && t.participantId !== ws.participantId;
-          if (ev.booked && bookedBefore === 'null') {
-            void notify(ev, others, { title: `${ev.title} is booked`, body: sessionText(ev.booked) });
-          } else if (ev.booked) {
-            void notify(ev, others, { title: `${ev.title} moved`, body: `Now ${sessionText(ev.booked)}` });
-          } else {
+          if (added.length === 1 && removed.length === 1) {
+            void notify(ev, others, { title: `${ev.title} moved`, body: `Now ${sessionText(added[0])}` });
+          } else if (added.length) {
+            void notify(ev, others, {
+              title: before.length ? `${ev.title}: another session booked` : `${ev.title} is booked`,
+              body: added.map(sessionText).join('; '),
+            });
+          } else if (!ev.bookings.length) {
             void notify(ev, others, { title: `${ev.title} is no longer booked`, body: 'The organiser cancelled the session.' });
+          } else {
+            void notify(ev, others, { title: `${ev.title}: a session was cancelled`, body: removed.map(sessionText).join('; ') });
           }
         }
         if (patch.dayStart !== undefined || patch.dayEnd !== undefined) {

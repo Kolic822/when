@@ -2,7 +2,7 @@ import { Component, computed, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { buildIcs, openInCalendar } from '../../core/calendar';
 import { Session } from '../../core/models';
-import { formatMinutes, weekdayLong, dayMonth } from '../../core/time';
+import { formatMinutes, weekdayLong, weekdayShort, dayMonth } from '../../core/time';
 
 /** The session the organiser settled on, shown to everyone at the top of the When. */
 @Component({
@@ -11,19 +11,41 @@ import { formatMinutes, weekdayLong, dayMonth } from '../../core/time';
   template: `
     <section class="booked">
       <span class="badge"><mat-icon>check_circle</mat-icon>Booked</span>
-      <p class="when">
-        <strong>{{ day() }}</strong>
-        <span>{{ time() }}</span>
-      </p>
-      <div class="actions">
-        <button type="button" class="pill" (click)="addToCalendar()">
-          <mat-icon>event</mat-icon>
-          Add to calendar
-        </button>
-        @if (organiser()) {
-          <button type="button" class="pill ghost" (click)="unbooked.emit()">Undo</button>
-        }
-      </div>
+      @for (row of rows(); track row.key) {
+        <div class="row" [class.single]="rows().length === 1">
+          <p class="when">
+            <strong>{{ row.day }}</strong>
+            <span>{{ row.time }}</span>
+          </p>
+          <div class="actions">
+            <button
+              type="button"
+              class="pill"
+              (click)="addToCalendar(row.session)"
+              [attr.aria-label]="'Add ' + row.day + ' ' + row.time + ' to calendar'"
+            >
+              <mat-icon>event</mat-icon>
+              @if (rows().length === 1) {
+                Add to calendar
+              }
+            </button>
+            @if (organiser()) {
+              <button
+                type="button"
+                class="pill ghost"
+                (click)="unbooked.emit(row.session)"
+                [attr.aria-label]="'Cancel ' + row.day + ' ' + row.time"
+              >
+                @if (rows().length === 1) {
+                  Undo
+                } @else {
+                  <mat-icon>close</mat-icon>
+                }
+              </button>
+            }
+          </div>
+        </div>
+      }
     </section>
   `,
   styles: `
@@ -49,6 +71,27 @@ import { formatMinutes, weekdayLong, dayMonth } from '../../core/time';
         width: 16px;
         height: 16px;
       }
+    }
+    /* Several sessions: one compact line each. */
+    .row:not(.single) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+      border-top: 1px solid color-mix(in srgb, var(--on-accent) 22%, transparent);
+
+      .when {
+        margin: 0;
+        font-size: 16px;
+      }
+      .pill {
+        width: 38px;
+        padding: 0;
+      }
+    }
+    .row:not(.single):first-of-type {
+      margin-top: 6px;
     }
     .when {
       margin: 4px 0 10px;
@@ -88,22 +131,24 @@ import { formatMinutes, weekdayLong, dayMonth } from '../../core/time';
   `,
 })
 export class Booked {
-  readonly session = input.required<Session>();
+  readonly sessions = input.required<Session[]>();
   readonly title = input('Meetup');
   readonly description = input('');
   readonly url = input('');
   readonly organiser = input(false);
-  readonly unbooked = output<void>();
+  /** The organiser takes one session back. */
+  readonly unbooked = output<Session>();
 
-  readonly day = computed(
-    () => `${weekdayLong(this.session().date)} ${dayMonth(this.session().date)}`,
-  );
-  readonly time = computed(
-    () => `${formatMinutes(this.session().start)} – ${formatMinutes(this.session().end)}`,
+  readonly rows = computed(() =>
+    this.sessions().map((session) => ({
+      key: `${session.date}-${session.start}`,
+      session,
+      day: `${this.sessions().length === 1 ? weekdayLong(session.date) : weekdayShort(session.date)} ${dayMonth(session.date)}`,
+      time: `${formatMinutes(session.start)} – ${formatMinutes(session.end)}`,
+    })),
   );
 
-  addToCalendar(): void {
-    const s = this.session();
+  addToCalendar(s: Session): void {
     const notes = [this.description(), this.url() ? `Planned with When: ${this.url()}` : '']
       .filter(Boolean)
       .join('\n\n');

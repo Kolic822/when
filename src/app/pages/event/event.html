@@ -5,11 +5,21 @@
       <span class="conn offline"><span class="dot"></span>reconnecting…</span>
     }
     @if (!stepping() && !editingDay()) {
+      <button
+        type="button"
+        class="icon-btn bell"
+        [class.on]="notifyOn()"
+        (click)="menu.openSection('notify')"
+        [attr.aria-label]="notifyOn() ? 'Notifications are on' : 'Notifications are off'"
+        [title]="notifyOn() ? 'Notifications are on' : 'Notifications are off'"
+      >
+        <mat-icon>{{ notifyOn() ? 'notifications_active' : 'notifications_off' }}</mat-icon>
+      </button>
       <a routerLink="/" class="pill new-when" title="Plan a new When">
         <mat-icon>add</mat-icon>
         <span class="txt">New When</span>
       </a>
-      <app-menu />
+      <app-menu #menu />
     }
   </nav>
 
@@ -162,14 +172,14 @@
         />
       } @else {
         @if (!editingDay()) {
-          @if (event()!.booked; as booked) {
+          @if (bookings().length) {
             <app-booked
-              [session]="booked"
+              [sessions]="bookings()"
               [title]="event()!.title"
               [description]="event()!.description"
               [url]="shareUrl()"
               [organiser]="isCreator()"
-              (unbooked)="onBook(null)"
+              (unbooked)="onUnbook($event)"
             />
           }
           @if (isCreator() && !event()!.booked && event()!.shortlists?.length) {
@@ -193,7 +203,7 @@
               [description]="event()!.description"
               [url]="shareUrl()"
               [shortlists]="event()!.shortlists ?? []"
-              [booked]="!!event()!.booked"
+              [booked]="bookings().length > 0 && !features().multiBook"
               (book)="onBook($event)"
             />
           }
@@ -264,9 +274,6 @@
           (hovered)="hoveredId.set($event)"
           (renameRequested)="renaming.set(true)"
         />
-        @if (features().history) {
-          <app-history [entries]="event()!.history ?? []" [meId]="meId()" />
-        }
       }
     }
   }

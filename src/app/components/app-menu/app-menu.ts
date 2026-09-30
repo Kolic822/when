@@ -1,10 +1,13 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ElementRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Auth } from '../../core/auth';
+import { CHANGELOG, VERSION } from '../../core/changelog';
+import { HistoryEntry } from '../../core/models';
+import { History } from '../history/history';
 import { Push } from '../../core/push';
 import { Identity, RecentMeetup } from '../../core/identity';
 import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
@@ -33,6 +36,7 @@ import { DURATIONS } from '../../pages/home/durations';
     MatFormFieldModule,
     MatSelectModule,
     MatSlideToggleModule,
+    History,
   ],
   templateUrl: './app-menu.html',
   styleUrl: './app-menu.scss',
@@ -45,6 +49,48 @@ export class AppMenu {
   readonly auth = inject(Auth);
   readonly push = inject(Push);
   readonly pushFailed = signal(false);
+
+  readonly version = VERSION;
+  readonly changelog = CHANGELOG;
+  readonly showChanges = signal(false);
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** Opens the menu on one section, e.g. from the bell at the top of a When. */
+  openSection(id: string): void {
+    if (!this.open()) this.toggle();
+    this.folded.update((set) => {
+      const next = new Set(set);
+      next.delete(id);
+      return next;
+    });
+    // Twice: the list of Whens above it grows once their details have loaded.
+    const reveal = () =>
+      this.host.nativeElement
+        .querySelector(`[data-section="${id}"]`)
+        ?.scrollIntoView({ block: 'start' });
+    setTimeout(reveal, 50);
+    setTimeout(reveal, 600);
+  }
+
+  // ---- History (Pro preview): what happened in any of my Whens.
+  readonly historyId = signal<string | null>(null);
+  readonly historyEntries = signal<HistoryEntry[] | null>(null);
+  readonly historyMe = computed(() => {
+    const id = this.historyId();
+    return id ? (this.identity.get(id)?.id ?? null) : null;
+  });
+
+  async showHistory(id: string): Promise<void> {
+    this.historyId.set(id);
+    this.historyEntries.set(null);
+    try {
+      const ev = await this.api.get(id);
+      if (this.historyId() === id) this.historyEntries.set(ev?.history ?? []);
+    } catch {
+      if (this.historyId() === id) this.historyEntries.set([]);
+    }
+  }
 
   async togglePush(on: boolean): Promise<void> {
     this.pushFailed.set(false);
@@ -96,6 +142,10 @@ export class AppMenu {
     if (!this.open()) {
       this.recent.set(this.identity.recent());
       this.loadBest();
+      // History starts on the When that is open, or the most recent one.
+      const current = /\/e\/([^/?#]+)/.exec(this.router.url)?.[1];
+      const first = this.recent().find((m) => m.id === current) ?? this.recent()[0];
+      if (first && this.prefs().features.history) void this.showHistory(first.id);
     }
     this.open.set(!this.open());
   }
@@ -109,10 +159,12 @@ export class AppMenu {
         try {
           const ev = await this.api.get(m.id);
           const windows = ev ? findCommonWindows(ev).windows : [];
-          const w = ev?.booked ?? windows[0] ?? null;
-          const more = !ev?.booked && windows.length > 1 ? ` +${windows.length - 1} more` : '';
+          const booked = ev?.bookings ?? (ev?.booked ? [ev.booked] : []);
+          const w = booked[0] ?? windows[0] ?? null;
+          const rest = (booked.length || windows.length) - 1;
+          const more = rest > 0 ? ` +${rest} more` : '';
           const text = w
-            ? `${ev?.booked ? 'Booked · ' : ''}${shortDate(w.date)} · ${formatMinutes(w.start)} – ${formatMinutes(w.end)}${more}`
+            ? `${booked.length ? 'Booked · ' : ''}${shortDate(w.date)} · ${formatMinutes(w.start)} – ${formatMinutes(w.end)}${more}`
             : null;
           this.best.update((b) => ({ ...b, [m.id]: text }));
           if (ev && (ev.title !== m.title || ev.dates.join() !== m.dates.join())) {
@@ -200,6 +252,11 @@ export class AppMenu {
       hint: 'See your own events behind the bars. Sample events for now.',
     },
     {
+      key: 'multiBook',
+      label: 'Book several sessions',
+      hint: 'The organiser can book more than one session for a When.',
+    },
+    {
       key: 'shortlist',
       label: 'Let someone else pick',
       hint: 'Send a link with only the possible sessions.',
@@ -214,7 +271,11 @@ export class AppMenu {
       label: 'Join for part of it',
       hint: 'Let people mark less than the full length.',
     },
-    { key: 'history', label: 'History', hint: 'See who changed what, and when.' },
+    {
+      key: 'history',
+      label: 'History',
+      hint: 'A History section in this menu: who changed what, and when.',
+    },
   ];
 
   /** Sections folded away; settings start folded so My Whens stays on screen. */
@@ -265,7 +326,7 @@ export class AppMenu {
 }
 
 const FOLDED_KEY = 'when:menu-folded-v2';
-const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'notify', 'pro'];
+const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'history', 'notify', 'pro'];
 
 function loadFolded(): Set<string> {
   try {

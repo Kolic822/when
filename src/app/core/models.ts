@@ -91,6 +91,8 @@ export interface MeetEvent {
   history: HistoryEntry[];
   /** The session the organiser settled on, if any. */
   booked?: Session | null;
+  /** Every booked session; more than one only with the Pro option. `booked` is the first. */
+  bookings?: Session[];
   shortlists?: Shortlist[];
   createdAt: string;
 }
@@ -114,6 +116,7 @@ export interface EventPatch {
   dayEnd?: number;
   partialOk?: boolean;
   booked?: Session | null;
+  bookings?: Session[];
 }
 
 export const DEFAULT_DAY_START = 8 * 60;

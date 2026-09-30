@@ -22,7 +22,7 @@
 .top {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   padding-top: 4px;
 
   .brand {
@@ -209,4 +209,15 @@
 .fill-acts {
   display: flex;
   gap: 6px;
+}
+
+/* Bell in the top bar: shows at a glance whether notifications are on. */
+.top .bell {
+  width: 44px;
+  height: 44px;
+  color: var(--when-muted);
+
+  &.on {
+    color: var(--accent);
+  }
 }

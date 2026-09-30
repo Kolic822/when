@@ -36,7 +36,6 @@ import { DayPicker } from '../../components/day-picker/day-picker';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
 import { Booked } from '../../components/booked/booked';
-import { History } from '../../components/history/history';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
 import { Push } from '../../core/push';
@@ -65,7 +64,6 @@ import { DURATIONS } from '../home/durations';
     DayStepper,
     Booked,
     AnswerCard,
-    History,
     MatSlideToggleModule,
   ],
   templateUrl: './event.html',
@@ -195,12 +193,25 @@ export class EventPage implements OnDestroy {
     this.session.setSlots(slots);
   }
 
-  /** Organiser settles on a session (or undoes it with null). */
-  onBook(session: Session | null): void {
-    const ok = this.session.updateEvent({ booked: session });
+  readonly bookings = computed<Session[]>(() => {
+    const ev = this.event();
+    return ev?.bookings ?? (ev?.booked ? [ev.booked] : []);
+  });
+  readonly notifyOn = computed(() => this.push.state() === 'on');
+
+  /** Organiser settles on a session; with the Pro option it is added to what is already booked. */
+  onBook(session: Session): void {
+    const keep = this.features().multiBook ? this.bookings() : [];
+    const ok = this.session.updateEvent({ bookings: [...keep, session] });
     if (!ok)
       this.snack.open('Only the organiser can book a session', undefined, { duration: 3000 });
-    else if (session) window.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onUnbook(session: Session): void {
+    this.session.updateEvent({
+      bookings: this.bookings().filter((b) => b.date !== session.date || b.start !== session.start),
+    });
   }
 
   /** Asking whether to add to or replace what is already marked. */

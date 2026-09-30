@@ -9,6 +9,34 @@ who opens the link enters their name and drags out the times they're free on a b
 (days on the x axis, hours on the y axis). Changes show up for everyone instantly, and the
 app lists every window where all of you are free for at least the requested length.
 
+Live at https://when-production-a440.up.railway.app · current version **0.5**
+
+## Features
+
+The full step-by-step guide is in the app: menu → App → **Guide** (`/guide`,
+source in `src/app/pages/guide/guide.ts`). The change log is next to it
+(`src/app/core/changelog.ts`); add an entry there and bump `VERSION` with every release.
+
+- **Plan**: name, description, any days from a rolling calendar, meetup length, earliest and latest hour
+- **Answer**: hold and drag on a day bar, resize, move, notes, free all day, copy to other days
+- **See**: one coloured bar per person per day, gold bands where everyone fits, live for everyone
+- **Decide**: possible sessions as chips; the organiser picks a start time and books
+- **Notifications**: everyone answered, booked, moved, cancelled; answers to sent links
+- **Welcome**: continue as a guest or with Google (`GOOGLE_CLIENT_ID`)
+- **Pro previews** (menu toggles): let someone else pick via a link, book several sessions,
+  connect calendar and fill from it (sample events), add to calendar, join for part of it, history
+
+## Server settings
+
+| Variable | Purpose |
+|---|---|
+| `PORT` / `API_PORT` | Port to listen on (3000) |
+| `DATA_FILE` | Where Whens are stored (`/data/events.json` in the container) |
+| `RETENTION_DAYS` | Whens are removed this long after their last day (60) |
+| `GOOGLE_CLIENT_ID` | Switches on Google sign-in |
+| `ADMIN_TOKEN` | Enables `GET /api/admin/export`; see `deploy/backup.sh` |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | Push keys; created next to the data file if unset |
+
 ## Stack
 
 - Angular 22 (standalone, signals, zoneless, Signal Forms) + Angular Material
