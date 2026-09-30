@@ -285,6 +285,7 @@ const MAX_SUBSCRIPTIONS = 60;
 async function notify(ev, pick, message) {
   const targets = (ev.push ?? []).filter(pick);
   if (!targets.length) return;
+  if (process.env.PUSH_DEBUG) console.log('notify', targets.map((t) => t.sub.endpoint.split('/').pop()), JSON.stringify(message));
   const gone = await push.send(
     targets.map((t) => t.sub),
     { ...message, url: `/e/${ev.id}` },
@@ -293,6 +294,23 @@ async function notify(ev, pick, message) {
     ev.push = ev.push.filter((t) => !gone.includes(t.sub.endpoint));
     store.set(ev);
   }
+}
+
+/** How many windows fit everyone: the same rule as the app, kept simple for a notification. */
+function findCommonCount(ev) {
+  const need = Math.round(ev.durationHours * 60);
+  let count = 0;
+  for (const date of ev.dates) {
+    let windows = [{ start: ev.dayStart, end: ev.dayEnd }];
+    for (const p of ev.participants) {
+      const mine = p.slots.filter((s) => s.date === date);
+      windows = windows.flatMap((w) =>
+        mine.map((s) => ({ start: Math.max(w.start, s.start), end: Math.min(w.end, s.end) })).filter((x) => x.end > x.start),
+      );
+    }
+    count += windows.filter((w) => w.end - w.start >= need).length;
+  }
+  return count;
 }
 
 function sessionText(s) {
@@ -368,6 +386,20 @@ app.post('/api/events/:id/shortlists', (req, res) => {
   res.status(201).json(list);
 });
 
+/** The organiser withdraws a link, e.g. sent to the wrong person. Answers on it go too. */
+app.delete('/api/events/:id/shortlists/:sid', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const token = req.get('x-creator-token');
+  if (!token || token !== ev.creatorToken) return res.status(403).json({ error: 'forbidden' });
+  const before = ev.shortlists?.length ?? 0;
+  ev.shortlists = (ev.shortlists ?? []).filter((s) => s.id !== req.params.sid);
+  if (ev.shortlists.length === before) return res.status(404).json({ error: 'not_found' });
+  store.set(ev);
+  broadcast(ev.id);
+  res.status(204).end();
+});
+
 app.get('/api/shortlists/:sid', (req, res) => {
   const found = findShortlist(req.params.sid);
   if (!found) return res.status(404).json({ error: 'not_found' });
@@ -404,13 +436,15 @@ app.post('/api/shortlists/:sid/answers', (req, res) => {
   }
   const answer = { name, picks, starts, at: new Date().toISOString() };
   const i = list.answers.findIndex((a) => a.name.toLowerCase() === name.toLowerCase());
+  const previous = i >= 0 ? list.answers[i] : null;
   if (i >= 0) list.answers[i] = answer;
   else list.answers.push(answer);
   store.set(ev);
   broadcast(ev.id);
   const chosen = picks.map((p) => sessionText(list.sessions[p])).join('; ');
+  const withdrew = previous?.picks.length && !picks.length;
   void notify(ev, (t) => t.organiser, {
-    title: `${name} answered · ${ev.title}`,
+    title: `${name} ${withdrew ? 'withdrew their answer' : previous ? 'changed their answer' : 'answered'} · ${ev.title}`,
     body: picks.length ? `Works for them: ${chosen}` : 'None of the sessions work for them.',
   });
   res.status(201).json(answer);
@@ -545,6 +579,7 @@ wss.on('connection', (ws, req) => {
           if (nameTaken(ev, name)) { send(ws, { type: 'nameTaken', name }); return; }
           p = { id: randomUUID(), name, color: pickColor(ev), slots: [] };
           ev.participants.push(p);
+          ev.notifiedComplete = false;
           record(ev, { ...who(p), kind: 'joined' });
           store.set(ev);
         }
@@ -560,6 +595,16 @@ wss.on('connection', (ws, req) => {
         const before = p.slots;
         p.slots = sanitizeSlots(ev, msg.slots);
         recordSlotChanges(ev, p, before, p.slots);
+        // The last person to answer completes the picture: tell the others once.
+        const everyone = ev.participants.length >= 2 && ev.participants.every((x) => x.slots.length);
+        if (everyone && !before.length && p.slots.length && !ev.notifiedComplete) {
+          ev.notifiedComplete = true;
+          const n = findCommonCount(ev);
+          void notify(ev, (t) => t.participantId !== p.id, {
+            title: `Everyone has answered · ${ev.title}`,
+            body: n ? `${n} possible session${n === 1 ? '' : 's'}. Time to book one.` : 'No session fits everyone yet.',
+          });
+        }
         store.set(ev);
         broadcast(ev.id);
         break;
@@ -594,12 +639,16 @@ wss.on('connection', (ws, req) => {
         if (typeof patch.partialOk === 'boolean') ev.partialOk = patch.partialOk;
         const bookedBefore = JSON.stringify(ev.booked ?? null);
         if (patch.booked !== undefined) ev.booked = cleanSession(patch.booked);
-        if (ev.booked && JSON.stringify(ev.booked) !== bookedBefore) {
-          // Everyone but the person who just booked it.
-          void notify(ev, (t) => !t.participantId || t.participantId !== ws.participantId, {
-            title: `${ev.title} is booked`,
-            body: sessionText(ev.booked),
-          });
+        if (JSON.stringify(ev.booked ?? null) !== bookedBefore) {
+          // Everyone but the organiser, who just did it.
+          const others = (t) => !t.organiser && t.participantId !== ws.participantId;
+          if (ev.booked && bookedBefore === 'null') {
+            void notify(ev, others, { title: `${ev.title} is booked`, body: sessionText(ev.booked) });
+          } else if (ev.booked) {
+            void notify(ev, others, { title: `${ev.title} moved`, body: `Now ${sessionText(ev.booked)}` });
+          } else {
+            void notify(ev, others, { title: `${ev.title} is no longer booked`, body: 'The organiser cancelled the session.' });
+          }
         }
         if (patch.dayStart !== undefined || patch.dayEnd !== undefined) {
           [ev.dayStart, ev.dayEnd] = cleanRange(patch.dayStart ?? ev.dayStart, patch.dayEnd ?? ev.dayEnd, ev.dayStart, ev.dayEnd);

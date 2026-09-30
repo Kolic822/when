@@ -112,6 +112,10 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  /* About three cards; the rest scroll inside the list. */
+  max-height: 300px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 
   li {
     display: flex;
@@ -340,4 +344,8 @@ p {
     font-size: 13px;
     color: var(--accent);
   }
+}
+
+.error {
+  color: var(--mat-sys-error);
 }

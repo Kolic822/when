@@ -1,20 +1,16 @@
 <div class="panel">
   @if (link(); as url) {
-    <p class="title">Link ready</p>
-    <p class="muted">Send it to whoever should choose. They only see these sessions.</p>
-    <div class="link">
-      <span class="url">{{ url }}</span>
-      <button mat-flat-button type="button" (click)="copy()">
+    <div class="ready">
+      <span class="title">Link ready</span>
+      <button mat-flat-button type="button" class="copy" (click)="copy()">
         <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
-        {{ copied() ? 'Copied' : 'Copy' }}
+        {{ copied() ? 'Copied' : 'Copy link' }}
       </button>
-    </div>
-    <div class="actions">
-      <button type="button" class="pill" (click)="closed.emit()">Close</button>
+      <button type="button" class="pill close" (click)="closed.emit()">Close</button>
     </div>
   } @else {
-    <p class="title">Ask someone</p>
-    <p class="muted">Which sessions should they choose from?</p>
+    <p class="title">Let someone else pick</p>
+    <p class="muted">They get a link with only these sessions. Which ones?</p>
     <div class="chips" role="group" aria-label="Sessions to include">
       @for (s of sessions(); track $index) {
         <button

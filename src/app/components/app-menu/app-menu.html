@@ -265,6 +265,63 @@
         <button
           type="button"
           class="fold"
+          (click)="toggleSection('notify')"
+          [attr.aria-expanded]="!isFolded('notify')"
+        >
+          <span>Notifications</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </h2>
+      @if (!isFolded('notify')) {
+        <div class="sect">
+          @switch (push.state()) {
+            @case ('install') {
+              <p class="muted small">
+                On iPhone, add When to your Home Screen first: tap Share, then “Add to Home Screen”,
+                and open it from there.
+              </p>
+            }
+            @case ('unsupported') {
+              <p class="muted small">This browser can't show notifications.</p>
+            }
+            @case ('blocked') {
+              <p class="muted small">
+                Notifications are blocked for When in your browser settings. Allow them there, then
+                come back.
+              </p>
+            }
+            @default {
+              <ul class="features">
+                <li>
+                  <mat-slide-toggle
+                    [checked]="push.state() === 'on'"
+                    [disabled]="push.busy()"
+                    (change)="togglePush($event.checked)"
+                    aria-label="Notifications"
+                  />
+                  <span class="text">
+                    <span class="label">Notify me</span>
+                    <span class="muted small"
+                      >When a session is booked, moved or cancelled, when everyone has answered, and
+                      about answers to links you sent.</span
+                    >
+                  </span>
+                </li>
+              </ul>
+              @if (pushFailed()) {
+                <p class="error small" role="alert">Couldn't turn on notifications. Try again.</p>
+              }
+            }
+          }
+        </div>
+      }
+    </section>
+
+    <section>
+      <h2>
+        <button
+          type="button"
+          class="fold"
           (click)="toggleSection('pro')"
           [attr.aria-expanded]="!isFolded('pro')"
         >

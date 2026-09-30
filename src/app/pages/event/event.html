@@ -264,9 +264,6 @@
           (hovered)="hoveredId.set($event)"
           (renameRequested)="renaming.set(true)"
         />
-        @if (meId() && !event()!.booked) {
-          <app-notify [eventId]="id()" [organiser]="isCreator()" />
-        }
         @if (features().history) {
           <app-history [entries]="event()!.history ?? []" [meId]="meId()" />
         }

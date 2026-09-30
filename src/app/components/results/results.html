@@ -25,111 +25,93 @@
   } @else {
     <div class="body">
       @if (rows().length) {
-        <ul>
+        <div class="chips" role="group" aria-label="Possible sessions">
           @for (r of visible(); track r.key) {
-            <li [class.open]="openRow() === r.key">
-              <button
-                type="button"
-                class="line"
-                [disabled]="!r.expandable"
-                [attr.aria-expanded]="r.expandable ? openRow() === r.key : null"
-                (click)="toggleRow(r)"
-              >
-                <span class="day">{{ r.day }}</span>
-                <span class="time">{{ r.time }}</span>
-                @if (r.notes.length) {
-                  <span class="notes-n" [attr.aria-label]="r.notes.length + ' notes'">
-                    <mat-icon>chat_bubble_outline</mat-icon>{{ r.notes.length }}
-                  </span>
-                }
-                <span class="len muted">{{ r.length }}</span>
-                @if (r.expandable) {
-                  <mat-icon class="chev">expand_more</mat-icon>
-                }
-              </button>
-
-              @if (openRow() === r.key) {
-                <div class="detail">
-                  @for (n of r.notes; track $index) {
-                    <p class="note">
-                      <strong>{{ n.name }}</strong> {{ n.note }}
-                    </p>
-                  }
-                  @if (r.partial) {
-                    <p class="note muted">{{ r.partial }}</p>
-                  }
-                  @if (selecting() === r.key) {
-                    <div class="chooser">
-                      @if (r.starts.length > 1) {
-                        <p class="chooser-title">When should the {{ durationLabel() }} start?</p>
-                        <div class="grid" role="radiogroup" aria-label="Start time">
-                          @for (s of r.starts; track s) {
-                            <button
-                              type="button"
-                              class="start"
-                              role="radio"
-                              [class.on]="startOf(r) === s"
-                              [attr.aria-checked]="startOf(r) === s"
-                              (click)="pickStart(r, s)"
-                            >
-                              {{ fmt(s) }}
-                            </button>
-                          }
-                        </div>
-                      }
-                      <div class="acts">
-                        <button type="button" class="pill cancel" (click)="selecting.set(null)">
-                          Cancel
-                        </button>
-                        <button type="button" class="pill book" (click)="confirmBooking(r)">
-                          <mat-icon>check</mat-icon>
-                          Book {{ chosen(r) }}
-                        </button>
-                      </div>
-                    </div>
-                  } @else if (organiser() || features().calendar) {
-                    <div class="acts">
-                      @if (organiser()) {
-                        @if (r.starts.length > 1) {
-                          <button type="button" class="pill book" (click)="selecting.set(r.key)">
-                            <mat-icon>schedule</mat-icon>
-                            Pick a time
-                          </button>
-                        } @else {
-                          <button type="button" class="pill book" (click)="confirmBooking(r)">
-                            <mat-icon>check</mat-icon>
-                            Book {{ chosen(r) }}
-                          </button>
-                        }
-                      }
-                      @if (features().calendar) {
-                        <button
-                          type="button"
-                          class="pill cal"
-                          (click)="addToCalendar(r)"
-                          [attr.aria-label]="'Add ' + r.day + ' ' + r.time + ' to calendar'"
-                        >
-                          <mat-icon>event</mat-icon>
-                          Calendar
-                        </button>
-                      }
-                    </div>
-                  }
-                </div>
+            <button
+              type="button"
+              class="chip"
+              [class.on]="openRow() === r.key"
+              [disabled]="!r.expandable"
+              [attr.aria-pressed]="r.expandable ? openRow() === r.key : null"
+              (click)="toggleRow(r)"
+            >
+              <span class="day">{{ r.day }}</span>
+              <span class="time">{{ r.time }}</span>
+              @if (r.notes.length) {
+                <span class="notes-n" [attr.aria-label]="r.notes.length + ' notes'">
+                  <mat-icon>chat_bubble</mat-icon>
+                </span>
               }
-            </li>
+            </button>
           }
-        </ul>
-        @if (rows().length > collapsedRows) {
-          <button
-            type="button"
-            class="more"
-            (click)="expanded.set(!expanded())"
-            [attr.aria-expanded]="expanded()"
-          >
-            {{ expanded() ? 'Show less' : 'Show ' + (rows().length - collapsedRows) + ' more' }}
-            <mat-icon>{{ expanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
-          </button>
+          @if (rows().length > limit) {
+            <button
+              type="button"
+              class="chip extra"
+              (click)="expanded.set(!expanded())"
+              [attr.aria-expanded]="expanded()"
+            >
+              {{ expanded() ? 'Show less' : '+' + (rows().length - visible().length) + ' more' }}
+            </button>
+          }
+        </div>
+
+        @if (selected(); as r) {
+          <div class="detail">
+            <p class="detail-title">
+              <strong>{{ r.day }}</strong>
+              <span>{{ r.time }}</span>
+              <span class="muted len">{{ r.length }}</span>
+            </p>
+            @for (n of r.notes; track $index) {
+              <p class="note">
+                <strong>{{ n.name }}</strong> {{ n.note }}
+              </p>
+            }
+            @if (r.partial) {
+              <p class="note muted">{{ r.partial }}</p>
+            }
+            @if (organiser() && r.starts.length > 1) {
+              <p class="chooser-title muted">When should the {{ durationLabel() }} start?</p>
+              <div class="grid" role="radiogroup" aria-label="Start time">
+                @for (s of r.starts; track s) {
+                  <button
+                    type="button"
+                    class="start"
+                    role="radio"
+                    [class.on]="startOf(r) === s"
+                    [attr.aria-checked]="startOf(r) === s"
+                    (click)="pickStart(r, s)"
+                  >
+                    {{ fmt(s) }}
+                  </button>
+                }
+              </div>
+            }
+            @if (organiser() || features().calendar) {
+              <div class="acts">
+                @if (organiser()) {
+                  <button type="button" class="pill book" (click)="confirmBooking(r)">
+                    <mat-icon>check</mat-icon>
+                    Book {{ chosen(r) }}
+                  </button>
+                }
+                @if (features().calendar) {
+                  <button
+                    type="button"
+                    class="pill cal"
+                    (click)="addToCalendar(r)"
+                    [attr.aria-label]="'Add ' + r.day + ' ' + r.time + ' to calendar'"
+                  >
+                    <mat-icon>event</mat-icon>
+                    @if (!organiser()) {
+                      Add to calendar
+                    }
+                  </button>
+                }
+              </div>
+            }
+          </div>
         }
       } @else if (result().answered.length === 0) {
         <p class="muted">Nothing yet. Tap a day to add your times.</p>
@@ -151,46 +133,70 @@
             (closed)="asking.set(false)"
           />
         } @else {
-          <button type="button" class="pill ask" (click)="asking.set(true)">
+          <button type="button" class="ask" (click)="asking.set(true)">
             <mat-icon>forward_to_inbox</mat-icon>
-            Ask someone
+            Let someone else pick
           </button>
         }
       }
 
-      @if (asked().length) {
+      @if (organiser() && asked().length) {
         <div class="asked">
           @for (a of asked(); track a.id) {
             <div class="list">
               <div class="list-head">
                 <span class="muted">
-                  Asked · {{ a.mode === 'one' ? 'pick one' : 'pick any' }} · {{ a.answered }}
-                  {{ a.answered === 1 ? 'answer' : 'answers' }}
+                  Link sent · {{ a.answered }} {{ a.answered === 1 ? 'answer' : 'answers' }}
                 </span>
-                <button type="button" class="pill mini" (click)="copy(a.url)">
-                  <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
-                  {{ copied() === a.url ? 'Copied' : 'Copy link' }}
-                </button>
+                @if (removing() === a.id) {
+                  <span class="confirm">
+                    <button type="button" class="pill mini" (click)="removing.set(null)">
+                      Keep
+                    </button>
+                    <button type="button" class="pill mini danger" (click)="remove(a.id)">
+                      Remove link
+                    </button>
+                  </span>
+                } @else {
+                  <span class="confirm">
+                    <button type="button" class="pill mini" (click)="copy(a.url)">
+                      <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
+                      {{ copied() === a.url ? 'Copied' : 'Copy link' }}
+                    </button>
+                    <button
+                      type="button"
+                      class="icon-btn mini-icon"
+                      (click)="removing.set(a.id)"
+                      aria-label="Remove this link"
+                      title="Remove this link"
+                    >
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </span>
+                }
               </div>
               @for (row of a.rows; track $index) {
-                <div class="ans">
-                  <span>{{ row.text }}</span>
-                  <span class="who">
-                    @for (n of row.yes; track n.name) {
-                      <span class="yes">
-                        <mat-icon>check</mat-icon>{{ n.name }}
-                        @if (n.at) {
-                          <span class="at">{{ n.at }}</span>
-                        }
-                      </span>
-                    } @empty {
-                      <span class="muted">–</span>
-                    }
-                  </span>
-                </div>
+                @if (row.yes.length) {
+                  <div class="ans">
+                    <span>{{ row.text }}</span>
+                    <span class="who">
+                      @for (n of row.yes; track n.name) {
+                        <span class="yes">
+                          <mat-icon>check</mat-icon>{{ n.name }}
+                          @if (n.at) {
+                            <span class="at">{{ n.at }}</span>
+                          }
+                        </span>
+                      }
+                    </span>
+                  </div>
+                }
               }
               @if (a.none.length) {
                 <div class="ans none muted">None fit: {{ a.none.join(', ') }}</div>
+              }
+              @if (!a.answered) {
+                <div class="ans none muted">No answer yet.</div>
               }
             </div>
           }

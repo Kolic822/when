@@ -2,6 +2,8 @@ import { Component, ElementRef, computed, inject, input, output, signal } from '
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AvailabilityResult } from '../../core/availability';
+import { EventApi } from '../../core/event-api';
+import { Identity } from '../../core/identity';
 import { buildIcs, openInCalendar } from '../../core/calendar';
 import { CommonWindow, Session, Shortlist } from '../../core/models';
 import { Features, NO_FEATURES } from '../../core/prefs';
@@ -38,7 +40,8 @@ interface Asked {
   answered: number;
 }
 
-const COLLAPSED_ROWS = 3;
+/** Chips shown before the rest hide behind "+N more": three rows of two. */
+const LIMIT = 6;
 
 /** Compact list of possible sessions, with the Pro extras when they are switched on. */
 @Component({
@@ -64,20 +67,22 @@ export class Results {
   /** The organiser settles on a session. */
   readonly book = output<Session>();
 
-  readonly collapsedRows = COLLAPSED_ROWS;
+  readonly limit = LIMIT;
 
   /** Whole card folded to one line; null follows the default (folded once booked). */
   private readonly folded = signal<boolean | null>(null);
   readonly isFolded = computed(() => this.folded() ?? this.booked());
   readonly expanded = signal(false);
-  /** Row the organiser is choosing a start time for, before booking. */
-  readonly selecting = signal<string | null>(null);
   /** Row whose details are open. */
   readonly openRow = signal<string | null>(null);
   /** Start the organiser picked per row; defaults to the start of the window. */
   private readonly pickedStart = signal<Record<string, number>>({});
   readonly asking = signal(false);
   readonly copied = signal<string | null>(null);
+  /** Sent link the organiser is about to remove. */
+  readonly removing = signal<string | null>(null);
+  private readonly api = inject(EventApi);
+  private readonly identity = inject(Identity);
 
   readonly minutes = computed(() => Math.round(this.durationHours() * 60));
   readonly durationLabel = computed(() => formatDuration(this.minutes()));
@@ -103,9 +108,11 @@ export class Results {
     }));
   });
 
+  /** With more than fit, one place is given to the "+N more" chip. */
   readonly visible = computed(() =>
-    this.expanded() ? this.rows() : this.rows().slice(0, COLLAPSED_ROWS),
+    this.expanded() || this.rows().length <= LIMIT ? this.rows() : this.rows().slice(0, LIMIT - 1),
   );
+  readonly selected = computed(() => this.rows().find((r) => r.key === this.openRow()) ?? null);
 
   readonly sessions = computed<Session[]>(() =>
     this.rows().map(({ window: w }) => ({ date: w.date, start: w.start, end: w.end })),
@@ -166,14 +173,12 @@ export class Results {
     );
     if (index < 0) return false;
     const key = this.rows()[index].key;
-    const row = this.rows()[index];
     this.folded.set(false);
-    if (index >= COLLAPSED_ROWS) this.expanded.set(true);
+    if (index >= LIMIT - 1) this.expanded.set(true);
     this.openRow.set(key);
-    this.selecting.set(row.starts.length > 1 ? key : null);
     setTimeout(() =>
       this.host.nativeElement
-        .querySelector('li.open')
+        .querySelector('.detail')
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
     );
     return true;
@@ -185,7 +190,6 @@ export class Results {
 
   toggleRow(r: Row): void {
     if (!r.expandable) return;
-    this.selecting.set(null);
     this.openRow.set(this.openRow() === r.key ? null : r.key);
   }
 
@@ -207,7 +211,6 @@ export class Results {
   confirmBooking(r: Row): void {
     const start = this.startOf(r);
     const len = Math.min(this.minutes(), r.window.end - r.window.start);
-    this.selecting.set(null);
     this.openRow.set(null);
     this.folded.set(null);
     this.book.emit({ date: r.window.date, start, end: start + len });
@@ -235,6 +238,18 @@ export class Results {
       }),
       'when.ics',
     );
+  }
+
+  /** Withdraws a sent link; whoever has it sees that it no longer exists. */
+  async remove(id: string): Promise<void> {
+    const token = this.identity.creatorToken(this.eventId());
+    this.removing.set(null);
+    if (!token) return;
+    try {
+      await this.api.removeShortlist(this.eventId(), id, token);
+    } catch {
+      /* the list refreshes from the server either way */
+    }
   }
 
   async copy(url: string): Promise<void> {

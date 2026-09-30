@@ -107,3 +107,26 @@ p.muted {
   font-size: 13px;
   color: var(--mat-sys-error);
 }
+
+/* Link created: one line with the two things left to do. */
+.ready {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .title {
+    white-space: nowrap;
+  }
+  .copy {
+    flex: 1;
+    height: 40px;
+    border-radius: 999px;
+  }
+  .close {
+    flex: none;
+    height: 40px;
+    padding: 0 14px;
+    background: var(--when-surface);
+    font-size: 13px;
+  }
+}

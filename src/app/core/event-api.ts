@@ -54,6 +54,14 @@ export class EventApi {
     return res.json();
   }
 
+  async removeShortlist(id: string, sid: string, creatorToken: string): Promise<void> {
+    const res = await fetch(
+      `/api/events/${encodeURIComponent(id)}/shortlists/${encodeURIComponent(sid)}`,
+      { method: 'DELETE', headers: { 'x-creator-token': creatorToken } },
+    );
+    if (!res.ok && res.status !== 404) throw new Error(`Could not remove the link (${res.status})`);
+  }
+
   async getShortlist(sid: string): Promise<ShortlistView | null> {
     const res = await fetch(`/api/shortlists/${encodeURIComponent(sid)}`);
     if (res.status === 404) return null;

@@ -36,10 +36,10 @@ import { DayPicker } from '../../components/day-picker/day-picker';
 import { AppMenu } from '../../components/app-menu/app-menu';
 import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
 import { Booked } from '../../components/booked/booked';
-import { Notify } from '../../components/notify/notify';
 import { History } from '../../components/history/history';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PrefsStore } from '../../core/prefs';
+import { Push } from '../../core/push';
 import { freeAround, sampleBusy } from '../../core/busy';
 import { mergeSlots } from '../../core/availability';
 import { DayStepper } from '../../components/day-stepper/day-stepper';
@@ -64,7 +64,6 @@ import { DURATIONS } from '../home/durations';
     AppMenu,
     DayStepper,
     Booked,
-    Notify,
     AnswerCard,
     History,
     MatSlideToggleModule,
@@ -87,6 +86,7 @@ export class EventPage implements OnDestroy {
 
   /** Pro features switched on in the menu (preview). */
   private readonly prefsStore = inject(PrefsStore);
+  private readonly push = inject(Push);
   readonly features = computed(() => this.prefsStore.prefs().features);
 
   readonly resultsCard = viewChild<Results>('results');
@@ -144,6 +144,12 @@ export class EventPage implements OnDestroy {
   });
 
   constructor() {
+    // Notifications are per device; each When still has to be registered once.
+    effect(() => {
+      const id = this.id();
+      if (this.meId() || this.isCreator()) void this.push.register(id);
+    });
+
     effect(() => this.session.connect(this.id()));
     // Offer the day stepper once, to people who have not marked anything yet.
     effect(() => {

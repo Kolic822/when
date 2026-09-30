@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Auth } from '../../core/auth';
+import { Push } from '../../core/push';
 import { Identity, RecentMeetup } from '../../core/identity';
 import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -42,6 +43,15 @@ export class AppMenu {
   readonly store = inject(PrefsStore);
   readonly updates = inject(Updates);
   readonly auth = inject(Auth);
+  readonly push = inject(Push);
+  readonly pushFailed = signal(false);
+
+  async togglePush(on: boolean): Promise<void> {
+    this.pushFailed.set(false);
+    if (!on) return this.push.disable();
+    const ok = await this.push.enable();
+    if (!ok && this.push.state() !== 'blocked') this.pushFailed.set(true);
+  }
 
   signOut(): void {
     this.auth.signOut();
@@ -191,7 +201,7 @@ export class AppMenu {
     },
     {
       key: 'shortlist',
-      label: 'Ask someone',
+      label: 'Let someone else pick',
       hint: 'Send a link with only the possible sessions.',
     },
     {
@@ -254,8 +264,8 @@ export class AppMenu {
   });
 }
 
-const FOLDED_KEY = 'when:menu-folded';
-const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'pro', 'app'];
+const FOLDED_KEY = 'when:menu-folded-v2';
+const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'notify', 'pro'];
 
 function loadFolded(): Set<string> {
   try {
