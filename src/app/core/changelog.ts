@@ -7,9 +7,14 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.3';
+export const VERSION = '0.10.4';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.4',
+    date: '30 Sep 2026',
+    changes: [m('Dragging a period no longer shows two overlapping labels')],
+  },
   {
     version: '0.10.3',
     date: '30 Sep 2026',

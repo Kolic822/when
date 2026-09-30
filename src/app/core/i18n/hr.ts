@@ -184,6 +184,8 @@ export const hr: Dictionary = {
   'Drag to add a block.': 'Povuci da dodaš blok.',
   'Drag to add your free time': 'Povuci za unos slobodnog vremena',
   'Drag to select the hours you are free': 'Povuci za odabir sati kad si slobodan/na',
+  'Dragging a period no longer shows two overlapping labels':
+    'Pri povlačenju razdoblja više se ne prikazuju dvije oznake koje se preklapaju',
   'Each day is a column and each person is a coloured bar inside it. Your bar is always on the right.':
     'Svaki dan je stupac, a svaka osoba obojena traka u njemu. Tvoja je traka uvijek desno.',
   'Earlier weeks': 'Raniji tjedni',

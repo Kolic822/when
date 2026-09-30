@@ -245,3 +245,7 @@ Pregledniji odjeljak Kalendar: najprije tvoji kalendari, na kraju opcije prikaza
 Fixed: the arrows in the day picker now move to later and earlier weeks
 Behoben: Die Pfeile in der Tagesauswahl blättern jetzt zu späteren und früheren Wochen
 Ispravljeno: strelice u odabiru dana sada prelaze na kasnije i ranije tjedne
+
+Dragging a period no longer shows two overlapping labels
+Beim Ziehen eines Zeitraums überlappen sich keine zwei Beschriftungen mehr
+Pri povlačenju razdoblja više se ne prikazuju dvije oznake koje se preklapaju

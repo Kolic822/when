@@ -360,16 +360,25 @@ header {
       height: 18px;
     }
   }
+  /* While a period is dragged, the original steps back to a bare outline of where it was:
+     no label, no icons, nothing to clash with the one that follows the finger. */
   &.editing {
-    opacity: 0.25;
+    background: transparent;
+    box-shadow: none;
+    outline: 1.5px dashed color-mix(in srgb, var(--color) 45%, transparent);
+    outline-offset: -2px;
+
+    > * {
+      visibility: hidden;
+    }
   }
 
+  /* The period as it will be when the finger lifts. */
   &.preview {
     animation: none;
-    opacity: 0.7;
-    outline: 2px dashed var(--color);
-    outline-offset: -3px;
+    opacity: 0.92;
     pointer-events: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
   }
 }
 

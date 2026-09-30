@@ -178,6 +178,8 @@ export const de: Dictionary = {
   'Drag to add your free time': 'Ziehen, um deine freie Zeit einzutragen',
   'Drag to select the hours you are free':
     'Ziehe, um die Stunden zu markieren, in denen du Zeit hast',
+  'Dragging a period no longer shows two overlapping labels':
+    'Beim Ziehen eines Zeitraums überlappen sich keine zwei Beschriftungen mehr',
   'Each day is a column and each person is a coloured bar inside it. Your bar is always on the right.':
     'Jeder Tag ist eine Spalte, jede Person ein farbiger Balken darin. Dein Balken ist immer rechts.',
   'Earlier weeks': 'Frühere Wochen',
