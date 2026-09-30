@@ -10,6 +10,7 @@ export const hr: Dictionary = {
   'A When keeps its times in the organiser’s time zone.':
     'When čuva vremena u vremenskoj zoni organizatora.',
   'A calendar button on every possible session.': 'Gumb za kalendar uz svaki mogući termin.',
+  'A double tap no longer zooms the page': 'Dvostruki dodir više ne zumira stranicu',
   'A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.':
     'Zlatna traka označava mogući termin: vrijeme kad su svi koji su odgovorili slobodni barem koliko traje susret.',
   'A new version is ready.': 'Nova verzija je spremna.',
@@ -247,6 +248,7 @@ export const hr: Dictionary = {
   'Hold your finger on the bar for a moment, then drag to mark a period. A period can’t be shorter than the meetup.':
     'Zadrži prst na traci trenutak pa povuci da označiš razdoblje. Razdoblje ne može biti kraće od susreta.',
   'Hold, then drag to add a block.': 'Drži pa povuci da dodaš blok.',
+  'Holding a finger down no longer selects text': 'Dugi pritisak više ne označava tekst',
   'Hours are in {city} time. People elsewhere see their own.':
     'Sati su po vremenu: {city}. Tko je drugdje, vidi svoje vrijeme.',
   'How it works': 'Kako radi',

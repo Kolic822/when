@@ -9,7 +9,7 @@ import { t } from '../../core/i18n/i18n';
   selector: 'app-changes',
   imports: [RouterLink, MatIconModule],
   template: `
-    <main class="page changes">
+    <main class="page changes selectable">
       <nav class="top">
         <a routerLink="/" class="brand"
           >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a

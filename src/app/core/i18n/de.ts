@@ -11,6 +11,7 @@ export const de: Dictionary = {
     'Ein When speichert seine Zeiten in der Zeitzone des Organisators.',
   'A calendar button on every possible session.':
     'Eine Kalender-Schaltfläche bei jedem möglichen Termin.',
+  'A double tap no longer zooms the page': 'Ein Doppeltipp zoomt die Seite nicht mehr',
   'A gold band marks a possible session: a time when everyone who answered is free for at least the length of the meetup.':
     'Ein goldenes Band markiert einen möglichen Termin: eine Zeit, in der alle, die geantwortet haben, mindestens für die Dauer des Treffens Zeit haben.',
   'A new version is ready.': 'Eine neue Version ist bereit.',
@@ -242,6 +243,7 @@ export const de: Dictionary = {
   'Hold your finger on the bar for a moment, then drag to mark a period. A period can’t be shorter than the meetup.':
     'Halte den Finger kurz auf dem Balken und ziehe dann, um einen Zeitraum zu markieren. Ein Zeitraum kann nicht kürzer sein als das Treffen.',
   'Hold, then drag to add a block.': 'Halten, dann ziehen, um einen Block hinzuzufügen.',
+  'Holding a finger down no longer selects text': 'Langes Drücken markiert keinen Text mehr',
   'Hours are in {city} time. People elsewhere see their own.':
     'Die Uhrzeiten gelten für {city}. Wer woanders ist, sieht die eigene Zeit.',
   'How it works': 'So funktioniert’s',

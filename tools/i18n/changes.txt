@@ -253,3 +253,11 @@ Pri povlačenju razdoblja više se ne prikazuju dvije oznake koje se preklapaju
 Fixed: the welcome screen buttons sometimes did nothing, for example after signing out
 Behoben: Die Schaltflächen auf dem Willkommensbildschirm reagierten manchmal nicht, zum Beispiel nach dem Abmelden
 Ispravljeno: gumbi na zaslonu dobrodošlice ponekad nisu reagirali, na primjer nakon odjave
+
+A double tap no longer zooms the page
+Ein Doppeltipp zoomt die Seite nicht mehr
+Dvostruki dodir više ne zumira stranicu
+
+Holding a finger down no longer selects text
+Langes Drücken markiert keinen Text mehr
+Dugi pritisak više ne označava tekst

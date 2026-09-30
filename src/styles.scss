@@ -436,3 +436,30 @@ h3 {
   line-height: 1.5;
   vertical-align: middle;
 }
+
+/*
+ * Behave like an app under the finger.
+ * - A double tap never zooms; scrolling and pinching still work. Elements that handle
+ *   their own gestures (the day bar) set a stricter touch-action themselves.
+ * - Holding a finger down never selects text or opens the system menu, except in
+ *   fields and on the reading pages, where copying text is useful.
+ */
+* {
+  touch-action: manipulation;
+}
+
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea,
+[contenteditable],
+.selectable {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}

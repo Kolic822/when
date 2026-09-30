@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.10.5';
+export const VERSION = '0.10.6';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.10.6',
+    date: '30 Sep 2026',
+    changes: [
+      m('A double tap no longer zooms the page'),
+      m('Holding a finger down no longer selects text'),
+    ],
+  },
   {
     version: '0.10.5',
     date: '30 Sep 2026',
