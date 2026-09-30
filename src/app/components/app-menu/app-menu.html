@@ -266,48 +266,123 @@
           (click)="toggleSection('defaults')"
           [attr.aria-expanded]="!isFolded('defaults')"
         >
-          <span>{{ t('Defaults for new Whens') }}</span>
+          <span>{{ t('Settings') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
       @if (!isFolded('defaults')) {
         <div class="sect">
-          <mat-form-field appearance="outline">
-            <mat-label>{{ t('Meetup length') }}</mat-label>
-            <mat-select
-              [value]="prefs().durationHours"
-              (valueChange)="store.update({ durationHours: $event })"
-            >
-              @for (d of durations; track d) {
-                <mat-option [value]="d">{{ tn(d, '{n} hour', '{n} hours') }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>{{ t('Earliest') }}</mat-label>
-              <mat-select
-                [value]="prefs().dayStart"
-                (valueChange)="store.update({ dayStart: $event })"
-              >
+          <p class="sub">{{ t('Defaults for new Whens') }}</p>
+          <div class="details">
+            <label>
+              <span class="muted">{{ t('Meetup length') }}</span>
+              <select (change)="setDefault('durationHours', $event)">
+                @for (d of durations; track d) {
+                  <option [value]="d" [selected]="prefs().durationHours === d">{{ d }} h</option>
+                }
+              </select>
+            </label>
+            <label>
+              <span class="muted">{{ t('Earliest') }}</span>
+              <select (change)="setDefault('dayStart', $event)">
                 @for (h of startOptions; track h.value) {
-                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                  <option [value]="h.value" [selected]="prefs().dayStart === h.value">
+                    {{ h.label }}
+                  </option>
                 }
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>{{ t('Latest') }}</mat-label>
-              <mat-select [value]="prefs().dayEnd" (valueChange)="store.update({ dayEnd: $event })">
+              </select>
+            </label>
+            <label>
+              <span class="muted">{{ t('Latest') }}</span>
+              <select (change)="setDefault('dayEnd', $event)">
                 @for (h of endOptions; track h.value) {
-                  <mat-option [value]="h.value">{{ h.label }}</mat-option>
+                  <option [value]="h.value" [selected]="prefs().dayEnd === h.value">
+                    {{ h.label }}
+                  </option>
                 }
-              </mat-select>
-            </mat-form-field>
+              </select>
+            </label>
           </div>
           @if (!rangeValid()) {
             <p class="warn">{{ t('The hours must leave room for the meetup length.') }}</p>
           }
-          <p class="muted small">{{ t('Used to pre-fill the form when you plan a new When.') }}</p>
+
+          <p class="sub">
+            {{ t('Booking') }} <span class="pro-badge">{{ t('PRO') }}</span>
+          </p>
+          <ul class="features" [class.locked]="!pro()">
+            <li>
+              <mat-slide-toggle
+                [checked]="pro() && prefs().multiBook"
+                [disabled]="!pro()"
+                (change)="store.update({ multiBook: $event.checked })"
+                [attr.aria-label]="t('Book several sessions')"
+              />
+              <span class="text">
+                <span class="label">{{ t('Book several sessions') }}</span>
+                <span class="muted small">{{
+                  t('Booking another day adds a session instead of replacing the first.')
+                }}</span>
+              </span>
+            </li>
+          </ul>
+
+          <p class="sub">
+            {{ t('My calendar') }} <span class="pro-badge">{{ t('PRO') }}</span>
+          </p>
+          <ul class="features" [class.locked]="!pro()">
+            <li>
+              <mat-slide-toggle
+                [checked]="pro() && prefs().calendarNames"
+                [disabled]="!pro()"
+                (change)="store.update({ calendarNames: $event.checked })"
+                [attr.aria-label]="t('Show event names')"
+              />
+              <span class="text">
+                <span class="label">{{ t('Show event names') }}</span>
+                <span class="muted small">{{ t('Off: every event just says Busy.') }}</span>
+              </span>
+            </li>
+            <li>
+              <mat-slide-toggle
+                [checked]="pro() && prefs().calendarAllDay"
+                [disabled]="!pro()"
+                (change)="store.update({ calendarAllDay: $event.checked })"
+                [attr.aria-label]="t('Show all-day events')"
+              />
+              <span class="text">
+                <span class="label">{{ t('Show all-day events') }}</span>
+                <span class="muted small">{{ t('Birthdays, holidays, trips.') }}</span>
+              </span>
+            </li>
+          </ul>
+          @if (pro()) {
+            @if (!calendar.available()) {
+              <p class="muted small">{{ t('Showing sample events for now.') }}</p>
+            } @else if (calendar.connected()) {
+              <p class="cal-row">
+                <span class="ok"><mat-icon>check_circle</mat-icon>{{ t('Connected') }}</span>
+                <button type="button" class="link" (click)="calendar.disconnect()">
+                  {{ t('Disconnect') }}
+                </button>
+              </p>
+            } @else {
+              <button
+                type="button"
+                class="pill cal-connect"
+                [disabled]="calendar.working()"
+                (click)="connectCalendar()"
+              >
+                <mat-icon>event</mat-icon>
+                {{ t('Connect Google Calendar') }}
+              </button>
+              @if (calendar.failed()) {
+                <p class="error small" role="alert">{{ t('Couldn’t connect. Try again.') }}</p>
+              }
+            }
+          } @else {
+            <p class="muted small">{{ t('Sign in with Google to use Pro settings.') }}</p>
+          }
         </div>
       }
     </section>
@@ -322,7 +397,7 @@
             [attr.aria-expanded]="!isFolded('history')"
           >
             <span
-              >{{ t('History') }} <span class="preview">{{ t('pro') }}</span></span
+              >{{ t('History') }} <span class="pro-badge">{{ t('PRO') }}</span></span
             >
             <mat-icon>expand_more</mat-icon>
           </button>
@@ -436,46 +511,27 @@
       </h2>
       @if (!isFolded('pro')) {
         <div class="sect">
-          <ul class="features">
-            @for (f of proFeatures; track f.key) {
+          @if (pro()) {
+            <p class="pro-state on">
+              <mat-icon>verified</mat-icon>
+              {{ t('Pro is on for your Google account.') }}
+            </p>
+          } @else {
+            <p class="pro-state">
+              <mat-icon>lock</mat-icon>
+              {{ t('Sign in with Google to use these.') }}
+            </p>
+            <button type="button" class="pill cal-connect" (click)="signIn()">
+              {{ t('Sign in') }}
+            </button>
+          }
+          <ul class="pro-list" [class.locked]="!pro()">
+            @for (f of proFeatures; track f.label) {
               <li>
-                <mat-slide-toggle
-                  [checked]="prefs().features[f.key]"
-                  (change)="setFeature(f.key, $event.checked)"
-                  [attr.aria-label]="t(f.label)"
-                />
+                <mat-icon>{{ f.icon }}</mat-icon>
                 <span class="text">
                   <span class="label">{{ t(f.label) }}</span>
                   <span class="muted small">{{ t(f.hint) }}</span>
-                  @if (f.key === 'connect' && prefs().features.connect) {
-                    @if (!calendar.available()) {
-                      <span class="muted small">{{ t('Showing sample events for now.') }}</span>
-                    } @else if (calendar.connected()) {
-                      <span class="cal-row">
-                        <span class="ok"
-                          ><mat-icon>check_circle</mat-icon>{{ t('Connected') }}</span
-                        >
-                        <button type="button" class="link" (click)="calendar.disconnect()">
-                          {{ t('Disconnect') }}
-                        </button>
-                      </span>
-                    } @else {
-                      <button
-                        type="button"
-                        class="pill cal-connect"
-                        [disabled]="calendar.working()"
-                        (click)="connectCalendar()"
-                      >
-                        <mat-icon>event</mat-icon>
-                        {{ t('Connect Google Calendar') }}
-                      </button>
-                      @if (calendar.failed()) {
-                        <span class="error small" role="alert">{{
-                          t('Couldn’t connect. Try again.')
-                        }}</span>
-                      }
-                    }
-                  }
                 </span>
               </li>
             }

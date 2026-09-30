@@ -112,6 +112,14 @@
     </div>
   </form>
 
+  @if (wholeDay().length) {
+    <p class="whole-day">
+      <mat-icon>event</mat-icon>
+      <span class="muted">{{ t('All day') }}:</span>
+      {{ wholeDay().join(', ') }}
+    </p>
+  }
+
   <div class="body">
     <div class="axis" aria-hidden="true">
       @for (h of hours(); track h.min) {

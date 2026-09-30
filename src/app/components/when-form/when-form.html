@@ -88,9 +88,10 @@
   }
 
   @if (features().partial) {
-    <mat-slide-toggle [formField]="form.partialOk" class="toggle">{{
-      t('People can join for part of it')
-    }}</mat-slide-toggle>
+    <mat-slide-toggle [formField]="form.partialOk" class="toggle"
+      >{{ t('People can join for part of it') }}
+      <span class="pro-badge">{{ t('PRO') }}</span></mat-slide-toggle
+    >
   }
 
   @if (error()) {

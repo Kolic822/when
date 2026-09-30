@@ -37,6 +37,11 @@ export function sampleBusy(date: string, dayStart: number, dayEnd: number): Busy
     .filter((b) => b.end > b.start);
 }
 
+/** A made-up all-day event on Saturdays, so the preview shows those too. */
+export function sampleAllDay(date: string): string[] {
+  return fromDateKey(date).getDay() === 6 ? ['Ana’s birthday'] : [];
+}
+
 const STEP = 15;
 
 /**

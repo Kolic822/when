@@ -173,3 +173,23 @@ Connect calendar reads your real busy times from Google Calendar
 “Send options” is now “Outsource decision”, offered only when there is more than one possible session
 „Optionen senden“ heißt jetzt „Entscheidung abgeben“ und wird nur angeboten, wenn es mehr als einen möglichen Termin gibt
 „Pošalji opcije” sada je „Prepusti odluku” i nudi se samo kad postoji više od jednog mogućeg termina
+
+Book several sessions moved to Settings; defaults use the same compact pickers as the form
+„Mehrere Termine festlegen“ ist in die Einstellungen gewandert; die Standardwerte nutzen dieselben kompakten Auswahlfelder wie das Formular
+„Potvrdi više termina” premješteno je u Postavke; zadane vrijednosti koriste iste kompaktne izbornike kao obrazac
+
+Connect calendar shows all your events with their names, including all-day ones
+„Kalender verbinden“ zeigt alle deine Termine mit Namen, auch ganztägige
+„Poveži kalendar” prikazuje sve tvoje događaje s nazivima, uključujući cjelodnevne
+
+Pro features are on for everyone signed in with Google; the switches are gone
+Pro-Funktionen sind für alle aktiv, die mit Google angemeldet sind; die Schalter sind weg
+Pro značajke uključene su svima koji su prijavljeni uz Google; prekidača više nema
+
+Pro features carry a PRO badge; guests see the list greyed out in the menu
+Pro-Funktionen tragen ein PRO-Abzeichen; Gäste sehen die Liste ausgegraut im Menü
+Pro značajke nose oznaku PRO; gosti vide popis zasivljen u izborniku
+
+Settings: choose whether event names and all-day events are shown
+Einstellungen: wähle, ob Terminnamen und ganztägige Termine angezeigt werden
+Postavke: odaberi prikazuju li se nazivi događaja i cjelodnevni događaji

@@ -46,8 +46,10 @@ interface DayColumn {
   /** participantId -> that person's blocks on this day */
   blocks: Record<string, Block[]>;
   common: Block[];
-  /** Own calendar events (Connect calendar preview). */
+  /** Own calendar events behind the lanes. */
   busy: Block[];
+  /** Names of my all-day calendar events on this day. */
+  wholeDay: string[];
   /** What someone chose through an "Ask someone" link. */
   picked: Block[];
   hasMine: boolean;
@@ -151,6 +153,7 @@ export class WeekChart {
           this.picked()?.date === key
             ? [this.block(this.picked()!.start, this.picked()!.end, this.picked()!.label)]
             : [],
+        wholeDay: this.showBusy() ? this.calendar.allDayOn(key) : [],
         busy: this.showBusy()
           ? this.calendar
               .busyOn(key, ev.dayStart, ev.dayEnd)

@@ -190,17 +190,9 @@ The hours must leave room for the meetup length.
 Zwischen den Uhrzeiten muss Platz für die Dauer des Treffens sein.
 Između tih sati mora stati trajanje susreta.
 
-Used to pre-fill the form when you plan a new When.
-Damit wird das Formular vorausgefüllt, wenn du ein neues When planst.
-Time se unaprijed ispunjava obrazac kad planiraš novi When.
-
 History
 Verlauf
 Povijest
-
-pro
-Pro
-pro
 
 Which When
 Welches When

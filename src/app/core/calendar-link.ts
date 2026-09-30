@@ -1,6 +1,7 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { Auth } from './auth';
-import { BusyBlock, sampleBusy } from './busy';
+import { BusyBlock, sampleAllDay, sampleBusy } from './busy';
+import { PrefsStore } from './prefs';
 import { t } from './i18n/i18n';
 import { addDays } from './time';
 import { toUtc, viewerZone, zoneOffset } from './zone';
@@ -23,20 +24,22 @@ interface OAuthApi {
   revoke(token: string, done?: () => void): void;
 }
 
-/** Only when people are busy: no titles, no guests, nothing else from the calendar. */
-const SCOPE = 'https://www.googleapis.com/auth/calendar.freebusy';
+/** Read-only access to the events of the person's calendars. */
+const SCOPE = 'https://www.googleapis.com/auth/calendar.events.readonly';
 const KEY = 'when:gcal';
 
 /**
  * Connect calendar: shows the person's own busy times behind the bars.
  *
  * With Google set up on the server, the browser asks Google directly for the
- * busy blocks of the days in view; nothing from the calendar is sent to the
- * When server. Without it, sample events stand in so the feature can be seen.
+ * events of the days in view; nothing from the calendar is sent to the When
+ * server. Without it, sample events stand in so the feature can be seen.
+ * Whether names and all-day events are shown is the person's own setting.
  */
 @Service()
 export class CalendarLink {
   private readonly auth = inject(Auth);
+  private readonly store = inject(PrefsStore);
 
   /** Google is configured on the server, so a real calendar can be connected. */
   readonly available = this.auth.googleReady;
@@ -49,21 +52,41 @@ export class CalendarLink {
     return !!token && token.expires > Date.now();
   });
 
-  /** Busy blocks by day (in the When's zone) for the range last loaded. */
-  private readonly blocks = signal<Record<string, BusyBlock[]>>({});
+  /** Events by day (in the When's zone) for the range last loaded. */
+  private readonly days = signal<CalendarDays>({ timed: {}, allDay: {} });
   private loadedFor = '';
 
   constructor() {
     void this.auth.loadConfig();
   }
 
-  /** What to draw behind a day's bar, clipped to the hours the When shows. */
+  /** Timed events to draw behind a day's bar, clipped to the hours the When shows. */
   busyOn(date: string, dayStart: number, dayEnd: number): BusyBlock[] {
-    if (!this.available()) return sampleBusy(date, dayStart, dayEnd);
-    if (!this.connected()) return [];
-    return (this.blocks()[date] ?? [])
-      .map((b) => ({ ...b, start: Math.max(b.start, dayStart), end: Math.min(b.end, dayEnd) }))
+    const names = this.store.prefs().calendarNames;
+    const source = !this.available()
+      ? sampleBusy(date, dayStart, dayEnd)
+      : this.connected()
+        ? (this.days().timed[date] ?? [])
+        : [];
+    return source
+      .map((b) => ({
+        start: Math.max(b.start, dayStart),
+        end: Math.min(b.end, dayEnd),
+        title: names ? b.title : t('Busy'),
+      }))
       .filter((b) => b.end > b.start);
+  }
+
+  /** Names of the events that last the whole of that day; empty when switched off in Settings. */
+  allDayOn(date: string): string[] {
+    const prefs = this.store.prefs();
+    if (!prefs.calendarAllDay) return [];
+    const titles = !this.available()
+      ? sampleAllDay(date)
+      : this.connected()
+        ? (this.days().allDay[date] ?? [])
+        : [];
+    return prefs.calendarNames ? titles : titles.map(() => t('Busy'));
   }
 
   /** Opens Google's permission window; must follow a tap. */
@@ -108,7 +131,7 @@ export class CalendarLink {
     if (token && oauth) oauth.revoke(token.value);
     this.token.set(null);
     saveToken(null);
-    this.blocks.set({});
+    this.days.set({ timed: {}, allDay: {} });
     this.loadedFor = '';
   }
 
@@ -123,15 +146,18 @@ export class CalendarLink {
     try {
       const from = toUtc(dates[0], 0, where);
       const to = toUtc(dates[dates.length - 1], 1440, where);
-      const res = await fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
-        method: 'POST',
-        headers: { authorization: `Bearer ${token.value}`, 'content-type': 'application/json' },
-        body: JSON.stringify({
-          timeMin: from.toISOString(),
-          timeMax: to.toISOString(),
-          items: [{ id: 'primary' }],
-        }),
+      const query = new URLSearchParams({
+        timeMin: from.toISOString(),
+        timeMax: to.toISOString(),
+        singleEvents: 'true',
+        orderBy: 'startTime',
+        maxResults: '250',
+        fields: 'items(summary,status,start,end)',
       });
+      const res = await fetch(
+        `https://www.googleapis.com/calendar/v3/calendars/primary/events?${query}`,
+        { headers: { authorization: `Bearer ${token.value}` } },
+      );
       if (res.status === 401) {
         // The hour is up, or access was withdrawn in the Google account.
         this.token.set(null);
@@ -139,10 +165,8 @@ export class CalendarLink {
         return;
       }
       if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as {
-        calendars?: { primary?: { busy?: { start: string; end: string }[] } };
-      };
-      this.blocks.set(byDay(data.calendars?.primary?.busy ?? [], where, new Set(dates)));
+      const data = (await res.json()) as { items?: GoogleEvent[] };
+      this.days.set(byDay(data.items ?? [], where, new Set(dates)));
     } catch {
       this.loadedFor = '';
       this.failed.set(true);
@@ -150,22 +174,45 @@ export class CalendarLink {
   }
 }
 
-/** Splits absolute busy intervals into per-day blocks in the given zone. */
-export function byDay(
-  busy: { start: string; end: string }[],
-  zone: string,
-  wanted: Set<string>,
-): Record<string, BusyBlock[]> {
-  const out: Record<string, BusyBlock[]> = {};
-  for (const item of busy) {
-    let at = local(new Date(item.start), zone);
-    const end = local(new Date(item.end), zone);
-    // Walk day by day until the end of the interval.
+export interface GoogleEvent {
+  summary?: string;
+  status?: string;
+  /** `dateTime` for timed events, `date` (YYYY-MM-DD) for all-day ones. */
+  start?: { dateTime?: string; date?: string };
+  end?: { dateTime?: string; date?: string };
+}
+
+export interface CalendarDays {
+  timed: Record<string, BusyBlock[]>;
+  /** Titles of all-day events per day. */
+  allDay: Record<string, string[]>;
+}
+
+/** Sorts calendar events into the days of a When, in the given zone. */
+export function byDay(events: GoogleEvent[], zone: string, wanted: Set<string>): CalendarDays {
+  const out: CalendarDays = { timed: {}, allDay: {} };
+  for (const event of events) {
+    if (event.status === 'cancelled') continue;
+    const title = event.summary?.trim() || t('Busy');
+
+    if (event.start?.date && event.end?.date) {
+      // All-day: the end date is the day after the last day.
+      for (let day = event.start.date, guard = 0; day < event.end.date && guard < 370; guard++) {
+        if (wanted.has(day)) (out.allDay[day] ??= []).push(title);
+        day = addDays(day, 1);
+      }
+      continue;
+    }
+    if (!event.start?.dateTime || !event.end?.dateTime) continue;
+
+    let at = local(new Date(event.start.dateTime), zone);
+    const end = local(new Date(event.end.dateTime), zone);
+    // Walk day by day until the end of the event.
     for (let guard = 0; guard < 62; guard++) {
       const last = at.date === end.date;
       const stop = last ? end.min : 1440;
       if (stop > at.min && wanted.has(at.date)) {
-        (out[at.date] ??= []).push({ start: at.min, end: stop, title: t('Busy') });
+        (out.timed[at.date] ??= []).push({ start: at.min, end: stop, title });
       }
       if (last) break;
       at = { date: addDays(at.date, 1), min: 0 };

@@ -374,10 +374,6 @@ Everything When can do, step by step. Version {version}.
 Alles, was When kann, Schritt für Schritt. Version {version}.
 Sve što When može, korak po korak. Verzija {version}.
 
-Sections marked Pro are previews. Switch them on under Pro features in the menu.
-Mit „Pro“ markierte Abschnitte sind Vorschauen. Schalte sie im Menü unter Pro-Funktionen ein.
-Odjeljci s oznakom Pro su pregledi. Uključi ih u izborniku pod Pro značajke.
-
 Pro
 Pro
 Pro
@@ -506,10 +502,6 @@ Times that no longer fit are removed from everyone’s answers.
 Zeiten, die nicht mehr passen, werden aus allen Antworten entfernt.
 Vremena koja više ne odgovaraju uklanjaju se iz svih odgovora.
 
-{n} hour
-{n} Stunde || {n} Stunden
-{n} sat || {n} sata || {n} sati
-
 Copy to {n} day
 Auf {n} Tag kopieren || Auf {n} Tage kopieren
 Kopiraj na {n} dan || Kopiraj na {n} dana || Kopiraj na {n} dana
@@ -578,6 +570,62 @@ Couldn’t connect. Try again.
 Verbindung nicht möglich. Versuch es noch einmal.
 Povezivanje nije uspjelo. Pokušaj ponovno.
 
-See when you are busy behind the bars. Only busy times are read, never what the events are.
-Sieh hinter den Balken, wann du belegt bist. Gelesen wird nur, wann du belegt bist, nie, was die Termine sind.
-Vidi iza traka kad si zauzet/a. Čita se samo kad si zauzet/a, nikad o kojim je događajima riječ.
+All day
+Ganztägig
+Cijeli dan
+
+Birthdays, holidays, trips.
+Geburtstage, Feiertage, Reisen.
+Rođendani, praznici, putovanja.
+
+Booking
+Festlegen
+Potvrđivanje
+
+Booking another day adds a session instead of replacing the first.
+Ein weiterer Tag fügt einen Termin hinzu, statt den ersten zu ersetzen.
+Potvrda drugog dana dodaje termin umjesto da zamijeni prvi.
+
+My calendar
+Mein Kalender
+Moj kalendar
+
+Off: every event just says Busy.
+Aus: Jeder Termin heißt nur „Belegt“.
+Isključeno: svaki događaj piše samo „Zauzeto”.
+
+PRO
+PRO
+PRO
+
+Pro is on for your Google account.
+Pro ist für dein Google-Konto aktiv.
+Pro je uključen za tvoj Google račun.
+
+See your own calendar events behind the bars while you mark when you are free.
+Sieh deine eigenen Kalendertermine hinter den Balken, während du markierst, wann du Zeit hast.
+Vidi svoje događaje iz kalendara iza traka dok označavaš kad možeš.
+
+Settings
+Einstellungen
+Postavke
+
+Show all-day events
+Ganztägige Termine anzeigen
+Prikaži cjelodnevne događaje
+
+Show event names
+Terminnamen anzeigen
+Prikaži nazive događaja
+
+Show my calendar
+Meinen Kalender anzeigen
+Prikaži moj kalendar
+
+Sign in with Google to use Pro settings.
+Melde dich mit Google an, um die Pro-Einstellungen zu nutzen.
+Prijavi se uz Google da koristiš Pro postavke.
+
+Sign in with Google to use these.
+Melde dich mit Google an, um diese zu nutzen.
+Prijavi se uz Google da ih koristiš.

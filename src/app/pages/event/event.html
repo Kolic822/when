@@ -158,6 +158,13 @@
           />
         } @else {
           <section class="card chart">
+            @if (showCalendarPrompt()) {
+              <button type="button" class="pill cal-prompt" (click)="calendar.connect()">
+                <mat-icon>event</mat-icon>
+                {{ t('Show my calendar') }}
+                <span class="pro-badge">{{ t('PRO') }}</span>
+              </button>
+            }
             <app-week-chart
               [event]="event()!"
               [meId]="meId()"

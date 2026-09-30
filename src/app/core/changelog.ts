@@ -7,9 +7,22 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.8';
+export const VERSION = '0.9';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.9',
+    date: '30 Sep 2026',
+    changes: [
+      m('Pro features are on for everyone signed in with Google; the switches are gone'),
+      m('Pro features carry a PRO badge; guests see the list greyed out in the menu'),
+      m('Connect calendar shows all your events with their names, including all-day ones'),
+      m('Settings: choose whether event names and all-day events are shown'),
+      m(
+        'Book several sessions moved to Settings; defaults use the same compact pickers as the form',
+      ),
+    ],
+  },
   {
     version: '0.8',
     date: '30 Sep 2026',

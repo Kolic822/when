@@ -92,7 +92,15 @@ export class EventPage implements OnDestroy {
   private readonly prefsStore = inject(PrefsStore);
   private readonly push = inject(Push);
   private readonly howTo = inject(HowToState);
-  private readonly calendar = inject(CalendarLink);
+  readonly calendar = inject(CalendarLink);
+  /** Pro, Google is set up, and the calendar is not connected (or the hour is up). */
+  readonly showCalendarPrompt = computed(
+    () =>
+      this.features().connect &&
+      !!this.meId() &&
+      this.calendar.available() &&
+      !this.calendar.connected(),
+  );
   readonly features = computed(() => this.prefsStore.prefs().features);
 
   readonly resultsCard = viewChild<Results>('results');

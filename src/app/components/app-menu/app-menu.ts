@@ -2,8 +2,6 @@ import { Component, computed, inject, signal, ElementRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { Auth } from '../../core/auth';
 import { VERSION } from '../../core/changelog';
 import { HistoryEntry } from '../../core/models';
@@ -11,7 +9,7 @@ import { History } from '../history/history';
 import { Push } from '../../core/push';
 import { CalendarLink } from '../../core/calendar-link';
 import { Identity, RecentMeetup } from '../../core/identity';
-import { Features, Look, PrefsStore, Theme } from '../../core/prefs';
+import { Look, PrefsStore, Theme } from '../../core/prefs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Updates } from '../../core/updates';
 import { HowToState } from '../../core/how-to-state';
@@ -39,15 +37,7 @@ import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */
 @Component({
   selector: 'app-menu',
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    History,
-  ],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatSlideToggleModule, History],
   templateUrl: './app-menu.html',
   styleUrl: './app-menu.scss',
 })
@@ -292,40 +282,47 @@ export class AppMenu {
     this.store.update({ look });
   }
 
-  readonly proFeatures: { key: keyof Features; label: string; hint: string }[] = [
+  /** Signed in with Google: Pro features are on. */
+  readonly pro = this.store.pro;
+
+  /** What Pro adds, for the list in the menu. */
+  readonly proFeatures: { icon: string; label: string; hint: string }[] = [
     {
-      key: 'connect',
+      icon: 'event',
       label: m('Connect calendar'),
-      hint: m(
-        'See when you are busy behind the bars. Only busy times are read, never what the events are.',
-      ),
+      hint: m('See your own calendar events behind the bars while you mark when you are free.'),
     },
     {
-      key: 'multiBook',
-      label: m('Book several sessions'),
-      hint: m('The organiser can book more than one session for a When.'),
-    },
-    {
-      key: 'shortlist',
+      icon: 'forward_to_inbox',
       label: m('Outsource decision'),
       hint: m('Send a link with only the possible sessions.'),
     },
     {
-      key: 'calendar',
+      icon: 'library_add_check',
+      label: m('Book several sessions'),
+      hint: m('The organiser can book more than one session for a When.'),
+    },
+    {
+      icon: 'calendar_add_on',
       label: m('Add to calendar'),
       hint: m('A calendar button on every possible session.'),
     },
     {
-      key: 'partial',
+      icon: 'timelapse',
       label: m('Join for part of it'),
       hint: m('Let people mark less than the full length.'),
     },
     {
-      key: 'history',
+      icon: 'history',
       label: m('History'),
       hint: m('A History section in this menu: who changed what, and when.'),
     },
   ];
+
+  /** Native selects hand back text; the settings keep numbers. */
+  setDefault(key: 'durationHours' | 'dayStart' | 'dayEnd', event: Event): void {
+    this.store.update({ [key]: Number((event.target as HTMLSelectElement).value) });
+  }
 
   /** Sections folded away; settings start folded so My Whens stays on screen. */
   readonly folded = signal<Set<string>>(loadFolded());
@@ -341,10 +338,6 @@ export class AppMenu {
       saveFolded(next);
       return next;
     });
-  }
-
-  setFeature(key: keyof Features, on: boolean): void {
-    this.store.setFeature(key, on);
   }
 
   readonly dateStyles: { value: DateStyle; label: string }[] = [

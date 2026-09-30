@@ -421,3 +421,18 @@ h3 {
     height: 20px;
   }
 }
+
+/* Marks a Pro feature wherever it appears. */
+.pro-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #facc15, #f59e0b);
+  color: #3b2a00;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  vertical-align: middle;
+}

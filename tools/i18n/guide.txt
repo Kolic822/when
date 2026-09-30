@@ -290,10 +290,6 @@ Sent to the wrong person? Tap the bin next to the link to remove it.
 An die falsche Person geschickt? Tippe auf den Papierkorb neben dem Link, um ihn zu entfernen.
 Poslano krivoj osobi? Dodirni koš pokraj poveznice da je ukloniš.
 
-With this on, booking a session on another day adds it instead of replacing the first.
-Ist dies eingeschaltet, wird ein Termin an einem anderen Tag hinzugefügt, statt den ersten zu ersetzen.
-Kad je ovo uključeno, potvrda termina na drugi dan dodaje ga umjesto da zamijeni prvi.
-
 One session per day: booking the same day again replaces that day’s session.
 Ein Termin pro Tag: Legst du denselben Tag erneut fest, wird der Termin dieses Tages ersetzt.
 Jedan termin po danu: ponovna potvrda istog dana zamjenjuje termin tog dana.
@@ -306,17 +302,9 @@ The organiser removes one with its × button.
 Der Organisator entfernt einen mit dessen ×.
 Organizator pojedini termin uklanja njegovim ×.
 
-Other Pro previews
-Weitere Pro-Vorschauen
-Ostali Pro pregledi
-
 Add to calendar: a calendar button on every possible session, not only on the booked one.
 Zum Kalender hinzufügen: eine Kalender-Schaltfläche bei jedem möglichen Termin, nicht nur beim festgelegten.
 Dodaj u kalendar: gumb za kalendar uz svaki mogući termin, ne samo uz potvrđeni.
-
-Join for part of it: people may mark less than the full length; a session then needs everyone together for at least half of it.
-Nur teilweise dabei sein: Man darf weniger als die volle Dauer markieren; ein Termin braucht dann alle gemeinsam für mindestens die Hälfte.
-Sudjelovanje samo dio vremena: može se označiti manje od punog trajanja; termin tada traži da su svi zajedno barem polovicu vremena.
 
 History: a section in the menu showing who changed what in any of your Whens.
 Verlauf: ein Bereich im Menü, der zeigt, wer in einem deiner Whens was geändert hat.
@@ -346,22 +334,46 @@ Tap every day that could work. They don’t have to be next to each other. The a
 Tippe auf jeden Tag, der passen könnte. Sie müssen nicht nebeneinanderliegen. Die Pfeile blättern jeweils vier Wochen weiter.
 Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. Strelice pomiču po četiri tjedna.
 
-See your own busy times while you mark when you are free.
-Sieh deine eigenen belegten Zeiten, während du markierst, wann du Zeit hast.
-Vidi svoja zauzeta vremena dok označavaš kad možeš.
-
-Switch on Connect calendar under Pro features, then tap Connect Google Calendar and allow it.
-Schalte unter Pro-Funktionen „Kalender verbinden“ ein, tippe dann auf „Google Kalender verbinden“ und erlaube es.
-Uključi „Poveži kalendar” pod Pro značajke, zatim dodirni „Poveži Google kalendar” i dopusti pristup.
-
-Your busy times appear as grey striped blocks behind the bars, so you see clashes while marking.
-Deine belegten Zeiten erscheinen als grau gestreifte Blöcke hinter den Balken, damit du Überschneidungen beim Markieren siehst.
-Tvoja zauzeta vremena prikazuju se kao sivi prugasti blokovi iza traka, pa pri označavanju vidiš preklapanja.
-
-Only whether you are busy is read: no titles, no guests. It goes straight from Google to your phone and is never stored by When.
-Gelesen wird nur, ob du belegt bist: keine Titel, keine Gäste. Das geht direkt von Google auf dein Handy und wird von When nie gespeichert.
-Čita se samo jesi li zauzet/a: bez naziva, bez gostiju. Ide izravno s Googlea na tvoj mobitel i When to nikad ne sprema.
-
 Google asks again after about an hour; Disconnect in the menu withdraws access.
 Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.
 Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.
+
+In Settings you can hide the names (every event then says Busy) and hide all-day events.
+In den Einstellungen kannst du die Namen ausblenden (jeder Termin heißt dann „Belegt“) und ganztägige Termine ausblenden.
+U Postavkama možeš sakriti nazive (svaki događaj tada piše „Zauzeto”) i sakriti cjelodnevne događaje.
+
+Join for part of it: a switch when you plan a When. People may mark less than the full length; a session then needs everyone together for at least half of it.
+Nur teilweise dabei sein: ein Schalter beim Planen eines When. Man darf weniger als die volle Dauer markieren; ein Termin braucht dann alle gemeinsam für mindestens die Hälfte.
+Sudjelovanje samo dio vremena: prekidač pri planiranju Whena. Može se označiti manje od punog trajanja; termin tada traži da su svi zajedno barem polovicu vremena.
+
+Other Pro features
+Weitere Pro-Funktionen
+Ostale Pro značajke
+
+Sections marked Pro need you to be signed in with Google.
+Für mit „Pro“ markierte Abschnitte musst du mit Google angemeldet sein.
+Za odjeljke s oznakom Pro trebaš biti prijavljen/a uz Google.
+
+See your own calendar while you mark when you are free.
+Sieh deinen eigenen Kalender, während du markierst, wann du Zeit hast.
+Vidi svoj kalendar dok označavaš kad možeš.
+
+Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.
+Melde dich mit Google an, tippe dann über dem Kalender auf „Meinen Kalender anzeigen“ oder in den Einstellungen auf „Google Kalender verbinden“ und erlaube es.
+Prijavi se uz Google, zatim iznad kalendara dodirni „Prikaži moj kalendar” ili u Postavkama „Poveži Google kalendar” i dopusti pristup.
+
+Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.
+Mit der Google-Anmeldung werden auch die Pro-Funktionen aktiv. Es gibt nichts einzuschalten; sie sind dort, wo sie erscheinen, mit PRO markiert.
+Prijavom uz Google uključuju se i Pro značajke. Ništa ne treba uključivati; označene su s PRO ondje gdje se pojavljuju.
+
+Switch on Book several sessions in Settings. Booking a session on another day then adds it instead of replacing the first.
+Schalte in den Einstellungen „Mehrere Termine festlegen“ ein. Ein Termin an einem anderen Tag wird dann hinzugefügt, statt den ersten zu ersetzen.
+Uključi „Potvrdi više termina” u Postavkama. Potvrda termina na drugi dan tada ga dodaje umjesto da zamijeni prvi.
+
+Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.
+Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.
+Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.
+
+Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.
+Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ganztägige Termine stehen oben am Tag.
+Tvoji događaji prikazuju se kao sivi prugasti blokovi iza traka, s nazivima, pa pri označavanju vidiš preklapanja. Cjelodnevni događaji navedeni su na vrhu dana.

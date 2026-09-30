@@ -205,6 +205,9 @@ export class Guide {
           'As a guest you type a name in each When. Your Whens are remembered on this device only.',
         ),
         m('With Google your name is filled in for you. Sign in or out from the top of the menu.'),
+        m(
+          'Signing in with Google also switches on the Pro features. There is nothing to turn on; they are marked PRO where they appear.',
+        ),
       ],
     },
     {
@@ -232,7 +235,9 @@ export class Guide {
       title: m('Book several sessions'),
       pro: true,
       steps: [
-        m('With this on, booking a session on another day adds it instead of replacing the first.'),
+        m(
+          'Switch on Book several sessions in Settings. Booking a session on another day then adds it instead of replacing the first.',
+        ),
         m('One session per day: booking the same day again replaces that day’s session.'),
         m('The banner lists every booked session, each with its own calendar button.'),
         m('The organiser removes one with its × button.'),
@@ -242,30 +247,33 @@ export class Guide {
       icon: 'event',
       title: m('Connect calendar'),
       pro: true,
-      intro: m('See your own busy times while you mark when you are free.'),
+      intro: m('See your own calendar while you mark when you are free.'),
       steps: [
         m(
-          'Switch on Connect calendar under Pro features, then tap Connect Google Calendar and allow it.',
+          'Sign in with Google, then tap Show my calendar above the calendar, or Connect Google Calendar in Settings, and allow it.',
         ),
         m(
-          'Your busy times appear as grey striped blocks behind the bars, so you see clashes while marking.',
+          'Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. All-day events are named at the top of the day.',
         ),
         m(
-          'Only whether you are busy is read: no titles, no guests. It goes straight from Google to your phone and is never stored by When.',
+          'In Settings you can hide the names (every event then says Busy) and hide all-day events.',
+        ),
+        m(
+          'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.',
         ),
         m('Google asks again after about an hour; Disconnect in the menu withdraws access.'),
       ],
     },
     {
       icon: 'more_horiz',
-      title: m('Other Pro previews'),
+      title: m('Other Pro features'),
       pro: true,
       steps: [
         m(
           'Add to calendar: a calendar button on every possible session, not only on the booked one.',
         ),
         m(
-          'Join for part of it: people may mark less than the full length; a session then needs everyone together for at least half of it.',
+          'Join for part of it: a switch when you plan a When. People may mark less than the full length; a session then needs everyone together for at least half of it.',
         ),
         m('History: a section in the menu showing who changed what in any of your Whens.'),
       ],

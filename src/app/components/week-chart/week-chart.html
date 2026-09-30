@@ -60,6 +60,14 @@
                 }}</span>
               }
             }
+            @if (d.wholeDay.length) {
+              <span class="whole-day" [title]="d.wholeDay.join(', ')">
+                {{ d.wholeDay[0] }}
+                @if (d.wholeDay.length > 1) {
+                  +{{ d.wholeDay.length - 1 }}
+                }
+              </span>
+            }
             @for (b of d.busy; track b.top) {
               <span
                 class="busy"

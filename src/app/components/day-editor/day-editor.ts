@@ -65,6 +65,11 @@ export class DayEditor {
     }));
   });
 
+  /** My all-day calendar events on this day. */
+  readonly wholeDay = computed(() =>
+    this.prefs.prefs().features.connect ? this.calendar.allDayOn(this.date()) : [],
+  );
+
   readonly event = input.required<MeetEvent>();
   readonly meId = input.required<string>();
   readonly date = input.required<string>();

@@ -113,6 +113,7 @@
                     @if (!organiser()) {
                       {{ t('Add to calendar') }}
                     }
+                    <span class="pro-badge">{{ t('PRO') }}</span>
                   </button>
                 }
               </div>
@@ -142,6 +143,7 @@
           <button type="button" class="ask" (click)="asking.set(true)">
             <mat-icon>forward_to_inbox</mat-icon>
             {{ t('Outsource decision') }}
+            <span class="pro-badge">{{ t('PRO') }}</span>
           </button>
         }
       }
