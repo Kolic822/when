@@ -12,6 +12,8 @@ interface TokenClient {
 interface TokenResponse {
   access_token?: string;
   expires_in?: number;
+  /** Space-separated list of what the person actually allowed. */
+  scope?: string;
   error?: string;
 }
 interface OAuthApi {
@@ -24,8 +26,11 @@ interface OAuthApi {
   revoke(token: string, done?: () => void): void;
 }
 
-/** Read-only access to the events of the person's calendars. */
-const SCOPE = 'https://www.googleapis.com/auth/calendar.events.readonly';
+/** Read-only: the events, and the list of calendars the person keeps. */
+const EVENTS = 'https://www.googleapis.com/auth/calendar.events.readonly';
+const LIST = 'https://www.googleapis.com/auth/calendar.calendarlist.readonly';
+const SCOPE = `${EVENTS} ${LIST}`;
+const API = 'https://www.googleapis.com/calendar/v3';
 const KEY = 'when:gcal';
 
 /**
@@ -45,6 +50,10 @@ export class CalendarLink {
   readonly available = this.auth.googleReady;
   readonly working = signal(false);
   readonly failed = signal(false);
+  /** Why the calendar could not be shown, in words the person can act on. */
+  readonly problem = signal<string | null>(null);
+  /** How many events were found on the days last loaded; null before the first load. */
+  readonly found = signal<number | null>(null);
 
   private readonly token = signal<{ value: string; expires: number } | null>(loadToken());
   readonly connected = computed(() => {
@@ -92,6 +101,7 @@ export class CalendarLink {
   /** Opens Google's permission window; must follow a tap. */
   async connect(): Promise<void> {
     this.failed.set(false);
+    this.problem.set(null);
     this.working.set(true);
     try {
       const clientId = await this.auth.ensureGoogle();
@@ -105,6 +115,10 @@ export class CalendarLink {
             scope: SCOPE,
             callback: (response) => {
               if (!response.access_token) return reject(new Error(response.error ?? 'denied'));
+              // Google lets people untick single permissions; without events there is nothing to show.
+              if (response.scope && !response.scope.split(' ').includes(EVENTS)) {
+                return reject(new Error('scope'));
+              }
               const token = {
                 value: response.access_token,
                 expires: Date.now() + (response.expires_in ?? 3600) * 1000 - 60_000,
@@ -118,8 +132,13 @@ export class CalendarLink {
           .requestAccessToken({ hint: user?.kind === 'google' ? user.email : undefined });
       });
       this.loadedFor = '';
-    } catch {
+    } catch (err) {
       this.failed.set(true);
+      this.problem.set(
+        err instanceof Error && err.message === 'scope'
+          ? t('Calendar access was not ticked. Connect again and tick the calendar box.')
+          : t('Google’s window was closed or blocked. Try again.'),
+      );
     } finally {
       this.working.set(false);
     }
@@ -132,10 +151,12 @@ export class CalendarLink {
     this.token.set(null);
     saveToken(null);
     this.days.set({ timed: {}, allDay: {} });
+    this.found.set(null);
+    this.problem.set(null);
     this.loadedFor = '';
   }
 
-  /** Fetches the busy times for these days; `zone` is the When's zone. */
+  /** Fetches my events for these days from every calendar I keep; `zone` is the When's zone. */
   async load(dates: string[], zone: string | null): Promise<void> {
     const token = this.token();
     if (!this.connected() || !token || !dates.length) return;
@@ -143,35 +164,92 @@ export class CalendarLink {
     const stamp = `${dates[0]}|${dates[dates.length - 1]}|${where}|${token.value.slice(-8)}`;
     if (stamp === this.loadedFor) return;
     this.loadedFor = stamp;
+    this.problem.set(null);
+    const headers = { authorization: `Bearer ${token.value}` };
     try {
-      const from = toUtc(dates[0], 0, where);
-      const to = toUtc(dates[dates.length - 1], 1440, where);
       const query = new URLSearchParams({
-        timeMin: from.toISOString(),
-        timeMax: to.toISOString(),
+        timeMin: toUtc(dates[0], 0, where).toISOString(),
+        timeMax: toUtc(dates[dates.length - 1], 1440, where).toISOString(),
         singleEvents: 'true',
         orderBy: 'startTime',
         maxResults: '250',
         fields: 'items(summary,status,start,end)',
       });
-      const res = await fetch(
-        `https://www.googleapis.com/calendar/v3/calendars/primary/events?${query}`,
-        { headers: { authorization: `Bearer ${token.value}` } },
+      const calendars = await this.calendarIds(headers);
+      const lists = await Promise.all(
+        calendars.map(async (id) => {
+          const res = await fetch(`${API}/calendars/${encodeURIComponent(id)}/events?${query}`, {
+            headers,
+          });
+          if (res.ok) return ((await res.json()) as { items?: GoogleEvent[] }).items ?? [];
+          // One calendar that can't be read (a shared one, say) shouldn't hide the rest.
+          if (id !== 'primary' && res.status !== 401) return [];
+          throw await failure(res);
+        }),
       );
-      if (res.status === 401) {
+      const events = lists.flat();
+      const wanted = new Set(dates);
+      const days = byDay(events, where, wanted);
+      this.days.set(days);
+      this.found.set(
+        Object.values(days.timed).reduce((n, list) => n + list.length, 0) +
+          Object.values(days.allDay).reduce((n, list) => n + list.length, 0),
+      );
+    } catch (err) {
+      this.loadedFor = '';
+      this.failed.set(true);
+      const status = (err as { status?: number }).status;
+      if (status === 401) {
         // The hour is up, or access was withdrawn in the Google account.
         this.token.set(null);
         saveToken(null);
         return;
       }
-      if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as { items?: GoogleEvent[] };
-      this.days.set(byDay(data.items ?? [], where, new Set(dates)));
-    } catch {
-      this.loadedFor = '';
-      this.failed.set(true);
+      this.problem.set(err instanceof Error ? err.message : t('Something went wrong'));
     }
   }
+
+  /** The calendars ticked in the person's Google Calendar; just the main one if the list can't be read. */
+  private async calendarIds(headers: Record<string, string>): Promise<string[]> {
+    try {
+      const res = await fetch(
+        `${API}/users/me/calendarList?minAccessRole=reader&fields=items(id,selected,primary)`,
+        { headers },
+      );
+      if (!res.ok) return ['primary'];
+      const data = (await res.json()) as {
+        items?: { id: string; selected?: boolean; primary?: boolean }[];
+      };
+      const ids = (data.items ?? []).filter((c) => c.selected || c.primary).map((c) => c.id);
+      return ids.length ? ids.slice(0, 12) : ['primary'];
+    } catch {
+      return ['primary'];
+    }
+  }
+}
+
+/** Turns a refused request into a sentence that says what to do about it. */
+async function failure(res: Response): Promise<Error & { status: number }> {
+  let reason = '';
+  let message = '';
+  try {
+    const body = (await res.json()) as {
+      error?: { message?: string; status?: string; errors?: { reason?: string }[] };
+    };
+    message = body.error?.message ?? '';
+    reason = `${body.error?.status ?? ''} ${body.error?.errors?.[0]?.reason ?? ''} ${message}`;
+  } catch {
+    /* no details */
+  }
+  let text: string;
+  if (/accessNotConfigured|SERVICE_DISABLED|has not been used|is disabled/i.test(reason)) {
+    text = t('The Google Calendar API is not switched on for this Google Cloud project.');
+  } else if (/insufficient|SCOPE/i.test(reason)) {
+    text = t('Calendar access was not ticked. Connect again and tick the calendar box.');
+  } else {
+    text = t('Google refused the request ({code}). {message}', { code: res.status, message });
+  }
+  return Object.assign(new Error(text), { status: res.status });
 }
 
 export interface GoogleEvent {

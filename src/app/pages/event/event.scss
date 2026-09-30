@@ -206,3 +206,36 @@
     height: 16px;
   }
 }
+
+.cal-problem {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mat-sys-error) 10%, transparent);
+  font-size: 13px;
+  line-height: 1.35;
+
+  mat-icon {
+    flex: none;
+    color: var(--mat-sys-error);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+  span {
+    flex: 1;
+  }
+  .link-btn {
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.9';
+export const VERSION = '0.9.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.9.1',
+    date: '30 Sep 2026',
+    changes: [
+      m('Connect calendar reads every calendar you keep, not only the main one'),
+      m('If the calendar cannot be shown, the app now says why'),
+    ],
+  },
   {
     version: '0.9',
     date: '30 Sep 2026',

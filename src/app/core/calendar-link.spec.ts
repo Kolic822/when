@@ -1,4 +1,5 @@
-import { byDay } from './calendar-link';
+import { TestBed } from '@angular/core/testing';
+import { byDay, CalendarLink } from './calendar-link';
 
 describe('calendar events by day', () => {
   const days = new Set(['2026-10-05', '2026-10-06']);
@@ -68,5 +69,116 @@ describe('calendar events by day', () => {
       days,
     );
     expect(out.timed['2026-10-05']).toEqual([{ start: 720, end: 780, title: 'Busy' }]);
+  });
+});
+
+describe('loading the calendar', () => {
+  const json = (body: unknown, status = 200) =>
+    Promise.resolve(new Response(JSON.stringify(body), { status }));
+  let calls: string[];
+
+  function connectWith(routes: (url: string) => Promise<Response> | undefined): CalendarLink {
+    calls = [];
+    sessionStorage.setItem(
+      'when:gcal',
+      JSON.stringify({ value: 'token-12345678', expires: Date.now() + 3_600_000 }),
+    );
+    vi.stubGlobal('fetch', (input: RequestInfo | URL) => {
+      const url = String(input);
+      calls.push(url);
+      return routes(url) ?? json({ googleClientId: 'client' });
+    });
+    TestBed.resetTestingModule();
+    return TestBed.inject(CalendarLink);
+  }
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    sessionStorage.clear();
+  });
+
+  it('reads every ticked calendar and counts what it found', async () => {
+    const link = connectWith((url) => {
+      if (url.includes('calendarList')) {
+        return json({
+          items: [
+            { id: 'primary', primary: true },
+            { id: 'family', selected: true },
+            { id: 'off' },
+          ],
+        });
+      }
+      if (url.includes('/calendars/primary/events')) {
+        return json({
+          items: [
+            {
+              summary: 'Work',
+              start: { dateTime: '2026-10-05T07:00:00Z' },
+              end: { dateTime: '2026-10-05T15:00:00Z' },
+            },
+          ],
+        });
+      }
+      if (url.includes('/calendars/family/events')) {
+        return json({
+          items: [{ summary: 'Trip', start: { date: '2026-10-05' }, end: { date: '2026-10-06' } }],
+        });
+      }
+      return undefined;
+    });
+    await link.load(['2026-10-05'], 'Europe/Zagreb');
+    expect(link.problem()).toBeNull();
+    expect(link.found()).toBe(2);
+    expect(calls.some((u) => u.includes('/calendars/off/'))).toBe(false);
+  });
+
+  it('says so when the Calendar API is switched off in the Google project', async () => {
+    const link = connectWith((url) => {
+      if (url.includes('calendarList')) return json({}, 403);
+      if (url.includes('/events')) {
+        return json(
+          {
+            error: {
+              message:
+                'Google Calendar API has not been used in project 1 before or it is disabled.',
+              status: 'PERMISSION_DENIED',
+              errors: [{ reason: 'accessNotConfigured' }],
+            },
+          },
+          403,
+        );
+      }
+      return undefined;
+    });
+    await link.load(['2026-10-05'], 'Europe/Zagreb');
+    expect(link.problem()).toContain('not switched on');
+    expect(link.connected()).toBe(true);
+  });
+
+  it('asks to connect again when the calendar box was not ticked', async () => {
+    const link = connectWith((url) => {
+      if (url.includes('calendarList')) return json({}, 403);
+      if (url.includes('/events')) {
+        return json(
+          {
+            error: {
+              message: 'Request had insufficient authentication scopes.',
+              status: 'PERMISSION_DENIED',
+            },
+          },
+          403,
+        );
+      }
+      return undefined;
+    });
+    await link.load(['2026-10-05'], 'Europe/Zagreb');
+    expect(link.problem()).toContain('tick the calendar box');
+  });
+
+  it('forgets an expired token without complaining', async () => {
+    const link = connectWith((url) => (url.includes('googleapis') ? json({}, 401) : undefined));
+    await link.load(['2026-10-05'], 'Europe/Zagreb');
+    expect(link.connected()).toBe(false);
+    expect(link.problem()).toBeNull();
   });
 });

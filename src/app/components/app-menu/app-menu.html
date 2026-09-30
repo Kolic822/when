@@ -361,11 +361,21 @@
               <p class="muted small">{{ t('Showing sample events for now.') }}</p>
             } @else if (calendar.connected()) {
               <p class="cal-row">
-                <span class="ok"><mat-icon>check_circle</mat-icon>{{ t('Connected') }}</span>
+                <span class="ok"
+                  ><mat-icon>check_circle</mat-icon>{{ t('Connected') }}
+                  @if (calendar.found() !== null) {
+                    <span class="muted count"
+                      >· {{ tn(calendar.found()!, '{n} event found', '{n} events found') }}</span
+                    >
+                  }
+                </span>
                 <button type="button" class="link" (click)="calendar.disconnect()">
                   {{ t('Disconnect') }}
                 </button>
               </p>
+              @if (calendar.problem(); as problem) {
+                <p class="error small" role="alert">{{ problem }}</p>
+              }
             } @else {
               <button
                 type="button"
@@ -377,7 +387,9 @@
                 {{ t('Connect Google Calendar') }}
               </button>
               @if (calendar.failed()) {
-                <p class="error small" role="alert">{{ t('Couldn’t connect. Try again.') }}</p>
+                <p class="error small" role="alert">
+                  {{ calendar.problem() ?? t('Couldn’t connect. Try again.') }}
+                </p>
               }
             }
           } @else {

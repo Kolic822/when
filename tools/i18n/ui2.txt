@@ -629,3 +629,27 @@ Prijavi se uz Google da koristiš Pro postavke.
 Sign in with Google to use these.
 Melde dich mit Google an, um diese zu nutzen.
 Prijavi se uz Google da ih koristiš.
+
+Calendar access was not ticked. Connect again and tick the calendar box.
+Der Kalenderzugriff wurde nicht angehakt. Verbinde erneut und setze den Haken beim Kalender.
+Pristup kalendaru nije označen. Poveži ponovno i označi kućicu za kalendar.
+
+Google’s window was closed or blocked. Try again.
+Das Google-Fenster wurde geschlossen oder blockiert. Versuch es noch einmal.
+Googleov prozor je zatvoren ili blokiran. Pokušaj ponovno.
+
+The Google Calendar API is not switched on for this Google Cloud project.
+Die Google Calendar API ist für dieses Google-Cloud-Projekt nicht eingeschaltet.
+Google Calendar API nije uključen za ovaj Google Cloud projekt.
+
+Google refused the request ({code}). {message}
+Google hat die Anfrage abgelehnt ({code}). {message}
+Google je odbio zahtjev ({code}). {message}
+
+Connect again
+Erneut verbinden
+Poveži ponovno
+
+{n} event found
+{n} Termin gefunden || {n} Termine gefunden
+pronađen {n} događaj || pronađena {n} događaja || pronađeno {n} događaja

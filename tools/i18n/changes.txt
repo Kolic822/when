@@ -193,3 +193,11 @@ Pro značajke nose oznaku PRO; gosti vide popis zasivljen u izborniku
 Settings: choose whether event names and all-day events are shown
 Einstellungen: wähle, ob Terminnamen und ganztägige Termine angezeigt werden
 Postavke: odaberi prikazuju li se nazivi događaja i cjelodnevni događaji
+
+Connect calendar reads every calendar you keep, not only the main one
+„Kalender verbinden“ liest jeden deiner Kalender, nicht nur den Hauptkalender
+„Poveži kalendar” čita svaki tvoj kalendar, ne samo glavni
+
+If the calendar cannot be shown, the app now says why
+Wenn der Kalender nicht angezeigt werden kann, sagt die App jetzt, warum
+Ako se kalendar ne može prikazati, aplikacija sada kaže zašto

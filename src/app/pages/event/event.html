@@ -158,6 +158,15 @@
           />
         } @else {
           <section class="card chart">
+            @if (features().connect && calendar.problem(); as problem) {
+              <p class="cal-problem" role="alert">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ problem }}</span>
+                <button type="button" class="link-btn" (click)="calendar.connect()">
+                  {{ t('Connect again') }}
+                </button>
+              </p>
+            }
             @if (showCalendarPrompt()) {
               <button type="button" class="pill cal-prompt" (click)="calendar.connect()">
                 <mat-icon>event</mat-icon>
