@@ -130,9 +130,7 @@
           @if (bookings().length) {
             <app-booked
               [sessions]="bookings()"
-              [title]="event()!.title"
-              [description]="event()!.description"
-              [url]="shareUrl()"
+              [eventId]="id()"
               [organiser]="isCreator()"
               (unbooked)="onUnbook($event)"
             />
@@ -154,9 +152,6 @@
               [features]="features()"
               [organiser]="isCreator()"
               [eventId]="id()"
-              [title]="event()!.title"
-              [description]="event()!.description"
-              [url]="shareUrl()"
               [shortlists]="event()!.shortlists ?? []"
               [booked]="bookings().length > 0 && !features().multiBook"
               (book)="onBook($event)"

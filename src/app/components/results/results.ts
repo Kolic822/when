@@ -1,15 +1,26 @@
 import { Component, ElementRef, computed, inject, input, output, signal } from '@angular/core';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { AvailabilityResult } from '../../core/availability';
+
 import { EventApi } from '../../core/event-api';
+
 import { Identity } from '../../core/identity';
-import { buildIcs, openInCalendar } from '../../core/calendar';
+
+import { openInCalendar } from '../../core/calendar';
+
 import { CommonWindow, Session, Shortlist } from '../../core/models';
+
 import { Features, NO_FEATURES } from '../../core/prefs';
-import { formatDuration, formatMinutes, shortDate } from '../../core/time';
+
+import { formatDuration, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
+
 import { AskPanel } from '../ask-panel/ask-panel';
+
 import { t, tn, listOf } from '../../core/i18n/i18n';
 
 interface Row {
@@ -61,9 +72,6 @@ export class Results {
   readonly features = input<Features>(NO_FEATURES);
   readonly organiser = input(false);
   readonly eventId = input('');
-  readonly title = input('Meetup');
-  readonly description = input('');
-  readonly url = input('');
   readonly shortlists = input<Shortlist[]>([]);
   /** A session is already booked, so the list starts folded away. */
   readonly booked = input(false);
@@ -220,27 +228,9 @@ export class Results {
   }
 
   addToCalendar(r: Row): void {
-    const w = r.window;
     const start = this.startOf(r);
-    const end = Math.min(w.end, start + this.minutes());
-    const notes = [
-      this.description(),
-      w.end > end ? t('Everyone is free {session}.', { session: `${r.day} ${r.time}` }) : '',
-      this.url() ? t('Planned with When: {url}', { url: this.url() }) : '',
-    ]
-      .filter(Boolean)
-      .join('\n\n');
-    openInCalendar(
-      buildIcs({
-        title: this.title(),
-        description: notes,
-        date: w.date,
-        start,
-        end,
-        url: this.url(),
-      }),
-      'when.ics',
-    );
+    const end = Math.min(r.window.end, start + this.minutes());
+    openInCalendar(this.eventId(), { date: r.window.date, start, end });
   }
 
   /** Withdraws a sent link; whoever has it sees that it no longer exists. */

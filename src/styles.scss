@@ -405,14 +405,16 @@ h3 {
   padding: 0 14px;
   background: var(--accent);
   color: #fff;
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: 700;
 
   .d {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 400;
   }
   .t {
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
   mat-icon {

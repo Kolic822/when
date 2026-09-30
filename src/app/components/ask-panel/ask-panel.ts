@@ -1,11 +1,19 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { EventApi } from '../../core/event-api';
+
 import { Identity } from '../../core/identity';
+
 import { Session } from '../../core/models';
-import { formatMinutes, shortDate } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { shortDate } from '../../core/time';
+
+import { dayOf, spanAt } from '../../core/zone';
+
 import { t } from '../../core/i18n/i18n';
 
 /**

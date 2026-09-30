@@ -102,48 +102,6 @@
   }
 }
 
-.settings {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 560px;
-
-  h2 {
-    margin: 0;
-    font-size: 17px;
-  }
-  h3 {
-    margin: 4px 0 0;
-    font-size: 15px;
-  }
-  .fields {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
-    gap: 12px;
-
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr 1fr;
-      mat-form-field:first-child {
-        grid-column: 1 / -1;
-      }
-    }
-  }
-  .warn {
-    margin: 0;
-    color: var(--mat-sys-error);
-    font-size: 13px;
-  }
-  .note {
-    margin: 0;
-    font-size: 13px;
-  }
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-}
-
 .chart {
   padding: 12px 8px 8px;
 

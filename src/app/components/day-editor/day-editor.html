@@ -1,84 +1,8 @@
 <section class="editor card" [style.--color]="color()" [style.--hours]="range().hours">
-  @if (mode() === 'full') {
-    <header>
-      <button
-        mat-icon-button
-        type="button"
-        (click)="closed.emit()"
-        [attr.aria-label]="t('Back to all days')"
-      >
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <div class="title">
-        <strong>{{ title() }}</strong>
-        <span class="muted">{{ subtitle() }}</span>
-      </div>
-      <span class="day-nav">
-        <button
-          type="button"
-          class="icon-btn"
-          (click)="goTo(prevDate())"
-          [disabled]="!prevDate()"
-          [attr.aria-label]="t('Previous day')"
-          [title]="t('Previous day')"
-        >
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <span class="muted count">{{ dayIndex() + 1 }}/{{ event().dates.length }}</span>
-        <button
-          type="button"
-          class="icon-btn"
-          (click)="goTo(nextDate())"
-          [disabled]="!nextDate()"
-          [attr.aria-label]="t('Next day')"
-          [title]="t('Next day')"
-        >
-          <mat-icon>chevron_right</mat-icon>
-        </button>
-      </span>
-    </header>
-  }
-
   <!-- Always takes its line so nothing jumps when the first block appears. -->
   <p class="hint muted" [class.ghost]="!mine().length">
     {{ t('Drag edges to resize · hold to move · tap for a note') }}
   </p>
-
-  @if (mode() === 'full') {
-    <div class="quick">
-      <button type="button" class="pill" (click)="freeAllDay()" [class.active]="allDay()">
-        <mat-icon>{{ allDay() ? 'check' : 'wb_sunny' }}</mat-icon>
-        {{ t('Free all day') }}
-      </button>
-      @if (mine().length) {
-        <button type="button" class="pill danger" (click)="clearDay()">
-          <mat-icon>delete_outline</mat-icon>
-          {{ t('Clear day') }}
-        </button>
-      }
-      @if (event().dates.length > 1) {
-        <app-copy-days
-          [dates]="event().dates"
-          [from]="date()"
-          [disabled]="!mine().length"
-          (applied)="copyTo.emit({ from: date(), to: $event })"
-        />
-      }
-    </div>
-  }
-
-  @if (copySlotIndex() !== null) {
-    <div class="copy-slot">
-      <app-copy-days
-        [dates]="event().dates"
-        [from]="date()"
-        [what]="copySlotLabel()"
-        [startOpen]="true"
-        (applied)="applyCopySlot($event)"
-        (cancelled)="copySlotIndex.set(null)"
-      />
-    </div>
-  }
 
   <!-- Always in the DOM (collapsed when unused) so a tap can focus it synchronously and open the keyboard. -->
   <form
@@ -227,14 +151,5 @@
       <span class="txt">{{ t('Keep holding, then drag…') }}</span>
       <span class="progress" [style.animation-duration.ms]="holdProgressMs"></span>
     </span>
-  }
-
-  @if (mode() === 'full') {
-    <div class="done-bar">
-      <button mat-flat-button type="button" (click)="closed.emit()">
-        <mat-icon>check</mat-icon>
-        {{ t('Done') }}
-      </button>
-    </div>
   }
 </section>

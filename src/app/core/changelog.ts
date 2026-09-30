@@ -7,9 +7,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.11';
+export const VERSION = '0.11.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.11.1',
+    date: '30 Sep 2026',
+    changes: [
+      m('Day view: a button at the top shows or hides your calendar events'),
+      m('Fill from calendar marks you free around your calendar events'),
+      m('Add to calendar now opens the calendar on phones'),
+      m('Book stands out more on its button'),
+    ],
+  },
   {
     version: '0.11',
     date: '30 Sep 2026',

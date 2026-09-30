@@ -1,13 +1,22 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { EventApi } from '../../core/event-api';
+
 import { ShortlistView } from '../../core/models';
-import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
+
+import { dayMonth, formatDuration, weekdayLong } from '../../core/time';
 import { dayOf, eventZone, spanAt, timeAt } from '../../core/zone';
+
 import { ZoneNote } from '../../components/zone-note/zone-note';
+
 import { t } from '../../core/i18n/i18n';
 
 /**

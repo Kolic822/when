@@ -17,6 +17,7 @@ const TEXTS = {
     withdrew: '{name} withdrew their answer · {title}',
     works: 'Works for them: {sessions}',
     none_work: 'None of the sessions work for them.',
+    planned_with: 'Planned with When: {url}',
   },
   de: {
     everyone: 'Alle haben geantwortet · {title}',
@@ -35,6 +36,7 @@ const TEXTS = {
     withdrew: '{name} hat die Antwort zurückgezogen · {title}',
     works: 'Passt: {sessions}',
     none_work: 'Keiner der Termine passt.',
+    planned_with: 'Geplant mit When: {url}',
   },
   hr: {
     everyone: 'Svi su odgovorili · {title}',
@@ -54,6 +56,7 @@ const TEXTS = {
     withdrew: '{name}: odgovor je povučen · {title}',
     works: 'Odgovara: {sessions}',
     none_work: 'Nijedan termin ne odgovara.',
+    planned_with: 'Planirano uz When: {url}',
   },
 };
 

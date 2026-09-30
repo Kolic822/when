@@ -9,74 +9,6 @@
   padding: 8px 12px 0;
 }
 
-/* Stays at the bottom of the screen while the tall editor scrolls. */
-.done-bar {
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
-  display: flex;
-  justify-content: flex-end;
-  margin: 8px -12px 0;
-  padding: 10px 12px calc(env(safe-area-inset-bottom, 0px) + 10px);
-  background: linear-gradient(to top, var(--when-surface) 70%, transparent);
-  border-radius: 0 0 var(--when-radius) var(--when-radius);
-
-  button {
-    height: 44px;
-    padding: 0 22px;
-    border-radius: 999px;
-  }
-}
-
-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  .day-nav {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-
-    .icon-btn {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--when-border);
-      color: var(--when-text);
-
-      mat-icon {
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
-      }
-    }
-    .count {
-      min-width: 32px;
-      text-align: center;
-      font-size: 13px;
-      font-variant-numeric: tabular-nums;
-    }
-    .icon-btn:disabled {
-      opacity: 0.3;
-      cursor: default;
-    }
-  }
-
-  .title {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-
-    strong {
-      font-size: 18px;
-    }
-    span {
-      font-size: 13px;
-    }
-  }
-}
-
 .hint {
   margin: 2px 0 10px 4px;
   font-size: 13px;
@@ -470,10 +402,6 @@ header {
   }
 }
 
-.copy-slot {
-  margin: 0 4px 10px;
-}
-
 .note-form {
   display: flex;
   flex-wrap: wrap;
@@ -528,18 +456,6 @@ header {
 @media (max-width: 480px) {
   .note-form .actions {
     width: 100%;
-  }
-}
-
-.quick {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 4px 4px;
-
-  /* The copy picker, once opened, takes the whole row. */
-  app-copy-days.open {
-    flex-basis: 100%;
   }
 }
 

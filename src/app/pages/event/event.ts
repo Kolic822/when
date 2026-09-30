@@ -8,44 +8,67 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { MatInputModule } from '@angular/material/input';
+
 import { MatSelectModule } from '@angular/material/select';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { EventSession } from '../../core/event-session';
+
 import { Identity } from '../../core/identity';
+
 import { findCommonWindows } from '../../core/availability';
-import {
-  HOUR_OPTIONS,
-  formatDuration,
-  formatMinutes,
-  rangeLabel,
-  shortDate,
-} from '../../core/time';
+
+import { rangeLabel, shortDate } from '../../core/time';
+
 import { Session, Slot } from '../../core/models';
+
 import { NamePrompt } from '../../components/name-prompt/name-prompt';
+
 import { ShareLink } from '../../components/share-link/share-link';
+
 import { WeekChart } from '../../components/week-chart/week-chart';
+
 import { Legend } from '../../components/legend/legend';
+
 import { Results } from '../../components/results/results';
+
 import { AppMenu } from '../../components/app-menu/app-menu';
+
 import { AnswerCard, latestVerdict } from '../../components/answer-card/answer-card';
+
 import { Booked } from '../../components/booked/booked';
+
 import { WhenDetails, WhenForm } from '../../components/when-form/when-form';
+
 import { ZoneNote } from '../../components/zone-note/zone-note';
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { PrefsStore } from '../../core/prefs';
+
 import { Push } from '../../core/push';
+
 import { HowToState } from '../../core/how-to-state';
+
 import { Sync } from '../../core/sync';
+
 import { CalendarLink } from '../../core/calendar-link';
-import { mergeSlots } from '../../core/availability';
+
 import { DayStepper } from '../../components/day-stepper/day-stepper';
-import { DURATIONS } from '../home/durations';
+
 import { t, tn } from '../../core/i18n/i18n';
 
 @Component({
@@ -192,13 +215,6 @@ export class EventPage implements OnDestroy {
   readonly shareUrl = computed(() => `${location.origin}/e/${this.id()}`);
   readonly rangeText = computed(() => (this.event() ? rangeLabel(this.event()!.dates) : ''));
   readonly hasAnySlots = computed(() => (this.me()?.slots.length ?? 0) > 0);
-  readonly durationText = computed(() =>
-    this.event() ? formatDuration(this.event()!.durationHours * 60) : '',
-  );
-  readonly hoursText = computed(() => {
-    const ev = this.event();
-    return ev ? `${formatMinutes(ev.dayStart)} – ${formatMinutes(ev.dayEnd)}` : '';
-  });
   readonly availability = computed(() => {
     const ev = this.event();
     return ev ? findCommonWindows(ev) : { windows: [], answered: [], pending: [] };

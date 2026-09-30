@@ -1,8 +1,13 @@
 import { Component, computed, input, output, signal } from '@angular/core';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { Session, Shortlist } from '../../core/models';
-import { formatMinutes, shortDate } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { shortDate } from '../../core/time';
+
+import { dayOf, spanAt } from '../../core/zone';
+
 import { t, listOf } from '../../core/i18n/i18n';
 
 export interface Verdict {

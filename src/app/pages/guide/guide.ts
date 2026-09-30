@@ -264,13 +264,16 @@ export class Guide {
           'Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',
         ),
         m(
+          'In the day view, the calendar button at the top hides or shows your events. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.',
+        ),
+        m(
           'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.',
         ),
         m(
           'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.',
         ),
         m(
-          'Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.',
+          'Your events are only read to draw them for you. When never stores them and nobody else sees them.',
         ),
         m('Google asks again after about an hour; Disconnect in the menu withdraws access.'),
       ],

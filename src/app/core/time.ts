@@ -1,8 +1,6 @@
 import { signal } from '@angular/core';
 import { lang, locale, t, tn } from './i18n/i18n';
 
-export const MINUTES_PER_DAY = 1440;
-
 export type DateStyle = 'numeric' | 'name';
 /** How dates are written: "30.9." or "30 Sep". Set from the user's preferences. */
 export const dateStyle = signal<DateStyle>('numeric');
@@ -63,11 +61,6 @@ export function startOfWeek(key: string): string {
 
 export function dateRange(startDate: string, days: number): string[] {
   return Array.from({ length: days }, (_, i) => addDays(startDate, i));
-}
-
-/** Sorted, de-duplicated copy of a list of date keys. */
-export function normalizeDates(dates: string[]): string[] {
-  return [...new Set(dates)].sort();
 }
 
 /** True when the dates form one unbroken run of days. */

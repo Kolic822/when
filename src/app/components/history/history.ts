@@ -7,10 +7,15 @@ import {
   input,
   signal,
 } from '@angular/core';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { HistoryEntry } from '../../core/models';
-import { formatMinutes, shortDate } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { shortDate } from '../../core/time';
+
+import { spanAt } from '../../core/zone';
+
 import { t } from '../../core/i18n/i18n';
 
 interface Row {

@@ -10,6 +10,7 @@ import { cleanSubscription, createPush } from './push.mjs';
 import { cleanLang, localeOf, say } from './messages.mjs';
 import { Accounts } from './accounts.mjs';
 import { eventsBetween, fetchCalendar } from './ics.mjs';
+import { calendarFile } from './calendar-file.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Hosting platforms set PORT; locally API_PORT keeps the API off the Angular dev server's port.
@@ -264,6 +265,49 @@ app.get('/api/admin/export', (req, res) => {
   if (!token || req.get('x-admin-token') !== token) return res.status(403).json({ error: 'forbidden' });
   res.setHeader('content-disposition', `attachment; filename="when-${new Date().toISOString().slice(0, 10)}.json"`);
   res.json(store.all());
+});
+
+/** Where the app lives, for links in calendar files and emails. */
+const PUBLIC_URL = (
+  process.env.PUBLIC_URL ??
+  (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : '')
+).replace(/\/+$/, '');
+const publicUrl = (req) => PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
+
+/**
+ * One session of a When as a calendar file. The name ends in .ics so the app's offline
+ * layer leaves the request alone and the phone's calendar picks it up.
+ */
+app.get('/api/events/:id/when.ics', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const date = String(req.query.date ?? '');
+  const start = Number(req.query.start);
+  const end = Number(req.query.end);
+  const valid =
+    ev.dates.includes(date) && Number.isInteger(start) && Number.isInteger(end) &&
+    start >= 0 && end > start && end <= 2880;
+  if (!valid) return res.status(400).json({ error: 'bad_session' });
+  const zone = cleanZone(ev.timeZone) ?? cleanZone(req.query.tz) ?? 'UTC';
+  const [y, m, d] = date.split('-').map(Number);
+  const at = (min) => new Date(Date.UTC(y, m - 1, d, 0, min) - zoneOffset(zone, date) * 60_000);
+  const link = `${publicUrl(req)}/e/${ev.id}`;
+  const description = [ev.description, say(cleanLang(String(req.query.lang ?? '')), 'planned_with', { url: link })]
+    .filter(Boolean)
+    .join('\n\n');
+  res.setHeader('content-type', 'text/calendar; charset=utf-8');
+  res.setHeader('content-disposition', 'inline; filename="when.ics"');
+  res.setHeader('cache-control', 'no-store');
+  res.send(
+    calendarFile({
+      uid: `${ev.id}-${date}-${start}@when`,
+      title: ev.title,
+      description,
+      url: link,
+      start: at(start),
+      end: at(end),
+    }),
+  );
 });
 
 // ---- Signing in with Google

@@ -178,18 +178,6 @@ li.open .line .chev {
   animation: rise 0.2s ease both;
 }
 
-.detail-title {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-size: 15px;
-
-  .len {
-    margin-left: auto;
-    font-size: 13px;
-  }
-}
-
 .note {
   font-size: 13px;
   line-height: 1.35;
@@ -240,6 +228,13 @@ li.open .line .chev {
     height: 38px;
     font-size: 14px;
   }
+  /* "Book" reads first; the day and time are the detail. */
+  .book-full {
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    font-size: 18px;
+  }
   mat-icon {
     font-size: 18px;
     width: 18px;
@@ -247,16 +242,25 @@ li.open .line .chev {
   }
 }
 
-.book {
-  flex: 1;
-  justify-content: center;
-  background: var(--accent);
-  color: #fff;
-  font-variant-numeric: tabular-nums;
-}
-
 .cal {
   color: var(--accent);
+
+  /* Beside the Book button: just the icon, with the badge on its corner. */
+  &.compact {
+    position: relative;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    justify-content: center;
+
+    .pro-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      font-size: 8px;
+    }
+  }
 }
 
 .mini {
@@ -397,8 +401,4 @@ p {
 
 .danger {
   color: var(--mat-sys-error) !important;
-}
-
-.cal:not(:has(> :not(mat-icon))) {
-  flex: none;
 }

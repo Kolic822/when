@@ -1,10 +1,34 @@
-import { Component, computed, effect, input, output, signal, untracked } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
+import { mergeSlots } from '../../core/availability';
+
+import { freeAround } from '../../core/busy';
+
+import { CalendarLink } from '../../core/calendar-link';
+
 import { MeetEvent, Slot } from '../../core/models';
-import { dayMonth, formatMinutes, shortDate, weekdayLong } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { PrefsStore } from '../../core/prefs';
+
+import { dayMonth, shortDate, weekdayLong } from '../../core/time';
+
+import { timeAt } from '../../core/zone';
+
 import { DayEditor } from '../day-editor/day-editor';
+
 import { t } from '../../core/i18n/i18n';
 
 /**
@@ -131,13 +155,39 @@ export class DayStepper {
     else this.quickFree.emit(this.date());
   }
 
-  /** Jump to a given day (used by Undo). */
-  goTo(date: string): void {
-    const i = this.dates().indexOf(date);
-    if (i >= 0) {
-      this.index.set(i);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ---- Own calendar (Pro)
+  private readonly prefs = inject(PrefsStore);
+  readonly calendar = inject(CalendarLink);
+  readonly calendarOffered = computed(() => this.prefs.prefs().features.connect);
+  readonly calendarShown = computed(() => this.prefs.prefs().calendarInDay);
+  /** Said for a moment when the calendar leaves no room on this day. */
+  readonly fillNote = signal(false);
+  private fillNoteTimer: ReturnType<typeof setTimeout> | null = null;
+
+  toggleCalendar(): void {
+    this.prefs.update({ calendarInDay: !this.calendarShown() });
+  }
+
+  /**
+   * Marks this day free wherever the calendar has nothing: the gaps around its events
+   * that are long enough for the meetup. Times already marked are kept.
+   */
+  fillFromCalendar(): void {
+    const ev = this.event();
+    const date = this.date();
+    // Show what the times are worked out from.
+    if (!this.calendarShown()) this.prefs.update({ calendarInDay: true });
+    const minLength = ev.partialOk ? 15 : ev.durationHours * 60;
+    const busy = this.calendar.busyOn(date, ev.dayStart, ev.dayEnd);
+    const gaps = freeAround(busy, ev.dayStart, ev.dayEnd, minLength);
+    if (this.fillNoteTimer) clearTimeout(this.fillNoteTimer);
+    this.fillNote.set(!gaps.length);
+    if (!gaps.length) {
+      this.fillNoteTimer = setTimeout(() => this.fillNote.set(false), 4000);
+      return;
     }
+    const mine = ev.participants.find((p) => p.id === this.meId())?.slots ?? [];
+    this.slotsChange.emit(mergeSlots([...mine, ...gaps.map((gap) => ({ date, ...gap }))]));
   }
 
   next(): void {

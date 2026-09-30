@@ -1,9 +1,15 @@
 import { Component, computed, input, output } from '@angular/core';
+
 import { MatIconModule } from '@angular/material/icon';
-import { buildIcs, openInCalendar } from '../../core/calendar';
+
+import { openInCalendar } from '../../core/calendar';
+
 import { Session } from '../../core/models';
-import { formatMinutes, weekdayLong, weekdayShort, dayMonth } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { weekdayLong, weekdayShort, dayMonth } from '../../core/time';
+
+import { dayOf, spanAt } from '../../core/zone';
+
 import { t } from '../../core/i18n/i18n';
 
 /** The session the organiser settled on, shown to everyone at the top of the When. */
@@ -137,9 +143,7 @@ import { t } from '../../core/i18n/i18n';
 export class Booked {
   readonly t = t;
   readonly sessions = input.required<Session[]>();
-  readonly title = input('Meetup');
-  readonly description = input('');
-  readonly url = input('');
+  readonly eventId = input('');
   readonly organiser = input(false);
   /** The organiser takes one session back. */
   readonly unbooked = output<Session>();
@@ -154,23 +158,7 @@ export class Booked {
   );
 
   addToCalendar(s: Session): void {
-    const notes = [
-      this.description(),
-      this.url() ? t('Planned with When: {url}', { url: this.url() }) : '',
-    ]
-      .filter(Boolean)
-      .join('\n\n');
-    openInCalendar(
-      buildIcs({
-        title: this.title(),
-        description: notes,
-        date: s.date,
-        start: s.start,
-        end: s.end,
-        url: this.url(),
-      }),
-      'when.ics',
-    );
+    openInCalendar(this.eventId(), s);
   }
 }
 

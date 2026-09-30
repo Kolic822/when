@@ -70,21 +70,6 @@ export function intersectIntervals(a: Interval[], b: Interval[]): Interval[] {
   return out;
 }
 
-/** The best candidate: fewest people leaving early, then the longest overlap, then the earliest. */
-export function bestWindow(windows: CommonWindow[]): CommonWindow | null {
-  if (!windows.length) return null;
-  const score = (w: CommonWindow) =>
-    [w.partial?.length ?? 0, -(w.end - w.start), w.date, w.start] as const;
-  const cmp = (a: readonly (number | string)[], b: readonly (number | string)[]) => {
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] < b[i]) return -1;
-      if (a[i] > b[i]) return 1;
-    }
-    return 0;
-  };
-  return windows.reduce((a, b) => (cmp(score(a), score(b)) <= 0 ? a : b));
-}
-
 export interface AvailabilityResult {
   windows: CommonWindow[];
   /** Participants that have entered at least one slot. */

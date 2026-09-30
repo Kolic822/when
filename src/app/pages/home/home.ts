@@ -7,8 +7,6 @@ import { t } from '../../core/i18n/i18n';
 import { Identity } from '../../core/identity';
 import { viewerZone } from '../../core/zone';
 
-export { DURATIONS } from './durations';
-
 /** Plan a new When. */
 @Component({
   selector: 'app-home',

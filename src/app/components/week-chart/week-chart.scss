@@ -136,33 +136,6 @@
   transition: border-color 0.15s;
 }
 
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 10px 0 0;
-}
-
-.scroll-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-
-  mat-icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-  }
-  .arrow {
-    animation: nudge 1.2s ease-in-out infinite;
-  }
-  &.done {
-    opacity: 0.6;
-  }
-}
-
 @keyframes nudge {
   0%,
   100% {

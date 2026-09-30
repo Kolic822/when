@@ -414,17 +414,9 @@ Undo
 Rückgängig
 Poništi
 
-Planned with When: {url}
-Geplant mit When: {url}
-Planirano uz When: {url}
-
 Copy to…
 Kopieren nach…
 Kopiraj na…
-
-Copy {what} to
-{what} kopieren nach
-Kopiraj {what} na
 
 Select none
 Keine auswählen
@@ -437,18 +429,6 @@ Odaberi sve
 Copy ({n})
 Kopieren ({n})
 Kopiraj ({n})
-
-Back to all days
-Zurück zu allen Tagen
-Natrag na sve dane
-
-Previous day
-Vorheriger Tag
-Prethodni dan
-
-Next day
-Nächster Tag
-Sljedeći dan
 
 Drag edges to resize · hold to move · tap for a note
 Ränder ziehen: Länge · halten: verschieben · tippen: Notiz
@@ -521,14 +501,6 @@ Drži još malo pa povuci…
 Done
 Fertig
 Gotovo
-
-Minimum is {length} – the meetup length. Your period was extended.
-Das Minimum ist {length} – die Dauer des Treffens. Dein Zeitraum wurde verlängert.
-Minimum je {length} – trajanje susreta. Tvoje razdoblje je produljeno.
-
-Removed {time}
-{time} entfernt
-Uklonjeno: {time}
 
 Clear
 Leeren

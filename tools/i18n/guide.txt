@@ -366,9 +366,9 @@ Switch on Book several sessions in Settings. Booking a session on another day th
 Schalte in den Einstellungen „Mehrere Termine festlegen“ ein. Ein Termin an einem anderen Tag wird dann hinzugefügt, statt den ersten zu ersetzen.
 Uključi „Potvrdi više termina” u Postavkama. Potvrda termina na drugi dan tada ga dodaje umjesto da zamijeni prvi.
 
-Your calendar goes straight from Google to your phone. When never stores it and nobody else sees it.
-Dein Kalender geht direkt von Google auf dein Handy. When speichert ihn nie, und niemand sonst sieht ihn.
-Tvoj kalendar ide izravno s Googlea na tvoj mobitel. When ga nikad ne sprema i nitko ga drugi ne vidi.
+Your events are only read to draw them for you. When never stores them and nobody else sees them.
+Deine Termine werden nur gelesen, um sie dir anzuzeigen. When speichert sie nie und niemand sonst sieht sie.
+Tvoji se događaji čitaju samo da bi ti se prikazali. When ih nikad ne sprema i nitko drugi ih ne vidi.
 
 Your events appear as grey striped blocks behind the bars, with their names, so you see clashes while marking. An all-day event fills the whole day.
 Deine Termine erscheinen als grau gestreifte Blöcke hinter den Balken, mit ihren Namen, damit du Überschneidungen beim Markieren siehst. Ein ganztägiger Termin füllt den ganzen Tag.
@@ -389,3 +389,7 @@ Apple Kalendar, Outlook i drugi: u izborniku pod „Kalendar” dodirni „Dodaj
 Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.
 Etwas im Kalender hinzugefügt? Zieh im When nach unten oder tippe im Menü unter „Kalender“ auf „Aktualisieren“. Es aktualisiert sich auch, wenn du zur App zurückkommst.
 Dodao/la si nešto u kalendar? Povuci prema dolje u Whenu ili dodirni „Osvježi” u izborniku pod „Kalendar”. Osvježava se i kad se vratiš u aplikaciju.
+
+In the day view, the calendar button at the top hides or shows your events. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.
+In der Tagesansicht blendet der Kalender-Button oben deine Termine ein oder aus. Aus Kalender füllen markiert dich überall dort als frei, wo dein Kalender nichts hat, wenn die Lücke für das Treffen lang genug ist.
+U prikazu dana gumb kalendara na vrhu skriva ili prikazuje tvoje događaje. Popuni iz kalendara označava te slobodnim gdje god tvoj kalendar nema ništa, ako je praznina dovoljno duga za susret.

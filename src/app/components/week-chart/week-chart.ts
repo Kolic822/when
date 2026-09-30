@@ -1,26 +1,32 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
+
 import { CalendarLink } from '../../core/calendar-link';
+
 import { PrefsStore } from '../../core/prefs';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { CommonWindow, MeetEvent, Participant, Slot } from '../../core/models';
+
 import {
   dateStyle,
   dayMonth,
-  formatMinutes,
   fromDateKey,
   toDateKey,
   weekdayLong,
   weekdayShort,
   monthShort,
 } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
+
+import { spanAt, timeAt } from '../../core/zone';
+
 import { t } from '../../core/i18n/i18n';
 
 const LONG_PRESS_MS = 500;
 /** At most this many days are visible at once; more scroll sideways. */
 const MAX_VISIBLE = 5;
-const MANY_DAYS = MAX_VISIBLE;
 
 interface Block {
   top: number; // percent
@@ -113,7 +119,6 @@ export class WeekChart {
   private morphTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ---- Many days: optionally hide the ones nobody has marked.
-  readonly manyDays = computed(() => this.event().dates.length > MANY_DAYS);
   readonly visibleDates = computed(() => this.event().dates);
   /** Columns sharing the width at once (the rest scroll). */
   readonly visibleCount = computed(() => Math.min(MAX_VISIBLE, this.visibleDates().length));

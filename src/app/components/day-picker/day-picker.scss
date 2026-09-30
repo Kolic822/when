@@ -83,10 +83,6 @@
       background: var(--when-grid);
     }
   }
-  &.other {
-    color: var(--when-muted);
-    opacity: 0.6;
-  }
   &.today {
     border-color: var(--mat-sys-primary);
     font-weight: 600;

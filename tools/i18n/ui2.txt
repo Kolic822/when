@@ -174,10 +174,6 @@ Još nema odgovora.
 {names} kann nicht die vollen {length} bleiben
 {names} ne može ostati punih {length}
 
-Everyone is free {session}.
-Alle haben Zeit: {session}.
-Svi su slobodni: {session}.
-
 Copy the link to this When
 Link zu diesem When kopieren
 Kopiraj poveznicu na ovaj When
@@ -502,10 +498,6 @@ Times that no longer fit are removed from everyone’s answers.
 Zeiten, die nicht mehr passen, werden aus allen Antworten entfernt.
 Vremena koja više ne odgovaraju uklanjaju se iz svih odgovora.
 
-Copy to {n} day
-Auf {n} Tag kopieren || Auf {n} Tage kopieren
-Kopiraj na {n} dan || Kopiraj na {n} dana || Kopiraj na {n} dana
-
 {n} note
 {n} Notiz || {n} Notizen
 {n} bilješka || {n} bilješke || {n} bilješki
@@ -809,3 +801,19 @@ Nema veze. Probaj ponovno.
 Already use When as an app? Links open in the browser. Sign in here too and you carry on as the same person.
 Du nutzt When schon als App? Links öffnen sich im Browser. Melde dich auch hier an, dann machst du als dieselbe Person weiter.
 Već koristiš When kao aplikaciju? Poveznice se otvaraju u pregledniku. Prijavi se i ovdje pa nastavljaš kao ista osoba.
+
+Fill from calendar
+Aus Kalender füllen
+Popuni iz kalendara
+
+Mark the time your calendar leaves free
+Markiert die Zeit, die dein Kalender frei lässt
+Označi vrijeme koje ti kalendar ostavlja slobodnim
+
+Show my calendar events
+Meine Kalendertermine anzeigen
+Prikaži moje događaje iz kalendara
+
+Your calendar leaves no gap long enough on this day.
+Dein Kalender lässt an diesem Tag keine ausreichend lange Lücke.
+Tvoj kalendar taj dan ne ostavlja dovoljno dugu prazninu.

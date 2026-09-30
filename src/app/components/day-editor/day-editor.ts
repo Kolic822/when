@@ -11,16 +11,23 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { MeetEvent, Slot } from '../../core/models';
+
 import { mergeSlots } from '../../core/availability';
+
 import { CalendarLink } from '../../core/calendar-link';
+
 import { PrefsStore } from '../../core/prefs';
-import { dayMonth, formatDuration, formatMinutes, weekdayLong } from '../../core/time';
-import { dayOf, spanAt, timeAt } from '../../core/zone';
-import { CopyDays } from '../copy-days/copy-days';
+
+import { formatDuration } from '../../core/time';
+
+import { spanAt, timeAt } from '../../core/zone';
+
 import { t } from '../../core/i18n/i18n';
 
 interface Interval {
@@ -46,8 +53,8 @@ const MOVE_TOLERANCE_PX = 8;
  */
 @Component({
   selector: 'app-day-editor',
-  host: { '[class.step]': "mode() === 'step'" },
-  imports: [MatButtonModule, MatIconModule, CopyDays],
+  host: { class: 'step' },
+  imports: [MatButtonModule, MatIconModule],
   templateUrl: './day-editor.html',
   styleUrl: './day-editor.scss',
 })
@@ -57,7 +64,8 @@ export class DayEditor {
   private readonly calendar = inject(CalendarLink);
   /** Own calendar events behind the bar: real ones when connected, samples as a preview. */
   readonly busy = computed(() => {
-    if (!this.prefs.prefs().features.connect) return [];
+    const prefs = this.prefs.prefs();
+    if (!prefs.features.connect || !prefs.calendarInDay) return [];
     const { dayStart, dayEnd } = this.event();
     return this.calendar.busyOn(this.date(), dayStart, dayEnd).map((b) => ({
       ...b,
@@ -68,52 +76,10 @@ export class DayEditor {
   readonly event = input.required<MeetEvent>();
   readonly meId = input.required<string>();
   readonly date = input.required<string>();
-  /** 'step' embeds the editor in the day stepper: no header, no Done bar. */
-  readonly mode = input<'full' | 'step'>('full');
   readonly slotsChange = output<Slot[]>();
-  readonly allDayToggled = output<boolean>();
-  readonly dayCleared = output<void>();
-  readonly closed = output<void>();
-  readonly copyTo = output<{ from: string; to: string[] }>();
-  /** Copy one period to other days. */
-  readonly copySlotTo = output<{ slot: Slot; to: string[] }>();
-  /** Step mode: the parent shows the day picker for this period in its side column. */
+  /** The parent shows the day picker for this period in its side column. */
   readonly copySlotRequested = output<Slot>();
 
-  /** Index of the block whose "copy to days" picker is open. */
-  readonly copySlotIndex = signal<number | null>(null);
-
-  copySlotLabel(): string {
-    const i = this.copySlotIndex();
-    const s = i === null ? null : this.mine()[i];
-    return s ? this.label(s) : '';
-  }
-
-  applyCopySlot(to: string[]): void {
-    const i = this.copySlotIndex();
-    const s = i === null ? null : this.mine()[i];
-    this.copySlotIndex.set(null);
-    if (!s) return;
-    const slot: Slot = s.note
-      ? { date: this.date(), start: s.start, end: s.end, note: s.note }
-      : { date: this.date(), start: s.start, end: s.end };
-    this.copySlotTo.emit({ slot, to });
-  }
-  /** Asks the parent to open another day (previous/next arrows). */
-  readonly dayChange = output<string>();
-
-  readonly dayIndex = computed(() => this.event().dates.indexOf(this.date()));
-  readonly prevDate = computed(() => this.event().dates[this.dayIndex() - 1] ?? null);
-  readonly nextDate = computed(() => this.event().dates[this.dayIndex() + 1] ?? null);
-
-  goTo(date: string | null): void {
-    if (!date) return;
-    this.reset();
-    this.noteEditing.set(null);
-    this.dayChange.emit(date);
-  }
-
-  private readonly snack = inject(MatSnackBar);
   private readonly bar = viewChild.required<ElementRef<HTMLElement>>('bar');
   private readonly noteInput = viewChild.required<ElementRef<HTMLInputElement>>('noteInput');
 
@@ -146,9 +112,6 @@ export class DayEditor {
   });
   readonly strict = computed(() => !this.event().partialOk);
   readonly minLabel = computed(() => formatDuration(this.minLen()));
-
-  readonly title = computed(() => weekdayLong(this.date()));
-  readonly subtitle = computed(() => dayMonth(this.date()));
 
   readonly me = computed(() => this.event().participants.find((p) => p.id === this.meId()));
   readonly color = computed(() => this.me()?.color ?? '#6366F1');
@@ -223,10 +186,7 @@ export class DayEditor {
     // While a gesture is active, stop the page from scrolling under the finger.
     // Outside a gesture the browser scrolls as usual (touch-action: pan-y).
     const destroyRef = inject(DestroyRef);
-    const host = inject<ElementRef<HTMLElement>>(ElementRef);
     afterNextRender(() => {
-      // Bring the editor to the top of the screen so the whole day fits.
-      if (this.mode() === 'full') window.scrollTo({ top: 0, behavior: 'smooth' });
       const el = this.bar().nativeElement;
       const onTouchMove = (e: TouchEvent) => {
         const g = this.gesture;
@@ -279,14 +239,10 @@ export class DayEditor {
     }
     if (slotEl && slot && target.closest('.copy-one')) {
       this.noteEditing.set(null);
-      if (this.mode() === 'step') {
-        const s: Slot = slot.note
-          ? { date: this.date(), start: slot.start, end: slot.end, note: slot.note }
-          : { date: this.date(), start: slot.start, end: slot.end };
-        this.copySlotRequested.emit(s);
-      } else {
-        this.copySlotIndex.set(index);
-      }
+      const s: Slot = slot.note
+        ? { date: this.date(), start: slot.start, end: slot.end, note: slot.note }
+        : { date: this.date(), start: slot.start, end: slot.end };
+      this.copySlotRequested.emit(s);
       return;
     }
 
@@ -392,7 +348,6 @@ export class DayEditor {
         if (!d) return;
         if (!g.held && Math.abs(g.last - g.origin) < SNAP) return; // a tap on empty space does nothing
         this.commit([...mine, d]);
-        this.warnIfExtended(Math.abs(g.last - g.origin));
         break;
       }
       case 'pending-move': {
@@ -414,7 +369,6 @@ export class DayEditor {
           ...rest,
           note ? { start: d.start, end: d.end, note } : { start: d.start, end: d.end },
         ]);
-        if (g.kind === 'resize') this.warnIfExtended(Math.abs(g.last - g.fixed));
         break;
       }
     }
@@ -446,21 +400,6 @@ export class DayEditor {
       }
     }
     return { start, end };
-  }
-
-  /** Tells the user why their period came out longer than what they dragged. */
-  private warnIfExtended(dragged: number): void {
-    if (dragged >= this.minLen() || this.mode() === 'step') return;
-    this.snack.open(
-      t('Minimum is {length} – the meetup length. Your period was extended.', {
-        length: this.minLabel(),
-      }),
-      undefined,
-      {
-        duration: 3500,
-        panelClass: 'above-bar',
-      },
-    );
   }
 
   private reset(): void {
@@ -502,29 +441,9 @@ export class DayEditor {
     this.noteInput().nativeElement.blur();
   }
 
-  /** Toggles "free all day"; the parent stashes/restores the earlier periods. */
-  freeAllDay(): void {
-    this.noteEditing.set(null);
-    this.allDayToggled.emit(!this.allDay());
-  }
-
   remove(iv: Interval): void {
     const before = this.mine();
     this.commit(before.filter((s) => s !== iv));
-    if (this.mode() === 'step') return;
-    this.snack
-      .open(t('Removed {time}', { time: this.label(iv) }), t('Undo'), {
-        duration: 4000,
-        panelClass: 'above-bar',
-      })
-      .onAction()
-      .subscribe(() => this.commit(before));
-  }
-
-  clearDay(): void {
-    if (!this.mine().length) return;
-    this.noteEditing.set(null);
-    this.dayCleared.emit();
   }
 
   /** Replaces my slots for this day and emits the full merged list. */

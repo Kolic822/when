@@ -26,8 +26,11 @@ source in `src/app/pages/guide/guide.ts`). The change log is next to it
   and password (hashed with scrypt in `accounts.json`; no email verification or password reset yet)
 - **Accounts**: My Whens, who you are in each When and your calendar links follow the account to
   every device, including the browser next to the installed app
-- **Pro previews** (menu toggles): let someone else pick via a link, book several sessions,
-  connect calendar and fill from it (sample events), add to calendar, join for part of it, history
+- **Pro** (signed in with Google): let someone else pick via a link, book several sessions,
+  own calendar behind the day bar (Google, or any calendar by link) and fill free time from it,
+  add to calendar, join for part of it, history
+- **Hosting**: Railway builds the `Dockerfile` on every push to `main`; data lives on the volume
+  mounted at `/data`
 
 ## Languages
 
@@ -98,13 +101,3 @@ Set `API_PORT` to change the server port.
 | `npm run serve:prod` | build, then serve it from the Node server        |
 | `npm test`        | unit tests (vitest)                                 |
 
-## Hosting on a VM (Oracle Cloud free tier, or any Ubuntu box)
-
-1. Create an Ubuntu VM and allow TCP 80 and 443 in its security list / firewall.
-2. Pick a hostname that points at the VM. Free options: a DuckDNS name, or `<ip>.sslip.io`
-   (no sign-up; e.g. `203.0.113.7.sslip.io`).
-3. On the VM, once: `sudo bash setup-server.sh <hostname>` (copy `deploy/setup-server.sh` there
-   first). It installs Node 22, Caddy (automatic HTTPS), a `when` systemd service, and opens the ports.
-4. From this Mac, every time you want to ship a new version: `./deploy/deploy.sh ubuntu@<ip>`.
-
-Data lives in `/var/lib/when/events.json` on the VM.

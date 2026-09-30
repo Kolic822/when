@@ -104,6 +104,7 @@
                   <button
                     type="button"
                     class="pill cal"
+                    [class.compact]="organiser()"
                     (click)="addToCalendar(r)"
                     [attr.aria-label]="
                       t('Add {session} to calendar', { session: r.day + ' ' + r.time })

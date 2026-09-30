@@ -1,27 +1,36 @@
 import { Component, computed, inject, signal, ElementRef, effect, untracked } from '@angular/core';
+
 import { Router, RouterLink } from '@angular/router';
+
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
+
 import { Auth } from '../../core/auth';
+
 import { VERSION } from '../../core/changelog';
+
 import { HistoryEntry } from '../../core/models';
+
 import { History } from '../history/history';
+
 import { Push } from '../../core/push';
+
 import { CalendarLink } from '../../core/calendar-link';
+
 import { Sync } from '../../core/sync';
+
 import { Identity, RecentMeetup } from '../../core/identity';
+
 import { Look, PrefsStore, Theme } from '../../core/prefs';
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { Updates } from '../../core/updates';
+
 import { HowToState } from '../../core/how-to-state';
-import {
-  DateStyle,
-  HOUR_OPTIONS,
-  formatMinutes,
-  rangeLabel,
-  shortDate,
-  toDateKey,
-} from '../../core/time';
+
+import { DateStyle, HOUR_OPTIONS, rangeLabel, shortDate, toDateKey } from '../../core/time';
 import {
   dayOf,
   deviceZone,
@@ -30,9 +39,13 @@ import {
   zoneCity,
   zoneOverride,
 } from '../../core/zone';
+
 import { EventApi } from '../../core/event-api';
+
 import { findCommonWindows } from '../../core/availability';
+
 import { DURATIONS } from '../../pages/home/durations';
+
 import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */

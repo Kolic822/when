@@ -78,7 +78,6 @@ export class CalendarLink {
   readonly found = signal<number | null>(null);
   /** Every calendar that was read last time, with what it had. */
   readonly sources = signal<CalendarSource[]>([]);
-  readonly calendarsRead = computed(() => this.sources().length);
 
   /**
    * Calendars added by subscription link (Apple Calendar, Outlook, …). Kept with the

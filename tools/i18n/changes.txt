@@ -285,3 +285,19 @@ Poveznica otvorena u pregledniku dok koristiš instaliranu aplikaciju: prijavi s
 Calendar links are kept with your account, so every device shows them
 Kalender-Links werden bei deinem Konto gespeichert, damit jedes Gerät sie zeigt
 Poveznice kalendara čuvaju se uz tvoj račun pa ih prikazuje svaki uređaj
+
+Day view: a button at the top shows or hides your calendar events
+Tagesansicht: Ein Button oben blendet deine Kalendertermine ein oder aus
+Prikaz dana: gumb na vrhu prikazuje ili skriva tvoje događaje iz kalendara
+
+Fill from calendar marks you free around your calendar events
+Aus Kalender füllen markiert dich rund um deine Kalendertermine als frei
+Popuni iz kalendara označava te slobodnim oko tvojih događaja iz kalendara
+
+Add to calendar now opens the calendar on phones
+Zum Kalender hinzufügen öffnet jetzt auf dem Handy den Kalender
+Dodaj u kalendar sada na mobitelu otvara kalendar
+
+Book stands out more on its button
+Festlegen ist auf dem Button jetzt deutlicher
+Potvrdi se sada više ističe na gumbu

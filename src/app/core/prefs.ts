@@ -47,6 +47,8 @@ interface Stored {
   calendarNames: boolean;
   /** Pro setting: show events that last the whole day. */
   calendarAllDay: boolean;
+  /** Pro: own calendar events are drawn behind the bar in the day view. */
+  calendarInDay: boolean;
 }
 
 export interface Prefs extends Stored {
@@ -64,6 +66,7 @@ const DEFAULTS: Stored = {
   multiBook: false,
   calendarNames: true,
   calendarAllDay: true,
+  calendarInDay: true,
 };
 
 /** Per-browser preferences: appearance, defaults for new Whens and Pro settings. */
