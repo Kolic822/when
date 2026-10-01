@@ -369,7 +369,9 @@ console.log(
 
 /** What the app needs to know before it starts; empty client id means no Google sign-in. */
 const canMail = (req) => mailer.ready && !!mailLinkBase(req);
-app.get('/api/config', (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, mail: canMail(req) }));
+app.get('/api/config', (req, res) =>
+  res.json({ googleClientId: GOOGLE_CLIENT_ID, mail: canMail(req), contact: process.env.CONTACT_EMAIL ?? '' }),
+);
 
 /** Checks the token Google gave the browser and returns the person's name. */
 app.post('/api/auth/google', async (req, res) => {

@@ -98,6 +98,30 @@ $looks: (
       muted: #9aa5bd,
     ),
   ),
+  lavender: (
+    light: (
+      accent: #8f74f2,
+      on-accent: #ffffff,
+      accent-soft: #ece6ff,
+      bg: #faf7ff,
+      surface: #ffffff,
+      grid: #f2edfc,
+      border: #e4dcf8,
+      text: #211a3a,
+      muted: #7b7399,
+    ),
+    dark: (
+      accent: #c7b4ff,
+      on-accent: #26184f,
+      accent-soft: #352a5c,
+      bg: #13111b,
+      surface: #1c1828,
+      grid: #272136,
+      border: #362e4a,
+      text: #f0ebfb,
+      muted: #aaa2c3,
+    ),
+  ),
 );
 
 @mixin look-vars($c, $dark: false) {
@@ -355,28 +379,6 @@ h3 {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-/* Anything that folds away: the height eases instead of jumping. */
-.fold-wrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
-
-  > * {
-    min-height: 0;
-    overflow: hidden;
-    visibility: hidden;
-    transition: visibility 0s 0.28s;
-  }
-  &.open {
-    grid-template-rows: 1fr;
-
-    > * {
-      visibility: visible;
-      transition: none;
-    }
-  }
 }
 
 /* Cards settle into place when a page opens. */

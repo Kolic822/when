@@ -3,6 +3,7 @@ import { Component, computed, inject, input, output, signal } from '@angular/cor
 import { MatButtonModule } from '@angular/material/button';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { EventApi } from '../../core/event-api';
 
@@ -22,7 +23,7 @@ import { t } from '../../core/i18n/i18n';
  */
 @Component({
   selector: 'app-ask-panel',
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, MatSlideToggleModule],
   templateUrl: './ask-panel.html',
   styleUrl: './ask-panel.scss',
 })
@@ -34,14 +35,14 @@ export class AskPanel {
   readonly eventId = input.required<string>();
   readonly sessions = input.required<Session[]>();
   readonly closed = output<void>();
+  /** A link was made: its id, so the list below can point at it. */
+  readonly created = output<string>();
 
   /** Indices of the sessions to include; all by default. */
   readonly chosen = signal<Set<number> | null>(null);
   readonly mode = signal<'one' | 'many'>('one');
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
-  readonly link = signal<string | null>(null);
-  readonly copied = signal(false);
 
   readonly picked = computed(() => this.chosen() ?? new Set(this.sessions().map((_, i) => i)));
 
@@ -63,23 +64,12 @@ export class AskPanel {
     this.error.set(null);
     try {
       const list = await this.api.createShortlist(this.eventId(), token, this.mode(), sessions);
-      this.link.set(`${location.origin}/s/${list.id}`);
+      this.created.emit(list.id);
+      this.closed.emit();
     } catch (e) {
       this.error.set(e instanceof Error ? e.message : t('Something went wrong'));
     } finally {
       this.busy.set(false);
-    }
-  }
-
-  async copy(): Promise<void> {
-    const url = this.link();
-    if (!url) return;
-    try {
-      await navigator.clipboard.writeText(url);
-      this.copied.set(true);
-      setTimeout(() => this.copied.set(false), 1800);
-    } catch {
-      /* ignore */
     }
   }
 }

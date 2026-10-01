@@ -58,47 +58,41 @@ p.muted {
   }
 }
 
-.segments {
-  display: flex;
-  gap: 6px;
-
-  .pill {
-    flex: 1;
-    background: var(--when-surface);
-
-    &.active {
-      background: var(--accent);
-    }
-  }
-}
-
-.link {
+.switch {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 6px 6px 12px;
-  border-radius: 999px;
+  gap: 12px;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
   background: var(--when-surface);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
 
-  .url {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 13px;
-    color: var(--when-muted);
+  .text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .small {
+    font-size: 12px;
+    font-weight: 400;
   }
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 14px;
 
   .pill {
+    height: 44px;
     background: var(--when-surface);
+  }
+  button {
+    width: 100%;
   }
 }
 
@@ -106,27 +100,4 @@ p.muted {
   margin: 8px 0 0;
   font-size: 13px;
   color: var(--mat-sys-error);
-}
-
-/* Link created: one line with the two things left to do. */
-.ready {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  .title {
-    white-space: nowrap;
-  }
-  .copy {
-    flex: 1;
-    height: 40px;
-    border-radius: 999px;
-  }
-  .close {
-    flex: none;
-    height: 40px;
-    padding: 0 14px;
-    background: var(--when-surface);
-    font-size: 13px;
-  }
 }

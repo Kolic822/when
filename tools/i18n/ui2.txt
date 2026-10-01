@@ -913,3 +913,79 @@ Cjelodnevni događaji ispunjavaju dan
 Off: birthdays, holidays and trips are only a note at the top.
 Aus: Geburtstage, Feiertage und Reisen sind nur eine Notiz oben.
 Isključeno: rođendani, praznici i putovanja samo su bilješka na vrhu.
+
+Lavender
+Lavendel
+Lavanda
+
+Multiple choice allowed
+Mehrfachauswahl erlaubt
+Dopušten višestruki odabir
+
+Off: they pick exactly one session.
+Aus: Sie wählen genau einen Termin.
+Isključeno: biraju točno jedan termin.
+
+Privacy
+Datenschutz
+Privatnost
+
+When keeps as little about you as it can. This page says what it keeps, why, and for how long.
+When speichert so wenig über dich wie möglich. Diese Seite sagt, was es speichert, warum und wie lange.
+When čuva što manje podataka o tebi. Ova stranica kaže što čuva, zašto i koliko dugo.
+
+Whens
+Whens
+Whenovi
+
+A When holds its title, description, days and hours, and for each person their name, the times they marked, their notes and the sessions the organiser booked. Anyone with the link can see it. A When is removed 60 days after its last day; the organiser can delete it earlier from the menu.
+Ein When enthält Titel, Beschreibung, Tage und Uhrzeiten und für jede Person ihren Namen, die markierten Zeiten, ihre Notizen und die vom Organisator festgelegten Termine. Wer den Link hat, kann es sehen. Ein When wird 60 Tage nach seinem letzten Tag gelöscht; der Organisator kann es im Menü früher löschen.
+When sadrži naslov, opis, dane i sate te za svaku osobu ime, označena vremena, bilješke i termine koje je organizator potvrdio. Vidi ga svatko tko ima poveznicu. When se briše 60 dana nakon svog zadnjeg dana; organizator ga može ranije izbrisati iz izbornika.
+
+Accounts
+Konten
+Računi
+
+An account holds your email address and username, a salted hash of your password (never the password itself) or, with Google, the id, name and email Google gives us, plus the list of your Whens and your calendar links. You can delete it at the end of the menu; the Whens stay for the others in them.
+Ein Konto enthält deine E-Mail-Adresse und deinen Benutzernamen, einen gesalzenen Hash deines Passworts (nie das Passwort selbst) oder, mit Google, die Id, den Namen und die E-Mail, die Google uns gibt, dazu die Liste deiner Whens und deine Kalender-Links. Du kannst es am Ende des Menüs löschen; die Whens bleiben für die anderen darin bestehen.
+Račun sadrži tvoju adresu e-pošte i korisničko ime, posoljeni hash lozinke (nikad samu lozinku) ili, uz Google, id, ime i e-poštu koje nam Google daje, te popis tvojih Whenova i poveznice kalendara. Možeš ga izbrisati na kraju izbornika; Whenovi ostaju ostalima u njima.
+
+With a connected Google Calendar or a calendar link, your events are read only to draw them for you on the days of a When. They are never stored on our server and nobody else sees them. Calendar links are kept with your account so your other devices show them.
+Mit einem verbundenen Google Kalender oder einem Kalender-Link werden deine Termine nur gelesen, um sie dir an den Tagen eines Whens anzuzeigen. Sie werden nie auf unserem Server gespeichert und niemand sonst sieht sie. Kalender-Links werden bei deinem Konto gespeichert, damit deine anderen Geräte sie zeigen.
+Uz povezani Google kalendar ili poveznicu kalendara tvoji se događaji čitaju samo da ti se prikažu na danima Whena. Nikad se ne spremaju na našem poslužitelju i nitko ih drugi ne vidi. Poveznice kalendara čuvaju se uz tvoj račun kako bi ih prikazali i tvoji drugi uređaji.
+
+Notifications
+Benachrichtigungen
+Obavijesti
+
+If you switch on push notifications, your browser gives us an address to send them to. It is removed when you switch them off or when the When is removed.
+Wenn du Push-Benachrichtigungen einschaltest, gibt uns dein Browser eine Adresse, an die wir sie schicken. Sie wird gelöscht, wenn du sie ausschaltest oder wenn das When gelöscht wird.
+Ako uključiš push obavijesti, tvoj nam preglednik daje adresu na koju ih šaljemo. Briše se kad ih isključiš ili kad se When izbriše.
+
+Technical
+Technisches
+Tehničko
+
+The server keeps your IP address for a short time to slow down abuse, such as too many sign-in attempts. There are no advertising cookies and no analytics; the app keeps your settings in your browser only.
+Der Server behält deine IP-Adresse kurz, um Missbrauch zu bremsen, etwa zu viele Anmeldeversuche. Es gibt keine Werbe-Cookies und keine Analyse; die App speichert deine Einstellungen nur in deinem Browser.
+Poslužitelj kratko čuva tvoju IP adresu kako bi usporio zlouporabu, poput previše pokušaja prijave. Nema oglasnih kolačića ni analitike; aplikacija čuva tvoje postavke samo u tvom pregledniku.
+
+Where
+Wo
+Gdje
+
+Everything runs on Railway, our hosting provider. Backups are kept for 14 days. Emails for confirming your address or resetting a password go through a mail service only when you ask for them.
+Alles läuft bei Railway, unserem Hosting-Anbieter. Sicherungen werden 14 Tage aufbewahrt. E-Mails zum Bestätigen deiner Adresse oder zum Zurücksetzen des Passworts gehen nur dann über einen Mail-Dienst, wenn du sie anforderst.
+Sve radi na Railwayu, našem pružatelju hostinga. Sigurnosne kopije čuvaju se 14 dana. E-poruke za potvrdu adrese ili ponovno postavljanje lozinke idu kroz servis za poštu samo kad ih zatražiš.
+
+Your rights
+Deine Rechte
+Tvoja prava
+
+You can see, change or delete your own data in the app at any time.
+Du kannst deine eigenen Daten in der App jederzeit sehen, ändern oder löschen.
+Svoje podatke možeš u aplikaciji vidjeti, promijeniti ili izbrisati bilo kad.
+
+For anything else, write to
+Für alles andere schreib an
+Za sve ostalo piši na

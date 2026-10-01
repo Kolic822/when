@@ -4,7 +4,7 @@ import { DEFAULT_DAY_END, DEFAULT_DAY_START } from './models';
 import { DateStyle, dateStyle } from './time';
 
 export type Theme = 'system' | 'light' | 'dark';
-export type Look = 'grape' | 'sand' | 'sky';
+export type Look = 'grape' | 'sand' | 'sky' | 'lavender';
 
 /**
  * Pro features. They are on for everyone signed in with Google and off for guests;

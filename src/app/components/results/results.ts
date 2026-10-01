@@ -18,6 +18,7 @@ import { formatDuration, shortDate } from '../../core/time';
 import { dayOf, spanAt, timeAt } from '../../core/zone';
 
 import { AskPanel } from '../ask-panel/ask-panel';
+import { Fold } from '../fold';
 
 import { t, tn, listOf } from '../../core/i18n/i18n';
 
@@ -57,7 +58,7 @@ const LIMIT = 6;
 /** Compact list of possible sessions, with the Pro extras when they are switched on. */
 @Component({
   selector: 'app-results',
-  imports: [MatButtonModule, MatIconModule, AskPanel],
+  imports: [MatButtonModule, MatIconModule, AskPanel, Fold],
   templateUrl: './results.html',
   styleUrl: './results.scss',
 })
@@ -88,6 +89,8 @@ export class Results {
   /** Start the organiser picked per row; defaults to the start of the window. */
   private readonly pickedStart = signal<Record<string, number>>({});
   readonly asking = signal(false);
+  /** The link just made, shown with a filled Copy button until it is copied. */
+  readonly fresh = signal<string | null>(null);
   readonly copied = signal<string | null>(null);
   /** Sent link the organiser is about to remove. */
   readonly removing = signal<string | null>(null);
@@ -237,6 +240,7 @@ export class Results {
   }
 
   async copy(url: string): Promise<void> {
+    this.fresh.set(null);
     try {
       await navigator.clipboard.writeText(url);
       this.copied.set(url);

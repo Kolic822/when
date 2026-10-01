@@ -23,7 +23,7 @@
       </p>
     }
   }
-  <div class="fold-wrap" [class.open]="!isFolded()" [attr.inert]="isFolded() ? '' : null">
+  <div [appFold]="!isFolded()">
     <div class="body">
       @if (rows().length) {
         <div class="chips" role="group" [attr.aria-label]="t('Possible sessions')">
@@ -121,6 +121,7 @@
             [eventId]="eventId()"
             [sessions]="sessions()"
             (closed)="asking.set(false)"
+            (created)="fresh.set($event)"
           />
         } @else {
           <button type="button" class="ask" (click)="asking.set(true)">
@@ -134,10 +135,14 @@
       @if (organiser() && asked().length) {
         <div class="asked">
           @for (a of asked(); track a.id) {
-            <div class="list">
+            <div class="list" [class.fresh]="fresh() === a.id">
               <div class="list-head">
                 <span class="muted">
-                  {{ t('Link sent') }} · {{ tn(a.answered, '{n} answer', '{n} answers') }}
+                  @if (fresh() === a.id) {
+                    <strong class="new">{{ t('Link ready') }}</strong>
+                  } @else {
+                    {{ t('Link sent') }} · {{ tn(a.answered, '{n} answer', '{n} answers') }}
+                  }
                 </span>
                 @if (removing() === a.id) {
                   <span class="confirm">
@@ -150,7 +155,12 @@
                   </span>
                 } @else {
                   <span class="confirm">
-                    <button type="button" class="pill mini" (click)="copy(a.url)">
+                    <button
+                      type="button"
+                      class="pill mini"
+                      [class.active]="fresh() === a.id"
+                      (click)="copy(a.url)"
+                    >
                       <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
                       {{ copied() === a.url ? t('Copied') : t('Copy link') }}
                     </button>

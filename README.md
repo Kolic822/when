@@ -54,6 +54,7 @@ the server are in `server/messages.mjs`.
 | `MAIL_FROM` | Sender, e.g. `When <hello@example.com>`; must be an address the mail service lets you send from |
 | `PUBLIC_URL` | The app's address for links in emails; on Railway `RAILWAY_PUBLIC_DOMAIN` is used when unset |
 | `MAIL_LOG` | `1` prints emails to the server log instead of sending (local testing) |
+| `CONTACT_EMAIL` | Shown on the privacy page as the address to write to |
 
 ## Stack
 

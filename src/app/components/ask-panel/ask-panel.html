@@ -1,71 +1,41 @@
 <div class="panel">
-  @if (link(); as url) {
-    <div class="ready">
-      <span class="title">{{ t('Link ready') }}</span>
-      <button mat-flat-button type="button" class="copy" (click)="copy()">
-        <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
-        {{ copied() ? t('Copied') : t('Copy link') }}
-      </button>
-      <button type="button" class="pill close" (click)="closed.emit()">{{ t('Close') }}</button>
-    </div>
-  } @else {
-    <p class="title">{{ t('Outsource decision') }}</p>
-    <p class="muted">{{ t('They get a link with only these sessions. Which ones?') }}</p>
-    <div class="chips" role="group" [attr.aria-label]="t('Sessions to include')">
-      @for (s of sessions(); track $index) {
-        <button
-          type="button"
-          class="chip"
-          [class.on]="picked().has($index)"
-          [attr.aria-pressed]="picked().has($index)"
-          (click)="toggle($index)"
-        >
-          <mat-icon>{{
-            picked().has($index) ? 'check_circle' : 'radio_button_unchecked'
-          }}</mat-icon>
-          {{ label(s) }}
-        </button>
-      }
-    </div>
-
-    <p class="muted">{{ t('They can pick') }}</p>
-    <div class="segments" role="radiogroup" [attr.aria-label]="t('Answer mode')">
+  <p class="title">{{ t('Outsource decision') }}</p>
+  <p class="muted">{{ t('They get a link with only these sessions. Which ones?') }}</p>
+  <div class="chips" role="group" [attr.aria-label]="t('Sessions to include')">
+    @for (s of sessions(); track $index) {
       <button
         type="button"
-        class="pill"
-        role="radio"
-        [class.active]="mode() === 'one'"
-        [attr.aria-checked]="mode() === 'one'"
-        (click)="mode.set('one')"
+        class="chip"
+        [class.on]="picked().has($index)"
+        [attr.aria-pressed]="picked().has($index)"
+        (click)="toggle($index)"
       >
-        {{ t('Just one') }}
+        <mat-icon>{{ picked().has($index) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+        {{ label(s) }}
       </button>
-      <button
-        type="button"
-        class="pill"
-        role="radio"
-        [class.active]="mode() === 'many'"
-        [attr.aria-checked]="mode() === 'many'"
-        (click)="mode.set('many')"
-      >
-        {{ t('One or more') }}
-      </button>
-    </div>
-
-    @if (error()) {
-      <p class="error" role="alert">{{ error() }}</p>
     }
+  </div>
 
-    <div class="actions">
-      <button type="button" class="pill" (click)="closed.emit()">{{ t('Cancel') }}</button>
-      <button
-        mat-flat-button
-        type="button"
-        (click)="create()"
-        [disabled]="!picked().size || busy()"
-      >
-        {{ busy() ? t('Creating…') : t('Create link') }}
-      </button>
-    </div>
+  <label class="switch">
+    <mat-slide-toggle
+      [checked]="mode() === 'many'"
+      (change)="mode.set($event.checked ? 'many' : 'one')"
+    />
+    <span class="text">
+      <span>{{ t('Multiple choice allowed') }}</span>
+      <span class="muted small">{{ t('Off: they pick exactly one session.') }}</span>
+    </span>
+  </label>
+
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
   }
+
+  <div class="actions">
+    <button type="button" class="pill" (click)="closed.emit()">{{ t('Cancel') }}</button>
+    <button mat-flat-button type="button" (click)="create()" [disabled]="!picked().size || busy()">
+      <mat-icon>link</mat-icon>
+      {{ busy() ? t('Creating…') : t('Create link') }}
+    </button>
+  </div>
 </div>

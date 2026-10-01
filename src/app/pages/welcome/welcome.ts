@@ -1,6 +1,8 @@
 import {
   afterNextRender,
   Component,
+  effect,
+  untracked,
   computed,
   ElementRef,
   inject,
@@ -9,7 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Auth } from '../../core/auth';
@@ -18,7 +20,7 @@ import { LANGS, lang, m, setLang, t } from '../../core/i18n/i18n';
 /** First screen on a new device: come in with Google, or carry on as a guest. */
 @Component({
   selector: 'app-welcome',
-  imports: [FormField, MatIconModule, MatProgressSpinnerModule],
+  imports: [FormField, RouterLink, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './welcome.html',
   styleUrl: './welcome.scss',
 })
@@ -44,13 +46,20 @@ export class Welcome {
   readonly setLang = setLang;
 
   constructor() {
-    afterNextRender(() => {
-      const host = this.googleHost()?.nativeElement;
-      if (!host) return;
-      void this.auth
-        .renderGoogleButton(host, (ok) => (ok ? this.enter() : this.failed.set(true)))
-        .catch(() => this.failed.set(true));
+    afterNextRender(() => this.drawGoogle());
+    // Google's button carries its own words, so it is drawn again in the chosen language.
+    effect(() => {
+      lang();
+      untracked(() => this.drawGoogle());
     });
+  }
+
+  private drawGoogle(): void {
+    const host = this.googleHost()?.nativeElement;
+    if (!host) return;
+    void this.auth
+      .renderGoogleButton(host, (ok) => (ok ? this.enter() : this.failed.set(true)))
+      .catch(() => this.failed.set(true));
   }
 
   // ---- Email and password

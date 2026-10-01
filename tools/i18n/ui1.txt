@@ -346,22 +346,6 @@ Sessions to include
 Enthaltene Termine
 Termini koje uključuješ
 
-They can pick
-Sie dürfen wählen
-Mogu odabrati
-
-Answer mode
-Antwortart
-Način odgovora
-
-Just one
-Nur einen
-Samo jedan
-
-One or more
-Einen oder mehrere
-Jedan ili više
-
 Creating…
 Wird erstellt…
 Stvaram…

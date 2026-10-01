@@ -381,3 +381,16 @@ p {
 .danger {
   color: var(--mat-sys-error) !important;
 }
+
+/* The link that was just made stands out until its address has been copied. */
+.list.fresh {
+  border: 1.5px solid var(--accent);
+
+  .new {
+    color: var(--accent);
+  }
+  .pill.mini.active {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}

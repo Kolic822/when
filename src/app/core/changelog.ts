@@ -7,9 +7,22 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.14';
+export const VERSION = '0.15';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.15',
+    date: '1 Oct 2026',
+    changes: [
+      m('Privacy page, linked from the welcome screen and the menu'),
+      m('Lavender joins the colour schemes'),
+      m('Outsource decision: one switch for multiple choice, clearer buttons'),
+      m('Folding is smooth now: the content fades, then the box follows'),
+      m('Swiping between days no longer opens a note by accident'),
+      m('More air between people’s bars, and the bars are more see-through'),
+      m('Google button in the chosen language, the same height as the other buttons'),
+    ],
+  },
   {
     version: '0.14',
     date: '1 Oct 2026',

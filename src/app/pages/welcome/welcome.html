@@ -164,6 +164,7 @@
       )
     }}
   </p>
+  <a routerLink="/privacy" class="privacy-link muted">{{ t('Privacy') }}</a>
   <div class="langs" role="radiogroup" [attr.aria-label]="t('Language')">
     @for (l of langs; track l.value) {
       <button

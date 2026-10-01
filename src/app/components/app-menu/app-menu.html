@@ -68,11 +68,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('whens')"
-        [attr.inert]="isFolded('whens') ? '' : null"
-      >
+      <div [appFold]="!isFolded('whens')">
         <div class="sect">
           @if (recent().length) {
             <ul class="whens">
@@ -180,11 +176,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('look')"
-        [attr.inert]="isFolded('look') ? '' : null"
-      >
+      <div [appFold]="!isFolded('look')">
         <div class="sect">
           <div class="segments looks" role="radiogroup" [attr.aria-label]="t('Colour')">
             @for (l of looks; track l.value) {
@@ -232,11 +224,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('defaults')"
-        [attr.inert]="isFolded('defaults') ? '' : null"
-      >
+      <div [appFold]="!isFolded('defaults')">
         <div class="sect">
           <p class="sub">{{ t('Language') }}</p>
           <div class="segments langs" role="radiogroup" [attr.aria-label]="t('Language')">
@@ -358,11 +346,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('calendar')"
-        [attr.inert]="isFolded('calendar') ? '' : null"
-      >
+      <div [appFold]="!isFolded('calendar')">
         <div class="sect">
           @if (!pro()) {
             <p class="muted small">
@@ -522,11 +506,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('notify')"
-        [attr.inert]="isFolded('notify') ? '' : null"
-      >
+      <div [appFold]="!isFolded('notify')">
         <div class="sect">
           @switch (push.state()) {
             @case ('install') {
@@ -594,11 +574,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('pro')"
-        [attr.inert]="isFolded('pro') ? '' : null"
-      >
+      <div [appFold]="!isFolded('pro')">
         <div class="sect">
           @if (pro()) {
             <p class="pro-state on">
@@ -641,11 +617,7 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      <div
-        class="fold-wrap"
-        [class.open]="!isFolded('app')"
-        [attr.inert]="isFolded('app') ? '' : null"
-      >
+      <div [appFold]="!isFolded('app')">
         <div class="sect">
           <div class="update-row">
             @if (updates.status() === 'ready') {
@@ -670,6 +642,7 @@
             <span class="ver">{{ t('Version {version}', { version }) }}</span>
             <a class="link" routerLink="/changes" (click)="close()">{{ t('What’s new') }}</a>
             <a class="link" routerLink="/guide" (click)="close()">{{ t('Guide') }}</a>
+            <a class="link" routerLink="/privacy" (click)="close()">{{ t('Privacy') }}</a>
           </div>
           @if (auth.session()) {
             @if (deleting()) {

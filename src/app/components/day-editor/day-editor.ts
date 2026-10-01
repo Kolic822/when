@@ -144,12 +144,19 @@ export class DayEditor {
     | {
         kind: 'pending-create';
         origin: number;
+        startX: number;
         startY: number;
         timer: ReturnType<typeof setTimeout>;
         hintTimer: ReturnType<typeof setTimeout>;
       }
     | { kind: 'resize'; index: number; fixed: number; last: number }
-    | { kind: 'pending-move'; index: number; startY: number; timer: ReturnType<typeof setTimeout> }
+    | {
+        kind: 'pending-move';
+        index: number;
+        startX: number;
+        startY: number;
+        timer: ReturnType<typeof setTimeout>;
+      }
     | { kind: 'move'; index: number; grab: number; length: number }
     | null = null;
 
@@ -273,7 +280,7 @@ export class DayEditor {
         this.moving.set(true);
         navigator.vibrate?.(15);
       }, LONG_PRESS_MS);
-      this.gesture = { kind: 'pending-move', index, startY: e.clientY, timer };
+      this.gesture = { kind: 'pending-move', index, startX: e.clientX, startY: e.clientY, timer };
       return;
     }
 
@@ -296,7 +303,14 @@ export class DayEditor {
       this.drag.set(this.withMin(m, m, 'start'));
       navigator.vibrate?.(20);
     }, CREATE_HOLD_MS);
-    this.gesture = { kind: 'pending-create', origin: m, startY: e.clientY, timer, hintTimer };
+    this.gesture = {
+      kind: 'pending-create',
+      origin: m,
+      startX: e.clientX,
+      startY: e.clientY,
+      timer,
+      hintTimer,
+    };
   }
 
   onMove(e: PointerEvent): void {
@@ -323,8 +337,10 @@ export class DayEditor {
       }
       case 'pending-move':
       case 'pending-create': {
-        // Moved before the hold engaged: the user is scrolling – let go.
-        if (Math.abs(e.clientY - g.startY) > MOVE_TOLERANCE_PX) this.reset();
+        // Moved before the hold engaged: the user is scrolling or swiping – let go.
+        if (Math.hypot(e.clientX - g.startX, e.clientY - g.startY) > MOVE_TOLERANCE_PX) {
+          this.reset();
+        }
         break;
       }
       case 'move': {

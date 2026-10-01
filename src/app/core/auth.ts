@@ -34,8 +34,6 @@ interface AccountProfile {
 }
 
 const KEY = 'when:user';
-/** Google's button is 40px tall; the page's buttons are 48px. */
-export const GOOGLE_SCALE = 1.2;
 
 /** Whether the page is currently dark: the chosen theme, or else the system's. */
 function isDark(): boolean {
@@ -66,6 +64,8 @@ export class Auth {
   readonly checked = computed(() => this.clientId() !== null);
   /** The server can send email, so forgotten passwords and address checks work. */
   readonly mailReady = signal(false);
+  /** Who to write to about privacy, when the server was given an address. */
+  readonly contact = signal('');
   /** Signed in with an email that has not been confirmed yet. */
   readonly needsConfirming = computed(() => {
     const u = this.user();
@@ -89,8 +89,9 @@ export class Auth {
   loadConfig(): Promise<void> {
     this.configRequest ??= fetch('/api/config')
       .then((res) => (res.ok ? res.json() : { googleClientId: '' }))
-      .then((config: { googleClientId?: string; mail?: boolean }) => {
+      .then((config: { googleClientId?: string; mail?: boolean; contact?: string }) => {
         this.mailReady.set(!!config.mail);
+        this.contact.set(config.contact ?? '');
         this.clientId.set(config.googleClientId ?? '');
       })
       .catch(() => this.clientId.set(''));
@@ -239,8 +240,7 @@ export class Auth {
       client_id: clientId,
       callback: (response) => void this.verify(response.credential).then(done),
     });
-    // Google draws a 40px button; the page scales it up to match its own 48px buttons.
-    const width = Math.round(host.getBoundingClientRect().width / GOOGLE_SCALE) || 300;
+    host.replaceChildren();
     api.renderButton(host, {
       type: 'standard',
       theme: isDark() ? 'filled_black' : 'outline',
@@ -248,7 +248,8 @@ export class Auth {
       shape: 'pill',
       text: 'continue_with',
       logo_alignment: 'center',
-      width: Math.min(400, width),
+      locale: lang(),
+      width: Math.min(400, Math.round(host.getBoundingClientRect().width) || 320),
     });
   }
 

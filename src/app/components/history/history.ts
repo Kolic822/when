@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
+import { Fold } from '../fold';
 
 import { HistoryEntry } from '../../core/models';
 
@@ -29,7 +30,7 @@ interface Row {
 /** Collapsible log of what everyone did, newest first. */
 @Component({
   selector: 'app-history',
-  imports: [MatIconModule],
+  imports: [MatIconModule, Fold],
   template: `
     <section class="history" [class.card]="!bare()">
       @if (!bare()) {
@@ -45,11 +46,7 @@ interface Row {
           <mat-icon class="chev">{{ open() ? 'expand_less' : 'expand_more' }}</mat-icon>
         </button>
       }
-      <div
-        class="fold-wrap"
-        [class.open]="open() || bare()"
-        [attr.inert]="open() || bare() ? null : ''"
-      >
+      <div [appFold]="open() || bare()">
         <div>
           @if (rows().length) {
             <ol>

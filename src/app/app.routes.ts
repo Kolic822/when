@@ -31,6 +31,10 @@ export const routes: Routes = [
     path: 'guide',
     loadComponent: () => import('./pages/guide/guide').then((m) => m.Guide),
   },
+  {
+    path: 'privacy',
+    loadComponent: () => import('./pages/privacy/privacy').then((m) => m.Privacy),
+  },
   // Links from account emails. They work signed in or not.
   {
     path: 'verify',

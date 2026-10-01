@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { Auth } from '../../core/auth';
+import { Fold } from '../fold';
 
 import { VERSION } from '../../core/changelog';
 
@@ -47,7 +48,7 @@ import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */
 @Component({
   selector: 'app-menu',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatSlideToggleModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatSlideToggleModule, Fold],
   templateUrl: './app-menu.html',
   styleUrl: './app-menu.scss',
 })
@@ -343,6 +344,7 @@ export class AppMenu {
     { value: 'grape', label: m('Grape'), color: '#6d5ef5' },
     { value: 'sand', label: m('Sand'), color: '#b4802e' },
     { value: 'sky', label: m('Sky'), color: '#2f6ff0' },
+    { value: 'lavender', label: m('Lavender'), color: '#8f74f2' },
   ];
 
   setLook(look: Look): void {

@@ -377,3 +377,31 @@ Prikaz dana: prekidači kalendara pojavljuju se samo na danima s događajima iz 
 Google sign-in button matches the other buttons and no longer sits in a white box in the dark
 Der Google-Anmeldebutton passt zu den anderen Buttons und sitzt im Dunkeln nicht mehr in einer weißen Box
 Gumb za prijavu Googleom odgovara ostalim gumbima i više ne stoji u bijelom okviru u tamnom načinu
+
+Privacy page, linked from the welcome screen and the menu
+Datenschutzseite, verlinkt vom Startbildschirm und aus dem Menü
+Stranica o privatnosti, povezana s početnog zaslona i iz izbornika
+
+Lavender joins the colour schemes
+Lavendel kommt zu den Farbschemata dazu
+Lavanda se pridružuje shemama boja
+
+Outsource decision: one switch for multiple choice, clearer buttons
+Entscheidung auslagern: ein Schalter für Mehrfachauswahl, klarere Buttons
+Prepusti odluku: jedan prekidač za višestruki odabir, jasniji gumbi
+
+Folding is smooth now: the content fades, then the box follows
+Auf- und Zuklappen läuft jetzt flüssig: Der Inhalt blendet aus, dann folgt der Kasten
+Sklapanje je sada glatko: sadržaj izblijedi, a zatim ga slijedi okvir
+
+Swiping between days no longer opens a note by accident
+Wischen zwischen Tagen öffnet nicht mehr versehentlich eine Notiz
+Povlačenje između dana više ne otvara bilješku slučajno
+
+More air between people’s bars, and the bars are more see-through
+Mehr Luft zwischen den Balken der Leute, und die Balken sind durchsichtiger
+Više zraka između traka ljudi, a trake su prozirnije
+
+Google button in the chosen language, the same height as the other buttons
+Google-Button in der gewählten Sprache, so hoch wie die anderen Buttons
+Googleov gumb na odabranom jeziku, iste visine kao ostali gumbi
