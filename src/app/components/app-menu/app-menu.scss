@@ -250,7 +250,10 @@
   gap: 6px;
 }
 
-.looks {
+/* Four schemes: two per row, so nothing runs off the edge. */
+.segments.looks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 8px;
 
   .swatch {

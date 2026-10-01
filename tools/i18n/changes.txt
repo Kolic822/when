@@ -405,3 +405,11 @@ Više zraka između traka ljudi, a trake su prozirnije
 Google button in the chosen language, the same height as the other buttons
 Google-Button in der gewählten Sprache, so hoch wie die anderen Buttons
 Googleov gumb na odabranom jeziku, iste visine kao ostali gumbi
+
+The colour schemes fit the menu again, two per row
+Die Farbschemata passen wieder ins Menü, zwei pro Reihe
+Sheme boja opet stanu u izbornik, dvije po retku
+
+Outsource decision: the button steps aside while a link exists
+Entscheidung auslagern: Der Button tritt zurück, solange ein Link existiert
+Prepusti odluku: gumb se povlači dok poveznica postoji

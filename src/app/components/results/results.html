@@ -115,7 +115,8 @@
         <p class="pending muted">{{ t('Waiting for {names}.', { names: pendingNames() }) }}</p>
       }
 
-      @if (features().shortlist && organiser() && rows().length > 1) {
+      <!-- One link is enough; while it exists the button stays away. -->
+      @if (features().shortlist && organiser() && rows().length > 1 && !asked().length) {
         @if (asking()) {
           <app-ask-panel
             [eventId]="eventId()"
