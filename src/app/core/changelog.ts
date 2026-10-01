@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17.4';
+export const VERSION = '0.17.5';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17.5',
+    date: '1 Oct 2026',
+    changes: [
+      m('Change the plan: people as chips, with the remove button at the edge'),
+      m('Day view: the hint line no longer gets pushed out of view after adding a time'),
+    ],
+  },
   {
     version: '0.17.4',
     date: '1 Oct 2026',

@@ -436,6 +436,15 @@ export class DayEditor {
     input.value = this.noteDraft();
     input.focus({ preventScroll: true });
     input.setSelectionRange(input.value.length, input.value.length);
+    // iPhones ignore preventScroll and shove the boxes above the bar out of view to make
+    // room for the keyboard; put them back once the keyboard has settled.
+    const unshove = () => {
+      for (let el = input.parentElement; el; el = el.parentElement) {
+        if (el.scrollTop && getComputedStyle(el).overflowY === 'hidden') el.scrollTop = 0;
+      }
+    };
+    requestAnimationFrame(unshove);
+    setTimeout(unshove, 350);
   }
 
   saveNote(): void {

@@ -155,24 +155,32 @@ form:not(.editing) app-day-picker {
   letter-spacing: -0.01em;
 }
 
-/* Editing: who is in, each with a way out. */
+/* Editing: who is in, as chips; the button at the chip's edge takes someone out. */
 .people {
   margin: 0 0 10px;
   font-size: 13px;
 
-  ul {
-    list-style: none;
-    margin: 4px 0 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  .pchips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
   }
-  li {
+  .pchip {
+    display: flex;
+    align-items: stretch;
+    min-height: 44px;
+    border-radius: 14px;
+    background: var(--when-grid);
+    overflow: hidden;
+  }
+  .pmain {
+    flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    min-height: 32px;
+    gap: 7px;
+    padding: 0 10px;
   }
   .dot {
     width: 10px;
@@ -181,30 +189,40 @@ form:not(.editing) app-day-picker {
     flex: none;
   }
   .pname {
-    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-weight: 600;
   }
   .small {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
-  .small-icon {
-    width: 30px;
-    height: 30px;
+  .side {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    border: 0;
+    border-left: 1px solid color-mix(in srgb, var(--when-text) 8%, transparent);
+    background: color-mix(in srgb, var(--when-text) 4%, transparent);
+    color: var(--when-muted);
+    cursor: pointer;
 
     mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
     }
-  }
-  .mini {
-    height: 30px;
-    padding: 0 12px;
-    font-size: 12px;
-  }
-  .mini.danger {
-    background: var(--mat-sys-error);
-    color: var(--mat-sys-on-error);
+    &.danger {
+      background: var(--mat-sys-error);
+      color: var(--mat-sys-on-error);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
   }
 }

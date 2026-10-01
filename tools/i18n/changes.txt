@@ -465,3 +465,11 @@ Skočni prozori „Očisti dan“ i „Potvrdi“ stoje na sredini zaslona, izna
 Votes show up in the history
 Stimmen erscheinen im Verlauf
 Glasovi se pojavljuju u povijesti
+
+Change the plan: people as chips, with the remove button at the edge
+Plan ändern: Leute als Chips, mit dem Entfernen-Button am Rand
+Promijeni plan: ljudi kao pločice, s gumbom za uklanjanje na rubu
+
+Day view: the hint line no longer gets pushed out of view after adding a time
+Tagesansicht: Die Hinweiszeile wird nach dem Hinzufügen einer Zeit nicht mehr aus dem Bild geschoben
+Prikaz dana: redak s uputom više ne nestaje iz vidokruga nakon dodavanja vremena

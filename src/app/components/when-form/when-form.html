@@ -35,34 +35,44 @@
   @if (editing() && people().length) {
     <div class="people">
       <span class="muted">{{ t('People') }}</span>
-      <ul>
+      <div class="pchips">
         @for (p of people(); track p.id) {
-          <li>
-            <span class="dot" [style.background]="p.color"></span>
-            <span class="pname">{{ p.name }}</span>
-            @if (p.id === meId()) {
-              <span class="muted small">{{ t('you') }}</span>
-            } @else if (removing() === p.id) {
-              <button type="button" class="pill mini" (click)="removing.set(null)">
-                {{ t('Keep') }}
-              </button>
-              <button type="button" class="pill mini danger" (click)="confirmRemove(p)">
-                {{ t('Remove') }}
-              </button>
-            } @else {
-              <button
-                type="button"
-                class="icon-btn small-icon"
-                (click)="removing.set(p.id)"
-                [attr.aria-label]="t('Remove {name}', { name: p.name })"
-                [title]="t('Remove {name}', { name: p.name })"
-              >
-                <mat-icon>person_remove</mat-icon>
-              </button>
+          <div class="pchip" [class.asking]="removing() === p.id">
+            <span class="pmain">
+              <span class="dot" [style.background]="p.color"></span>
+              <span class="pname">{{ p.name }}</span>
+              @if (p.id === meId()) {
+                <span class="muted small">{{ t('you') }}</span>
+              }
+            </span>
+            @if (p.id !== meId()) {
+              @if (removing() === p.id) {
+                <button type="button" class="side keep" (click)="removing.set(null)">
+                  <mat-icon>undo</mat-icon>
+                </button>
+                <button
+                  type="button"
+                  class="side danger"
+                  (click)="confirmRemove(p)"
+                  [attr.aria-label]="t('Remove {name}', { name: p.name })"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              } @else {
+                <button
+                  type="button"
+                  class="side"
+                  (click)="removing.set(p.id)"
+                  [attr.aria-label]="t('Remove {name}', { name: p.name })"
+                  [title]="t('Remove {name}', { name: p.name })"
+                >
+                  <mat-icon>person_remove</mat-icon>
+                </button>
+              }
             }
-          </li>
+          </div>
         }
-      </ul>
+      </div>
     </div>
   }
 
