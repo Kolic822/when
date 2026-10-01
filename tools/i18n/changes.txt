@@ -505,3 +505,7 @@ Prepusti odluku objašnjava samu sebe: pošalji termine nekome izvan grupe da od
 Organisers get three extra guide pages the first time they create a When: booking, tidying, sharing
 Organisatoren bekommen beim ersten When drei zusätzliche Anleitungsseiten: Festlegen, Aufräumen, Teilen
 Organizatori pri prvom Whenu dobivaju tri dodatne stranice vodiča: potvrđivanje, pospremanje, dijeljenje
+
+Tapping or holding a gold band in the calendar reaches the band again, not the day under it
+Tippen oder Halten auf einen goldenen Streifen im Kalender trifft wieder den Streifen, nicht den Tag darunter
+Dodir ili zadržavanje na zlatnoj traci u kalendaru opet pogađa traku, a ne dan ispod nje

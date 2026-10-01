@@ -487,6 +487,7 @@ export const de: Dictionary = {
   "Tap the days that could work.": "Tippe auf die Tage, die passen könnten.",
   "Tap the header to fold the list down to one line.": "Tippe auf die Überschrift, um die Liste auf eine Zeile einzuklappen.",
   "Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.": "Tippe auf den Stift neben dem Titel, um Namen, Beschreibung, Tage, Dauer oder Uhrzeiten zu ändern, alles auf einer Seite.",
+  "Tapping or holding a gold band in the calendar reaches the band again, not the day under it": "Tippen oder Halten auf einen goldenen Streifen im Kalender trifft wieder den Streifen, nicht den Tag darunter",
   "Technical": "Technisches",
   "Th": "Do",
   "Thanks, {email} is confirmed.": "Danke, {email} ist bestätigt.",

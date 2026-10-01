@@ -7,9 +7,18 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.18.2';
+export const VERSION = '0.18.3';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.18.3',
+    date: '1 Oct 2026',
+    changes: [
+      m(
+        'Tapping or holding a gold band in the calendar reaches the band again, not the day under it',
+      ),
+    ],
+  },
   {
     version: '0.18.2',
     date: '1 Oct 2026',

@@ -487,6 +487,7 @@ export const hr: Dictionary = {
   "Tap the days that could work.": "Dodirni dane koji bi mogli odgovarati.",
   "Tap the header to fold the list down to one line.": "Dodirni zaglavlje da sklopiš popis na jedan redak.",
   "Tap the pencil next to the title to change the name, description, days, length or hours, all on one page.": "Dodirni olovku pokraj naziva da promijeniš naziv, opis, dane, trajanje ili sate, sve na jednoj stranici.",
+  "Tapping or holding a gold band in the calendar reaches the band again, not the day under it": "Dodir ili zadržavanje na zlatnoj traci u kalendaru opet pogađa traku, a ne dan ispod nje",
   "Technical": "Tehničko",
   "Th": "Če",
   "Thanks, {email} is confirmed.": "Hvala, {email} je potvrđena.",

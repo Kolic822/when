@@ -390,7 +390,10 @@
   }
 }
 
+/* For the organiser the band itself takes the tap and the hold; otherwise touches fall
+   through to the day underneath (which is what every gold band does for everyone else). */
 .common.tappable {
+  pointer-events: auto;
   cursor: pointer;
   transition: transform 0.1s;
 
