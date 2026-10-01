@@ -481,3 +481,19 @@ Promijeni plan: označi ljude, dodirni Ukloni, potvrdi; događa se pri spremanju
 People are removed under Change the plan only; the tiny icon in the legend is gone
 Leute werden nur noch unter „Plan ändern“ entfernt; das winzige Symbol in der Legende ist weg
 Ljudi se uklanjaju samo pod „Promijeni plan“; sićušna ikona u legendi je nestala
+
+The organiser can drop the days nobody can make
+Der Organisator kann die Tage streichen, an denen niemand kann
+Organizator može izbaciti dane koje nitko ne može
+
+Day view: Done is now Overview, and a one-time hint explains Next and Overview
+Tagesansicht: Fertig heißt jetzt Übersicht, und ein einmaliger Hinweis erklärt Weiter und Übersicht
+Prikaz dana: Gotovo je sada Pregled, a jednokratna uputa objašnjava Dalje i Pregled
+
+The how-it-works guide covers voting, booking and the Free button
+Die Anleitung „So geht’s“ erklärt Abstimmen, Festlegen und den Frei-Button
+Vodič „Kako radi“ pokriva glasanje, potvrđivanje i gumb Slobodno
+
+Every text field and drop-down looks the same now, including Change your name
+Alle Textfelder und Auswahlfelder sehen jetzt gleich aus, auch „Namen ändern“
+Sva polja za tekst i padajući izbornici sada izgledaju isto, uključujući „Promijeni ime“

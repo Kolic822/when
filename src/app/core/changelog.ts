@@ -7,9 +7,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17.7';
+export const VERSION = '0.18';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.18',
+    date: '1 Oct 2026',
+    changes: [
+      m('The organiser can drop the days nobody can make'),
+      m('Day view: Done is now Overview, and a one-time hint explains Next and Overview'),
+      m('The how-it-works guide covers voting, booking and the Free button'),
+      m('Every text field and drop-down looks the same now, including Change your name'),
+    ],
+  },
   {
     version: '0.17.7',
     date: '1 Oct 2026',

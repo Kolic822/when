@@ -34,6 +34,17 @@
       }
     </div>
     <h2>{{ dayLabel() }}</h2>
+    @if (tip()) {
+      <p class="tip" role="status">
+        <mat-icon>lightbulb</mat-icon>
+        <span>{{
+          t('Mark each day and tap Next, or tap Overview any time to see all days at once.')
+        }}</span>
+        <button type="button" class="icon-btn" (click)="closeTip()" [attr.aria-label]="t('Close')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </p>
+    }
     @if (fillNote()) {
       <p class="fill-note" role="status">
         {{ t('Your calendar leaves no gap long enough on this day.') }}
@@ -160,8 +171,8 @@
         {{ t('Prev') }}
       </button>
       <button type="button" class="pill nav-btn done" (click)="finished.emit()">
-        <mat-icon>check</mat-icon>
-        {{ t('Done') }}
+        <mat-icon>calendar_view_week</mat-icon>
+        {{ t('Overview') }}
       </button>
       <button mat-flat-button type="button" class="nav-btn" (click)="next()">
         {{ isLast() ? t('Finish') : t('Next') }}

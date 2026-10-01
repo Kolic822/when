@@ -18,7 +18,7 @@ interface Tip {
 }
 
 interface Step {
-  key: 'calendar' | 'day' | 'actions';
+  key: 'calendar' | 'day' | 'actions' | 'sessions';
   title: string;
   lead: string;
   tips: Tip[];
@@ -47,7 +47,7 @@ export class HowTo {
       tips: [
         { icon: 'touch_app', text: m('Tap a day to add your free time.') },
         { icon: 'star', text: m('Gold shows when everyone can make it.') },
-        { icon: 'wb_sunny', text: m('The sun under a day means free all day.') },
+        { icon: 'check', text: m('The Free button under a day means free all day.') },
       ],
     },
     {
@@ -70,7 +70,23 @@ export class HowTo {
       tips: [
         { icon: 'wb_sunny', text: m('Free all day fills the whole day.') },
         { icon: 'content_copy', text: m('Copy to… repeats your times on other days.') },
-        { icon: 'check', text: m('Next moves on. Done takes you back to the calendar.') },
+        {
+          icon: 'calendar_view_week',
+          text: m('Next moves on. Overview shows all days at once, any time.'),
+        },
+      ],
+    },
+    {
+      key: 'sessions',
+      title: m('Possible sessions'),
+      lead: m('Chips at the top list the times that work for everyone.'),
+      tips: [
+        { icon: 'thumb_up', text: m('Vote with the thumb; everyone sees it at once.') },
+        {
+          icon: 'event_available',
+          text: m('The organiser books one; it lands in everyone’s calendar.'),
+        },
+        { icon: 'event_busy', text: m('Days nobody can make can be dropped by the organiser.') },
       ],
     },
   ];

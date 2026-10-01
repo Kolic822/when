@@ -67,7 +67,7 @@ export class Guide {
         m(
           'Clear day removes everything you marked on that day. In the calendar you can also hold a day to clear it.',
         ),
-        m('Prev and Next move between days. Done returns to the calendar.'),
+        m('Prev and Next move between days. Overview shows all days at once, any time.'),
       ],
     },
     {
@@ -108,6 +108,9 @@ export class Guide {
         m('They appear above the calendar once at least two people have answered, in date order.'),
         m(
           'Everyone can vote for a session with the thumb on its chip; the votes show for all of you at once, the line along the bottom shows how many of you are for it, and the best-liked session gets a gold outline. The organiser still decides.',
+        ),
+        m(
+          'Once two or more have answered, the organiser can drop the days nobody can make, under the possible sessions. Times marked on those days go with them.',
         ),
         m('Tap a session to see the notes people left on the times it covers.'),
         m('Tap the header to fold the list down to one line.'),

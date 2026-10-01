@@ -111,22 +111,6 @@ import { t } from '../../core/i18n/i18n';
       gap: 3px;
       font-size: 12px;
     }
-    input {
-      height: 44px;
-      padding: 0 12px;
-      border: 1.5px solid var(--when-border);
-      border-radius: 12px;
-      background: var(--when-surface);
-      color: var(--when-text);
-      font: inherit;
-      /* 16px keeps iOS from zooming in on focus. */
-      font-size: 16px;
-
-      &:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 1px;
-      }
-    }
     .hint {
       font-size: 11px;
     }

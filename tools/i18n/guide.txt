@@ -70,9 +70,9 @@ Clear day removes everything you marked on that day. In the calendar you can als
 „Tag leeren“ entfernt alles, was du an dem Tag markiert hast. Im Kalender kannst du einen Tag auch gedrückt halten, um ihn zu leeren.
 „Očisti dan” uklanja sve što si označio/la tog dana. U kalendaru možeš i držati dan da ga očistiš.
 
-Prev and Next move between days. Done returns to the calendar.
-„Zurück“ und „Weiter“ wechseln zwischen den Tagen. „Fertig“ führt zurück zum Kalender.
-„Preth.” i „Dalje” prelaze između dana. „Gotovo” vraća na kalendar.
+Prev and Next move between days. Overview shows all days at once, any time.
+Zurück und Weiter wechseln zwischen den Tagen. Übersicht zeigt jederzeit alle Tage auf einmal.
+Natrag i Dalje prelaze među danima. Pregled u svakom trenutku prikazuje sve dane odjednom.
 
 Copy times to other days
 Zeiten auf andere Tage kopieren
@@ -409,3 +409,7 @@ Svi mogu palcem na pločici glasati za termin; glasovi se svima vide odmah, crta
 Lost your place (a new phone, a cleared browser)? Type your old name and tap “That’s me” to carry on with your times. The organiser can remove a leftover double under Change the plan: tick people, tap Remove, and it happens when you save (Cancel undoes it).
 Platz verloren (neues Handy, geleerter Browser)? Tippe deinen alten Namen ein und dann auf „Das bin ich“, um mit deinen Zeiten weiterzumachen. Der Organisator kann einen übrig gebliebenen Doppelgänger unter „Plan ändern“ entfernen: Leute ankreuzen, auf Entfernen tippen, und es passiert beim Speichern (Abbrechen macht es rückgängig).
 Izgubio/la si mjesto (novi mobitel, očišćen preglednik)? Upiši svoje staro ime i dodirni „To sam ja“ da nastaviš sa svojim vremenima. Organizator može ukloniti zaostali duplikat pod „Promijeni plan“: označi ljude, dodirne Ukloni, a to se događa pri spremanju (Odustani to poništava).
+
+Once two or more have answered, the organiser can drop the days nobody can make, under the possible sessions. Times marked on those days go with them.
+Sobald zwei oder mehr geantwortet haben, kann der Organisator unter den möglichen Terminen die Tage streichen, an denen niemand kann. Markierte Zeiten an diesen Tagen gehen mit.
+Kad dvoje ili više odgovori, organizator pod mogućim terminima može izbaciti dane koje nitko ne može. Vremena označena na tim danima odlaze s njima.

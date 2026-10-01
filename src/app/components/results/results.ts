@@ -85,6 +85,24 @@ export class Results {
   readonly voted = output<{ key: string; value: 1 | 0 }>();
   /** A session is already booked, so the list starts folded away. */
   readonly booked = input(false);
+  /** The When's days, to find the ones no session fits on. */
+  readonly dates = input<string[]>([]);
+  /** Organiser: drop these days from the When. */
+  readonly dropDays = output<string[]>();
+  readonly askDrop = signal(false);
+
+  /** Days with no possible session, once at least two people have answered. */
+  readonly deadDays = computed(() => {
+    if (this.result().answered.length < 2) return [];
+    const live = new Set(this.result().windows.map((w) => w.date));
+    return this.dates().filter((d) => !live.has(d));
+  });
+  readonly deadDaysText = computed(() => listOf(this.deadDays().map((d) => shortDate(d))));
+
+  confirmDrop(): void {
+    this.askDrop.set(false);
+    this.dropDays.emit(this.deadDays());
+  }
 
   /** The organiser settles on a session. */
   readonly book = output<Session>();

@@ -1,33 +1,31 @@
 import { Component, input, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { t, m } from '../../core/i18n/i18n';
 
 @Component({
   selector: 'app-name-prompt',
-  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [MatButtonModule, MatIconModule],
   template: `
     <form class="card prompt" (submit)="submit($event)">
       <h2>{{ t(heading()) }}</h2>
       @if (hint()) {
         <p class="muted">{{ t(hint()!) }}</p>
       }
-      <mat-form-field appearance="outline">
-        <mat-label>{{ t('Your name') }}</mat-label>
+      <label class="field">
+        <span class="muted">{{ t('Your name') }}</span>
         <input
-          matInput
+          type="text"
           [value]="name()"
           (input)="name.set($any($event.target).value)"
           autocomplete="given-name"
           autofocus
           maxlength="40"
         />
-        @if (error()) {
-          <mat-hint class="error">{{ error() }}</mat-hint>
-        }
-      </mat-form-field>
+      </label>
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
       @if (reclaimable()) {
         <button type="button" class="pill thats-me" (click)="reclaimed.emit(name().trim())">
           <mat-icon>person_check</mat-icon>
@@ -57,6 +55,16 @@ import { t, m } from '../../core/i18n/i18n';
     }
     p {
       margin: 0 0 16px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+    }
+    .error {
+      margin: 8px 0 0;
+      font-size: 13px;
     }
     .actions {
       display: flex;

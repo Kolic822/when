@@ -155,6 +155,15 @@
         }
       }
 
+      @if (organiser() && deadDays().length && dates().length > deadDays().length) {
+        <button type="button" class="drop-days" (click)="askDrop.set(true)">
+          <mat-icon>event_busy</mat-icon>
+          {{
+            tn(deadDays().length, 'Drop {n} day nobody can make', 'Drop {n} days nobody can make')
+          }}
+        </button>
+      }
+
       @if (organiser() && asked().length) {
         <div class="asked">
           @for (a of asked(); track a.id) {
@@ -213,4 +222,23 @@
       }
     </div>
   </div>
+
+  @if (askDrop()) {
+    <div class="sheet-backdrop" (click)="askDrop.set(false)"></div>
+    <div class="sheet card" role="dialog" aria-modal="true" [attr.aria-label]="t('Drop days')">
+      <p>
+        {{
+          t('Drop {days} from this When? Times people marked on those days go too.', {
+            days: deadDaysText(),
+          })
+        }}
+      </p>
+      <div class="actions">
+        <button type="button" class="pill" (click)="askDrop.set(false)">{{ t('Cancel') }}</button>
+        <button mat-flat-button type="button" class="danger" (click)="confirmDrop()">
+          {{ t('Drop days') }}
+        </button>
+      </div>
+    </div>
+  }
 </section>

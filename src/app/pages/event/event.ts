@@ -419,6 +419,17 @@ export class EventPage implements OnDestroy {
     window.scrollTo({ top: 0 });
   }
 
+  /** Organiser: the days no session fits on leave the When. */
+  onDropDays(days: string[]): void {
+    const ev = this.event();
+    if (!ev) return;
+    const dates = ev.dates.filter((d) => !days.includes(d));
+    if (!dates.length) return;
+    const ok = this.session.updateEvent({ dates });
+    if (!ok)
+      this.snack.open(t('Only the organiser can change the days'), undefined, { duration: 3000 });
+  }
+
   saveSettings(details: WhenDetails): void {
     const { name: _name, ...patch } = details;
     const ok = this.session.updateEvent(patch);

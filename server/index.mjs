@@ -1146,7 +1146,17 @@ wss.on('connection', (ws, req) => {
         const patch = msg.patch ?? {};
         if (patch.dates !== undefined) {
           const dates = cleanDates(patch.dates);
-          if (dates.length) ev.dates = dates;
+          if (dates.length) {
+            ev.dates = dates;
+            // Days that left take what sat on them along: times, bookings, votes.
+            const keep = new Set(dates);
+            for (const p of ev.participants) p.slots = p.slots.filter((s) => keep.has(s.date));
+            if (ev.bookings) ev.bookings = ev.bookings.filter((b) => keep.has(b.date));
+            ev.booked = ev.bookings?.[0] ?? null;
+            for (const key of Object.keys(ev.votes ?? {})) {
+              if (!keep.has(key.split(':')[0])) delete ev.votes[key];
+            }
+          }
         }
         if (patch.durationHours !== undefined) {
           ev.durationHours = Math.min(24, Math.max(0.5, Number(patch.durationHours) || ev.durationHours));

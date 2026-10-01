@@ -14,10 +14,6 @@ Gold shows when everyone can make it.
 Gold zeigt, wann alle können.
 Zlatno pokazuje kad svi mogu.
 
-The sun under a day means free all day.
-Die Sonne unter einem Tag bedeutet: ganzer Tag frei.
-Sunce ispod dana znači da si slobodan/na cijeli dan.
-
 Day by day
 Tag für Tag
 Dan po dan
@@ -57,10 +53,6 @@ Free all day fills the whole day.
 Copy to… repeats your times on other days.
 „Kopieren nach…“ wiederholt deine Zeiten an anderen Tagen.
 „Kopiraj na…” ponavlja tvoja vremena na drugim danima.
-
-Next moves on. Done takes you back to the calendar.
-„Weiter“ geht zum nächsten Tag. „Fertig“ bringt dich zurück zum Kalender.
-„Dalje” vodi na sljedeći dan. „Gotovo” te vraća na kalendar.
 
 People
 Personen
@@ -1045,3 +1037,51 @@ Ukloni {n} osobu || Ukloni {n} osobe || Ukloni {n} osoba
 Remove {names} and their times? It happens when you save.
 {names} und die markierten Zeiten entfernen? Das passiert beim Speichern.
 Ukloniti {names} i njihova vremena? To se događa pri spremanju.
+
+Overview
+Übersicht
+Pregled
+
+Mark each day and tap Next, or tap Overview any time to see all days at once.
+Markiere jeden Tag und tippe auf Weiter, oder tippe jederzeit auf Übersicht, um alle Tage auf einmal zu sehen.
+Označi svaki dan i dodirni Dalje, ili bilo kad dodirni Pregled da vidiš sve dane odjednom.
+
+Drop {n} day nobody can make
+{n} Tag streichen, an dem niemand kann || {n} Tage streichen, an denen niemand kann
+Izbaci {n} dan koji nitko ne može || Izbaci {n} dana koja nitko ne može || Izbaci {n} dana koje nitko ne može
+
+Drop days
+Tage streichen
+Izbaci dane
+
+Drop {days} from this When? Times people marked on those days go too.
+{days} aus diesem When streichen? Markierte Zeiten an diesen Tagen gehen mit.
+Izbaciti {days} iz ovog Whena? Vremena koja su ljudi označili tih dana također odlaze.
+
+The Free button under a day means free all day.
+Der Frei-Button unter einem Tag heißt: den ganzen Tag frei.
+Gumb Slobodno ispod dana znači: slobodan cijeli dan.
+
+Next moves on. Overview shows all days at once, any time.
+Weiter geht zum nächsten Tag. Übersicht zeigt jederzeit alle Tage auf einmal.
+Dalje vodi na sljedeći dan. Pregled u svakom trenutku prikazuje sve dane odjednom.
+
+Possible sessions
+Mögliche Termine
+Mogući termini
+
+Chips at the top list the times that work for everyone.
+Die Chips oben zeigen die Zeiten, die für alle passen.
+Pločice na vrhu nabrajaju vremena koja odgovaraju svima.
+
+Vote with the thumb; everyone sees it at once.
+Stimme mit dem Daumen ab; alle sehen es sofort.
+Glasaj palcem; svi to odmah vide.
+
+The organiser books one; it lands in everyone’s calendar.
+Der Organisator legt einen fest; er landet in jedem Kalender.
+Organizator jedan potvrdi; završi u svačijem kalendaru.
+
+Days nobody can make can be dropped by the organiser.
+Tage, an denen niemand kann, kann der Organisator streichen.
+Dane koje nitko ne može organizator može izbaciti.

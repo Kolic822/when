@@ -426,10 +426,6 @@ Keep holding, then drag…
 Weiter halten, dann ziehen…
 Drži još malo pa povuci…
 
-Done
-Fertig
-Gotovo
-
 Clear
 Leeren
 Očisti

@@ -432,20 +432,6 @@
     overflow: hidden;
     pointer-events: none;
   }
-  input {
-    font: inherit;
-    /* 16px keeps iOS Safari from zooming in when the field gets focus. */
-    font-size: 16px;
-    padding: 8px 10px;
-    border: 1px solid var(--when-border);
-    border-radius: 8px;
-    background: var(--when-surface);
-    outline: none;
-
-    &:focus {
-      border-color: var(--mat-sys-primary);
-    }
-  }
   .actions {
     display: flex;
     justify-content: flex-end;

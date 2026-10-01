@@ -60,6 +60,14 @@ export class DayStepper {
 
   readonly index = signal(0);
 
+  /** A one-time hint about Next and Overview, the first time this device sees the day view. */
+  readonly tip = signal(!flag(TIP_KEY));
+
+  closeTip(): void {
+    this.tip.set(false);
+    setFlag(TIP_KEY);
+  }
+
   constructor() {
     // Only the start date drives this; event updates must not reset the position.
     effect(() => {
@@ -258,5 +266,23 @@ export class DayStepper {
     if (Date.now() - from.at > 700 || Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2) return;
     if (dx < 0 && !this.isLast()) this.next();
     else if (dx > 0) this.prev();
+  }
+}
+
+const TIP_KEY = 'when:stepper-tip-seen';
+
+function flag(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function setFlag(key: string): void {
+  try {
+    localStorage.setItem(key, '1');
+  } catch {
+    /* ignore */
   }
 }

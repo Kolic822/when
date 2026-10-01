@@ -435,18 +435,6 @@ p {
   flex-direction: column;
   gap: 3px;
   margin-bottom: 8px;
-
-  select {
-    height: 44px;
-    padding: 0 10px;
-    border: 1.5px solid var(--when-border);
-    border-radius: 12px;
-    background: var(--when-surface);
-    color: var(--when-text);
-    font: inherit;
-    /* 16px keeps iOS from zooming in on focus. */
-    font-size: 16px;
-  }
 }
 
 .zone-pick {
@@ -497,20 +485,6 @@ p {
     flex-direction: column;
     gap: 3px;
     font-size: 12px;
-  }
-  select {
-    width: 100%;
-    height: 44px;
-    padding: 0 10px;
-    border: 1.5px solid var(--when-border);
-    border-radius: 12px;
-    background: var(--when-surface);
-    color: var(--when-text);
-    font: inherit;
-    /* 16px keeps iOS from zooming in on focus. */
-    font-size: 16px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -603,15 +577,6 @@ p {
   input {
     flex: 1;
     min-width: 0;
-    height: 40px;
-    padding: 0 10px;
-    border: 1.5px solid var(--when-border);
-    border-radius: 12px;
-    background: var(--when-surface);
-    color: var(--when-text);
-    font: inherit;
-    /* 16px keeps iOS from zooming in on focus. */
-    font-size: 16px;
   }
   .pill {
     height: 40px;
