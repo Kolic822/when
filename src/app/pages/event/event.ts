@@ -281,6 +281,11 @@ export class EventPage implements OnDestroy {
     this.session.join(name);
   }
 
+  /** Change the plan was saved with people marked for removal. */
+  async removeParticipants(people: Participant[]): Promise<void> {
+    for (const p of people) await this.removeParticipant(p);
+  }
+
   /** Organiser: takes someone out of the When, e.g. a double who lost their browser storage. */
   async removeParticipant(p: Participant): Promise<void> {
     if (!this.isCreator() || p.id === this.meId()) return;

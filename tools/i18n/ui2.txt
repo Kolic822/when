@@ -1033,3 +1033,23 @@ glasa za {session}
 took back the vote for {session}
 hat die Stimme für {session} zurückgezogen
 povlači glas za {session}
+
+removed on save
+wird beim Speichern entfernt
+uklanja se pri spremanju
+
+Keep {name}
+{name} behalten
+Zadrži {name}
+
+Select {name}
+{name} auswählen
+Odaberi {name}
+
+Remove {n} person
+{n} Person entfernen || {n} Personen entfernen
+Ukloni {n} osobu || Ukloni {n} osobe || Ukloni {n} osoba
+
+Remove {names} and their times? It happens when you save.
+{names} und die markierten Zeiten entfernen? Das passiert beim Speichern.
+Ukloniti {names} i njihova vremena? To se događa pri spremanju.

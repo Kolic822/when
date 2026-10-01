@@ -37,41 +37,72 @@
       <span class="muted">{{ t('People') }}</span>
       <div class="pchips">
         @for (p of people(); track p.id) {
-          <div class="pchip" [class.asking]="removing() === p.id">
+          <div
+            class="pchip"
+            [class.selected]="selected().has(p.id)"
+            [class.doomed]="doomed().has(p.id)"
+          >
             <span class="pmain">
               <span class="dot" [style.background]="p.color"></span>
               <span class="pname">{{ p.name }}</span>
               @if (p.id === meId()) {
                 <span class="muted small">{{ t('you') }}</span>
+              } @else if (doomed().has(p.id)) {
+                <span class="muted small">{{ t('removed on save') }}</span>
               }
             </span>
             @if (p.id !== meId()) {
-              @if (removing() === p.id) {
-                <button type="button" class="side keep" (click)="removing.set(null)">
-                  <mat-icon>undo</mat-icon>
-                </button>
+              @if (doomed().has(p.id)) {
                 <button
                   type="button"
-                  class="side danger"
-                  (click)="confirmRemove(p)"
-                  [attr.aria-label]="t('Remove {name}', { name: p.name })"
+                  class="side"
+                  (click)="keep(p)"
+                  [attr.aria-label]="t('Keep {name}', { name: p.name })"
+                  [title]="t('Keep {name}', { name: p.name })"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon>undo</mat-icon>
                 </button>
               } @else {
                 <button
                   type="button"
                   class="side"
-                  (click)="removing.set(p.id)"
-                  [attr.aria-label]="t('Remove {name}', { name: p.name })"
-                  [title]="t('Remove {name}', { name: p.name })"
+                  [class.on]="selected().has(p.id)"
+                  role="checkbox"
+                  [attr.aria-checked]="selected().has(p.id)"
+                  (click)="toggleSelect(p)"
+                  [attr.aria-label]="t('Select {name}', { name: p.name })"
                 >
-                  <mat-icon>person_remove</mat-icon>
+                  <mat-icon>{{
+                    selected().has(p.id) ? 'check_circle' : 'radio_button_unchecked'
+                  }}</mat-icon>
                 </button>
               }
             }
           </div>
         }
+      </div>
+      @if (selected().size) {
+        <button type="button" class="pill remove-btn" (click)="askRemove.set(true)">
+          <mat-icon>person_remove</mat-icon>
+          {{ tn(selected().size, 'Remove {n} person', 'Remove {n} people') }}
+        </button>
+      }
+    </div>
+  }
+
+  @if (askRemove()) {
+    <div class="sheet-backdrop" (click)="askRemove.set(false)"></div>
+    <div class="sheet card" role="dialog" aria-modal="true" [attr.aria-label]="t('Remove')">
+      <p>
+        {{
+          t('Remove {names} and their times? It happens when you save.', { names: selectedNames() })
+        }}
+      </p>
+      <div class="actions">
+        <button type="button" class="pill" (click)="askRemove.set(false)">{{ t('Cancel') }}</button>
+        <button mat-flat-button type="button" class="danger" (click)="stageRemoval()">
+          {{ t('Remove') }}
+        </button>
       </div>
     </div>
   }

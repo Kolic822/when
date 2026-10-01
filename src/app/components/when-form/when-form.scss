@@ -216,13 +216,63 @@ form:not(.editing) app-day-picker {
       height: 20px;
       font-size: 20px;
     }
-    &.danger {
-      background: var(--mat-sys-error);
-      color: var(--mat-sys-on-error);
+    &.on {
+      background: var(--accent);
+      color: var(--on-accent);
     }
     &:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: -2px;
     }
+  }
+  .pchip.selected {
+    box-shadow: inset 0 0 0 1.5px var(--accent);
+  }
+  /* Marked for removal: faded, until Save makes it real or Cancel forgets it. */
+  .pchip.doomed {
+    opacity: 0.55;
+
+    .pname {
+      text-decoration: line-through;
+    }
+  }
+  .remove-btn {
+    margin-top: 8px;
+    height: 36px;
+    font-size: 13px;
+    background: color-mix(in srgb, var(--mat-sys-error) 12%, transparent);
+    color: var(--mat-sys-error);
+  }
+}
+
+/* The "are you sure" for removing people: in the middle of the screen, above everything. */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.sheet {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 31;
+  width: min(420px, calc(100vw - 32px));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+  p {
+    margin: 0 0 12px;
+    font-size: 16px;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .danger {
+    --mat-button-filled-container-color: var(--mat-sys-error);
+    --mat-button-filled-label-text-color: var(--mat-sys-on-error);
   }
 }

@@ -95,7 +95,7 @@ export class Guide {
           'Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.',
         ),
         m(
-          'Lost your place (a new phone, a cleared browser)? Type your old name and tap “That’s me” to carry on with your times. The organiser can remove a leftover double by highlighting the name and tapping the remove icon, or under Change the plan.',
+          'Lost your place (a new phone, a cleared browser)? Type your old name and tap “That’s me” to carry on with your times. The organiser can remove a leftover double by highlighting the name and tapping the remove icon, or under Change the plan: tick people, tap Remove, and it happens when you save (Cancel undoes it).',
         ),
         m('With more than five days, swipe sideways. An arrow on the edge shows there is more.'),
         m('The Free button under a day marks you free all day.'),

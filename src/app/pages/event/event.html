@@ -107,7 +107,7 @@
           [initial]="editSnapshot()"
           [people]="event()!.participants"
           [meId]="meId()"
-          (removePerson)="removeParticipant($event)"
+          (removePeople)="removeParticipants($event)"
           (submitted)="saveSettings($event)"
           (cancelled)="settingsOpen.set(false)"
         />

@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Auth } from '../../core/auth';
-import { t } from '../../core/i18n/i18n';
+import { listOf, t, tn } from '../../core/i18n/i18n';
 import { Participant } from '../../core/models';
 import { PrefsStore } from '../../core/prefs';
 import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
@@ -56,6 +56,7 @@ interface Model {
 })
 export class WhenForm {
   readonly t = t;
+  readonly tn = tn;
   private readonly store = inject(PrefsStore);
   private readonly prefs = this.store.prefs();
 
@@ -65,15 +66,44 @@ export class WhenForm {
   readonly busy = input(false);
   readonly error = input<string | null>(null);
 
-  /** Editing: who is in the When, so the organiser can take someone out. */
+  /** Editing: who is in the When, so the organiser can take people out. */
   readonly people = input<Participant[]>([]);
   readonly meId = input<string | null>(null);
-  readonly removePerson = output<Participant>();
-  readonly removing = signal<string | null>(null);
+  /** The people marked for removal, sent out when the form is saved. */
+  readonly removePeople = output<Participant[]>();
+  /** Ticked chips, waiting for the Remove button. */
+  readonly selected = signal<ReadonlySet<string>>(new Set());
+  /** Marked for removal; it only happens on Save, so Cancel undoes it. */
+  readonly doomed = signal<ReadonlySet<string>>(new Set());
+  readonly askRemove = signal(false);
+  readonly selectedNames = computed(() =>
+    listOf(
+      this.people()
+        .filter((p) => this.selected().has(p.id))
+        .map((p) => p.name),
+    ),
+  );
 
-  confirmRemove(p: Participant): void {
-    this.removing.set(null);
-    this.removePerson.emit(p);
+  toggleSelect(p: Participant): void {
+    this.selected.update((set) => {
+      const next = new Set(set);
+      next.has(p.id) ? next.delete(p.id) : next.add(p.id);
+      return next;
+    });
+  }
+
+  stageRemoval(): void {
+    this.doomed.update((set) => new Set([...set, ...this.selected()]));
+    this.selected.set(new Set());
+    this.askRemove.set(false);
+  }
+
+  keep(p: Participant): void {
+    this.doomed.update((set) => {
+      const next = new Set(set);
+      next.delete(p.id);
+      return next;
+    });
   }
 
   readonly submitted = output<WhenDetails>();
@@ -144,6 +174,8 @@ export class WhenForm {
 
   save(): void {
     if (!this.valid()) return;
+    const gone = this.people().filter((p) => this.doomed().has(p.id));
+    if (gone.length) this.removePeople.emit(gone);
     const m = this.model();
     this.submitted.emit({
       title: m.title.trim(),

@@ -473,3 +473,7 @@ Promijeni plan: ljudi kao pločice, s gumbom za uklanjanje na rubu
 Day view: the hint line no longer gets pushed out of view after adding a time
 Tagesansicht: Die Hinweiszeile wird nach dem Hinzufügen einer Zeit nicht mehr aus dem Bild geschoben
 Prikaz dana: redak s uputom više ne nestaje iz vidokruga nakon dodavanja vremena
+
+Change the plan: tick people, tap Remove, confirm; it happens on Save, and Cancel undoes it
+Plan ändern: Leute ankreuzen, Entfernen tippen, bestätigen; es passiert beim Speichern, Abbrechen macht es rückgängig
+Promijeni plan: označi ljude, dodirni Ukloni, potvrdi; događa se pri spremanju, a Odustani to poništava
