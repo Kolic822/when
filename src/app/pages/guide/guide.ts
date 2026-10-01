@@ -95,7 +95,7 @@ export class Guide {
           'Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.',
         ),
         m('With more than five days, swipe sideways. An arrow on the edge shows there is more.'),
-        m('The sun button under a day marks you free all day.'),
+        m('The Free button under a day marks you free all day.'),
       ],
     },
     {
@@ -112,7 +112,9 @@ export class Guide {
       icon: 'check_circle',
       title: m('Book a session (organiser)'),
       steps: [
-        m('Tap a possible session, or its gold band in the calendar.'),
+        m(
+          'Tap a possible session, or its gold band in the calendar. Hold a gold band to book it right there.',
+        ),
         m('If it is longer than the meetup, choose when the meetup should start.'),
         m('Tap Book. Everyone sees the Booked banner at the top and can add it to their calendar.'),
         m('Undo on the banner takes the booking back.'),
@@ -167,7 +169,7 @@ export class Guide {
         ),
         m('Booked sessions, calendar files and notifications always use your own time and date.'),
         m(
-          'Travelling, or planning for somewhere else? Choose a time zone under Date and time in the menu.',
+          'Travelling, or planning for somewhere else? Choose a time zone under Settings in the menu.',
         ),
       ],
     },
@@ -176,13 +178,13 @@ export class Guide {
       title: m('The menu'),
       steps: [
         m(
-          'Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in your phone’s language when it is one of the three.',
+          'Choose English, Deutsch or Hrvatski under Settings in the menu. The app starts in your phone’s language when it is one of the three.',
         ),
         m(
           'My Whens lists every When you created or joined on this device, with what is booked or possible.',
         ),
         m(
-          'Appearance changes the colours and light or dark mode. Date and time switches between 30.9. and 30 Sep and sets your time zone.',
+          'Appearance changes the colours and light or dark mode. Settings holds the language, the date style (30.9. or 30 Sep), your time zone and the defaults for new Whens.',
         ),
         m('Defaults for new Whens pre-fills the length and hours when you plan the next one.'),
         m('App checks for a new version and shows what changed.'),
@@ -270,7 +272,7 @@ export class Guide {
           'Apple Calendar, Outlook and others: under Calendar in the menu tap Add Apple or other calendar and paste the calendar’s subscription link. In Apple Calendar tap Calendars, the ⓘ next to a calendar, switch on Public Calendar, then Share Link.',
         ),
         m(
-          'In the day view, the calendar button at the top hides or shows your events. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.',
+          'In the day view, the calendar button at the top hides or shows your events, and the Names and All day switches beside the bar choose what is drawn. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.',
         ),
         m(
           'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.',
@@ -290,12 +292,12 @@ export class Guide {
       pro: true,
       steps: [
         m(
-          'Add to calendar: a calendar button on every possible session, not only on the booked one.',
+          'Add to calendar: a calendar button on every booked session. In the installed app on iPhone it subscribes your Calendar to the When’s booked sessions, which then follow changes by themselves.',
         ),
         m(
           'Join for part of it: a switch when you plan a When. People may mark less than the full length; a session then needs everyone together for at least half of it.',
         ),
-        m('History: a section in the menu showing who changed what in any of your Whens.'),
+        m('History: under the calendar of each When, who changed what and when.'),
       ],
     },
   ];

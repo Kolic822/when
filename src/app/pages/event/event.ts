@@ -41,6 +41,7 @@ import { ShareLink } from '../../components/share-link/share-link';
 
 import { WeekChart } from '../../components/week-chart/week-chart';
 
+import { History } from '../../components/history/history';
 import { Legend } from '../../components/legend/legend';
 
 import { Results } from '../../components/results/results';
@@ -84,6 +85,7 @@ import { t, tn } from '../../core/i18n/i18n';
     NamePrompt,
     ShareLink,
     WeekChart,
+    History,
     Legend,
     Results,
     AppMenu,

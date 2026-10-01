@@ -56,22 +56,6 @@
       }
     </div>
 
-    <div class="segments langs" role="radiogroup" [attr.aria-label]="t('Language')">
-      @for (l of langs; track l.value) {
-        <button
-          type="button"
-          class="pill"
-          role="radio"
-          [class.active]="lang() === l.value"
-          [attr.aria-checked]="lang() === l.value"
-          [attr.lang]="l.value"
-          (click)="setLang(l.value)"
-        >
-          {{ l.label }}
-        </button>
-      }
-    </div>
-
     <section data-section="whens">
       <h2>
         <button
@@ -228,20 +212,37 @@
       }
     </section>
 
-    <section data-section="dates">
+    <section data-section="defaults">
       <h2>
         <button
           type="button"
           class="fold"
-          (click)="toggleSection('dates')"
-          [attr.aria-expanded]="!isFolded('dates')"
+          (click)="toggleSection('defaults')"
+          [attr.aria-expanded]="!isFolded('defaults')"
         >
-          <span>{{ t('Date and time') }}</span>
+          <span>{{ t('Settings') }}</span>
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('dates')) {
+      @if (!isFolded('defaults')) {
         <div class="sect">
+          <p class="sub">{{ t('Language') }}</p>
+          <div class="segments langs" role="radiogroup" [attr.aria-label]="t('Language')">
+            @for (l of langs; track l.value) {
+              <button
+                type="button"
+                class="pill"
+                role="radio"
+                [class.active]="lang() === l.value"
+                [attr.aria-checked]="lang() === l.value"
+                [attr.lang]="l.value"
+                (click)="setLang(l.value)"
+              >
+                {{ l.label }}
+              </button>
+            }
+          </div>
+          <p class="sub">{{ t('Date and time') }}</p>
           <div class="segments" role="radiogroup" [attr.aria-label]="t('Date format')">
             @for (d of dateStyles; track d.value) {
               <button
@@ -270,24 +271,6 @@
               }
             </select>
           </label>
-        </div>
-      }
-    </section>
-
-    <section data-section="defaults">
-      <h2>
-        <button
-          type="button"
-          class="fold"
-          (click)="toggleSection('defaults')"
-          [attr.aria-expanded]="!isFolded('defaults')"
-        >
-          <span>{{ t('Settings') }}</span>
-          <mat-icon>expand_more</mat-icon>
-        </button>
-      </h2>
-      @if (!isFolded('defaults')) {
-        <div class="sect">
           <p class="sub">{{ t('Defaults for new Whens') }}</p>
           <div class="details">
             <label>
@@ -508,48 +491,6 @@
         </div>
       }
     </section>
-
-    @if (prefs().features.history) {
-      <section data-section="history">
-        <h2>
-          <button
-            type="button"
-            class="fold"
-            (click)="toggleSection('history')"
-            [attr.aria-expanded]="!isFolded('history')"
-          >
-            <span
-              >{{ t('History') }} <span class="pro-badge">{{ t('PRO') }}</span></span
-            >
-            <mat-icon>expand_more</mat-icon>
-          </button>
-        </h2>
-        @if (!isFolded('history')) {
-          <div class="sect">
-            @if (recent().length) {
-              <label class="pick-when">
-                <span class="muted small">{{ t('When') }}</span>
-                <select
-                  [attr.aria-label]="t('Which When')"
-                  (change)="showHistory($any($event.target).value)"
-                >
-                  @for (m of recent(); track m.id) {
-                    <option [value]="m.id" [selected]="m.id === historyId()">{{ m.title }}</option>
-                  }
-                </select>
-              </label>
-              @if (historyEntries(); as entries) {
-                <app-history bare [entries]="entries" [meId]="historyMe()" [zone]="historyZone()" />
-              } @else {
-                <p class="muted small">{{ t('Loading…') }}</p>
-              }
-            } @else {
-              <p class="muted small">{{ t('Open or create a When first.') }}</p>
-            }
-          </div>
-        }
-      </section>
-    }
 
     <section data-section="notify">
       <h2>

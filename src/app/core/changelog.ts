@@ -7,9 +7,24 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.12.2';
+export const VERSION = '0.13';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.13',
+    date: '1 Oct 2026',
+    changes: [
+      m('A fresher look: rounder, lighter, with the menu in tidy groups'),
+      m('Menu: one group open at a time; language, date and time live under Settings'),
+      m('History sits under the calendar of each When'),
+      m('Hold a gold band in the calendar to book it right there'),
+      m('A Free button under each day instead of the sun'),
+      m('Day view: Names and All day switches for your calendar, beside the bar'),
+      m(
+        'Add to calendar only on booked sessions; in the installed app on iPhone it subscribes your Calendar to the When',
+      ),
+    ],
+  },
   {
     version: '0.12.2',
     date: '1 Oct 2026',

@@ -83,6 +83,29 @@
             <span>{{ allChosen() ? t('Select none') : t('Select all') }}</span>
           </button>
         } @else {
+          @if (calendarOffered() && calendar.hasSource()) {
+            <span class="side-title muted">{{ calendarLabel() }}</span>
+            <button
+              type="button"
+              class="side-btn"
+              [class.active]="settings().calendarNames"
+              [attr.aria-pressed]="settings().calendarNames"
+              (click)="toggleSetting('calendarNames')"
+            >
+              <mat-icon>label</mat-icon>
+              <span>{{ t('Names') }}</span>
+            </button>
+            <button
+              type="button"
+              class="side-btn"
+              [class.active]="settings().calendarAllDay"
+              [attr.aria-pressed]="settings().calendarAllDay"
+              (click)="toggleSetting('calendarAllDay')"
+            >
+              <mat-icon>today</mat-icon>
+              <span>{{ t('All day') }}</span>
+            </button>
+          }
           <span class="spacer"></span>
           @if (dates().length > 1) {
             <button

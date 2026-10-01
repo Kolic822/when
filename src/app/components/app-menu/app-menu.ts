@@ -10,10 +10,6 @@ import { Auth } from '../../core/auth';
 
 import { VERSION } from '../../core/changelog';
 
-import { HistoryEntry } from '../../core/models';
-
-import { History } from '../history/history';
-
 import { Push } from '../../core/push';
 
 import { CalendarLink } from '../../core/calendar-link';
@@ -51,7 +47,7 @@ import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 /** The ☰ menu: your Whens, appearance and defaults for new Whens. */
 @Component({
   selector: 'app-menu',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatSlideToggleModule, History],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatSlideToggleModule],
   templateUrl: './app-menu.html',
   styleUrl: './app-menu.scss',
 })
@@ -161,11 +157,7 @@ export class AppMenu {
   /** Opens the menu on one section, e.g. from the bell at the top of a When. */
   openSection(id: string): void {
     if (!this.open()) this.toggle();
-    this.folded.update((set) => {
-      const next = new Set(set);
-      next.delete(id);
-      return next;
-    });
+    this.openId.set(id);
     // Twice: the list of Whens above it grows once their details have loaded.
     const reveal = () =>
       this.host.nativeElement
@@ -173,29 +165,6 @@ export class AppMenu {
         ?.scrollIntoView({ block: 'start' });
     setTimeout(reveal, 50);
     setTimeout(reveal, 600);
-  }
-
-  // ---- History (Pro preview): what happened in any of my Whens.
-  readonly historyId = signal<string | null>(null);
-  readonly historyEntries = signal<HistoryEntry[] | null>(null);
-  readonly historyZone = signal<string | null>(null);
-  readonly historyMe = computed(() => {
-    const id = this.historyId();
-    return id ? (this.identity.get(id)?.id ?? null) : null;
-  });
-
-  async showHistory(id: string): Promise<void> {
-    this.historyId.set(id);
-    this.historyEntries.set(null);
-    try {
-      const ev = await this.api.get(id);
-      if (this.historyId() === id) {
-        this.historyZone.set(ev?.timeZone ?? null);
-        this.historyEntries.set(ev?.history ?? []);
-      }
-    } catch {
-      if (this.historyId() === id) this.historyEntries.set([]);
-    }
   }
 
   async togglePush(on: boolean): Promise<void> {
@@ -272,10 +241,6 @@ export class AppMenu {
     if (!this.open()) {
       this.recent.set(this.identity.recent());
       this.loadBest();
-      // History starts on the When that is open, or the most recent one.
-      const current = /\/e\/([^/?#]+)/.exec(this.router.url)?.[1];
-      const first = this.recent().find((m) => m.id === current) ?? this.recent()[0];
-      if (first && this.prefs().features.history) void this.showHistory(first.id);
     }
     this.open.set(!this.open());
   }
@@ -407,7 +372,7 @@ export class AppMenu {
     {
       icon: 'calendar_add_on',
       label: m('Add to calendar'),
-      hint: m('A calendar button on every possible session.'),
+      hint: m('Put a booked session into your phone’s calendar with one tap.'),
     },
     {
       icon: 'timelapse',
@@ -417,7 +382,7 @@ export class AppMenu {
     {
       icon: 'history',
       label: m('History'),
-      hint: m('A History section in this menu: who changed what, and when.'),
+      hint: m('Who changed what, and when, under the calendar of each When.'),
     },
   ];
 
@@ -426,20 +391,15 @@ export class AppMenu {
     this.store.update({ [key]: Number((event.target as HTMLSelectElement).value) });
   }
 
-  /** Sections folded away; settings start folded so My Whens stays on screen. */
-  readonly folded = signal<Set<string>>(loadFolded());
+  /** The one section that is open; the others stay folded so the menu stays short. */
+  readonly openId = signal('whens');
 
   isFolded(id: string): boolean {
-    return this.folded().has(id);
+    return this.openId() !== id;
   }
 
   toggleSection(id: string): void {
-    this.folded.update((set) => {
-      const next = new Set(set);
-      next.has(id) ? next.delete(id) : next.add(id);
-      saveFolded(next);
-      return next;
-    });
+    this.openId.set(this.openId() === id ? '' : id);
   }
 
   readonly dateStyles: { value: DateStyle; label: string }[] = [
@@ -467,24 +427,4 @@ export class AppMenu {
         return '';
     }
   });
-}
-
-const FOLDED_KEY = 'when:menu-folded-v3';
-const FOLDED_DEFAULT = ['look', 'dates', 'defaults', 'calendar', 'history', 'notify', 'pro'];
-
-function loadFolded(): Set<string> {
-  try {
-    const raw = localStorage.getItem(FOLDED_KEY);
-    return new Set(raw ? (JSON.parse(raw) as string[]) : FOLDED_DEFAULT);
-  } catch {
-    return new Set(FOLDED_DEFAULT);
-  }
-}
-
-function saveFolded(set: Set<string>): void {
-  try {
-    localStorage.setItem(FOLDED_KEY, JSON.stringify([...set]));
-  } catch {
-    /* ignore */
-  }
 }

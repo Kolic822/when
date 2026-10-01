@@ -164,6 +164,29 @@ export class DayStepper {
   readonly fillNote = signal(false);
   private fillNoteTimer: ReturnType<typeof setTimeout> | null = null;
 
+  readonly settings = computed(() => this.prefs.prefs());
+
+  /** Which calendar the events come from, as a heading for its switches. */
+  readonly calendarLabel = computed(() => {
+    const links = this.calendar.links();
+    const google = this.calendar.connected();
+    if (google && !links.length) return 'Google';
+    const hosts = links.map((l) => {
+      try {
+        return new URL(l).hostname;
+      } catch {
+        return '';
+      }
+    });
+    if (!google && hosts.every((h) => h.endsWith('icloud.com'))) return 'iCloud';
+    if (!google && hosts.every((h) => /outlook|live\.com|office/.test(h))) return 'Outlook';
+    return t('Calendar');
+  });
+
+  toggleSetting(key: 'calendarNames' | 'calendarAllDay'): void {
+    this.prefs.update({ [key]: !this.settings()[key] });
+  }
+
   toggleCalendar(): void {
     this.prefs.update({ calendarInDay: !this.calendarShown() });
   }

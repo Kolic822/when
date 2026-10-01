@@ -242,9 +242,16 @@
   justify-content: center;
   gap: 6px;
 
-  .pill.icon {
-    width: 34px;
-    height: 34px;
+  .free {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
   }
 }
 
@@ -296,9 +303,10 @@
     --hour-px: 18px;
     --bar-min: 340px;
   }
-  .actions .pill.icon {
-    width: 32px;
-    height: 32px;
+  .actions .free {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
   }
 }
 

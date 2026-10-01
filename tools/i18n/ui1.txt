@@ -194,18 +194,6 @@ History
 Verlauf
 Povijest
 
-Which When
-Welches When
-Koji When
-
-Loading…
-Wird geladen…
-Učitavam…
-
-Open or create a When first.
-Öffne oder erstelle zuerst ein When.
-Najprije otvori ili stvori When.
-
 Notifications
 Benachrichtigungen
 Obavijesti
@@ -318,10 +306,6 @@ Add to calendar
 Zum Kalender hinzufügen
 Dodaj u kalendar
 
-A calendar button on every possible session.
-Eine Kalender-Schaltfläche bei jedem möglichen Termin.
-Gumb za kalendar uz svaki mogući termin.
-
 Join for part of it
 Nur teilweise dabei sein
 Sudjelovanje samo dio vremena
@@ -329,10 +313,6 @@ Sudjelovanje samo dio vremena
 Let people mark less than the full length.
 Lass andere weniger als die volle Dauer markieren.
 Dopusti da se označi manje od punog trajanja.
-
-A History section in this menu: who changed what, and when.
-Ein Bereich „Verlauf“ in diesem Menü: wer was wann geändert hat.
-Odjeljak Povijest u ovom izborniku: tko je što promijenio i kada.
 
 Updates apply automatically when opened in a browser.
 Im Browser werden Updates automatisch übernommen.

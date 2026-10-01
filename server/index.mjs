@@ -10,7 +10,7 @@ import { cleanSubscription, createPush } from './push.mjs';
 import { cleanLang, localeOf, say } from './messages.mjs';
 import { Accounts } from './accounts.mjs';
 import { eventsBetween, fetchCalendar } from './ics.mjs';
-import { calendarFile } from './calendar-file.mjs';
+import { calendarFeed, calendarFile } from './calendar-file.mjs';
 import { createMailer } from './mail.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -316,6 +316,30 @@ app.get('/api/events/:id/when.ics', (req, res) => {
       end: at(end),
     }),
   );
+});
+
+/**
+ * The booked sessions of a When as a calendar to subscribe to. The installed app on
+ * iPhone cannot show the "add event" sheet, but it can open the Calendar app on a
+ * webcal address; the phone then keeps the sessions up to date by itself.
+ */
+app.get('/api/events/:id/booked.ics', (req, res) => {
+  const ev = store.get(req.params.id);
+  if (!ev) return res.status(404).json({ error: 'not_found' });
+  const zone = cleanZone(ev.timeZone) ?? cleanZone(req.query.tz) ?? 'UTC';
+  const link = `${publicUrl(req)}/e/${ev.id}`;
+  const description = [ev.description, say(cleanLang(String(req.query.lang ?? '')), 'planned_with', { url: link })]
+    .filter(Boolean)
+    .join('\n\n');
+  const events = (ev.bookings ?? []).map((b) => {
+    const [y, m, d] = b.date.split('-').map(Number);
+    const at = (min) => new Date(Date.UTC(y, m - 1, d, 0, min) - zoneOffset(zone, b.date) * 60_000);
+    return { uid: `${ev.id}-${b.date}@when`, title: ev.title, description, url: link, start: at(b.start), end: at(b.end) };
+  });
+  res.setHeader('content-type', 'text/calendar; charset=utf-8');
+  res.setHeader('content-disposition', 'inline; filename="when-booked.ics"');
+  res.setHeader('cache-control', 'no-store');
+  res.send(calendarFeed({ name: `${ev.title} · When`, events }));
 });
 
 // ---- Signing in with Google

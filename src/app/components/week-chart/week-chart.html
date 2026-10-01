@@ -1,3 +1,17 @@
+@if (bookAsk(); as ask) {
+  <div class="sheet-backdrop" (click)="bookAsk.set(null)"></div>
+  <div class="sheet card" role="dialog" aria-modal="true" [attr.aria-label]="t('Book')">
+    <p>{{ t('Book {session}?', { session: ask.label }) }}</p>
+    <div class="actions">
+      <button type="button" class="pill" (click)="bookAsk.set(null)">{{ t('Cancel') }}</button>
+      <button mat-flat-button type="button" (click)="bookConfirmed(ask)">
+        <mat-icon>check</mat-icon>
+        {{ t('Book') }}
+      </button>
+    </div>
+  </div>
+}
+
 @if (confirmClear(); as d) {
   <div class="sheet-backdrop" (click)="confirmClear.set(null)"></div>
   <div
@@ -97,7 +111,11 @@
                 class="common"
                 [class.tappable]="organiser()"
                 (click)="onBandClick(d, w, $event)"
-                (pointerdown)="organiser() && $event.stopPropagation()"
+                (pointerdown)="onBandPressStart(d, w, $event)"
+                (pointermove)="onPressMove($event)"
+                (pointerup)="onPressEnd()"
+                (pointercancel)="onPressEnd()"
+                (pointerleave)="onPressEnd()"
                 [style.top.%]="w.top"
                 [style.height.%]="w.height"
                 [title]="w.label"
@@ -119,7 +137,7 @@
           <span class="actions">
             <button
               type="button"
-              class="pill icon"
+              class="pill free"
               [class.active]="d.allDay"
               [attr.aria-pressed]="d.allDay"
               [attr.aria-label]="
@@ -134,7 +152,10 @@
               "
               (click)="toggleAllDay(d)"
             >
-              <mat-icon>{{ d.allDay ? 'check' : 'wb_sunny' }}</mat-icon>
+              @if (d.allDay) {
+                <mat-icon>check</mat-icon>
+              }
+              {{ t('Free') }}
             </button>
           </span>
         }

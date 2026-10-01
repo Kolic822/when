@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatIconModule } from '@angular/material/icon';
 
-import { CommonWindow, MeetEvent, Participant, Slot } from '../../core/models';
+import { CommonWindow, MeetEvent, Participant, Session, Slot } from '../../core/models';
 
 import {
   dateStyle,
@@ -32,8 +32,9 @@ interface Block {
   top: number; // percent
   height: number; // percent
   label: string;
-  /** Start of the window in minutes (gold bands only). */
+  /** Start and end of the window in minutes (gold bands only). */
   start?: number;
+  end?: number;
   /** Start/end text drawn inside gold bands that are tall enough. */
   from?: string;
   to?: string;
@@ -84,6 +85,8 @@ export class WeekChart {
   /** The organiser can tap a gold band to book that session. */
   readonly organiser = input(false);
   readonly sessionSelected = output<{ date: string; start: number }>();
+  /** Organiser held a gold band and confirmed: book this session. */
+  readonly bookRequested = output<Session>();
   /** Window chosen through an "Ask someone" link, with who chose it. */
   readonly picked = input<{ date: string; start: number; end: number; label: string } | null>(null);
   readonly daySelected = output<string>();
@@ -170,6 +173,7 @@ export class WeekChart {
               t('Everyone can make it {time}', { time: spanAt(w.date, w.start, w.end) }),
             ),
             start: w.start,
+            end: w.end,
             ...(w.end - w.start >= 90
               ? { from: timeAt(w.date, w.start), to: timeAt(w.date, w.end) }
               : {}),
@@ -225,10 +229,41 @@ export class WeekChart {
     this.daySelected.emit(day.key);
   }
 
+  // ---- Holding a gold band offers to book it right here.
+  readonly bookAsk = signal<{ session: Session; label: string } | null>(null);
+
+  onBandPressStart(day: DayColumn, band: Block, e: PointerEvent): void {
+    if (!this.organiser() || band.start === undefined) return;
+    e.stopPropagation();
+    if (e.button !== 0) return;
+    const ev = this.event();
+    const start = band.start;
+    const end = Math.min(band.end ?? start, start + ev.durationHours * 60);
+    this.pressStart = { x: e.clientX, y: e.clientY };
+    this.pressTimer = setTimeout(() => {
+      this.pressTimer = null;
+      this.suppressClick = true;
+      navigator.vibrate?.(15);
+      this.bookAsk.set({
+        session: { date: day.key, start, end },
+        label: `${day.longLabel} ${spanAt(day.key, start, end)}`,
+      });
+    }, LONG_PRESS_MS);
+  }
+
+  bookConfirmed(ask: { session: Session }): void {
+    this.bookAsk.set(null);
+    this.bookRequested.emit(ask.session);
+  }
+
   /** Organiser tapped a gold band: go and book it instead of opening the day. */
   onBandClick(day: DayColumn, band: Block, e: Event): void {
     if (!this.organiser() || band.start === undefined) return;
     e.stopPropagation();
+    if (this.suppressClick) {
+      this.suppressClick = false;
+      return;
+    }
     this.sessionSelected.emit({ date: day.key, start: band.start });
   }
 

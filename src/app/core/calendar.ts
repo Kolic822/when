@@ -10,24 +10,32 @@ const isInstalled = () =>
   (navigator as { standalone?: boolean }).standalone === true;
 
 /**
- * Hands one session to the device's calendar. The server makes the calendar file, since
- * phones only offer "Add to Calendar" for a file that comes from a real address.
+ * Hands a booked session to the device's calendar. The server makes the calendar file,
+ * since phones only offer "Add to Calendar" for a file that comes from a real address.
+ *
+ * The installed app on iPhone cannot show that sheet at all, so there the Calendar app is
+ * opened on a webcal address instead and subscribes to the When's booked sessions: they
+ * appear at once and follow later changes by themselves.
  */
 export function openInCalendar(
   eventId: string,
   session: { date: string; start: number; end: number },
 ): void {
+  const common = { lang: lang(), tz: viewerZone() };
+  const id = encodeURIComponent(eventId);
+  if (isApple() && isInstalled()) {
+    const query = new URLSearchParams(common);
+    window.location.href = `webcal://${location.host}/api/events/${id}/booked.ics?${query}`;
+    return;
+  }
   const query = new URLSearchParams({
     date: session.date,
     start: String(session.start),
     end: String(session.end),
-    lang: lang(),
-    tz: viewerZone(),
+    ...common,
   });
-  const url = `/api/events/${encodeURIComponent(eventId)}/when.ics?${query}`;
+  const url = `/api/events/${id}/when.ics?${query}`;
   if (isApple()) {
-    // The installed app has no way to show the sheet itself; a browser view on top does.
-    if (isInstalled() && window.open(url, '_blank')) return;
     window.location.href = url;
     return;
   }

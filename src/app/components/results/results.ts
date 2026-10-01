@@ -10,8 +10,6 @@ import { EventApi } from '../../core/event-api';
 
 import { Identity } from '../../core/identity';
 
-import { openInCalendar } from '../../core/calendar';
-
 import { CommonWindow, Session, Shortlist } from '../../core/models';
 
 import { Features, NO_FEATURES } from '../../core/prefs';
@@ -118,8 +116,7 @@ export class Results {
       notes: w.notes ?? [],
       window: w,
       starts: this.startsIn(w),
-      expandable:
-        this.organiser() || this.features().calendar || !!w.notes?.length || !!w.partial?.length,
+      expandable: this.organiser() || !!w.notes?.length || !!w.partial?.length,
     }));
   });
 
@@ -225,12 +222,6 @@ export class Results {
     this.openRow.set(null);
     this.folded.set(null);
     this.book.emit({ date: r.window.date, start, end: start + len });
-  }
-
-  addToCalendar(r: Row): void {
-    const start = this.startOf(r);
-    const end = Math.min(r.window.end, start + this.minutes());
-    openInCalendar(this.eventId(), { date: r.window.date, start, end });
   }
 
   /** Withdraws a sent link; whoever has it sees that it no longer exists. */

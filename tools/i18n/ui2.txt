@@ -885,3 +885,23 @@ Izbriši račun
 Delete your account? It forgets your Whens and calendar links. The Whens themselves stay for everyone in them.
 Dein Konto löschen? Es vergisst deine Whens und Kalender-Links. Die Whens selbst bleiben für alle Beteiligten bestehen.
 Izbrisati tvoj račun? Zaboravit će tvoje Whenove i poveznice kalendara. Sami Whenovi ostaju svima koji su u njima.
+
+Free
+Frei
+Slobodno
+
+Names
+Namen
+Imena
+
+Book {session}?
+{session} festlegen?
+Potvrditi {session}?
+
+Put a booked session into your phone’s calendar with one tap.
+Einen festgelegten Termin mit einem Tipp in den Kalender deines Handys übernehmen.
+Potvrđeni termin jednim dodirom ubaci u kalendar svog mobitela.
+
+Who changed what, and when, under the calendar of each When.
+Wer wann was geändert hat, unter dem Kalender jedes Whens.
+Tko je što i kada promijenio, ispod kalendara svakog Whena.

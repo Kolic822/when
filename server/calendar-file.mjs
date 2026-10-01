@@ -39,22 +39,42 @@ function fold(line) {
  * event when the file comes from a real address, so the server makes it, not the app.
  */
 export function calendarFile({ uid, title, description, url, start, end }) {
+  return calendarFeed({ events: [{ uid, title, description, url, start, end }] });
+}
+
+/**
+ * A calendar with several events. Given a `name` it can be subscribed to (the installed
+ * app on iPhone can only hand a calendar to the phone that way), and the phone checks
+ * back for changes now and then.
+ */
+export function calendarFeed({ name, events }) {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
     'PRODID:-//When//Meetup//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:${uid}`,
-    `DTSTAMP:${stamp(new Date())}`,
-    `DTSTART:${stamp(start)}`,
-    `DTEND:${stamp(end)}`,
-    `SUMMARY:${escapeText(title)}`,
-    ...(description ? [`DESCRIPTION:${escapeText(description)}`] : []),
-    ...(url ? [`URL:${url}`] : []),
-    'END:VEVENT',
-    'END:VCALENDAR',
+    ...(name
+      ? [
+          `X-WR-CALNAME:${escapeText(name)}`,
+          'REFRESH-INTERVAL;VALUE=DURATION:PT1H',
+          'X-PUBLISHED-TTL:PT1H',
+        ]
+      : []),
   ];
+  for (const { uid, title, description, url, start, end } of events) {
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${stamp(new Date())}`,
+      `DTSTART:${stamp(start)}`,
+      `DTEND:${stamp(end)}`,
+      `SUMMARY:${escapeText(title)}`,
+      ...(description ? [`DESCRIPTION:${escapeText(description)}`] : []),
+      ...(url ? [`URL:${url}`] : []),
+      'END:VEVENT',
+    );
+  }
+  lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n') + '\r\n';
 }

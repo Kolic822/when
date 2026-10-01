@@ -90,33 +90,14 @@
                 }
               </div>
             }
-            @if (organiser() || features().calendar) {
+            @if (organiser()) {
               <div class="acts">
-                @if (organiser()) {
-                  <button type="button" class="pill book-full" (click)="confirmBooking(r)">
-                    {{ t('Book') }}
-                    <span class="d">{{ r.day }}</span>
-                    <span class="t">{{ chosen(r) }}</span>
-                    <mat-icon>check</mat-icon>
-                  </button>
-                }
-                @if (features().calendar) {
-                  <button
-                    type="button"
-                    class="pill cal"
-                    [class.compact]="organiser()"
-                    (click)="addToCalendar(r)"
-                    [attr.aria-label]="
-                      t('Add {session} to calendar', { session: r.day + ' ' + r.time })
-                    "
-                  >
-                    <mat-icon>event</mat-icon>
-                    @if (!organiser()) {
-                      {{ t('Add to calendar') }}
-                    }
-                    <span class="pro-badge">{{ t('PRO') }}</span>
-                  </button>
-                }
+                <button type="button" class="pill book-full" (click)="confirmBooking(r)">
+                  {{ t('Book') }}
+                  <span class="d">{{ r.day }}</span>
+                  <span class="t">{{ chosen(r) }}</span>
+                  <mat-icon>check</mat-icon>
+                </button>
               </div>
             }
           </div>

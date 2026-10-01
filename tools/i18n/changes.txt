@@ -134,9 +134,9 @@ Days, months and notifications follow your language
 Tage, Monate und Benachrichtigungen folgen deiner Sprache
 Dani, mjeseci i obavijesti prate tvoj jezik
 
-Choose English, Deutsch or Hrvatski at the top of the menu. The app starts in your phone’s language when it is one of the three.
-Wähle oben im Menü English, Deutsch oder Hrvatski. Die App startet in der Sprache deines Handys, wenn es eine der drei ist.
-Na vrhu izbornika odaberi English, Deutsch ili Hrvatski. Aplikacija se pokreće na jeziku tvog mobitela ako je jedan od ta tri.
+Choose English, Deutsch or Hrvatski under Settings in the menu. The app starts in your phone’s language when it is one of the three.
+Wähle unter Einstellungen im Menü English, Deutsch oder Hrvatski. Die App startet in der Sprache deines Handys, wenn es eine der drei ist.
+Odaberi English, Deutsch ili Hrvatski pod Postavke u izborniku. Aplikacija kreće na jeziku tvog mobitela ako je jedan od ta tri.
 
 Editing a When is one page with everything on it, and Save always in reach
 Ein When zu bearbeiten ist eine Seite mit allem darauf, mit „Speichern“ immer griffbereit
@@ -321,3 +321,31 @@ Brisanje računa, na kraju izbornika
 The tagline “When are you free?” stays in English in every language
 Der Slogan „When are you free?“ bleibt in jeder Sprache auf Englisch
 Slogan „When are you free?“ ostaje na engleskom u svakom jeziku
+
+A fresher look: rounder, lighter, with the menu in tidy groups
+Ein frischerer Look: runder, leichter, mit dem Menü in ordentlichen Gruppen
+Svježiji izgled: zaobljeniji, lakši, s izbornikom u urednim grupama
+
+Menu: one group open at a time; language, date and time live under Settings
+Menü: immer nur eine Gruppe offen; Sprache, Datum und Uhrzeit sind unter Einstellungen
+Izbornik: otvorena je samo jedna grupa; jezik, datum i vrijeme su pod Postavkama
+
+History sits under the calendar of each When
+Der Verlauf steht unter dem Kalender jedes Whens
+Povijest stoji ispod kalendara svakog Whena
+
+Hold a gold band in the calendar to book it right there
+Halte einen goldenen Streifen im Kalender gedrückt, um ihn direkt festzulegen
+Zadrži prst na zlatnoj traci u kalendaru da je odmah potvrdiš
+
+A Free button under each day instead of the sun
+Ein Frei-Button unter jedem Tag statt der Sonne
+Gumb Slobodno ispod svakog dana umjesto sunca
+
+Day view: Names and All day switches for your calendar, beside the bar
+Tagesansicht: Schalter Namen und Ganztägig für deinen Kalender, neben dem Balken
+Prikaz dana: prekidači Imena i Cijeli dan za tvoj kalendar, pokraj trake
+
+Add to calendar only on booked sessions; in the installed app on iPhone it subscribes your Calendar to the When
+Zum Kalender hinzufügen nur bei festgelegten Terminen; in der installierten App auf dem iPhone abonniert dein Kalender das When
+Dodaj u kalendar samo na potvrđenim terminima; u instaliranoj aplikaciji na iPhoneu tvoj se Kalendar pretplaćuje na When

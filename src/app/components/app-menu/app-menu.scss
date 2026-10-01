@@ -43,17 +43,24 @@
   }
 
   section {
-    padding: 14px 0;
-    border-top: 1px solid var(--when-border);
-  }
-
-  section {
-    padding: 4px 0;
+    margin-bottom: 8px;
+    padding: 2px 12px;
+    border-radius: 18px;
+    background: var(--when-grid);
   }
 
   .sect {
-    padding: 6px 0 12px;
+    padding: 2px 0 12px;
     animation: rise 0.2s ease both;
+  }
+
+  /* Inside a grey group, the grey pill would vanish: give it the card colour. */
+  section .pill:not(.active):not(.danger) {
+    background: var(--when-surface);
+    box-shadow: var(--card-shadow);
+  }
+  section select {
+    background: var(--when-surface);
   }
 
   .fold {
@@ -86,11 +93,11 @@
 
   h2 {
     margin: 0;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--when-muted);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--when-text);
   }
 }
 
@@ -125,7 +132,7 @@
     align-items: center;
     gap: 4px;
     border: 0;
-    background: var(--when-grid);
+    background: var(--when-surface);
     border-radius: 16px;
     padding: 8px 4px 8px 12px;
 
@@ -432,7 +439,7 @@ p {
 }
 
 .langs {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
 
   .pill {
     flex: 1;

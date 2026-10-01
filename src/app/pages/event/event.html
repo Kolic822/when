@@ -21,9 +21,7 @@
     </div>
   }
   <nav class="top">
-    <a routerLink="/" class="brand"
-      >When <span class="tagline">are you free?</span></a
-    >
+    <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
     @if (status() === 'offline') {
       <span class="conn offline"><span class="dot"></span>{{ t('reconnecting…') }}</span>
     }
@@ -204,6 +202,7 @@
               [organiser]="isCreator()"
               [picked]="answered()"
               (sessionSelected)="resultsCard()?.openFor($event.date, $event.start)"
+              (bookRequested)="onBook($event)"
               (daySelected)="editingDay.set($event)"
               (allDayToggled)="onAllDay($event.date, $event.on)"
               (dayCleared)="onClearDay($event)"
@@ -221,6 +220,13 @@
           (hovered)="hoveredId.set($event)"
           (renameRequested)="renaming.set(true)"
         />
+        @if (features().history) {
+          <app-history
+            [entries]="event()!.history ?? []"
+            [meId]="meId()"
+            [zone]="event()!.timeZone ?? null"
+          />
+        }
       }
     }
   }
