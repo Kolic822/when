@@ -154,3 +154,57 @@ form:not(.editing) app-day-picker {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+
+/* Editing: who is in, each with a way out. */
+.people {
+  margin: 0 0 10px;
+  font-size: 13px;
+
+  ul {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    flex: none;
+  }
+  .pname {
+    flex: 1;
+    font-weight: 600;
+  }
+  .small {
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .small-icon {
+    width: 30px;
+    height: 30px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  .mini {
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .mini.danger {
+    background: var(--mat-sys-error);
+    color: var(--mat-sys-on-error);
+  }
+}

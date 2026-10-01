@@ -418,10 +418,26 @@ Dark mode and month names in dates are switches now
 Dunkler Modus und Monatsnamen in Datumsangaben sind jetzt Schalter
 Tamni način i imena mjeseci u datumima sada su prekidači
 
-Vote possible sessions up or down; everyone sees the votes live and the favourite is marked
-Mögliche Termine hoch- oder runterstimmen; alle sehen die Stimmen live und der Favorit ist markiert
-Glasaj za moguće termine ili protiv njih; svi vide glasove uživo, a favorit je označen
+Vote for possible sessions; everyone sees the votes live and the favourite is marked
+Für mögliche Termine stimmen; alle sehen die Stimmen live und der Favorit ist markiert
+Glasaj za moguće termine; svi vide glasove uživo, a favorit je označen
 
 The Create my When button sits at the bottom again instead of over the form
 Der Button „Mein When erstellen“ sitzt wieder unten statt über dem Formular
 Gumb „Napravi moj When“ opet stoji na dnu umjesto preko obrasca
+
+Guests keep their place: the server remembers who you are even if the browser forgets
+Gäste behalten ihren Platz: Der Server merkt sich, wer du bist, auch wenn der Browser es vergisst
+Gosti zadržavaju svoje mjesto: poslužitelj pamti tko si čak i ako preglednik zaboravi
+
+Lost it anyway? Type your old name and tap “That’s me” to carry on with your times
+Trotzdem verloren? Tippe deinen alten Namen ein und dann auf „Das bin ich“, um mit deinen Zeiten weiterzumachen
+Ipak izgubljeno? Upiši svoje staro ime i dodirni „To sam ja“ da nastaviš sa svojim vremenima
+
+The organiser can remove a person: highlight the name under the calendar, or under Change the plan
+Der Organisator kann jemanden entfernen: Namen unter dem Kalender hervorheben oder unter „Plan ändern“
+Organizator može ukloniti osobu: istakne ime ispod kalendara ili pod „Promijeni plan“
+
+Voting: one big thumb per session, and a line along the chip shows how many are for it
+Abstimmen: ein großer Daumen pro Termin, und eine Linie am Chip zeigt, wie viele dafür sind
+Glasanje: jedan veliki palac po terminu, a crta uz pločicu pokazuje koliko ih je za

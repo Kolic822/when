@@ -1,4 +1,4 @@
-import { Component, computed, input, model, output } from '@angular/core';
+import { Component, computed, input, model, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Participant } from '../../core/models';
 import { t } from '../../core/i18n/i18n';
@@ -50,7 +50,28 @@ import { t } from '../../core/i18n/i18n';
             >
               <mat-icon>edit</mat-icon>
             </button>
+          } @else if (organiser() && selected() === p.id) {
+            <button
+              type="button"
+              class="icon-btn edit"
+              (click)="asking.set(p)"
+              [attr.aria-label]="t('Remove {name}', { name: p.name })"
+              [title]="t('Remove {name}', { name: p.name })"
+            >
+              <mat-icon>person_remove</mat-icon>
+            </button>
           }
+        </li>
+      }
+      @if (asking(); as p) {
+        <li class="ask">
+          <span>{{ t('Remove {name} and their times?', { name: p.name }) }}</span>
+          <button type="button" class="pill mini" (click)="asking.set(null)">
+            {{ t('Keep') }}
+          </button>
+          <button type="button" class="pill mini danger" (click)="confirmRemove(p)">
+            {{ t('Remove') }}
+          </button>
         </li>
       }
       @if (!participants().length) {
@@ -154,6 +175,31 @@ import { t } from '../../core/i18n/i18n';
       font-size: 12px;
       padding-left: 2px;
     }
+    .ask {
+      flex-basis: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: var(--when-surface);
+      box-shadow: var(--card-shadow);
+      font-size: 13px;
+
+      span {
+        flex: 1;
+      }
+    }
+    .mini {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+    .mini.danger {
+      background: var(--mat-sys-error);
+      color: var(--mat-sys-on-error);
+    }
   `,
 })
 export class Legend {
@@ -162,6 +208,16 @@ export class Legend {
   readonly meId = input<string | null>(null);
   readonly online = input<ReadonlySet<string>>(new Set());
   readonly renameRequested = output<void>();
+  /** The organiser may take people out, e.g. a double left behind by a lost browser storage. */
+  readonly organiser = input(false);
+  readonly removeRequested = output<Participant>();
+  readonly asking = signal<Participant | null>(null);
+
+  confirmRemove(p: Participant): void {
+    this.asking.set(null);
+    this.selected.set(null);
+    this.removeRequested.emit(p);
+  }
   /** Sticky highlight (click); two-way. */
   readonly selected = model<string | null>(null);
   /** Transient highlight while hovering or focusing a chip. */

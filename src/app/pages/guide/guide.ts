@@ -94,6 +94,9 @@ export class Guide {
         m(
           'Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.',
         ),
+        m(
+          'Lost your place (a new phone, a cleared browser)? Type your old name and tap “That’s me” to carry on with your times. The organiser can remove a leftover double by highlighting the name and tapping the remove icon, or under Change the plan.',
+        ),
         m('With more than five days, swipe sideways. An arrow on the edge shows there is more.'),
         m('The Free button under a day marks you free all day.'),
       ],
@@ -104,7 +107,7 @@ export class Guide {
       steps: [
         m('They appear above the calendar once at least two people have answered, in date order.'),
         m(
-          'Everyone can vote a session up or down with the arrows on its chip; the votes show for all of you at once, and the best-liked session is marked “Most votes”. The organiser still decides.',
+          'Everyone can vote for a session with the thumb on its chip; the votes show for all of you at once, the line along the bottom shows how many of you are for it, and the best-liked session is marked “Most votes”. The organiser still decides.',
         ),
         m('Tap a session to see the notes people left on the times it covers.'),
         m('Tap the header to fold the list down to one line.'),

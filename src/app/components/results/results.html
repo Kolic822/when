@@ -50,37 +50,25 @@
                   </span>
                 }
               </button>
+              <span class="bar" [style.width.%]="r.share * 100" aria-hidden="true"></span>
               @if (meId()) {
-                <span class="vote">
-                  <button
-                    type="button"
-                    class="arrow"
-                    [class.on]="r.myVote === 1"
-                    [attr.aria-pressed]="r.myVote === 1"
-                    [attr.aria-label]="t('Vote for {session}', { session: r.day + ' ' + r.time })"
-                    (click)="vote(r, 1)"
-                  >
-                    <mat-icon>keyboard_arrow_up</mat-icon>
-                  </button>
-                  <span
-                    class="score"
-                    [class.plus]="r.score > 0"
-                    [class.minus]="r.score < 0"
-                    [attr.aria-label]="tn(r.score, '{n} vote', '{n} votes')"
-                    >{{ r.score > 0 ? '+' + r.score : r.score }}</span
-                  >
-                  <button
-                    type="button"
-                    class="arrow"
-                    [class.on]="r.myVote === -1"
-                    [attr.aria-pressed]="r.myVote === -1"
-                    [attr.aria-label]="
-                      t('Vote against {session}', { session: r.day + ' ' + r.time })
-                    "
-                    (click)="vote(r, -1)"
-                  >
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                  </button>
+                <button
+                  type="button"
+                  class="vote"
+                  [class.on]="r.myVote"
+                  [attr.aria-pressed]="r.myVote"
+                  [attr.aria-label]="t('Vote for {session}', { session: r.day + ' ' + r.time })"
+                  (click)="vote(r)"
+                >
+                  <mat-icon>{{ r.myVote ? 'thumb_up' : 'thumb_up_off_alt' }}</mat-icon>
+                  <span class="score" [attr.aria-label]="tn(r.score, '{n} vote', '{n} votes')">{{
+                    r.score
+                  }}</span>
+                </button>
+              } @else if (r.score) {
+                <span class="vote quiet">
+                  <mat-icon>thumb_up</mat-icon>
+                  <span class="score">{{ r.score }}</span>
                 </span>
               }
             </div>

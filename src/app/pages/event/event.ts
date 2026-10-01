@@ -25,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { EventApi } from '../../core/event-api';
 import { EventSession } from '../../core/event-session';
 
 import { Identity } from '../../core/identity';
@@ -33,7 +34,7 @@ import { findCommonWindows } from '../../core/availability';
 
 import { rangeLabel, shortDate } from '../../core/time';
 
-import { Session, Slot } from '../../core/models';
+import { Participant, Session, Slot } from '../../core/models';
 
 import { NamePrompt } from '../../components/name-prompt/name-prompt';
 
@@ -106,6 +107,7 @@ export class EventPage implements OnDestroy {
   readonly id = input.required<string>();
 
   readonly session = inject(EventSession);
+  private readonly api = inject(EventApi);
   private readonly identity = inject(Identity);
   private readonly snack = inject(MatSnackBar);
 
@@ -277,6 +279,16 @@ export class EventPage implements OnDestroy {
 
   join(name: string): void {
     this.session.join(name);
+  }
+
+  /** Organiser: takes someone out of the When, e.g. a double who lost their browser storage. */
+  async removeParticipant(p: Participant): Promise<void> {
+    if (!this.isCreator() || p.id === this.meId()) return;
+    try {
+      await this.api.leave(this.id(), p.id);
+    } catch {
+      /* the next event update shows whether it worked */
+    }
   }
 
   rename(name: string): void {

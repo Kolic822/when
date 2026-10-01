@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Auth } from '../../core/auth';
 import { t } from '../../core/i18n/i18n';
+import { Participant } from '../../core/models';
 import { PrefsStore } from '../../core/prefs';
 import { HOUR_OPTIONS, rangeLabel } from '../../core/time';
 import { eventZone, viewerZone, zoneCity } from '../../core/zone';
@@ -63,6 +64,17 @@ export class WhenForm {
   readonly initial = input<WhenDetails | null>(null);
   readonly busy = input(false);
   readonly error = input<string | null>(null);
+
+  /** Editing: who is in the When, so the organiser can take someone out. */
+  readonly people = input<Participant[]>([]);
+  readonly meId = input<string | null>(null);
+  readonly removePerson = output<Participant>();
+  readonly removing = signal<string | null>(null);
+
+  confirmRemove(p: Participant): void {
+    this.removing.set(null);
+    this.removePerson.emit(p);
+  }
 
   readonly submitted = output<WhenDetails>();
   readonly cancelled = output<void>();

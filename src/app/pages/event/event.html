@@ -83,7 +83,9 @@
         [heading]="t('What\'s your name?')"
         [hint]="t('So the others know who\'s who.')"
         [error]="session.nameError()"
+        [reclaimable]="session.nameClash()?.online === false"
         (submitted)="join($event)"
+        (reclaimed)="session.join($event, true)"
       />
     } @else {
       @if (renaming()) {
@@ -103,6 +105,9 @@
         <app-when-form
           mode="edit"
           [initial]="editSnapshot()"
+          [people]="event()!.participants"
+          [meId]="meId()"
+          (removePerson)="removeParticipant($event)"
           (submitted)="saveSettings($event)"
           (cancelled)="settingsOpen.set(false)"
         />
@@ -221,7 +226,9 @@
           [online]="session.online()"
           [(selected)]="selectedId"
           (hovered)="hoveredId.set($event)"
+          [organiser]="isCreator()"
           (renameRequested)="renaming.set(true)"
+          (removeRequested)="removeParticipant($event)"
         />
         @if (features().history) {
           <app-history

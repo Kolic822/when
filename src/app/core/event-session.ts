@@ -25,6 +25,9 @@ export class EventSession {
   readonly notFound = signal(false);
   /** Set when the server refused a name because someone else already uses it. */
   readonly nameError = signal<string | null>(null);
+  /** The name that clashed, and whether its owner is connected right now (then it can't be taken back). */
+  readonly nameClash = signal<{ name: string; online: boolean } | null>(null);
+  private reclaim = false;
   /** Ids of participants currently connected. */
   readonly online = signal<ReadonlySet<string>>(new Set());
 
@@ -51,19 +54,42 @@ export class EventSession {
     this.online.set(new Set());
     this.meId.set(this.identity.get(eventId)?.id ?? null);
     this.pendingName = this.identity.takePendingName(eventId);
-    if (this.pendingName || this.meId() || !this.auth.session()) {
+    if (this.pendingName || this.meId()) {
       this.open();
       return;
     }
-    // Signed in, and new to this When on this device. They may have joined it on another
-    // device (or in the installed app), so ask the account who they are here before joining.
-    void this.sync.ask().then(() => {
+    // New to this When on this device. The account may know who they are here (another
+    // device, the installed app), and the server's cookie may too (browser storage was lost).
+    void Promise.all([this.sync.ask(), this.fromCookie(eventId)]).then(() => {
       if (this.stopped || this.eventId !== eventId) return;
       this.meId.set(this.identity.get(eventId)?.id ?? null);
-      // Not in it yet: join under the account's name straight away instead of asking.
+      // Not in it yet: signed in, join under the account's name straight away instead of asking.
       if (!this.meId()) this.pendingName = this.auth.name() || null;
       this.open();
     });
+  }
+
+  /** Who the server's cookie says this browser is in the When, if anyone. */
+  private async fromCookie(eventId: string): Promise<void> {
+    try {
+      const res = await fetch(`/api/identity/${encodeURIComponent(eventId)}`);
+      if (!res.ok) return;
+      const found = (await res.json()) as { participantId?: string; name?: string };
+      if (found.participantId && !this.identity.get(eventId)) {
+        this.identity.set(eventId, { id: found.participantId, name: found.name ?? '' });
+      }
+    } catch {
+      /* offline: the name prompt still works */
+    }
+  }
+
+  /** Tells the server's cookie who this browser is here, so a wiped storage is not the end. */
+  private remember(eventId: string, participantId: string): void {
+    void fetch('/api/identity', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ eventId, participantId }),
+    }).catch(() => undefined);
   }
 
   disconnect(): void {
@@ -76,16 +102,21 @@ export class EventSession {
     this.ws = null;
   }
 
-  /** Join (or create) a participant with the given name. */
-  join(name: string): void {
+  /**
+   * Join (or create) a participant with the given name. `reclaim` says "that name is me":
+   * carry on as the existing participant of that name if they are not connected right now.
+   */
+  join(name: string, reclaim = false): void {
     this.nameError.set(null);
+    this.nameClash.set(null);
     this.pendingName = name.trim();
+    this.reclaim = reclaim;
     this.meId.set(null);
     this.sendJoin();
   }
 
-  /** Thumbs up or down on a possible session; 0 takes the vote back. */
-  vote(key: string, value: 1 | -1 | 0): void {
+  /** A vote for a possible session; 0 takes it back. */
+  vote(key: string, value: 1 | 0): void {
     this.send({ type: 'vote', key, value });
   }
 
@@ -201,7 +232,9 @@ export class EventSession {
   private sendJoin(): void {
     const id = this.meId();
     if (id) this.send({ type: 'join', participantId: id });
-    else if (this.pendingName) this.send({ type: 'join', name: this.pendingName });
+    else if (this.pendingName) {
+      this.send({ type: 'join', name: this.pendingName, reclaim: this.reclaim || undefined });
+    }
   }
 
   private handle(msg: ServerMessage): void {
@@ -238,10 +271,17 @@ export class EventSession {
         break;
       case 'nameTaken':
         this.pendingName = null;
+        this.reclaim = false;
+        this.nameClash.set({ name: msg.name, online: !!msg.online });
         this.nameError.set(
-          t('Someone here is already called {name}. Add a last initial or pick another name.', {
-            name: msg.name,
-          }),
+          msg.online
+            ? t(
+                'Someone called {name} is here right now. Add a last initial or pick another name.',
+                {
+                  name: msg.name,
+                },
+              )
+            : t('Someone here is already called {name}.', { name: msg.name }),
         );
         break;
       case 'joined': {
@@ -249,8 +289,13 @@ export class EventSession {
         const ev = this.event();
         const name =
           this.pendingName ?? ev?.participants.find((p) => p.id === msg.participantId)?.name ?? '';
-        if (this.eventId) this.identity.set(this.eventId, { id: msg.participantId, name });
+        if (this.eventId) {
+          this.identity.set(this.eventId, { id: msg.participantId, name });
+          this.remember(this.eventId, msg.participantId);
+        }
         this.pendingName = null;
+        this.reclaim = false;
+        this.nameClash.set(null);
         break;
       }
       case 'needName':

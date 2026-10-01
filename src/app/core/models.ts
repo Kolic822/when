@@ -97,8 +97,8 @@ export interface MeetEvent {
   /** Every booked session; more than one only with the Pro option. `booked` is the first. */
   bookings?: Session[];
   shortlists?: Shortlist[];
-  /** Thumbs up (1) or down (-1) per possible session ("date:start:end") and participant. */
-  votes?: Record<string, Record<string, 1 | -1>>;
+  /** A vote (1) per possible session ("date:start:end") and participant. */
+  votes?: Record<string, Record<string, 1>>;
   createdAt: string;
 }
 
@@ -143,16 +143,16 @@ export type ServerMessage =
   | { type: 'event'; event: MeetEvent }
   | { type: 'joined'; participantId: string }
   | { type: 'needName' }
-  | { type: 'nameTaken'; name: string }
+  | { type: 'nameTaken'; name: string; online?: boolean }
   | { type: 'presence'; online: string[] }
   | { type: 'deleted' }
   | { type: 'error'; code: string }
   | { type: 'pong' };
 
 export type ClientMessage =
-  | { type: 'join'; participantId?: string; name?: string }
+  | { type: 'join'; participantId?: string; name?: string; reclaim?: boolean }
   | { type: 'setSlots'; slots: Slot[] }
   | { type: 'rename'; name: string }
-  | { type: 'vote'; key: string; value: 1 | -1 | 0 }
+  | { type: 'vote'; key: string; value: 1 | 0 }
   | { type: 'updateEvent'; token: string; patch: EventPatch }
   | { type: 'ping' };

@@ -159,52 +159,57 @@ li.open .line .chev {
   }
 }
 
-/* Thumbs up, the score, thumbs down: a slim column at the chip's edge. */
+/* One thumb, the whole height of the chip, with the count under it. */
 .vote {
   flex: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  width: 30px;
-  padding: 2px 0;
-  background: color-mix(in srgb, var(--when-text) 5%, transparent);
+  justify-content: center;
+  gap: 2px;
+  width: 44px;
+  border: 0;
+  border-left: 1px solid color-mix(in srgb, var(--when-text) 8%, transparent);
+  background: color-mix(in srgb, var(--when-text) 4%, transparent);
+  color: var(--when-muted);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
-  .arrow {
-    display: grid;
-    place-items: center;
-    width: 30px;
+  mat-icon {
+    width: 20px;
     height: 20px;
-    border: 0;
-    background: none;
-    color: var(--when-muted);
-    cursor: pointer;
-
-    mat-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 20px;
-    }
-    &.on {
-      color: var(--accent);
-    }
-    &:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: -2px;
-    }
+    font-size: 20px;
   }
   .score {
     font-size: 12px;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-
-    &.plus {
-      color: var(--accent);
-    }
-    &.minus {
-      color: var(--mat-sys-error);
-    }
   }
+  &.on {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  &.quiet {
+    cursor: default;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+}
+
+/* The share of people who voted for it, drawn along the chip's bottom edge. */
+.chip .bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  pointer-events: none;
 }
 
 /* "+N more" / "Show less" keeps the old button look. */

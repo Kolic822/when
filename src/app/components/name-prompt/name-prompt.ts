@@ -1,12 +1,13 @@
 import { Component, input, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { t, m } from '../../core/i18n/i18n';
 
 @Component({
   selector: 'app-name-prompt',
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
   template: `
     <form class="card prompt" (submit)="submit($event)">
       <h2>{{ t(heading()) }}</h2>
@@ -27,6 +28,12 @@ import { t, m } from '../../core/i18n/i18n';
           <mat-hint class="error">{{ error() }}</mat-hint>
         }
       </mat-form-field>
+      @if (reclaimable()) {
+        <button type="button" class="pill thats-me" (click)="reclaimed.emit(name().trim())">
+          <mat-icon>person_check</mat-icon>
+          {{ t('That’s me, carry on as {name}', { name: name().trim() }) }}
+        </button>
+      }
       <div class="actions">
         @if (cancellable()) {
           <button type="button" class="pill" (click)="cancelled.emit()">{{ t('Cancel') }}</button>
@@ -60,6 +67,12 @@ import { t, m } from '../../core/i18n/i18n';
     .error {
       color: var(--mat-sys-error);
     }
+    .thats-me {
+      align-self: flex-start;
+      margin: 4px 0 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
   `,
 })
 export class NamePrompt {
@@ -70,6 +83,9 @@ export class NamePrompt {
   readonly submitLabel = input(m('Let’s go'));
   readonly cancellable = input(false);
   readonly error = input<string | null>(null);
+  /** The typed name belongs to someone who is away: offer to carry on as them. */
+  readonly reclaimable = input(false);
+  readonly reclaimed = output<string>();
   readonly submitted = output<string>();
   readonly cancelled = output<void>();
 

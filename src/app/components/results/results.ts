@@ -35,9 +35,10 @@ interface Row {
   starts: number[];
   /** Whether tapping the row reveals anything (notes, booking, calendar). */
   expandable: boolean;
-  /** Thumbs up minus thumbs down. */
+  /** How many people voted for it, and what share of those who answered that is. */
   score: number;
-  myVote: 1 | -1 | 0;
+  share: number;
+  myVote: boolean;
   /** The single best-liked session, when one is ahead with a positive score. */
   top: boolean;
 }
@@ -78,10 +79,10 @@ export class Results {
   readonly eventId = input('');
   readonly shortlists = input<Shortlist[]>([]);
   /** Everyone's thumbs up and down, from the When. */
-  readonly votes = input<Record<string, Record<string, 1 | -1>>>({});
+  readonly votes = input<Record<string, Record<string, 1>>>({});
   /** Who is looking; '' for someone who has not joined (no voting then). */
   readonly meId = input<string | null>(null);
-  readonly voted = output<{ key: string; value: 1 | -1 | 0 }>();
+  readonly voted = output<{ key: string; value: 1 | 0 }>();
   /** A session is already booked, so the list starts folded away. */
   readonly booked = input(false);
 
@@ -119,15 +120,17 @@ export class Results {
     const me = this.meId();
     const scores = ordered.map((w) => {
       const own = votes[`${w.date}:${w.start}:${w.end}`] ?? {};
-      return Object.values(own).reduce((n, v) => n + v, 0);
+      return Object.values(own).filter((v) => v === 1).length;
     });
+    const voters = Math.max(1, this.result().answered.length);
     const best = Math.max(0, ...scores);
     const topIndex =
       best > 0 && scores.filter((s) => s === best).length === 1 ? scores.indexOf(best) : -1;
     return ordered.map((w, i) => ({
       key: `${w.date}-${w.start}`,
       score: scores[i],
-      myVote: (me && votes[`${w.date}:${w.start}:${w.end}`]?.[me]) || 0,
+      share: Math.min(1, scores[i] / voters),
+      myVote: !!me && votes[`${w.date}:${w.start}:${w.end}`]?.[me] === 1,
       top: i === topIndex,
       day: shortDate(dayOf(w.date, w.start)),
       time: spanAt(w.date, w.start, w.end),
@@ -241,13 +244,10 @@ export class Results {
     this.pickedStart.update((all) => ({ ...all, [r.key]: start }));
   }
 
-  /** Tapping the same arrow again takes the vote back. */
-  vote(r: Row, value: 1 | -1): void {
+  /** Tapping again takes the vote back. */
+  vote(r: Row): void {
     const w = r.window;
-    this.voted.emit({
-      key: `${w.date}:${w.start}:${w.end}`,
-      value: r.myVote === value ? 0 : value,
-    });
+    this.voted.emit({ key: `${w.date}:${w.start}:${w.end}`, value: r.myVote ? 0 : 1 });
   }
 
   confirmBooking(r: Row): void {

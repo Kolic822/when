@@ -32,6 +32,40 @@
     </label>
   </div>
 
+  @if (editing() && people().length) {
+    <div class="people">
+      <span class="muted">{{ t('People') }}</span>
+      <ul>
+        @for (p of people(); track p.id) {
+          <li>
+            <span class="dot" [style.background]="p.color"></span>
+            <span class="pname">{{ p.name }}</span>
+            @if (p.id === meId()) {
+              <span class="muted small">{{ t('you') }}</span>
+            } @else if (removing() === p.id) {
+              <button type="button" class="pill mini" (click)="removing.set(null)">
+                {{ t('Keep') }}
+              </button>
+              <button type="button" class="pill mini danger" (click)="confirmRemove(p)">
+                {{ t('Remove') }}
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="icon-btn small-icon"
+                (click)="removing.set(p.id)"
+                [attr.aria-label]="t('Remove {name}', { name: p.name })"
+                [title]="t('Remove {name}', { name: p.name })"
+              >
+                <mat-icon>person_remove</mat-icon>
+              </button>
+            }
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
   <p class="summary" [class.muted]="!dates().length">
     @if (dates().length) {
       <mat-icon>event_available</mat-icon> {{ rangeText() }}

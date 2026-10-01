@@ -642,6 +642,49 @@ app.put('/api/me/calendars', (req, res) => {
   res.json({ links });
 });
 
+// ---- Who a browser is in each When, kept in a cookie the server sets. Browsers throw away
+// script-written storage sooner than server cookies, so guests do not lose their place.
+const ME_COOKIE = 'when_me';
+const MAX_REMEMBERED = 40;
+
+function readMeCookie(req) {
+  const raw = (req.get('cookie') ?? '')
+    .split(';')
+    .map((c) => c.trim())
+    .find((c) => c.startsWith(`${ME_COOKIE}=`));
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(Buffer.from(raw.slice(ME_COOKIE.length + 1), 'base64url').toString('utf8'));
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeMeCookie(req, res, map) {
+  const value = Buffer.from(JSON.stringify(map)).toString('base64url');
+  const secure = req.secure || req.get('x-forwarded-proto') === 'https' ? '; Secure' : '';
+  res.setHeader('set-cookie', `${ME_COOKIE}=${value}; Path=/; Max-Age=34560000; HttpOnly; SameSite=Lax${secure}`);
+}
+
+app.get('/api/identity/:id', (req, res) => {
+  const pid = readMeCookie(req)[req.params.id];
+  const ev = store.get(req.params.id);
+  const p = pid && ev ? ev.participants.find((x) => x.id === pid) : null;
+  res.json(p ? { participantId: p.id, name: p.name } : {});
+});
+
+app.post('/api/identity', (req, res) => {
+  const ev = store.get(String(req.body?.eventId ?? ''));
+  const p = ev?.participants.find((x) => x.id === req.body?.participantId);
+  if (!ev || !p) return res.status(404).json({ error: 'not_found' });
+  const map = readMeCookie(req);
+  delete map[ev.id];
+  const entries = [...Object.entries(map), [ev.id, p.id]].slice(-MAX_REMEMBERED);
+  writeMeCookie(req, res, Object.fromEntries(entries));
+  res.status(204).end();
+});
+
 /**
  * Reads a calendar subscription link (Apple, Outlook, …) for someone signed in and
  * returns its events in a range. The events themselves are never stored.
@@ -1014,7 +1057,17 @@ wss.on('connection', (ws, req) => {
         if (!p) {
           const name = cleanName(msg.name);
           if (!name) { send(ws, { type: 'needName' }); return; }
-          if (nameTaken(ev, name)) { send(ws, { type: 'nameTaken', name }); return; }
+          const same = ev.participants.find((x) => x.name.toLowerCase() === name.toLowerCase());
+          if (same) {
+            // Someone of that name is here already. If they are not connected right now and the
+            // newcomer says "that's me" (a lost browser storage, a new phone), carry on as them.
+            const online = onlineIds(ev.id).includes(same.id);
+            if (msg.reclaim === true && !online) p = same;
+            else { send(ws, { type: 'nameTaken', name, online }); return; }
+          }
+        }
+        if (!p) {
+          const name = cleanName(msg.name);
           p = { id: randomUUID(), name, color: pickColor(ev), slots: [] };
           ev.participants.push(p);
           ev.notifiedComplete = false;
@@ -1048,10 +1101,10 @@ wss.on('connection', (ws, req) => {
         break;
       }
       case 'vote': {
-        // A thumbs up or down on a possible session, keyed by its date and minutes.
+        // A vote for a possible session, keyed by its date and minutes; 0 takes it back.
         const p = ev.participants.find((x) => x.id === ws.participantId);
         const key = String(msg.key ?? '');
-        const value = [1, -1, 0].includes(msg.value) ? msg.value : null;
+        const value = [1, 0].includes(msg.value) ? msg.value : null;
         if (!p || value === null || !/^\d{4}-\d{2}-\d{2}:\d{1,4}:\d{1,4}$/.test(key)) return;
         ev.votes ??= {};
         if (value === 0) {

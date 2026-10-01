@@ -7,16 +7,26 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.16';
+export const VERSION = '0.17';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17',
+    date: '1 Oct 2026',
+    changes: [
+      m('Guests keep their place: the server remembers who you are even if the browser forgets'),
+      m('Lost it anyway? Type your old name and tap “That’s me” to carry on with your times'),
+      m(
+        'The organiser can remove a person: highlight the name under the calendar, or under Change the plan',
+      ),
+      m('Voting: one big thumb per session, and a line along the chip shows how many are for it'),
+    ],
+  },
   {
     version: '0.16',
     date: '1 Oct 2026',
     changes: [
-      m(
-        'Vote possible sessions up or down; everyone sees the votes live and the favourite is marked',
-      ),
+      m('Vote for possible sessions; everyone sees the votes live and the favourite is marked'),
       m('The Create my When button sits at the bottom again instead of over the form'),
     ],
   },
