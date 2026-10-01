@@ -10,7 +10,7 @@
   (pointercancel)="onSwipeEnd($event)"
 >
   <header>
-    <span class="count muted">{{ index() + 1 }} / {{ steps.length }}</span>
+    <span class="count muted">{{ index() + 1 }} / {{ steps().length }}</span>
     <button type="button" class="pill skip" (click)="skip()">{{ t('Skip') }}</button>
   </header>
 
@@ -60,6 +60,9 @@
               <span class="chip"><i></i><b>0</b></span>
             </div>
           }
+          @default {
+            <mat-icon class="big-icon">{{ step().icon }}</mat-icon>
+          }
           @case ('actions') {
             <div class="mini-actions">
               <span class="bar"><span class="block full"></span></span>
@@ -90,7 +93,7 @@
   }
 
   <div class="dots" aria-hidden="true">
-    @for (s of steps; track s.key) {
+    @for (s of steps(); track s.key) {
       <span class="dot" [class.on]="$index === index()"></span>
     }
   </div>

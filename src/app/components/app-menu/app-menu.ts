@@ -216,7 +216,9 @@ export class AppMenu {
 
   showHowTo(): void {
     this.close();
-    this.howTo.show();
+    // On a When they organise, the organiser pages come along.
+    const current = /\/e\/([^/?#]+)/.exec(this.router.url)?.[1];
+    this.howTo.show(!!current && !!this.identity.creatorToken(current));
   }
 
   private readonly api = inject(EventApi);

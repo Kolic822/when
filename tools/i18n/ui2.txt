@@ -1089,3 +1089,63 @@ Dane koje nitko ne može organizator može izbaciti.
 Send the sessions to someone outside the group, so they choose which one gets booked.
 Schicke die Termine jemandem außerhalb der Gruppe, damit die Person wählt, welcher festgelegt wird.
 Pošalji termine nekome izvan grupe da odabere koji će se potvrditi.
+
+You book
+Du legst fest
+Ti potvrđuješ
+
+Only the organiser can book a session.
+Nur der Organisator kann einen Termin festlegen.
+Samo organizator može potvrditi termin.
+
+Tap a possible session, pick a start, tap Book.
+Tippe auf einen möglichen Termin, wähle einen Beginn, tippe auf Festlegen.
+Dodirni mogući termin, odaberi početak, dodirni Potvrdi.
+
+Or hold a gold band in the calendar to book it right there.
+Oder halte einen goldenen Streifen im Kalender gedrückt, um ihn direkt festzulegen.
+Ili zadrži prst na zlatnoj traci u kalendaru da je odmah potvrdiš.
+
+A booked session lands in everyone’s calendar with one tap.
+Ein festgelegter Termin landet mit einem Tipp in jedem Kalender.
+Potvrđeni termin jednim dodirom završi u svačijem kalendaru.
+
+Keep it tidy
+Ordnung halten
+Održavaj red
+
+Your When, your rules.
+Dein When, deine Regeln.
+Tvoj When, tvoja pravila.
+
+Drop the days nobody can make, under the possible sessions.
+Streiche unter den möglichen Terminen die Tage, an denen niemand kann.
+Pod mogućim terminima izbaci dane koje nitko ne može.
+
+Change the plan: name, days, hours and length.
+Plan ändern: Name, Tage, Uhrzeiten und Dauer.
+Promijeni plan: naziv, dane, sate i trajanje.
+
+Remove a leftover double from the people list there.
+Entferne dort in der Personenliste einen übrig gebliebenen Doppelgänger.
+Ondje s popisa ljudi ukloni zaostali duplikat.
+
+Share, or outsource
+Teilen oder auslagern
+Podijeli ili prepusti
+
+Get answers, or let someone else choose.
+Hol dir Antworten oder lass jemand anderen wählen.
+Prikupi odgovore ili pusti nekog drugog da bira.
+
+Copy link sends the When to the group.
+Link kopieren schickt das When an die Gruppe.
+Kopiraj poveznicu šalje When grupi.
+
+Outsource decision sends the sessions to someone outside the group to choose.
+Entscheidung auslagern schickt die Termine jemandem außerhalb der Gruppe zur Wahl.
+Prepusti odluku šalje termine nekome izvan grupe da odabere.
+
+Turn on notifications to hear when everyone has answered.
+Schalte Benachrichtigungen ein, um zu erfahren, wenn alle geantwortet haben.
+Uključi obavijesti da saznaš kad svi odgovore.

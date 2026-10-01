@@ -250,7 +250,7 @@ export class EventPage implements OnDestroy {
       if (!me || this.stepperOffered) return;
       this.stepperOffered = true;
       // New here: explain the calendar first. Skipping it is one tap.
-      this.howTo.offer();
+      this.howTo.offer(this.isCreator());
       if (me.slots.length === 0 && !this.identity.stepperDone(this.id())) this.stepping.set(true);
     });
     // Close the rename prompt once the new name has arrived (it stays open on a "name taken" error).

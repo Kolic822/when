@@ -18,10 +18,14 @@ interface Tip {
 }
 
 interface Step {
-  key: 'calendar' | 'day' | 'actions' | 'sessions';
+  key: 'calendar' | 'day' | 'actions' | 'sessions' | 'book' | 'tidy' | 'share';
   title: string;
   lead: string;
   tips: Tip[];
+  /** Pages without a drawing show a big icon instead. */
+  icon?: string;
+  /** Only the organiser sees these. */
+  organiser?: boolean;
 }
 
 const COARSE = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
@@ -39,7 +43,7 @@ export class HowTo {
   private readonly state = inject(HowToState);
   private readonly primary = viewChild.required<ElementRef<HTMLButtonElement>>('primary');
 
-  readonly steps: Step[] = [
+  private readonly allSteps: Step[] = [
     {
       key: 'calendar',
       title: m('The calendar'),
@@ -89,11 +93,68 @@ export class HowTo {
         { icon: 'event_busy', text: m('Days nobody can make can be dropped by the organiser.') },
       ],
     },
+    {
+      key: 'book',
+      organiser: true,
+      icon: 'event_available',
+      title: m('You book'),
+      lead: m('Only the organiser can book a session.'),
+      tips: [
+        { icon: 'touch_app', text: m('Tap a possible session, pick a start, tap Book.') },
+        {
+          icon: 'back_hand',
+          text: m('Or hold a gold band in the calendar to book it right there.'),
+        },
+        {
+          icon: 'calendar_add_on',
+          text: m('A booked session lands in everyone’s calendar with one tap.'),
+        },
+      ],
+    },
+    {
+      key: 'tidy',
+      organiser: true,
+      icon: 'tune',
+      title: m('Keep it tidy'),
+      lead: m('Your When, your rules.'),
+      tips: [
+        {
+          icon: 'event_busy',
+          text: m('Drop the days nobody can make, under the possible sessions.'),
+        },
+        { icon: 'edit', text: m('Change the plan: name, days, hours and length.') },
+        { icon: 'person_remove', text: m('Remove a leftover double from the people list there.') },
+      ],
+    },
+    {
+      key: 'share',
+      organiser: true,
+      icon: 'forward_to_inbox',
+      title: m('Share, or outsource'),
+      lead: m('Get answers, or let someone else choose.'),
+      tips: [
+        { icon: 'link', text: m('Copy link sends the When to the group.') },
+        {
+          icon: 'forward_to_inbox',
+          text: m('Outsource decision sends the sessions to someone outside the group to choose.'),
+        },
+        {
+          icon: 'notifications_active',
+          text: m('Turn on notifications to hear when everyone has answered.'),
+        },
+      ],
+    },
   ];
 
+  /** The pages for this showing: the general ones, the organiser's, or both. */
+  readonly steps = computed(() => {
+    const { general, organiser } = this.state.pages();
+    return this.allSteps.filter((s) => (s.organiser ? organiser : general));
+  });
+
   readonly index = signal(0);
-  readonly step = computed(() => this.steps[this.index()]);
-  readonly isLast = computed(() => this.index() === this.steps.length - 1);
+  readonly step = computed(() => this.steps()[this.index()]);
+  readonly isLast = computed(() => this.index() === this.steps().length - 1);
 
   constructor() {
     // Material's button finishes setting up a moment after render; focus once it has.

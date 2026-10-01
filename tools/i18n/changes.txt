@@ -501,3 +501,7 @@ Sva polja za tekst i padajući izbornici sada izgledaju isto, uključujući „P
 Outsource decision explains itself: send the sessions to someone outside the group to choose
 Entscheidung auslagern erklärt sich selbst: Termine an jemanden außerhalb der Gruppe schicken, der wählt
 Prepusti odluku objašnjava samu sebe: pošalji termine nekome izvan grupe da odabere
+
+Organisers get three extra guide pages the first time they create a When: booking, tidying, sharing
+Organisatoren bekommen beim ersten When drei zusätzliche Anleitungsseiten: Festlegen, Aufräumen, Teilen
+Organizatori pri prvom Whenu dobivaju tri dodatne stranice vodiča: potvrđivanje, pospremanje, dijeljenje
