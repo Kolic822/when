@@ -84,6 +84,11 @@ export class EventSession {
     this.sendJoin();
   }
 
+  /** Thumbs up or down on a possible session; 0 takes the vote back. */
+  vote(key: string, value: 1 | -1 | 0): void {
+    this.send({ type: 'vote', key, value });
+  }
+
   rename(name: string): void {
     const n = name.trim();
     if (!n) return;

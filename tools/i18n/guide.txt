@@ -401,3 +401,7 @@ Račun napravljen e-poštom? Otvori poveznicu koju ti pošaljemo da potvrdiš ad
 Signing out takes your Whens off that device; they come back when you sign in again. As a guest, your Whens move into the account you create or sign in to.
 Beim Abmelden verschwinden deine Whens von diesem Gerät; sie kommen zurück, wenn du dich wieder anmeldest. Als Gast wandern deine Whens in das Konto, das du erstellst oder in das du dich anmeldest.
 Odjavom tvoji Whenovi nestaju s tog uređaja; vraćaju se kad se ponovno prijaviš. Kao gost, tvoji Whenovi prelaze u račun koji napraviš ili u koji se prijaviš.
+
+Everyone can vote a session up or down with the arrows on its chip; the votes show for all of you at once, and the best-liked session is marked “Most votes”. The organiser still decides.
+Alle können einen Termin mit den Pfeilen auf seinem Chip hoch- oder runterstimmen; die Stimmen sehen alle sofort, und der beliebteste Termin ist mit „Meiste Stimmen“ markiert. Entscheiden tut weiterhin der Organisator.
+Svi mogu strelicama na pločici glasati za termin ili protiv njega; glasovi se svima vide odmah, a najomiljeniji termin nosi oznaku „Najviše glasova“. Odluku i dalje donosi organizator.

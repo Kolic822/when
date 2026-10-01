@@ -65,27 +65,27 @@
 .choices {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
 .google {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
   width: 100%;
-  min-height: 48px;
+  height: 40px;
 }
 
 /*
- * Google's button lives in an iframe. Scaled to the height of the other buttons; and the
- * frame's own colour scheme is declared so dark pages do not get an opaque white box.
+ * Google's button lives in an iframe and cannot be styled, so the page draws its own
+ * button and lays Google's over it, invisible, exactly as big, to take the tap.
+ * The frame's colour scheme is declared so dark pages do not get an opaque white box.
  */
 .google-button {
+  position: absolute;
+  inset: 0;
   display: flex;
   justify-content: center;
-  width: 100%;
-  min-height: 40px;
+  opacity: 0.001;
   color-scheme: light;
 
   &:empty {
@@ -93,10 +93,9 @@
   }
 }
 
-.placeholder {
-  display: grid;
-  place-items: center;
-  height: 40px;
+.soon.live {
+  color: var(--when-text);
+  cursor: pointer;
 }
 
 /* Google's button is 40px tall; the page's own buttons match it. */
@@ -273,7 +272,7 @@
   align-items: flex-start;
   gap: 8px;
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0 0 22px;
   padding: 10px 12px;
   border-radius: 14px;
   background: color-mix(in srgb, var(--accent) 10%, transparent);

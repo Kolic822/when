@@ -103,6 +103,9 @@ export class Guide {
       title: m('Possible sessions'),
       steps: [
         m('They appear above the calendar once at least two people have answered, in date order.'),
+        m(
+          'Everyone can vote a session up or down with the arrows on its chip; the votes show for all of you at once, and the best-liked session is marked “Most votes”. The organiser still decides.',
+        ),
         m('Tap a session to see the notes people left on the times it covers.'),
         m('Tap the header to fold the list down to one line.'),
         m('“Waiting for …” tells you who hasn’t answered yet.'),

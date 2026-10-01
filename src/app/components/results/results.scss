@@ -103,40 +103,126 @@ li.open .line .chev {
 .chip {
   position: relative;
   display: flex;
+  align-items: stretch;
+  min-height: 56px;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  background: var(--when-grid);
+  color: var(--when-text);
+  overflow: hidden;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+
+  &.on {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  /* The session most people voted for. */
+  &.top {
+    border-color: var(--when-common);
+    box-shadow: 0 0 0 2px var(--when-common-bg);
+  }
+
+  .main {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    padding: 7px 12px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+  }
+  .top-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--when-common);
+  }
+}
+
+/* Thumbs up, the score, thumbs down: a slim column at the chip's edge. */
+.vote {
+  flex: none;
+  display: flex;
   flex-direction: column;
-  gap: 1px;
+  align-items: center;
+  justify-content: space-between;
+  width: 30px;
+  padding: 2px 0;
+  background: color-mix(in srgb, var(--when-text) 5%, transparent);
+
+  .arrow {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 20px;
+    border: 0;
+    background: none;
+    color: var(--when-muted);
+    cursor: pointer;
+
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+    &.on {
+      color: var(--accent);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+  }
+  .score {
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+
+    &.plus {
+      color: var(--accent);
+    }
+    &.minus {
+      color: var(--mat-sys-error);
+    }
+  }
+}
+
+/* "+N more" / "Show less" keeps the old button look. */
+.chip.extra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 48px;
   padding: 7px 12px;
   border: 1.5px solid transparent;
   border-radius: 14px;
   background: var(--when-grid);
-  color: var(--when-text);
+  color: var(--accent);
   font: inherit;
   font-size: 13px;
-  line-height: 1.25;
-  text-align: left;
+  font-weight: 600;
   cursor: pointer;
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    transform 0.1s;
 
-  &:disabled {
-    cursor: default;
-  }
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-  &.on {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-  &.extra {
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-weight: 600;
-  }
   &:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;

@@ -417,3 +417,11 @@ Prepusti odluku: gumb se povlači dok poveznica postoji
 Dark mode and month names in dates are switches now
 Dunkler Modus und Monatsnamen in Datumsangaben sind jetzt Schalter
 Tamni način i imena mjeseci u datumima sada su prekidači
+
+Vote possible sessions up or down; everyone sees the votes live and the favourite is marked
+Mögliche Termine hoch- oder runterstimmen; alle sehen die Stimmen live und der Favorit ist markiert
+Glasaj za moguće termine ili protiv njih; svi vide glasove uživo, a favorit je označen
+
+The Create my When button sits at the bottom again instead of over the form
+Der Button „Mein When erstellen“ sitzt wieder unten statt über dem Formular
+Gumb „Napravi moj When“ opet stoji na dnu umjesto preko obrasca

@@ -7,9 +7,19 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.15.2';
+export const VERSION = '0.16';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.16',
+    date: '1 Oct 2026',
+    changes: [
+      m(
+        'Vote possible sessions up or down; everyone sees the votes live and the favourite is marked',
+      ),
+      m('The Create my When button sits at the bottom again instead of over the form'),
+    ],
+  },
   {
     version: '0.15.2',
     date: '1 Oct 2026',

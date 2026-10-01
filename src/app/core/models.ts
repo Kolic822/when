@@ -97,6 +97,8 @@ export interface MeetEvent {
   /** Every booked session; more than one only with the Pro option. `booked` is the first. */
   bookings?: Session[];
   shortlists?: Shortlist[];
+  /** Thumbs up (1) or down (-1) per possible session ("date:start:end") and participant. */
+  votes?: Record<string, Record<string, 1 | -1>>;
   createdAt: string;
 }
 
@@ -151,5 +153,6 @@ export type ClientMessage =
   | { type: 'join'; participantId?: string; name?: string }
   | { type: 'setSlots'; slots: Slot[] }
   | { type: 'rename'; name: string }
+  | { type: 'vote'; key: string; value: 1 | -1 | 0 }
   | { type: 'updateEvent'; token: string; patch: EventPatch }
   | { type: 'ping' };

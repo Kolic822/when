@@ -152,6 +152,9 @@
               [eventId]="id()"
               [shortlists]="event()!.shortlists ?? []"
               [booked]="bookings().length > 0 && !features().multiBook"
+              [votes]="event()!.votes ?? {}"
+              [meId]="meId()"
+              (voted)="session.vote($event.key, $event.value)"
               (book)="onBook($event)"
             />
           }

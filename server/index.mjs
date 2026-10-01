@@ -138,6 +138,7 @@ for (const ev of store.all()) {
   ev.partialOk ??= false;
   ev.booked ??= null;
   ev.shortlists ??= [];
+  ev.votes ??= {};
   ev.push ??= [];
   ev.bookings ??= ev.booked ? [ev.booked] : [];
   if (ev.dayStart === undefined || ev.dayEnd === undefined) {
@@ -1041,6 +1042,24 @@ wss.on('connection', (ws, req) => {
             title: say('everyone', { title: ev.title }),
             body: n ? say('possible', { n }, n) : say('none_fit'),
           }));
+        }
+        store.set(ev);
+        broadcast(ev.id);
+        break;
+      }
+      case 'vote': {
+        // A thumbs up or down on a possible session, keyed by its date and minutes.
+        const p = ev.participants.find((x) => x.id === ws.participantId);
+        const key = String(msg.key ?? '');
+        const value = [1, -1, 0].includes(msg.value) ? msg.value : null;
+        if (!p || value === null || !/^\d{4}-\d{2}-\d{2}:\d{1,4}:\d{1,4}$/.test(key)) return;
+        ev.votes ??= {};
+        if (value === 0) {
+          delete ev.votes[key]?.[p.id];
+          if (ev.votes[key] && !Object.keys(ev.votes[key]).length) delete ev.votes[key];
+        } else {
+          if (!ev.votes[key] && Object.keys(ev.votes).length >= 200) return;
+          (ev.votes[key] ??= {})[p.id] = value;
         }
         store.set(ev);
         broadcast(ev.id);

@@ -28,25 +28,62 @@
       @if (rows().length) {
         <div class="chips" role="group" [attr.aria-label]="t('Possible sessions')">
           @for (r of visible(); track r.key) {
-            <button
-              type="button"
-              class="chip"
-              [class.on]="openRow() === r.key"
-              [disabled]="!r.expandable"
-              [attr.aria-pressed]="r.expandable ? openRow() === r.key : null"
-              (click)="toggleRow(r)"
-            >
-              <span class="day">{{ r.day }}</span>
-              <span class="time">{{ r.time }}</span>
-              @if (r.notes.length) {
-                <span
-                  class="notes-n"
-                  [attr.aria-label]="tn(r.notes.length, '{n} note', '{n} notes')"
-                >
-                  <mat-icon>chat_bubble</mat-icon>
+            <div class="chip" [class.on]="openRow() === r.key" [class.top]="r.top">
+              <button
+                type="button"
+                class="main"
+                [disabled]="!r.expandable"
+                [attr.aria-pressed]="r.expandable ? openRow() === r.key : null"
+                (click)="toggleRow(r)"
+              >
+                <span class="day">{{ r.day }}</span>
+                <span class="time">{{ r.time }}</span>
+                @if (r.top) {
+                  <span class="top-tag">{{ t('Most votes') }}</span>
+                }
+                @if (r.notes.length) {
+                  <span
+                    class="notes-n"
+                    [attr.aria-label]="tn(r.notes.length, '{n} note', '{n} notes')"
+                  >
+                    <mat-icon>chat_bubble</mat-icon>
+                  </span>
+                }
+              </button>
+              @if (meId()) {
+                <span class="vote">
+                  <button
+                    type="button"
+                    class="arrow"
+                    [class.on]="r.myVote === 1"
+                    [attr.aria-pressed]="r.myVote === 1"
+                    [attr.aria-label]="t('Vote for {session}', { session: r.day + ' ' + r.time })"
+                    (click)="vote(r, 1)"
+                  >
+                    <mat-icon>keyboard_arrow_up</mat-icon>
+                  </button>
+                  <span
+                    class="score"
+                    [class.plus]="r.score > 0"
+                    [class.minus]="r.score < 0"
+                    [attr.aria-label]="tn(r.score, '{n} vote', '{n} votes')"
+                    >{{ r.score > 0 ? '+' + r.score : r.score }}</span
+                  >
+                  <button
+                    type="button"
+                    class="arrow"
+                    [class.on]="r.myVote === -1"
+                    [attr.aria-pressed]="r.myVote === -1"
+                    [attr.aria-label]="
+                      t('Vote against {session}', { session: r.day + ' ' + r.time })
+                    "
+                    (click)="vote(r, -1)"
+                  >
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                  </button>
                 </span>
               }
-            </button>
+            </div>
           }
           @if (rows().length > limit) {
             <button

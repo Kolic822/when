@@ -250,11 +250,17 @@
   gap: 6px;
 }
 
-/* Four schemes: two per row, so nothing runs off the edge. */
+/* Four schemes: a small grid of equal pills. */
 .segments.looks {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 8px;
+
+  .pill {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
 
   .swatch {
     width: 14px;
