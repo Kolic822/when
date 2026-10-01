@@ -477,3 +477,7 @@ Prikaz dana: redak s uputom više ne nestaje iz vidokruga nakon dodavanja vremen
 Change the plan: tick people, tap Remove, confirm; it happens on Save, and Cancel undoes it
 Plan ändern: Leute ankreuzen, Entfernen tippen, bestätigen; es passiert beim Speichern, Abbrechen macht es rückgängig
 Promijeni plan: označi ljude, dodirni Ukloni, potvrdi; događa se pri spremanju, a Odustani to poništava
+
+People are removed under Change the plan only; the tiny icon in the legend is gone
+Leute werden nur noch unter „Plan ändern“ entfernt; das winzige Symbol in der Legende ist weg
+Ljudi se uklanjaju samo pod „Promijeni plan“; sićušna ikona u legendi je nestala

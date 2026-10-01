@@ -1018,10 +1018,6 @@ Remove {name}
 {name} entfernen
 Ukloni {name}
 
-Remove {name} and their times?
-{name} und die markierten Zeiten entfernen?
-Ukloniti {name} i njihova vremena?
-
 Velvet
 Samt
 Baršun

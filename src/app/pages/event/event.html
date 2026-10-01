@@ -227,9 +227,7 @@
           [online]="session.online()"
           [(selected)]="selectedId"
           (hovered)="hoveredId.set($event)"
-          [organiser]="isCreator()"
           (renameRequested)="renaming.set(true)"
-          (removeRequested)="removeParticipant($event)"
         />
         @if (features().history) {
           <app-history

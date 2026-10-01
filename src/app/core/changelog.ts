@@ -7,9 +7,16 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17.6';
+export const VERSION = '0.17.7';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17.7',
+    date: '1 Oct 2026',
+    changes: [
+      m('People are removed under Change the plan only; the tiny icon in the legend is gone'),
+    ],
+  },
   {
     version: '0.17.6',
     date: '1 Oct 2026',
