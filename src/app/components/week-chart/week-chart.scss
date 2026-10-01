@@ -357,6 +357,39 @@
 }
 
 /* The organiser books by tapping a gold band. */
+/* The session opened in the list above: solid gold, a thick outline, and it pulses once;
+   the other bands step back meanwhile. */
+.common.focus {
+  z-index: 3;
+  background: var(--when-common-bg);
+  box-shadow:
+    inset 0 0 0 3px var(--when-common),
+    0 0 0 3px var(--when-common-bg);
+  animation: focus-pulse 0.7s ease-out;
+}
+
+.chart:has(.common.focus) .common:not(.focus) {
+  opacity: 0.45;
+}
+
+@keyframes focus-pulse {
+  0% {
+    box-shadow:
+      inset 0 0 0 3px var(--when-common),
+      0 0 0 0 var(--when-common-bg);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 3px var(--when-common),
+      0 0 0 10px var(--when-common);
+  }
+  100% {
+    box-shadow:
+      inset 0 0 0 3px var(--when-common),
+      0 0 0 3px var(--when-common-bg);
+  }
+}
+
 .common.tappable {
   cursor: pointer;
   transition: transform 0.1s;

@@ -449,3 +449,7 @@ Prepusti odluku: poveznica se kopira čim nastane; svaka poveznica je jedan ured
 Velvet, a deep red scheme, replaces Grape; Lavender is the default
 Samt, ein tiefrotes Schema, ersetzt Traube; Lavendel ist die Vorgabe
 Baršun, duboko crvena shema, zamjenjuje Grožđe; Lavanda je zadana
+
+Tap a possible session and its gold band lights up in the calendar
+Tippe auf einen möglichen Termin und sein goldener Streifen leuchtet im Kalender auf
+Dodirni mogući termin i njegova zlatna traka zasvijetli u kalendaru

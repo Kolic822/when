@@ -444,6 +444,7 @@ export const hr: Dictionary = {
   "Tap a day to add your free time.": "Dodirni dan da uneseš slobodno vrijeme.",
   "Tap a name under the calendar to highlight that person; tap again to switch it off. A green dot means they are in the app right now.": "Dodirni ime ispod kalendara da istakneš tu osobu; dodirni ponovno da isključiš. Zelena točka znači da je upravo u aplikaciji.",
   "Tap a period to write a note, for example “only if it doesn’t rain”. Tap × to remove it.": "Dodirni razdoblje da napišeš bilješku, na primjer „samo ako ne pada kiša”. Dodirni × da ga ukloniš.",
+  "Tap a possible session and its gold band lights up in the calendar": "Dodirni mogući termin i njegova zlatna traka zasvijetli u kalendaru",
   "Tap a possible session, or its gold band in the calendar. Hold a gold band to book it right there.": "Dodirni mogući termin ili njegovu zlatnu traku u kalendaru. Zadrži prst na zlatnoj traci da je odmah ondje potvrdiš.",
   "Tap a session to see the notes people left on the times it covers.": "Dodirni termin da vidiš bilješke ostavljene uz vremena koja pokriva.",
   "Tap every day that could work. They don’t have to be next to each other. Use This week, Next week or Weekends to pick several at once; the arrows move four weeks at a time.": "Dodirni svaki dan koji bi mogao odgovarati. Ne moraju biti jedan do drugoga. S „Ovaj tjedan”, „Sljedeći tjedan” ili „Vikendi” odabireš više dana odjednom; strelice pomiču po četiri tjedna.",

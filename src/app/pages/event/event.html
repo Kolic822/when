@@ -207,6 +207,7 @@
               [meId]="meId()"
               [windows]="availability().windows"
               [highlightId]="highlightId()"
+              [focus]="resultsCard()?.selected()?.window ?? null"
               [organiser]="isCreator()"
               [picked]="answered()"
               (sessionSelected)="resultsCard()?.openFor($event.date, $event.start)"

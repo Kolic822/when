@@ -110,6 +110,7 @@
             @for (w of d.common; track w.top) {
               <span
                 class="common"
+                [class.focus]="w.focus"
                 [class.tappable]="organiser()"
                 (click)="onBandClick(d, w, $event)"
                 (pointerdown)="onBandPressStart(d, w, $event)"

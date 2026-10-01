@@ -1,4 +1,14 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
 
 import { CalendarLink } from '../../core/calendar-link';
 
@@ -37,6 +47,8 @@ interface Block {
   end?: number;
   /** A calendar event folded to a note at the top of the day. */
   note?: boolean;
+  /** The session opened in the list above (gold bands only). */
+  focus?: boolean;
   /** Start/end text drawn inside gold bands that are tall enough. */
   from?: string;
   to?: string;
@@ -91,6 +103,8 @@ export class WeekChart {
   readonly bookRequested = output<Session>();
   /** Window chosen through an "Ask someone" link, with who chose it. */
   readonly picked = input<{ date: string; start: number; end: number; label: string } | null>(null);
+  /** The possible session opened in the list above: its gold band is singled out. */
+  readonly focus = input<{ date: string; start: number } | null>(null);
   readonly daySelected = output<string>();
   readonly allDayToggled = output<{ date: string; on: boolean }>();
   readonly dayCleared = output<string>();
@@ -130,6 +144,23 @@ export class WeekChart {
   /** More days than fit: show a scroll hint until the user reaches the end. */
   readonly overflows = computed(() => this.visibleDates().length > MAX_VISIBLE);
   readonly scrolledToEnd = signal(false);
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  constructor() {
+    // The session opened in the list may sit on a day that is scrolled out of view.
+    effect(() => {
+      const f = this.focus();
+      if (!f) return;
+      untracked(() =>
+        setTimeout(() =>
+          this.host.nativeElement
+            .querySelector('.common.focus')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' }),
+        ),
+      );
+    });
+  }
 
   onChartScroll(e: Event): void {
     const el = e.target as HTMLElement;
@@ -176,6 +207,7 @@ export class WeekChart {
             ),
             start: w.start,
             end: w.end,
+            focus: this.focus()?.date === w.date && this.focus()?.start === w.start,
             ...(w.end - w.start >= 90
               ? { from: timeAt(w.date, w.start), to: timeAt(w.date, w.end) }
               : {}),
