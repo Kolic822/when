@@ -1014,10 +1014,6 @@ That’s me, carry on as {name}
 Das bin ich, weiter als {name}
 To sam ja, nastavi kao {name}
 
-Remove {name}
-{name} entfernen
-Ukloni {name}
-
 Velvet
 Samt
 Baršun
