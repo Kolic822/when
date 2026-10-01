@@ -224,6 +224,7 @@ export const hr: Dictionary = {
   "Guest or account": "Gost ili račun",
   "Guests keep their place: the server remembers who you are even if the browser forgets": "Gosti zadržavaju svoje mjesto: poslužitelj pamti tko si čak i ako preglednik zaboravi",
   "Guide": "Vodič",
+  "Guide: one topic open at a time": "Vodič: otvorena je samo jedna tema",
   "Highlight {name}": "Istakni: {name}",
   "History": "Povijest",
   "History moved into the menu (Pro preview), for any of your Whens": "Povijest je premještena u izbornik (Pro pregled), za bilo koji tvoj When",

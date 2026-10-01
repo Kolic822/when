@@ -224,6 +224,7 @@ export const de: Dictionary = {
   "Guest or account": "Gast oder Konto",
   "Guests keep their place: the server remembers who you are even if the browser forgets": "Gäste behalten ihren Platz: Der Server merkt sich, wer du bist, auch wenn der Browser es vergisst",
   "Guide": "Anleitung",
+  "Guide: one topic open at a time": "Anleitung: immer nur ein Thema offen",
   "Highlight {name}": "{name} hervorheben",
   "History": "Verlauf",
   "History moved into the menu (Pro preview), for any of your Whens": "Der Verlauf ist ins Menü gewandert (Pro-Vorschau), für jedes deiner Whens",

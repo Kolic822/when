@@ -509,3 +509,7 @@ Organizatori pri prvom Whenu dobivaju tri dodatne stranice vodiča: potvrđivanj
 Tapping or holding a gold band in the calendar reaches the band again, not the day under it
 Tippen oder Halten auf einen goldenen Streifen im Kalender trifft wieder den Streifen, nicht den Tag darunter
 Dodir ili zadržavanje na zlatnoj traci u kalendaru opet pogađa traku, a ne dan ispod nje
+
+Guide: one topic open at a time
+Anleitung: immer nur ein Thema offen
+Vodič: otvorena je samo jedna tema

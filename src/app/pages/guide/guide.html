@@ -20,7 +20,8 @@
   </p>
 
   @for (topic of topics; track topic.title) {
-    <details class="card topic">
+    <!-- One name for all of them: opening a topic closes the one that was open. -->
+    <details class="card topic" name="topics">
       <summary>
         <mat-icon class="icon">{{ topic.icon }}</mat-icon>
         <span class="title">{{ t(topic.title) }}</span>
