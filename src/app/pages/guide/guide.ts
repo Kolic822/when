@@ -237,7 +237,7 @@ export class Guide {
       title: m('Outsource decision'),
       pro: true,
       intro: m(
-        'For when the group has options and one more person has to choose, like a teacher or a guest.',
+        'Send the possible sessions to someone outside the group, such as a teacher, a guest or a venue, so they choose which one gets booked.',
       ),
       steps: [
         m('Under Possible sessions tap Outsource decision and tick the sessions to offer.'),

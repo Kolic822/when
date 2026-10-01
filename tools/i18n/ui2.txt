@@ -1085,3 +1085,7 @@ Organizator jedan potvrdi; završi u svačijem kalendaru.
 Days nobody can make can be dropped by the organiser.
 Tage, an denen niemand kann, kann der Organisator streichen.
 Dane koje nitko ne može organizator može izbaciti.
+
+Send the sessions to someone outside the group, so they choose which one gets booked.
+Schicke die Termine jemandem außerhalb der Gruppe, damit die Person wählt, welcher festgelegt wird.
+Pošalji termine nekome izvan grupe da odabere koji će se potvrditi.

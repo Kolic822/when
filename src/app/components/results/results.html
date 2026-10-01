@@ -147,7 +147,16 @@
             (created)="linkMade($event)"
           />
         } @else {
-          <button type="button" class="ask" (click)="asking.set(true)">
+          <button
+            type="button"
+            class="ask"
+            (click)="asking.set(true)"
+            [title]="
+              t(
+                'Send the sessions to someone outside the group, so they choose which one gets booked.'
+              )
+            "
+          >
             <mat-icon>forward_to_inbox</mat-icon>
             {{ t('Outsource decision') }}
             <span class="pro-badge">{{ t('PRO') }}</span>

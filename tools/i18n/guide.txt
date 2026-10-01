@@ -266,9 +266,9 @@ With an account your name is filled in for you: sign in with Google, or create o
 Mit einem Konto wird dein Name automatisch ausgefüllt: Melde dich mit Google an oder erstelle eines mit E-Mail, Benutzername und Passwort. An- und abmelden kannst du dich oben im Menü.
 S računom se tvoje ime ispunjava samo: prijavi se Googleom ili napravi račun e-poštom, korisničkim imenom i lozinkom. Prijava i odjava nalaze se na vrhu izbornika.
 
-For when the group has options and one more person has to choose, like a teacher or a guest.
-Für den Fall, dass die Gruppe Optionen hat und noch eine Person entscheiden muss, etwa ein Lehrer oder ein Gast.
-Za slučaj kad grupa ima opcije, a odlučiti mora još jedna osoba, poput učitelja ili gosta.
+Send the possible sessions to someone outside the group, such as a teacher, a guest or a venue, so they choose which one gets booked.
+Schicke die möglichen Termine jemandem außerhalb der Gruppe, etwa einer Lehrkraft, einem Gast oder dem Veranstaltungsort, damit die Person wählt, welcher festgelegt wird.
+Pošalji moguće termine nekome izvan grupe, primjerice učitelju, gostu ili prostoru, da odabere koji će se potvrditi.
 
 Choose whether they may pick just one or several, then create and copy the link.
 Wähle, ob nur einer oder mehrere gewählt werden dürfen, erstelle dann den Link und kopiere ihn.

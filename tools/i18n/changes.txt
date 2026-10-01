@@ -497,3 +497,7 @@ Vodič „Kako radi“ pokriva glasanje, potvrđivanje i gumb Slobodno
 Every text field and drop-down looks the same now, including Change your name
 Alle Textfelder und Auswahlfelder sehen jetzt gleich aus, auch „Namen ändern“
 Sva polja za tekst i padajući izbornici sada izgledaju isto, uključujući „Promijeni ime“
+
+Outsource decision explains itself: send the sessions to someone outside the group to choose
+Entscheidung auslagern erklärt sich selbst: Termine an jemanden außerhalb der Gruppe schicken, der wählt
+Prepusti odluku objašnjava samu sebe: pošalji termine nekome izvan grupe da odabere

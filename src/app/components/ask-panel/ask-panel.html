@@ -1,6 +1,12 @@
 <div class="panel">
   <p class="title">{{ t('Outsource decision') }}</p>
-  <p class="muted">{{ t('They get a link with only these sessions. Which ones?') }}</p>
+  <p class="muted">
+    {{
+      t(
+        'Send the sessions to someone outside the group, so they choose which one gets booked. Which sessions should they see?'
+      )
+    }}
+  </p>
   <div class="chips" role="group" [attr.aria-label]="t('Sessions to include')">
     @for (s of sessions(); track $index) {
       <button

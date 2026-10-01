@@ -369,7 +369,9 @@ export class AppMenu {
     {
       icon: 'forward_to_inbox',
       label: m('Outsource decision'),
-      hint: m('Send a link with only the possible sessions.'),
+      hint: m(
+        'Send the possible sessions to someone outside the group, so they choose which one gets booked.',
+      ),
     },
     {
       icon: 'library_add_check',

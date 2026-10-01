@@ -266,9 +266,9 @@ The organiser can book more than one session for a When.
 Der Organisator kann für ein When mehr als einen Termin festlegen.
 Organizator može potvrditi više termina za jedan When.
 
-Send a link with only the possible sessions.
-Sende einen Link, der nur die möglichen Termine zeigt.
-Pošalji poveznicu samo s mogućim terminima.
+Send the possible sessions to someone outside the group, so they choose which one gets booked.
+Schicke die möglichen Termine jemandem außerhalb der Gruppe, damit die Person wählt, welcher festgelegt wird.
+Pošalji moguće termine nekome izvan grupe da odabere koji će se potvrditi.
 
 Add to calendar
 Zum Kalender hinzufügen
@@ -310,9 +310,9 @@ Close
 Schließen
 Zatvori
 
-They get a link with only these sessions. Which ones?
-Sie bekommen einen Link nur mit diesen Terminen. Welche?
-Dobit će poveznicu samo s ovim terminima. S kojima?
+Send the sessions to someone outside the group, so they choose which one gets booked. Which sessions should they see?
+Schicke die Termine jemandem außerhalb der Gruppe, damit die Person wählt, welcher festgelegt wird. Welche Termine soll sie sehen?
+Pošalji termine nekome izvan grupe da odabere koji će se potvrditi. Koje termine treba vidjeti?
 
 Sessions to include
 Enthaltene Termine

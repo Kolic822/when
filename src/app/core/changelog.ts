@@ -7,9 +7,18 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.18';
+export const VERSION = '0.18.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.18.1',
+    date: '1 Oct 2026',
+    changes: [
+      m(
+        'Outsource decision explains itself: send the sessions to someone outside the group to choose',
+      ),
+    ],
+  },
   {
     version: '0.18',
     date: '1 Oct 2026',
