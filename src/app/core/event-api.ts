@@ -45,11 +45,13 @@ export class EventApi {
     creatorToken: string,
     mode: 'one' | 'many',
     sessions: Session[],
+    /** The id the app chose for the link, when it wants to know the address ahead. */
+    listId?: string,
   ): Promise<Shortlist> {
     const res = await fetch(`/api/events/${encodeURIComponent(id)}/shortlists`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-creator-token': creatorToken },
-      body: JSON.stringify({ mode, sessions }),
+      body: JSON.stringify({ mode, sessions, id: listId }),
     });
     if (!res.ok) throw new Error(`${t('Could not create the link')} (${res.status})`);
     return res.json();

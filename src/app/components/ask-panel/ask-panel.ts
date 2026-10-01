@@ -35,7 +35,7 @@ export class AskPanel {
   readonly eventId = input.required<string>();
   readonly sessions = input.required<Session[]>();
   readonly closed = output<void>();
-  /** A link was made: its id, so the list below can point at it. */
+  /** A link was made and its address copied: its id, so the list below can say so. */
   readonly created = output<string>();
 
   /** Indices of the sessions to include; all by default. */
@@ -62,8 +62,18 @@ export class AskPanel {
     if (!token || !sessions.length || this.busy()) return;
     this.busy.set(true);
     this.error.set(null);
+    // The link's address is chosen here, so it can go to the clipboard right at the tap:
+    // phones refuse clipboard writes once a request has been awaited.
+    const listId = newListId();
+    void navigator.clipboard?.writeText(`${location.origin}/s/${listId}`).catch(() => undefined);
     try {
-      const list = await this.api.createShortlist(this.eventId(), token, this.mode(), sessions);
+      const list = await this.api.createShortlist(
+        this.eventId(),
+        token,
+        this.mode(),
+        sessions,
+        listId,
+      );
       this.created.emit(list.id);
       this.closed.emit();
     } catch (e) {
@@ -72,4 +82,11 @@ export class AskPanel {
       this.busy.set(false);
     }
   }
+}
+
+/** 8 letters and digits, like the server's own ids. */
+function newListId(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  return Array.from(bytes, (b) => chars[b % chars.length]).join('');
 }

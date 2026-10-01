@@ -837,7 +837,10 @@ app.post('/api/events/:id/shortlists', (req, res) => {
     .filter(Boolean)
     .slice(0, 12);
   if (!sessions.length) return res.status(400).json({ error: 'no_sessions' });
-  let id = shortId();
+  // The app may bring its own id: it copies the link to the clipboard before asking, since
+  // phones only allow that right at the tap.
+  const wanted = String(req.body?.id ?? '');
+  let id = /^[A-Za-z0-9]{8}$/.test(wanted) && !findShortlist(wanted) ? wanted : shortId();
   while (findShortlist(id)) id = shortId();
   const list = {
     id,

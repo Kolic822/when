@@ -4,7 +4,7 @@ import { DEFAULT_DAY_END, DEFAULT_DAY_START } from './models';
 import { DateStyle, dateStyle } from './time';
 
 export type Theme = 'system' | 'light' | 'dark';
-export type Look = 'grape' | 'sand' | 'sky' | 'lavender';
+export type Look = 'lavender' | 'velvet' | 'sand' | 'sky';
 
 /**
  * Pro features. They are on for everyone signed in with Google and off for guests;
@@ -58,7 +58,7 @@ export interface Prefs extends Stored {
 const KEY = 'when:prefs';
 const DEFAULTS: Stored = {
   theme: 'system',
-  look: 'grape',
+  look: 'lavender',
   dateStyle: 'numeric',
   durationHours: 3,
   dayStart: DEFAULT_DAY_START,
@@ -121,7 +121,9 @@ function load(): Stored {
     const saved = JSON.parse(raw) as Partial<Stored> & { features?: Partial<Features> };
     const { features, ...rest } = saved;
     // Earlier colour schemes were replaced; keep people on the nearest new one.
-    const look = ({ sunset: 'sand', lagoon: 'sky' } as Record<string, Look>)[rest.look ?? ''];
+    const look = ({ sunset: 'sand', lagoon: 'sky', grape: 'lavender' } as Record<string, Look>)[
+      rest.look ?? ''
+    ];
     if (look) rest.look = look;
     // The "book several" choice used to live among the feature switches.
     return { ...DEFAULTS, multiBook: features?.multiBook ?? DEFAULTS.multiBook, ...rest };
@@ -133,7 +135,7 @@ function load(): Stored {
 /** `data-theme` drives our CSS variables; `color-scheme` drives Angular Material's light-dark() colours. */
 function applyTheme(theme: Theme, look: Look): void {
   const root = document.documentElement;
-  if (look === 'grape') root.removeAttribute('data-look');
+  if (look === 'lavender') root.removeAttribute('data-look');
   else root.setAttribute('data-look', look);
   if (theme === 'system') root.removeAttribute('data-theme');
   else root.setAttribute('data-theme', theme);

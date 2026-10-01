@@ -146,10 +146,6 @@ Waiting for {names}.
 Es fehlt noch: {names}.
 Čeka se: {names}.
 
-Link sent
-Link gesendet
-Poveznica poslana
-
 Keep
 Behalten
 Zadrži
@@ -165,10 +161,6 @@ Ukloni ovu poveznicu
 None fit: {names}
 Keiner passt: {names}
 Nijedan ne odgovara: {names}
-
-No answer yet.
-Noch keine Antwort.
-Još nema odgovora.
 
 {names} can’t stay the full {length}
 {names} kann nicht die vollen {length} bleiben
@@ -1002,10 +994,6 @@ Month names in dates
 Monatsnamen in Datumsangaben
 Imena mjeseci u datumima
 
-Most votes
-Meiste Stimmen
-Najviše glasova
-
 Vote for {session}
 Für {session} stimmen
 Glasaj za {session}
@@ -1033,3 +1021,7 @@ Ukloni {name}
 Remove {name} and their times?
 {name} und die markierten Zeiten entfernen?
 Ukloniti {name} i njihova vremena?
+
+Velvet
+Samt
+Baršun

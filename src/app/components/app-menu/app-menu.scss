@@ -257,9 +257,16 @@
   margin-bottom: 8px;
 
   .pill {
+    position: relative;
     height: 34px;
-    padding: 0 10px;
+    padding: 0 10px 0 28px;
     font-size: 13px;
+  }
+  .swatch {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .swatch {

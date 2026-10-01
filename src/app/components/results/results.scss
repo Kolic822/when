@@ -150,13 +150,6 @@ li.open .line .chev {
       outline-offset: -2px;
     }
   }
-  .top-tag {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--when-common);
-  }
 }
 
 /* One thumb, the whole height of the chip, with the count under it. */
@@ -402,10 +395,18 @@ p {
 .list-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: 6px;
   font-size: 12px;
+
+  .lead-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    color: var(--when-muted);
+  }
+  .count {
+    flex: 1;
+  }
 
   .pill {
     background: var(--when-surface);
@@ -474,14 +475,7 @@ p {
 }
 
 /* The link that was just made stands out until its address has been copied. */
-.list.fresh {
-  border: 1.5px solid var(--accent);
 
-  .new {
-    color: var(--accent);
-  }
-  .pill.mini.active {
-    background: var(--accent);
-    color: var(--on-accent);
-  }
+.list-head + .ans {
+  margin-top: 6px;
 }

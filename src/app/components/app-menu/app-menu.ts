@@ -346,10 +346,10 @@ export class AppMenu {
   }
 
   readonly looks: { value: Look; label: string; color: string }[] = [
-    { value: 'grape', label: m('Grape'), color: '#6d5ef5' },
+    { value: 'lavender', label: m('Lavender'), color: '#8f74f2' },
+    { value: 'velvet', label: m('Velvet'), color: '#b4234a' },
     { value: 'sand', label: m('Sand'), color: '#b4802e' },
     { value: 'sky', label: m('Sky'), color: '#2f6ff0' },
-    { value: 'lavender', label: m('Lavender'), color: '#8f74f2' },
   ];
 
   setLook(look: Look): void {

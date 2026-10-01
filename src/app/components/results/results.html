@@ -38,9 +38,6 @@
               >
                 <span class="day">{{ r.day }}</span>
                 <span class="time">{{ r.time }}</span>
-                @if (r.top) {
-                  <span class="top-tag">{{ t('Most votes') }}</span>
-                }
                 @if (r.notes.length) {
                   <span
                     class="notes-n"
@@ -147,7 +144,7 @@
             [eventId]="eventId()"
             [sessions]="sessions()"
             (closed)="asking.set(false)"
-            (created)="fresh.set($event)"
+            (created)="linkMade($event)"
           />
         } @else {
           <button type="button" class="ask" (click)="asking.set(true)">
@@ -161,45 +158,31 @@
       @if (organiser() && asked().length) {
         <div class="asked">
           @for (a of asked(); track a.id) {
-            <div class="list" [class.fresh]="fresh() === a.id">
+            <div class="list">
               <div class="list-head">
-                <span class="muted">
-                  @if (fresh() === a.id) {
-                    <strong class="new">{{ t('Link ready') }}</strong>
-                  } @else {
-                    {{ t('Link sent') }} · {{ tn(a.answered, '{n} answer', '{n} answers') }}
-                  }
-                </span>
+                <mat-icon class="lead-icon">forward_to_inbox</mat-icon>
+                <span class="muted count">{{ tn(a.answered, '{n} answer', '{n} answers') }}</span>
                 @if (removing() === a.id) {
-                  <span class="confirm">
-                    <button type="button" class="pill mini" (click)="removing.set(null)">
-                      {{ t('Keep') }}
-                    </button>
-                    <button type="button" class="pill mini danger" (click)="remove(a.id)">
-                      {{ t('Remove link') }}
-                    </button>
-                  </span>
+                  <button type="button" class="pill mini" (click)="removing.set(null)">
+                    {{ t('Keep') }}
+                  </button>
+                  <button type="button" class="pill mini danger" (click)="remove(a.id)">
+                    {{ t('Remove link') }}
+                  </button>
                 } @else {
-                  <span class="confirm">
-                    <button
-                      type="button"
-                      class="pill mini"
-                      [class.active]="fresh() === a.id"
-                      (click)="copy(a.url)"
-                    >
-                      <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
-                      {{ copied() === a.url ? t('Copied') : t('Copy link') }}
-                    </button>
-                    <button
-                      type="button"
-                      class="icon-btn mini-icon"
-                      (click)="removing.set(a.id)"
-                      [attr.aria-label]="t('Remove this link')"
-                      [title]="t('Remove this link')"
-                    >
-                      <mat-icon>delete_outline</mat-icon>
-                    </button>
-                  </span>
+                  <button type="button" class="pill mini" (click)="copy(a.url)">
+                    <mat-icon>{{ copied() === a.url ? 'check' : 'link' }}</mat-icon>
+                    {{ copied() === a.url ? t('Copied') : t('Copy link') }}
+                  </button>
+                  <button
+                    type="button"
+                    class="icon-btn mini-icon"
+                    (click)="removing.set(a.id)"
+                    [attr.aria-label]="t('Remove this link')"
+                    [title]="t('Remove this link')"
+                  >
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
                 }
               </div>
               @for (row of a.rows; track $index) {
@@ -223,9 +206,6 @@
                 <div class="ans none muted">
                   {{ t('None fit: {names}', { names: a.none.join(', ') }) }}
                 </div>
-              }
-              @if (!a.answered) {
-                <div class="ans none muted">{{ t('No answer yet.') }}</div>
               }
             </div>
           }

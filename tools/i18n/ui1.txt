@@ -254,10 +254,6 @@ Booked
 Festgelegt
 Potvrđeno
 
-Grape
-Traube
-Grožđe
-
 Connect calendar
 Kalender verbinden
 Poveži kalendar
@@ -301,10 +297,6 @@ Nova verzija je spremna.
 Could not check right now.
 Prüfung gerade nicht möglich.
 Trenutačno nije moguće provjeriti.
-
-Link ready
-Link bereit
-Poveznica spremna
 
 Copied
 Kopiert

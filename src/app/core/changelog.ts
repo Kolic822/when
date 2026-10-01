@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17';
+export const VERSION = '0.17.1';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17.1',
+    date: '1 Oct 2026',
+    changes: [
+      m('Outsource decision: the link is copied the moment it is made; each link is one tidy line'),
+      m('Velvet, a deep red scheme, replaces Grape; Lavender is the default'),
+    ],
+  },
   {
     version: '0.17',
     date: '1 Oct 2026',

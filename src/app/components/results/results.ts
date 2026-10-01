@@ -100,8 +100,11 @@ export class Results {
   /** Start the organiser picked per row; defaults to the start of the window. */
   private readonly pickedStart = signal<Record<string, number>>({});
   readonly asking = signal(false);
-  /** The link just made, shown with a filled Copy button until it is copied. */
-  readonly fresh = signal<string | null>(null);
+  /** A link was just made and its address copied: say so on its row for a moment. */
+  linkMade(id: string): void {
+    this.copied.set(`${location.origin}/s/${id}`);
+    setTimeout(() => this.copied.set(null), 2500);
+  }
   readonly copied = signal<string | null>(null);
   /** Sent link the organiser is about to remove. */
   readonly removing = signal<string | null>(null);
@@ -271,7 +274,6 @@ export class Results {
   }
 
   async copy(url: string): Promise<void> {
-    this.fresh.set(null);
     try {
       await navigator.clipboard.writeText(url);
       this.copied.set(url);

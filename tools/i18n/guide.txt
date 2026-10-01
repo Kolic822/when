@@ -402,9 +402,9 @@ Signing out takes your Whens off that device; they come back when you sign in ag
 Beim Abmelden verschwinden deine Whens von diesem Gerät; sie kommen zurück, wenn du dich wieder anmeldest. Als Gast wandern deine Whens in das Konto, das du erstellst oder in das du dich anmeldest.
 Odjavom tvoji Whenovi nestaju s tog uređaja; vraćaju se kad se ponovno prijaviš. Kao gost, tvoji Whenovi prelaze u račun koji napraviš ili u koji se prijaviš.
 
-Everyone can vote for a session with the thumb on its chip; the votes show for all of you at once, the line along the bottom shows how many of you are for it, and the best-liked session is marked “Most votes”. The organiser still decides.
-Alle können mit dem Daumen auf dem Chip für einen Termin stimmen; die Stimmen sehen alle sofort, die Linie am unteren Rand zeigt, wie viele von euch dafür sind, und der beliebteste Termin ist mit „Meiste Stimmen“ markiert. Entscheiden tut weiterhin der Organisator.
-Svi mogu palcem na pločici glasati za termin; glasovi se svima vide odmah, crta uz donji rub pokazuje koliko vas je za, a najomiljeniji termin nosi oznaku „Najviše glasova“. Odluku i dalje donosi organizator.
+Everyone can vote for a session with the thumb on its chip; the votes show for all of you at once, the line along the bottom shows how many of you are for it, and the best-liked session gets a gold outline. The organiser still decides.
+Alle können mit dem Daumen auf dem Chip für einen Termin stimmen; die Stimmen sehen alle sofort, die Linie am unteren Rand zeigt, wie viele von euch dafür sind, und der beliebteste Termin bekommt einen goldenen Rand. Entscheiden tut weiterhin der Organisator.
+Svi mogu palcem na pločici glasati za termin; glasovi se svima vide odmah, crta uz donji rub pokazuje koliko vas je za, a najomiljeniji termin dobiva zlatni obrub. Odluku i dalje donosi organizator.
 
 Lost your place (a new phone, a cleared browser)? Type your old name and tap “That’s me” to carry on with your times. The organiser can remove a leftover double by highlighting the name and tapping the remove icon, or under Change the plan.
 Platz verloren (neues Handy, geleerter Browser)? Tippe deinen alten Namen ein und dann auf „Das bin ich“, um mit deinen Zeiten weiterzumachen. Der Organisator kann einen übrig gebliebenen Doppelgänger entfernen: Namen hervorheben und auf das Entfernen-Symbol tippen, oder unter „Plan ändern“.

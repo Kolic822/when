@@ -441,3 +441,11 @@ Organizator može ukloniti osobu: istakne ime ispod kalendara ili pod „Promije
 Voting: one big thumb per session, and a line along the chip shows how many are for it
 Abstimmen: ein großer Daumen pro Termin, und eine Linie am Chip zeigt, wie viele dafür sind
 Glasanje: jedan veliki palac po terminu, a crta uz pločicu pokazuje koliko ih je za
+
+Outsource decision: the link is copied the moment it is made; each link is one tidy line
+Entscheidung auslagern: Der Link wird sofort beim Erstellen kopiert; jeder Link ist eine saubere Zeile
+Prepusti odluku: poveznica se kopira čim nastane; svaka poveznica je jedan uredan redak
+
+Velvet, a deep red scheme, replaces Grape; Lavender is the default
+Samt, ein tiefrotes Schema, ersetzt Traube; Lavendel ist die Vorgabe
+Baršun, duboko crvena shema, zamjenjuje Grožđe; Lavanda je zadana
