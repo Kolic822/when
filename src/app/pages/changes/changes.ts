@@ -11,9 +11,7 @@ import { t } from '../../core/i18n/i18n';
   template: `
     <main class="page changes selectable">
       <nav class="top">
-        <a routerLink="/" class="brand"
-          >{{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span></a
-        >
+        <a routerLink="/" class="brand">When <span class="tagline">are you free?</span></a>
         <a routerLink="/" class="pill back">
           <mat-icon>close</mat-icon>
           {{ t('Close') }}

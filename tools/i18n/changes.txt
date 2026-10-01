@@ -317,3 +317,7 @@ Odjavom tvoji Whenovi nestaju s uređaja pa sljedeći račun kreće sa svojima
 Delete account, at the end of the menu
 Konto löschen, am Ende des Menüs
 Brisanje računa, na kraju izbornika
+
+The tagline “When are you free?” stays in English in every language
+Der Slogan „When are you free?“ bleibt in jeder Sprache auf Englisch
+Slogan „When are you free?“ ostaje na engleskom u svakom jeziku

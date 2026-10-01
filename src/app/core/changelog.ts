@@ -7,9 +7,14 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.12.1';
+export const VERSION = '0.12.2';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.12.2',
+    date: '1 Oct 2026',
+    changes: [m('The tagline “When are you free?” stays in English in every language')],
+  },
   {
     version: '0.12.1',
     date: '30 Sep 2026',

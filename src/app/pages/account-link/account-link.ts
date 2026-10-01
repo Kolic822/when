@@ -16,9 +16,7 @@ import { t } from '../../core/i18n/i18n';
   imports: [FormField, RouterLink, MatIconModule, MatProgressSpinnerModule],
   template: `
     <main class="page link-page">
-      <h1 class="brand">
-        {{ t('When') }} <span class="tagline">{{ t('are you free?') }}</span>
-      </h1>
+      <h1 class="brand">When <span class="tagline">are you free?</span></h1>
 
       <section class="card box">
         @switch (state()) {
