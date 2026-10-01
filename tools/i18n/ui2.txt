@@ -1025,3 +1025,11 @@ Ukloniti {name} i njihova vremena?
 Velvet
 Samt
 Baršun
+
+voted for {session}
+hat für {session} gestimmt
+glasa za {session}
+
+took back the vote for {session}
+hat die Stimme für {session} zurückgezogen
+povlači glas za {session}

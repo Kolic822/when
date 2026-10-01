@@ -385,7 +385,9 @@ h3 {
    a card (the create form's bottom buttons) to the card instead of the screen. */
 .page > .card,
 .page > * > .card {
-  animation: fade-in 0.25s ease both;
+  /* "backwards", not "both": once it has run, the card must be an ordinary box again, or
+     popups pinned to the screen from inside it would be trapped under later cards. */
+  animation: fade-in 0.25s ease backwards;
 }
 
 @keyframes fade-in {

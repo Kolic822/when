@@ -1110,13 +1110,18 @@ wss.on('connection', (ws, req) => {
         const value = [1, 0].includes(msg.value) ? msg.value : null;
         if (!p || value === null || !/^\d{4}-\d{2}-\d{2}:\d{1,4}:\d{1,4}$/.test(key)) return;
         ev.votes ??= {};
+        const had = ev.votes[key]?.[p.id] === 1;
         if (value === 0) {
-          delete ev.votes[key]?.[p.id];
-          if (ev.votes[key] && !Object.keys(ev.votes[key]).length) delete ev.votes[key];
+          if (!had) return;
+          delete ev.votes[key][p.id];
+          if (!Object.keys(ev.votes[key]).length) delete ev.votes[key];
         } else {
+          if (had) return;
           if (!ev.votes[key] && Object.keys(ev.votes).length >= 200) return;
           (ev.votes[key] ??= {})[p.id] = value;
         }
+        const [date, start, end] = key.split(':');
+        record(ev, { ...who(p), kind: value ? 'voted' : 'unvoted', date, start: Number(start), end: Number(end) });
         store.set(ev);
         broadcast(ev.id);
         break;

@@ -190,6 +190,10 @@ function describe(e: HistoryEntry, zone: string | null): string {
       return t('cleared {day}', { day });
     case 'settings':
       return t('updated the When');
+    case 'voted':
+      return t('voted for {session}', { session: `${day}, ${span}` });
+    case 'unvoted':
+      return t('took back the vote for {session}', { session: `${day}, ${span}` });
   }
 }
 

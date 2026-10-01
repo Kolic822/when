@@ -7,9 +7,17 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17.3';
+export const VERSION = '0.17.4';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17.4',
+    date: '1 Oct 2026',
+    changes: [
+      m('Clear day and Book popups sit in the middle of the screen, above everything'),
+      m('Votes show up in the history'),
+    ],
+  },
   {
     version: '0.17.3',
     date: '1 Oct 2026',

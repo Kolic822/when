@@ -15,7 +15,16 @@ export interface Participant {
 }
 
 export type HistoryKind =
-  'joined' | 'left' | 'renamed' | 'added' | 'removed' | 'changed' | 'cleared' | 'settings';
+  | 'joined'
+  | 'left'
+  | 'renamed'
+  | 'added'
+  | 'removed'
+  | 'changed'
+  | 'cleared'
+  | 'settings'
+  | 'voted'
+  | 'unvoted';
 
 /** One line in the event's change log. */
 export interface HistoryEntry {

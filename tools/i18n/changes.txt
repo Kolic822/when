@@ -457,3 +457,11 @@ Dodirni mogući termin i njegova zlatna traka zasvijetli u kalendaru
 An opened session is clearly tinted, even when it is the one with most votes
 Ein geöffneter Termin ist deutlich eingefärbt, auch wenn er der mit den meisten Stimmen ist
 Otvoreni termin jasno je obojen, čak i kad je onaj s najviše glasova
+
+Clear day and Book popups sit in the middle of the screen, above everything
+Die Fenster „Tag leeren“ und „Festlegen“ sitzen in der Bildschirmmitte, über allem
+Skočni prozori „Očisti dan“ i „Potvrdi“ stoje na sredini zaslona, iznad svega
+
+Votes show up in the history
+Stimmen erscheinen im Verlauf
+Glasovi se pojavljuju u povijesti
