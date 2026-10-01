@@ -33,6 +33,7 @@ export const de: Dictionary = {
   "All-day events: fill the day, or (switched off) a small note at the top": "Ganztägige Termine: füllen den Tag oder sind (ausgeschaltet) eine kleine Notiz oben",
   "Already use When as an app? Links open in the browser. Sign in here too and you carry on as the same person.": "Du nutzt When schon als App? Links öffnen sich im Browser. Melde dich auch hier an, dann machst du als dieselbe Person weiter.",
   "An account holds your email address and username, a salted hash of your password (never the password itself) or, with Google, the id, name and email Google gives us, plus the list of your Whens and your calendar links. You can delete it at the end of the menu; the Whens stay for the others in them.": "Ein Konto enthält deine E-Mail-Adresse und deinen Benutzernamen, einen gesalzenen Hash deines Passworts (nie das Passwort selbst) oder, mit Google, die Id, den Namen und die E-Mail, die Google uns gibt, dazu die Liste deiner Whens und deine Kalender-Links. Du kannst es am Ende des Menüs löschen; die Whens bleiben für die anderen darin bestehen.",
+  "An opened session is clearly tinted, even when it is the one with most votes": "Ein geöffneter Termin ist deutlich eingefärbt, auch wenn er der mit den meisten Stimmen ist",
   "Android: open the browser menu and tap Install app or Add to Home screen.": "Android: Öffne das Browser-Menü und tippe auf „App installieren“ oder „Zum Startbildschirm hinzufügen“.",
   "Answer": "Antwort",
   "Answer from {names}": "Antwort von {names}",

@@ -33,6 +33,7 @@ export const hr: Dictionary = {
   "All-day events: fill the day, or (switched off) a small note at the top": "Cjelodnevni događaji: ispunjavaju dan ili su (isključeno) mala bilješka na vrhu",
   "Already use When as an app? Links open in the browser. Sign in here too and you carry on as the same person.": "Već koristiš When kao aplikaciju? Poveznice se otvaraju u pregledniku. Prijavi se i ovdje pa nastavljaš kao ista osoba.",
   "An account holds your email address and username, a salted hash of your password (never the password itself) or, with Google, the id, name and email Google gives us, plus the list of your Whens and your calendar links. You can delete it at the end of the menu; the Whens stay for the others in them.": "Račun sadrži tvoju adresu e-pošte i korisničko ime, posoljeni hash lozinke (nikad samu lozinku) ili, uz Google, id, ime i e-poštu koje nam Google daje, te popis tvojih Whenova i poveznice kalendara. Možeš ga izbrisati na kraju izbornika; Whenovi ostaju ostalima u njima.",
+  "An opened session is clearly tinted, even when it is the one with most votes": "Otvoreni termin jasno je obojen, čak i kad je onaj s najviše glasova",
   "Android: open the browser menu and tap Install app or Add to Home screen.": "Android: otvori izbornik preglednika i dodirni „Instaliraj aplikaciju” ili „Dodaj na početni zaslon”.",
   "Answer": "Odgovor",
   "Answer from {names}": "Odgovor: {names}",

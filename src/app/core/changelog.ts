@@ -7,9 +7,14 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.17.2';
+export const VERSION = '0.17.3';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.17.3',
+    date: '1 Oct 2026',
+    changes: [m('An opened session is clearly tinted, even when it is the one with most votes')],
+  },
   {
     version: '0.17.2',
     date: '1 Oct 2026',

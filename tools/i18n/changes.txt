@@ -453,3 +453,7 @@ Baršun, duboko crvena shema, zamjenjuje Grožđe; Lavanda je zadana
 Tap a possible session and its gold band lights up in the calendar
 Tippe auf einen möglichen Termin und sein goldener Streifen leuchtet im Kalender auf
 Dodirni mogući termin i njegova zlatna traka zasvijetli u kalendaru
+
+An opened session is clearly tinted, even when it is the one with most votes
+Ein geöffneter Termin ist deutlich eingefärbt, auch wenn er der mit den meisten Stimmen ist
+Otvoreni termin jasno je obojen, čak i kad je onaj s najviše glasova

@@ -114,14 +114,22 @@ li.open .line .chev {
     background 0.15s,
     border-color 0.15s;
 
+  /* Opened: a clearly tinted background and an inner ring in the accent colour. */
   &.on {
     border-color: var(--accent);
-    background: var(--accent-soft);
+    background: color-mix(in srgb, var(--accent) 16%, var(--when-surface));
+    box-shadow: inset 0 0 0 1.5px var(--accent);
   }
   /* The session most people voted for. */
   &.top {
     border-color: var(--when-common);
     box-shadow: 0 0 0 2px var(--when-common-bg);
+  }
+  /* Both at once: gold outside, accent inside, tinted background. */
+  &.on.top {
+    box-shadow:
+      inset 0 0 0 1.5px var(--accent),
+      0 0 0 2px var(--when-common-bg);
   }
 
   .main {
