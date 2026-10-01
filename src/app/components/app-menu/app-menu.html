@@ -68,7 +68,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('whens')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('whens')"
+        [attr.inert]="isFolded('whens') ? '' : null"
+      >
         <div class="sect">
           @if (recent().length) {
             <ul class="whens">
@@ -161,7 +165,7 @@
             {{ t('How it works') }}
           </button>
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="look">
@@ -176,7 +180,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('look')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('look')"
+        [attr.inert]="isFolded('look') ? '' : null"
+      >
         <div class="sect">
           <div class="segments looks" role="radiogroup" [attr.aria-label]="t('Colour')">
             @for (l of looks; track l.value) {
@@ -209,7 +217,7 @@
             }
           </div>
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="defaults">
@@ -224,7 +232,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('defaults')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('defaults')"
+        [attr.inert]="isFolded('defaults') ? '' : null"
+      >
         <div class="sect">
           <p class="sub">{{ t('Language') }}</p>
           <div class="segments langs" role="radiogroup" [attr.aria-label]="t('Language')">
@@ -329,7 +341,7 @@
             <p class="muted small">{{ t('Sign in with Google to use Pro settings.') }}</p>
           }
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="calendar">
@@ -346,7 +358,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('calendar')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('calendar')"
+        [attr.inert]="isFolded('calendar') ? '' : null"
+      >
         <div class="sect">
           @if (!pro()) {
             <p class="muted small">
@@ -479,17 +495,19 @@
                 <mat-slide-toggle
                   [checked]="prefs().calendarAllDay"
                   (change)="store.update({ calendarAllDay: $event.checked })"
-                  [attr.aria-label]="t('All-day events')"
+                  [attr.aria-label]="t('All-day events fill the day')"
                 />
                 <span class="text">
-                  <span class="label">{{ t('All-day events') }}</span>
-                  <span class="muted small">{{ t('Birthdays, holidays, trips.') }}</span>
+                  <span class="label">{{ t('All-day events fill the day') }}</span>
+                  <span class="muted small">{{
+                    t('Off: birthdays, holidays and trips are only a note at the top.')
+                  }}</span>
                 </span>
               </li>
             </ul>
           }
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="notify">
@@ -504,7 +522,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('notify')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('notify')"
+        [attr.inert]="isFolded('notify') ? '' : null"
+      >
         <div class="sect">
           @switch (push.state()) {
             @case ('install') {
@@ -555,7 +577,7 @@
             }
           }
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="pro">
@@ -572,7 +594,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('pro')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('pro')"
+        [attr.inert]="isFolded('pro') ? '' : null"
+      >
         <div class="sect">
           @if (pro()) {
             <p class="pro-state on">
@@ -600,7 +626,7 @@
             }
           </ul>
         </div>
-      }
+      </div>
     </section>
 
     <section data-section="app">
@@ -615,7 +641,11 @@
           <mat-icon>expand_more</mat-icon>
         </button>
       </h2>
-      @if (!isFolded('app')) {
+      <div
+        class="fold-wrap"
+        [class.open]="!isFolded('app')"
+        [attr.inert]="isFolded('app') ? '' : null"
+      >
         <div class="sect">
           <div class="update-row">
             @if (updates.status() === 'ready') {
@@ -670,7 +700,7 @@
             }
           }
         </div>
-      }
+      </div>
     </section>
   </aside>
   <button type="button" class="fab-close" (click)="close()" [attr.aria-label]="t('Close menu')">

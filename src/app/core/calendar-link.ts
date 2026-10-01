@@ -179,26 +179,31 @@ export class CalendarLink {
         title: names ? b.title : t('Busy'),
       }))
       .filter((b) => b.end > b.start);
-    // All-day events fill the whole bar, as one block behind the timed ones.
+    // All-day events: one block behind the timed ones. It fills the whole bar, or (switched
+    // off in Settings) sits as a small note at the top and leaves the day free.
     const wholeDay = this.allDayOn(date);
-    return wholeDay.length
-      ? [
-          { start: dayStart, end: dayEnd, title: [...new Set(wholeDay)].join(', '), allDay: true },
-          ...timed,
-        ]
-      : timed;
+    if (!wholeDay.length) return timed;
+    const title = names ? [...new Set(wholeDay)].join(', ') : t('Busy');
+    const block: BusyBlock = this.store.prefs().calendarAllDay
+      ? { start: dayStart, end: dayEnd, title, allDay: true }
+      : {
+          start: dayStart,
+          end: Math.min(dayEnd, dayStart + 40),
+          title,
+          allDay: true,
+          collapsed: true,
+        };
+    return [block, ...timed];
   }
 
-  /** Names of the events that last the whole of that day; empty when switched off in Settings. */
+  /** Names of the events that last the whole of that day. */
   allDayOn(date: string): string[] {
-    const prefs = this.store.prefs();
-    if (!prefs.calendarAllDay) return [];
     const titles = this.hasSource()
       ? (this.days().allDay[date] ?? [])
       : this.available()
         ? []
         : sampleAllDay(date);
-    return prefs.calendarNames ? titles : titles.map(() => t('Busy'));
+    return this.store.prefs().calendarNames ? titles : titles.map(() => t('Busy'));
   }
 
   /** Opens Google's permission window; must follow a tap. */

@@ -45,23 +45,29 @@ interface Row {
           <mat-icon class="chev">{{ open() ? 'expand_less' : 'expand_more' }}</mat-icon>
         </button>
       }
-      @if (open() || bare()) {
-        @if (rows().length) {
-          <ol>
-            @for (r of rows(); track r.id) {
-              <li>
-                <span class="dot" [style.background]="r.color"></span>
-                <span
-                  ><strong>{{ r.name }}</strong> {{ r.text }}</span
-                >
-                <span class="when muted">{{ r.when }}</span>
-              </li>
-            }
-          </ol>
-        } @else {
-          <p class="muted empty">{{ t('Nothing yet.') }}</p>
-        }
-      }
+      <div
+        class="fold-wrap"
+        [class.open]="open() || bare()"
+        [attr.inert]="open() || bare() ? null : ''"
+      >
+        <div>
+          @if (rows().length) {
+            <ol>
+              @for (r of rows(); track r.id) {
+                <li>
+                  <span class="dot" [style.background]="r.color"></span>
+                  <span
+                    ><strong>{{ r.name }}</strong> {{ r.text }}</span
+                  >
+                  <span class="when muted">{{ r.when }}</span>
+                </li>
+              }
+            </ol>
+          } @else {
+            <p class="muted empty">{{ t('Nothing yet.') }}</p>
+          }
+        </div>
+      </div>
     </section>
   `,
   styles: `

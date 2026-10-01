@@ -326,6 +326,17 @@
   pointer-events: none;
 }
 
+/* An all-day event folded to a note at the top of the day. */
+.busy.note {
+  border-right: 0;
+  background: color-mix(in srgb, var(--when-muted) 18%, var(--when-surface));
+}
+
+/* The first column also carries the hour labels; keep the note's text clear of them. */
+.day:first-child .busy.note .busy-t {
+  left: 40px;
+}
+
 .busy-t {
   position: absolute;
   top: 2px;

@@ -334,9 +334,9 @@ Google asks again after about an hour; Disconnect in the menu withdraws access.
 Google fragt nach etwa einer Stunde erneut; „Trennen“ im Menü entzieht den Zugriff.
 Google ponovno pita nakon otprilike sat vremena; „Prekini vezu” u izborniku povlači pristup.
 
-Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.
-Im Menü unter „Kalender“ kannst du die Namen ausblenden (jeder Termin heißt dann „Belegt“) und ganztägige Termine ausblenden.
-U izborniku pod „Kalendar” možeš sakriti nazive (svaki događaj tada piše „Zauzeto”) i sakriti cjelodnevne događaje.
+Under Calendar in the menu you can hide the names (every event then says Busy) and fold all-day events into a small note at the top of the day. The same switches sit beside the bar in the day view.
+Unter Kalender im Menü kannst du die Namen ausblenden (jeder Termin heißt dann Beschäftigt) und ganztägige Termine zu einer kleinen Notiz oben am Tag zusammenfalten. Dieselben Schalter stehen in der Tagesansicht neben dem Balken.
+Pod Kalendar u izborniku možeš sakriti imena (svaki događaj tada kaže Zauzeto) i cjelodnevne događaje sklopiti u malu bilješku na vrhu dana. Isti prekidači stoje pokraj trake u prikazu dana.
 
 Join for part of it: a switch when you plan a When. People may mark less than the full length; a session then needs everyone together for at least half of it.
 Nur teilweise dabei sein: ein Schalter beim Planen eines When. Man darf weniger als die volle Dauer markieren; ein Termin braucht dann alle gemeinsam für mindestens die Hälfte.

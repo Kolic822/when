@@ -34,6 +34,15 @@ interface AccountProfile {
 }
 
 const KEY = 'when:user';
+/** Google's button is 40px tall; the page's buttons are 48px. */
+export const GOOGLE_SCALE = 1.2;
+
+/** Whether the page is currently dark: the chosen theme, or else the system's. */
+function isDark(): boolean {
+  const chosen = document.documentElement.getAttribute('data-theme');
+  if (chosen) return chosen === 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
 const SCRIPT = 'https://accounts.google.com/gsi/client';
 
 /**
@@ -230,14 +239,16 @@ export class Auth {
       client_id: clientId,
       callback: (response) => void this.verify(response.credential).then(done),
     });
+    // Google draws a 40px button; the page scales it up to match its own 48px buttons.
+    const width = Math.round(host.getBoundingClientRect().width / GOOGLE_SCALE) || 300;
     api.renderButton(host, {
       type: 'standard',
-      theme: 'outline',
+      theme: isDark() ? 'filled_black' : 'outline',
       size: 'large',
       shape: 'pill',
       text: 'continue_with',
       logo_alignment: 'center',
-      width: Math.min(360, Math.round(host.getBoundingClientRect().width) || 320),
+      width: Math.min(400, width),
     });
   }
 

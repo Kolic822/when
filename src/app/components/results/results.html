@@ -22,7 +22,8 @@
         }
       </p>
     }
-  } @else {
+  }
+  <div class="fold-wrap" [class.open]="!isFolded()" [attr.inert]="isFolded() ? '' : null">
     <div class="body">
       @if (rows().length) {
         <div class="chips" role="group" [attr.aria-label]="t('Possible sessions')">
@@ -195,5 +196,5 @@
         </div>
       }
     </div>
-  }
+  </div>
 </section>

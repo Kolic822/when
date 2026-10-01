@@ -35,6 +35,8 @@ interface Block {
   /** Start and end of the window in minutes (gold bands only). */
   start?: number;
   end?: number;
+  /** A calendar event folded to a note at the top of the day. */
+  note?: boolean;
   /** Start/end text drawn inside gold bands that are tall enough. */
   from?: string;
   to?: string;
@@ -162,7 +164,7 @@ export class WeekChart {
         busy: this.showBusy()
           ? this.calendar
               .busyOn(key, ev.dayStart, ev.dayEnd)
-              .map((b) => this.block(b.start, b.end, b.title))
+              .map((b) => ({ ...this.block(b.start, b.end, b.title), note: b.collapsed }))
           : [],
         common: this.windows()
           .filter((w) => w.date === key)

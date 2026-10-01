@@ -73,11 +73,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   min-height: 48px;
 }
 
-.google-button:empty {
-  display: none;
+/*
+ * Google's button lives in an iframe. Scaled to the height of the other buttons; and the
+ * frame's own colour scheme is declared so dark pages do not get an opaque white box.
+ */
+.google-button {
+  width: 100%;
+  height: 48px;
+  color-scheme: light;
+
+  > div {
+    transform: scale(1.2);
+    transform-origin: top center;
+    height: 40px;
+  }
+  &:empty {
+    display: none;
+  }
 }
 
 .placeholder {

@@ -481,6 +481,16 @@
   pointer-events: none;
 }
 
+/* An all-day event folded to a note at the top: solid, so it reads as a label. */
+.busy.note {
+  border-right: 0;
+  background: color-mix(in srgb, var(--when-muted) 18%, var(--when-surface));
+
+  .busy-t {
+    opacity: 1;
+  }
+}
+
 .busy-t {
   display: block;
   padding: 4px 8px;

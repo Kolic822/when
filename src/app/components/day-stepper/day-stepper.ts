@@ -165,6 +165,12 @@ export class DayStepper {
   private fillNoteTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly settings = computed(() => this.prefs.prefs());
+  /** The connected calendar has something on the open day, so its switches matter. */
+  readonly dayHasEvents = computed(() => {
+    if (!this.calendarOffered() || !this.calendar.hasSource()) return false;
+    const ev = this.event();
+    return this.calendar.busyOn(this.date(), ev.dayStart, ev.dayEnd).length > 0;
+  });
 
   /** Which calendar the events come from, as a heading for its switches. */
   readonly calendarLabel = computed(() => {
@@ -220,12 +226,37 @@ export class DayStepper {
       return;
     }
     this.index.update((i) => i + 1);
+    this.slide.set('left');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   prev(): void {
     if (this.index() === 0) return;
     this.index.update((i) => i - 1);
+    this.slide.set('right');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---- Swiping sideways over the day moves to the next or previous one.
+  /** Which way the day just slid in from, for the animation. */
+  readonly slide = signal<'left' | 'right' | null>(null);
+  private swipeFrom: { x: number; y: number; at: number } | null = null;
+
+  onSwipeStart(e: TouchEvent): void {
+    const touch = e.touches[0];
+    this.swipeFrom = touch ? { x: touch.clientX, y: touch.clientY, at: Date.now() } : null;
+  }
+
+  onSwipeEnd(e: TouchEvent): void {
+    const from = this.swipeFrom;
+    const touch = e.changedTouches[0];
+    this.swipeFrom = null;
+    if (!from || !touch || this.copyTarget()) return;
+    const dx = touch.clientX - from.x;
+    const dy = touch.clientY - from.y;
+    // A clear, quick, mostly horizontal move; anything else is a drag on the bar or a scroll.
+    if (Date.now() - from.at > 700 || Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2) return;
+    if (dx < 0 && !this.isLast()) this.next();
+    else if (dx > 0) this.prev();
   }
 }

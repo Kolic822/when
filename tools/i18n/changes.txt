@@ -349,3 +349,31 @@ Prikaz dana: prekidači Imena i Cijeli dan za tvoj kalendar, pokraj trake
 Add to calendar only on booked sessions; in the installed app on iPhone it subscribes your Calendar to the When
 Zum Kalender hinzufügen nur bei festgelegten Terminen; in der installierten App auf dem iPhone abonniert dein Kalender das When
 Dodaj u kalendar samo na potvrđenim terminima; u instaliranoj aplikaciji na iPhoneu tvoj se Kalendar pretplaćuje na When
+
+New colour schemes: Sand (warm, gold) and Sky (cool blue) join Grape
+Neue Farbschemata: Sand (warm, gold) und Himmel (kühles Blau) neben Traube
+Nove sheme boja: Pijesak (toplo, zlatno) i Nebo (hladno plavo) uz Grožđe
+
+People in a When get colours as far apart as possible, never two look-alikes
+Die Leute in einem When bekommen möglichst weit auseinanderliegende Farben, nie zwei ähnliche
+Ljudi u Whenu dobivaju što različitije boje, nikad dvije slične
+
+Menu groups, possible sessions and history ease open and closed; days slide; the bell rings
+Menügruppen, mögliche Termine und Verlauf gleiten auf und zu; Tage gleiten; die Glocke läutet
+Grupe izbornika, mogući termini i povijest glatko se otvaraju i zatvaraju; dani klize; zvono zvoni
+
+Swipe sideways in the day view to move between days
+Wische in der Tagesansicht seitwärts, um zwischen den Tagen zu wechseln
+Povuci ustranu u prikazu dana za prelazak među danima
+
+All-day events: fill the day, or (switched off) a small note at the top
+Ganztägige Termine: füllen den Tag oder sind (ausgeschaltet) eine kleine Notiz oben
+Cjelodnevni događaji: ispunjavaju dan ili su (isključeno) mala bilješka na vrhu
+
+Day view: the calendar switches only appear on days with calendar events
+Tagesansicht: Die Kalender-Schalter erscheinen nur an Tagen mit Kalenderterminen
+Prikaz dana: prekidači kalendara pojavljuju se samo na danima s događajima iz kalendara
+
+Google sign-in button matches the other buttons and no longer sits in a white box in the dark
+Der Google-Anmeldebutton passt zu den anderen Buttons und sitzt im Dunkeln nicht mehr in einer weißen Box
+Gumb za prijavu Googleom odgovara ostalim gumbima i više ne stoji u bijelom okviru u tamnom načinu

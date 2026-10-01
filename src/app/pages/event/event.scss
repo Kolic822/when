@@ -147,6 +147,11 @@
 
   &.on {
     color: var(--accent);
+
+    mat-icon {
+      transform-origin: 50% 20%;
+      animation: ring 0.9s ease 0.5s both;
+    }
   }
 }
 

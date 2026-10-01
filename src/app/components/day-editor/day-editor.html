@@ -76,7 +76,12 @@
       (contextmenu)="$event.preventDefault()"
     >
       @for (b of busy(); track $index) {
-        <span class="busy" [style.top.%]="pct(b.start)" [style.height.%]="height(b)">
+        <span
+          class="busy"
+          [class.note]="b.collapsed"
+          [style.top.%]="pct(b.start)"
+          [style.height.%]="height(b)"
+        >
           <span class="busy-t">{{ b.label }}</span>
         </span>
       }

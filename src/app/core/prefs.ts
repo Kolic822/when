@@ -4,7 +4,7 @@ import { DEFAULT_DAY_END, DEFAULT_DAY_START } from './models';
 import { DateStyle, dateStyle } from './time';
 
 export type Theme = 'system' | 'light' | 'dark';
-export type Look = 'grape' | 'sunset' | 'lagoon';
+export type Look = 'grape' | 'sand' | 'sky';
 
 /**
  * Pro features. They are on for everyone signed in with Google and off for guests;
@@ -120,6 +120,9 @@ function load(): Stored {
     if (!raw) return DEFAULTS;
     const saved = JSON.parse(raw) as Partial<Stored> & { features?: Partial<Features> };
     const { features, ...rest } = saved;
+    // Earlier colour schemes were replaced; keep people on the nearest new one.
+    const look = ({ sunset: 'sand', lagoon: 'sky' } as Record<string, Look>)[rest.look ?? ''];
+    if (look) rest.look = look;
     // The "book several" choice used to live among the feature switches.
     return { ...DEFAULTS, multiBook: features?.multiBook ?? DEFAULTS.multiBook, ...rest };
   } catch {

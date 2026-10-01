@@ -51,7 +51,14 @@
     </div>
   </header>
 
-  <section class="board card">
+  <section
+    class="board card"
+    [class.slide-left]="slide() === 'left'"
+    [class.slide-right]="slide() === 'right'"
+    (touchstart)="onSwipeStart($event)"
+    (touchend)="onSwipeEnd($event)"
+    (animationend)="slide.set(null)"
+  >
     <app-day-editor
       [event]="event()"
       [meId]="meId()"
@@ -83,7 +90,7 @@
             <span>{{ allChosen() ? t('Select none') : t('Select all') }}</span>
           </button>
         } @else {
-          @if (calendarOffered() && calendar.hasSource()) {
+          @if (dayHasEvents()) {
             <span class="side-title muted">{{ calendarLabel() }}</span>
             <button
               type="button"

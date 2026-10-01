@@ -554,10 +554,6 @@ All day
 Ganztägig
 Cijeli dan
 
-Birthdays, holidays, trips.
-Geburtstage, Feiertage, Reisen.
-Rođendani, praznici, putovanja.
-
 Booking
 Festlegen
 Potvrđivanje
@@ -673,10 +669,6 @@ Dodaj Apple ili drugi kalendar
 Added
 Hinzugefügt
 Dodano
-
-All-day events
-Ganztägige Termine
-Cjelodnevni događaji
 
 Connect
 Verbinden
@@ -905,3 +897,19 @@ Potvrđeni termin jednim dodirom ubaci u kalendar svog mobitela.
 Who changed what, and when, under the calendar of each When.
 Wer wann was geändert hat, unter dem Kalender jedes Whens.
 Tko je što i kada promijenio, ispod kalendara svakog Whena.
+
+Sand
+Sand
+Pijesak
+
+Sky
+Himmel
+Nebo
+
+All-day events fill the day
+Ganztägige Termine füllen den Tag
+Cjelodnevni događaji ispunjavaju dan
+
+Off: birthdays, holidays and trips are only a note at the top.
+Aus: Geburtstage, Feiertage und Reisen sind nur eine Notiz oben.
+Isključeno: rođendani, praznici i putovanja samo su bilješka na vrhu.

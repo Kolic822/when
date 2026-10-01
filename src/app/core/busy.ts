@@ -7,6 +7,8 @@ export interface BusyBlock {
   title: string;
   /** Lasts the whole day (a birthday, a trip): drawn over the full height of the bar. */
   allDay?: boolean;
+  /** An all-day event shown only as a small note at the top, not blocking the day. */
+  collapsed?: boolean;
 }
 
 /** Made-up events per weekday (0 = Sunday), so every day looks a little different. */

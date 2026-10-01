@@ -124,6 +124,12 @@
     flex: 1;
     min-height: 0;
   }
+  &.slide-left app-day-editor {
+    animation: slide-from-right 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  &.slide-right app-day-editor {
+    animation: slide-from-left 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
   /* The embedded editor is a card itself; flatten it inside the board. */
   app-day-editor ::ng-deep .editor {
     border: 0;
@@ -249,5 +255,27 @@
   }
   .done {
     color: var(--mat-sys-primary);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

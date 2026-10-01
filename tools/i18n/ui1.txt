@@ -278,14 +278,6 @@ Grape
 Traube
 Grožđe
 
-Sunset
-Sonnenuntergang
-Zalazak
-
-Lagoon
-Lagune
-Laguna
-
 Connect calendar
 Kalender verbinden
 Poveži kalendar

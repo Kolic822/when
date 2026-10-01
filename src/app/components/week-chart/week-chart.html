@@ -77,6 +77,7 @@
             @for (b of d.busy; track $index) {
               <span
                 class="busy"
+                [class.note]="b.note"
                 [style.top.%]="b.top"
                 [style.height.%]="b.height"
                 [title]="b.label"

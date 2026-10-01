@@ -7,9 +7,26 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.13';
+export const VERSION = '0.14';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.14',
+    date: '1 Oct 2026',
+    changes: [
+      m('New colour schemes: Sand (warm, gold) and Sky (cool blue) join Grape'),
+      m('People in a When get colours as far apart as possible, never two look-alikes'),
+      m(
+        'Menu groups, possible sessions and history ease open and closed; days slide; the bell rings',
+      ),
+      m('Swipe sideways in the day view to move between days'),
+      m('All-day events: fill the day, or (switched off) a small note at the top'),
+      m('Day view: the calendar switches only appear on days with calendar events'),
+      m(
+        'Google sign-in button matches the other buttons and no longer sits in a white box in the dark',
+      ),
+    ],
+  },
   {
     version: '0.13',
     date: '1 Oct 2026',

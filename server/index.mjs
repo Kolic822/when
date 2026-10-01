@@ -21,8 +21,20 @@ const DIST = path.join(__dirname, '..', 'dist', 'when', 'browser');
 /** Modern palette; the first unused colour is picked at random. */
 const PALETTE = [
   '#6D5EF5', '#FF5C8A', '#00B8A0', '#FF9F1C', '#3D9BFF', '#FF6B4A',
-  '#9B5DE5', '#22C55E', '#F15BB5', '#06B6D4', '#E0529C', '#7CB518',
+  '#9B5DE5', '#22C55E', '#F15BB5', '#06B6D4', '#D97706', '#7CB518',
 ];
+const hueOf = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  if (!d) return 0;
+  const h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return h * 60;
+};
+const HUES = Object.fromEntries(PALETTE.map((c) => [c, hueOf(c)]));
+const hueGap = (a, b) => {
+  const d = Math.abs(HUES[a] - HUES[b]) % 360;
+  return Math.min(d, 360 - d);
+};
 
 const store = new Store(process.env.DATA_FILE ?? path.join(__dirname, 'data', 'events.json'));
 const accounts = new Accounts(
@@ -923,11 +935,21 @@ function broadcastPresence(eventId) {
   }
 }
 
+/**
+ * A colour for a new participant: one not in use, and as far in hue from the colours
+ * already in the When as possible, so two people never get look-alike shades. Among the
+ * best few the choice is random, so Whens do not all look the same.
+ */
 function pickColor(ev) {
-  const used = new Set(ev.participants.map((p) => p.color));
-  const free = PALETTE.filter((c) => !used.has(c));
+  const used = ev.participants.map((p) => p.color).filter((c) => c in HUES);
+  const free = PALETTE.filter((c) => !used.includes(c));
   const pool = free.length ? free : PALETTE;
-  return pool[Math.floor(Math.random() * pool.length)];
+  if (!used.length) return pool[Math.floor(Math.random() * pool.length)];
+  const ranked = pool
+    .map((c) => ({ c, gap: Math.min(...used.map((u) => hueGap(c, u))) }))
+    .sort((a, b) => b.gap - a.gap);
+  const best = ranked.filter((r) => r.gap >= ranked[0].gap - 10);
+  return best[Math.floor(Math.random() * best.length)].c;
 }
 
 function sanitizeSlots(ev, slots) {

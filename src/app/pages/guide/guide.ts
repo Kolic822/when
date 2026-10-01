@@ -275,7 +275,7 @@ export class Guide {
           'In the day view, the calendar button at the top hides or shows your events, and the Names and All day switches beside the bar choose what is drawn. Fill from calendar marks you free wherever your calendar has nothing, if the gap is long enough for the meetup.',
         ),
         m(
-          'Under Calendar in the menu you can hide the names (every event then says Busy) and hide all-day events.',
+          'Under Calendar in the menu you can hide the names (every event then says Busy) and fold all-day events into a small note at the top of the day. The same switches sit beside the bar in the day view.',
         ),
         m(
           'Added something in your calendar? Pull down on the When, or tap Refresh under Calendar in the menu. It also refreshes when you come back to the app.',
