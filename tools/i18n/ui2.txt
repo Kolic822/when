@@ -989,3 +989,19 @@ Svoje podatke možeš u aplikaciji vidjeti, promijeniti ili izbrisati bilo kad.
 For anything else, write to
 Für alles andere schreib an
 Za sve ostalo piši na
+
+Dark mode
+Dunkler Modus
+Tamni način
+
+Follows your phone.
+Folgt deinem Handy.
+Prati tvoj mobitel.
+
+Follow my phone instead
+Lieber meinem Handy folgen
+Radije prati moj mobitel
+
+Month names in dates
+Monatsnamen in Datumsangaben
+Imena mjeseci u datumima

@@ -150,17 +150,9 @@ Colour
 Farbe
 Boja
 
-Theme
-Design
-Tema
-
 Date and time
 Datum und Uhrzeit
 Datum i vrijeme
-
-Date format
-Datumsformat
-Format datuma
 
 Time zone
 Zeitzone
@@ -253,18 +245,6 @@ Obriši {title}
 Leave {title}
 {title} verlassen
 Napusti {title}
-
-System
-System
-Sustav
-
-Light
-Hell
-Svijetla
-
-Dark
-Dunkel
-Tamna
 
 +{n} more
 +{n} weitere

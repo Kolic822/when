@@ -184,7 +184,7 @@ export class Guide {
           'My Whens lists every When you created or joined on this device, with what is booked or possible.',
         ),
         m(
-          'Appearance changes the colours and light or dark mode. Settings holds the language, the date style (30.9. or 30 Sep), your time zone and the defaults for new Whens.',
+          'Appearance holds the colour scheme and a Dark mode switch (it follows your phone until you touch it). Settings holds the language, month names in dates, your time zone and the defaults for new Whens.',
         ),
         m('Defaults for new Whens pre-fills the length and hours when you plan the next one.'),
         m('App checks for a new version and shows what changed.'),

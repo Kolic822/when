@@ -54,6 +54,9 @@ import { LANGS, Lang, lang, m, setLang, t, tn } from '../../core/i18n/i18n';
 })
 export class AppMenu {
   constructor() {
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => this.systemDark.set(e.matches));
     // The account's Whens arrived while the menu is open: show them.
     effect(() => {
       if (this.sync.pulled() && untracked(() => this.open())) {
@@ -224,11 +227,13 @@ export class AppMenu {
   readonly best = signal<Record<string, string | null>>({});
   readonly prefs = this.store.prefs;
 
-  readonly themes: { value: Theme; label: string; icon: string }[] = [
-    { value: 'system', label: m('System'), icon: 'brightness_auto' },
-    { value: 'light', label: m('Light'), icon: 'light_mode' },
-    { value: 'dark', label: m('Dark'), icon: 'dark_mode' },
-  ];
+  /** Whether the page is dark right now: the chosen theme, or else the phone's setting. */
+  readonly isDark = computed(() => {
+    const theme = this.prefs().theme;
+    if (theme !== 'system') return theme === 'dark';
+    return this.systemDark();
+  });
+  private readonly systemDark = signal(window.matchMedia('(prefers-color-scheme: dark)').matches);
   readonly durations = DURATIONS;
   readonly startOptions = HOUR_OPTIONS.slice(0, 24);
   readonly endOptions = HOUR_OPTIONS.slice(1);
@@ -403,11 +408,6 @@ export class AppMenu {
   toggleSection(id: string): void {
     this.openId.set(this.openId() === id ? '' : id);
   }
-
-  readonly dateStyles: { value: DateStyle; label: string }[] = [
-    { value: 'numeric', label: '30.9.' },
-    { value: 'name', label: '30 Sep' },
-  ];
 
   setDateStyle(dateStyle: DateStyle): void {
     this.store.update({ dateStyle });

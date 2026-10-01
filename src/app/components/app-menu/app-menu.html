@@ -193,21 +193,27 @@
               </button>
             }
           </div>
-          <div class="segments" role="radiogroup" [attr.aria-label]="t('Theme')">
-            @for (th of themes; track th.value) {
-              <button
-                type="button"
-                class="pill"
-                role="radio"
-                [class.active]="prefs().theme === th.value"
-                [attr.aria-checked]="prefs().theme === th.value"
-                (click)="setTheme(th.value)"
-              >
-                <mat-icon>{{ th.icon }}</mat-icon>
-                {{ t(th.label) }}
-              </button>
-            }
-          </div>
+          <ul class="features">
+            <li>
+              <mat-slide-toggle
+                [checked]="isDark()"
+                (change)="setTheme($event.checked ? 'dark' : 'light')"
+                [attr.aria-label]="t('Dark mode')"
+              />
+              <span class="text">
+                <span class="label">{{ t('Dark mode') }}</span>
+                <span class="muted small">
+                  @if (prefs().theme === 'system') {
+                    {{ t('Follows your phone.') }}
+                  } @else {
+                    <button type="button" class="link-btn" (click)="setTheme('system')">
+                      {{ t('Follow my phone instead') }}
+                    </button>
+                  }
+                </span>
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -243,20 +249,21 @@
             }
           </div>
           <p class="sub">{{ t('Date and time') }}</p>
-          <div class="segments" role="radiogroup" [attr.aria-label]="t('Date format')">
-            @for (d of dateStyles; track d.value) {
-              <button
-                type="button"
-                class="pill"
-                role="radio"
-                [class.active]="prefs().dateStyle === d.value"
-                [attr.aria-checked]="prefs().dateStyle === d.value"
-                (click)="setDateStyle(d.value)"
-              >
-                {{ d.label }}
-              </button>
-            }
-          </div>
+          <ul class="features">
+            <li>
+              <mat-slide-toggle
+                [checked]="prefs().dateStyle === 'name'"
+                (change)="setDateStyle($event.checked ? 'name' : 'numeric')"
+                [attr.aria-label]="t('Month names in dates')"
+              />
+              <span class="text">
+                <span class="label">{{ t('Month names in dates') }}</span>
+                <span class="muted small">{{
+                  prefs().dateStyle === 'name' ? '30 Sep' : '30.9.'
+                }}</span>
+              </span>
+            </li>
+          </ul>
           <label class="pick-when zone-pick">
             <span class="muted small">{{ t('Time zone') }}</span>
             <select

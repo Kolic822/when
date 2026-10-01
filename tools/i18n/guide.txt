@@ -226,9 +226,9 @@ My Whens lists every When you created or joined on this device, with what is boo
 „Meine Whens“ listet jedes When, das du auf diesem Gerät erstellt hast oder dem du beigetreten bist, mit dem, was festgelegt oder möglich ist.
 „Moji Whenovi” prikazuje svaki When koji si stvorio/la ili kojem si se pridružio/la na ovom uređaju, s onim što je potvrđeno ili moguće.
 
-Appearance changes the colours and light or dark mode. Settings holds the language, the date style (30.9. or 30 Sep), your time zone and the defaults for new Whens.
-Aussehen ändert die Farben und den hellen oder dunklen Modus. Einstellungen enthält die Sprache, das Datumsformat (30.9. oder 30 Sep), deine Zeitzone und die Vorgaben für neue Whens.
-Izgled mijenja boje i svijetli ili tamni način. Postavke sadrže jezik, oblik datuma (30.9. ili 30 Sep), tvoju vremensku zonu i zadane vrijednosti za nove Whenove.
+Appearance holds the colour scheme and a Dark mode switch (it follows your phone until you touch it). Settings holds the language, month names in dates, your time zone and the defaults for new Whens.
+Aussehen enthält das Farbschema und einen Schalter für den dunklen Modus (er folgt deinem Handy, bis du ihn anfasst). Einstellungen enthält die Sprache, Monatsnamen in Datumsangaben, deine Zeitzone und die Vorgaben für neue Whens.
+Izgled sadrži shemu boja i prekidač za tamni način (prati tvoj mobitel dok ga ne dirneš). Postavke sadrže jezik, imena mjeseci u datumima, tvoju vremensku zonu i zadane vrijednosti za nove Whenove.
 
 Defaults for new Whens pre-fills the length and hours when you plan the next one.
 „Standardwerte für neue Whens“ füllt Dauer und Uhrzeiten vor, wenn du das nächste planst.

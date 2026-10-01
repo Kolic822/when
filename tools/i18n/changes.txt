@@ -413,3 +413,7 @@ Sheme boja opet stanu u izbornik, dvije po retku
 Outsource decision: the button steps aside while a link exists
 Entscheidung auslagern: Der Button tritt zurück, solange ein Link existiert
 Prepusti odluku: gumb se povlači dok poveznica postoji
+
+Dark mode and month names in dates are switches now
+Dunkler Modus und Monatsnamen in Datumsangaben sind jetzt Schalter
+Tamni način i imena mjeseci u datumima sada su prekidači

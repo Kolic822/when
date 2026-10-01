@@ -754,3 +754,14 @@ p {
     color: var(--mat-sys-on-error);
   }
 }
+
+/* A small action inside a hint line, e.g. "Follow my phone instead". */
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
