@@ -478,7 +478,8 @@ p {
   }
 }
 
-.danger {
+/* The small red text buttons (Remove link); the filled red button in the popup is styled on its own. */
+.pill.danger {
   color: var(--mat-sys-error) !important;
 }
 

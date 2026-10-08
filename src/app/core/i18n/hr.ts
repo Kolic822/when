@@ -540,6 +540,7 @@ export const hr: Dictionary = {
   "The organiser picks a session.": "Organizator bira termin.",
   "The organiser removes one with its × button.": "Organizator pojedini termin uklanja njegovim ×.",
   "The password needs at least 8 characters.": "Lozinka treba najmanje 8 znakova.",
+  "The red button in the Drop days popup shows its label again": "Crveni gumb u prozoru „Izbaci dane“ opet prikazuje svoju oznaku",
   "The server keeps your IP address for a short time to slow down abuse, such as too many sign-in attempts. There are no advertising cookies and no analytics; the app keeps your settings in your browser only.": "Poslužitelj kratko čuva tvoju IP adresu kako bi usporio zlouporabu, poput previše pokušaja prijave. Nema oglasnih kolačića ni analitike; aplikacija čuva tvoje postavke samo u tvom pregledniku.",
   "The short guide now appears right after you join a When from a link, and can be skipped": "Kratki vodič sada se pojavljuje odmah nakon pridruživanja Whenu preko poveznice i može se preskočiti",
   "The switch is per device and covers all your Whens.": "Prekidač vrijedi po uređaju i za sve tvoje Whenove.",

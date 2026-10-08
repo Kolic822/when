@@ -533,3 +533,7 @@ Potvrđeno: Javi grupi šalje vrijeme i poveznicu za kalendar
 Loading shapes instead of a spinner; a quieter top bar; softer gold in the dark
 Lade-Formen statt Spinner; eine ruhigere Kopfzeile; sanfteres Gold im Dunkeln
 Oblici učitavanja umjesto vrtuljka; mirnija gornja traka; mekše zlato u tami
+
+The red button in the Drop days popup shows its label again
+Der rote Button im Fenster „Tage streichen“ zeigt seine Beschriftung wieder
+Crveni gumb u prozoru „Izbaci dane“ opet prikazuje svoju oznaku

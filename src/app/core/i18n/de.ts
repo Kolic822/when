@@ -540,6 +540,7 @@ export const de: Dictionary = {
   "The organiser picks a session.": "Der Organisator legt einen Termin fest.",
   "The organiser removes one with its × button.": "Der Organisator entfernt einen mit dessen ×.",
   "The password needs at least 8 characters.": "Das Passwort braucht mindestens 8 Zeichen.",
+  "The red button in the Drop days popup shows its label again": "Der rote Button im Fenster „Tage streichen“ zeigt seine Beschriftung wieder",
   "The server keeps your IP address for a short time to slow down abuse, such as too many sign-in attempts. There are no advertising cookies and no analytics; the app keeps your settings in your browser only.": "Der Server behält deine IP-Adresse kurz, um Missbrauch zu bremsen, etwa zu viele Anmeldeversuche. Es gibt keine Werbe-Cookies und keine Analyse; die App speichert deine Einstellungen nur in deinem Browser.",
   "The short guide now appears right after you join a When from a link, and can be skipped": "Die Kurzanleitung erscheint jetzt direkt nach dem Beitritt zu einem When über einen Link und lässt sich überspringen",
   "The switch is per device and covers all your Whens.": "Der Schalter gilt pro Gerät und für alle deine Whens.",
