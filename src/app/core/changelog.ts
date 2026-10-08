@@ -7,9 +7,20 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.18.4';
+export const VERSION = '0.19';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.19',
+    date: '8 Oct 2026',
+    changes: [
+      m('Share opens the phone’s share sheet; a fresh When asks to be sent'),
+      m('Day view: Same as previous, and one-tap answers move on to the next day'),
+      m('Possible sessions: “All answered” state, Remind them, Mark my times, favourites first'),
+      m('Booked: Tell the group sends the time and the calendar link'),
+      m('Loading shapes instead of a spinner; a quieter top bar; softer gold in the dark'),
+    ],
+  },
   {
     version: '0.18.4',
     date: '1 Oct 2026',

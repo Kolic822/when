@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { EventApi } from '../../core/event-api';
+import { canShare, shareOrCopy } from '../../core/share';
 import { EventSession } from '../../core/event-session';
 
 import { Identity } from '../../core/identity';
@@ -430,11 +431,65 @@ export class EventPage implements OnDestroy {
       this.snack.open(t('Only the organiser can change the days'), undefined, { duration: 3000 });
   }
 
+  // ---- A fresh When: nudge the organiser to send it, once.
+  readonly canShare = canShare;
+  private readonly sent = signal(false);
+  readonly showSendCard = computed(() => {
+    const ev = this.event();
+    return (
+      !!ev &&
+      this.isCreator() &&
+      !!this.me() &&
+      ev.participants.length < 2 &&
+      !this.sent() &&
+      !flag(`when:sent:${ev.id}`)
+    );
+  });
+
+  async sendWhen(): Promise<void> {
+    const done = await shareOrCopy({
+      title: this.event()?.title ?? 'When',
+      text: t('When are you free? Mark your times here:'),
+      url: this.shareUrl(),
+    });
+    if (done === 'copied') {
+      this.snack.open(t('Link copied – send it to your group'), undefined, this.toastOpts(2500));
+    }
+    if (done === 'shared' || done === 'copied') this.dismissSendCard();
+  }
+
+  dismissSendCard(): void {
+    this.sent.set(true);
+    setFlag(`when:sent:${this.id()}`);
+  }
+
+  /** From the results card: they have not marked anything yet, so open the first day. */
+  startMarking(): void {
+    const ev = this.event();
+    if (ev) this.editingDay.set(ev.dates[0]);
+  }
+
   saveSettings(details: WhenDetails): void {
     const { name: _name, ...patch } = details;
     const ok = this.session.updateEvent(patch);
     if (!ok)
       this.snack.open(t('Only the organiser can change the days'), undefined, { duration: 3000 });
     this.settingsOpen.set(false);
+  }
+}
+
+function flag(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function setFlag(key: string): void {
+  try {
+    localStorage.setItem(key, '1');
+  } catch {
+    /* ignore */
   }
 }

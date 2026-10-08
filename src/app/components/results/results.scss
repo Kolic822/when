@@ -546,3 +546,38 @@ p {
     color: var(--mat-sys-on-error);
   }
 }
+
+/* Everyone is in: a cheerful line above the chips. */
+.all-in {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+}
+
+.next-step {
+  margin-top: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.pending {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+
+  .remind {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+}

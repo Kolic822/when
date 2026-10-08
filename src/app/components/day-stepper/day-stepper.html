@@ -125,6 +125,12 @@
             </button>
           }
           <span class="spacer"></span>
+          @if (index() > 0 && prevHasTimes()) {
+            <button type="button" class="side-btn" (click)="sameAsPrevious()">
+              <mat-icon>content_paste</mat-icon>
+              <span>{{ t('Same as previous') }}</span>
+            </button>
+          }
           @if (dates().length > 1) {
             <button
               type="button"

@@ -136,8 +136,8 @@ $looks: (
   --when-muted: #{map.get($c, muted)};
 
   @if $dark {
-    --when-common: #facc15;
-    --when-common-bg: rgba(250, 204, 21, 0.28);
+    --when-common: #e9c13a;
+    --when-common-bg: rgba(250, 204, 21, 0.16);
     --card-shadow: none;
     --card-border: 1px solid #{map.get($c, border)};
   } @else {

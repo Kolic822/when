@@ -36,10 +36,6 @@
       >
         <mat-icon>{{ notifyOn() ? 'notifications_active' : 'notifications_off' }}</mat-icon>
       </button>
-      <a routerLink="/" class="pill new-when" [title]="t('Plan a new When')">
-        <mat-icon>add</mat-icon>
-        <span class="txt">{{ t('New When') }}</span>
-      </a>
       <app-menu #menu />
     }
   </nav>
@@ -51,7 +47,11 @@
       <a mat-flat-button routerLink="/">{{ t('Start a new one') }}</a>
     </section>
   } @else if (!event(); as ev) {
-    <div class="loading"><mat-spinner diameter="36" /></div>
+    <div class="skeleton" aria-hidden="true">
+      <span class="bone title"></span>
+      <span class="bone card-s"></span>
+      <span class="bone chart-s"></span>
+    </div>
   } @else {
     @if (!editingDay() && !stepping() && !settingsOpen()) {
       <header class="head">
@@ -76,6 +76,27 @@
           <p class="description">{{ event()!.description }}</p>
         }
       </header>
+      @if (showSendCard()) {
+        <section class="card send-card">
+          <mat-icon class="lead-icon">celebration</mat-icon>
+          <div class="text">
+            <strong>{{ t('Your When is ready.') }}</strong>
+            <span class="muted">{{ t('Mark your own times, then send it to the group.') }}</span>
+          </div>
+          <button type="button" class="pill go" (click)="sendWhen()">
+            <mat-icon>{{ canShare ? 'ios_share' : 'content_copy' }}</mat-icon>
+            {{ canShare ? t('Send') : t('Copy link') }}
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="dismissSendCard()"
+            [attr.aria-label]="t('Close')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </section>
+      }
     }
 
     @if (session.needsName()) {
@@ -134,6 +155,8 @@
             <app-booked
               [sessions]="bookings()"
               [eventId]="id()"
+              [title]="event()!.title"
+              [url]="shareUrl()"
               [organiser]="isCreator()"
               (unbooked)="onUnbook($event)"
             />
@@ -158,6 +181,9 @@
               [shortlists]="event()!.shortlists ?? []"
               [booked]="bookings().length > 0 && !features().multiBook"
               [dates]="event()!.dates"
+              [title]="event()!.title"
+              [url]="shareUrl()"
+              (markTimes)="startMarking()"
               (dropDays)="onDropDays($event)"
               [votes]="event()!.votes ?? {}"
               [meId]="meId()"

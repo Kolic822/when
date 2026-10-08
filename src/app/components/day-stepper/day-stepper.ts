@@ -160,7 +160,32 @@ export class DayStepper {
   /** Toggles: a second tap switches "all day" off and brings back the earlier times. */
   freeAllDay(): void {
     if (this.isAllDay()) this.allDayToggled.emit({ date: this.date(), on: false });
-    else this.quickFree.emit(this.date());
+    else {
+      this.quickFree.emit(this.date());
+      this.advanceSoon();
+    }
+  }
+
+  /** The day before this one has times: repeat them here. */
+  readonly prevHasTimes = computed(() => {
+    const prev = this.dates()[this.index() - 1];
+    const me = this.event().participants.find((p) => p.id === this.meId());
+    return !!prev && !!me?.slots.some((s) => s.date === prev);
+  });
+
+  sameAsPrevious(): void {
+    const prev = this.dates()[this.index() - 1];
+    if (!prev) return;
+    this.copyTo.emit({ from: prev, to: [this.date()] });
+    this.advanceSoon();
+  }
+
+  /** A one-tap answer is done: move on after a beat, so the result is seen first. */
+  private advanceSoon(): void {
+    if (this.isLast()) return;
+    setTimeout(() => {
+      if (!this.isLast()) this.next();
+    }, 450);
   }
 
   // ---- Own calendar (Pro)

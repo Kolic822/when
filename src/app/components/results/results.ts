@@ -9,6 +9,8 @@ import { AvailabilityResult } from '../../core/availability';
 import { EventApi } from '../../core/event-api';
 
 import { Identity } from '../../core/identity';
+import { shareOrCopy } from '../../core/share';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CommonWindow, Session, Shortlist } from '../../core/models';
 
@@ -85,6 +87,34 @@ export class Results {
   readonly voted = output<{ key: string; value: 1 | 0 }>();
   /** A session is already booked, so the list starts folded away. */
   readonly booked = input(false);
+  /** The When's name and address, for the messages the organiser sends out. */
+  readonly title = input('When');
+  readonly url = input('');
+  /** The person has no times yet: let them start marking from here. */
+  readonly markTimes = output<void>();
+  private readonly snack = inject(MatSnackBar);
+
+  /** Everyone has answered (at least two people). */
+  readonly allAnswered = computed(
+    () => this.result().pending.length === 0 && this.result().answered.length >= 2,
+  );
+  /** Whether the viewer has marked anything. */
+  readonly meAnswered = computed(() => {
+    const me = this.meId();
+    return !!me && this.result().answered.some((p) => p.id === me);
+  });
+
+  /** Organiser: pokes the people who have not answered, through the share sheet. */
+  async remind(): Promise<void> {
+    const done = await shareOrCopy({
+      title: this.title(),
+      text: t('Still need your times for {title}:', { title: this.title() }),
+      url: this.url(),
+    });
+    if (done === 'copied') {
+      this.snack.open(t('Reminder copied – send it to them'), undefined, { duration: 2500 });
+    }
+  }
   /** The When's days, to find the ones no session fits on. */
   readonly dates = input<string[]>([]);
   /** Organiser: drop these days from the When. */
@@ -134,10 +164,13 @@ export class Results {
 
   /** In date order; the app doesn't rank them, the organiser decides. */
   readonly rows = computed<Row[]>(() => {
-    const ordered = [...this.result().windows].sort(
-      (a, b) => a.date.localeCompare(b.date) || a.start - b.start,
-    );
     const votes = this.votes();
+    const scoreOf = (w: CommonWindow) =>
+      Object.values(votes[`${w.date}:${w.start}:${w.end}`] ?? {}).filter((v) => v === 1).length;
+    // Date order; once anyone has voted, the favourites come first.
+    const ordered = [...this.result().windows].sort(
+      (a, b) => scoreOf(b) - scoreOf(a) || a.date.localeCompare(b.date) || a.start - b.start,
+    );
     const me = this.meId();
     const scores = ordered.map((w) => {
       const own = votes[`${w.date}:${w.start}:${w.end}`] ?? {};

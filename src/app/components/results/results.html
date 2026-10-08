@@ -25,6 +25,15 @@
   }
   <div [appFold]="!isFolded()">
     <div class="body">
+      @if (allAnswered() && !booked()) {
+        <p class="all-in">
+          <mat-icon>celebration</mat-icon>
+          <span>
+            {{ t('All {n} answered.', { n: result().answered.length }) }}
+            {{ organiser() ? t('Pick a session.') : t('The organiser picks a session.') }}
+          </span>
+        </p>
+      }
       @if (rows().length) {
         <div class="chips" role="group" [attr.aria-label]="t('Possible sessions')">
           @for (r of visible(); track r.key) {
@@ -126,15 +135,29 @@
           </div>
         }
       } @else if (result().answered.length === 0) {
-        <p class="muted">{{ t('Nothing yet. Tap a day to add your times.') }}</p>
+        <p class="muted">{{ t('Nothing yet.') }}</p>
       } @else if (result().answered.length === 1) {
         <p class="muted">{{ t('Waiting for one more person to answer.') }}</p>
       } @else {
         <p class="muted">{{ t('Nothing fits everyone yet. Try adding a bit more time.') }}</p>
       }
 
-      @if (result().pending.length && result().answered.length) {
-        <p class="pending muted">{{ t('Waiting for {names}.', { names: pendingNames() }) }}</p>
+      <!-- One thing to do next, whoever is looking. -->
+      @if (meId() && !meAnswered()) {
+        <button type="button" class="pill next-step" (click)="markTimes.emit()">
+          <mat-icon>touch_app</mat-icon>
+          {{ t('Mark my times') }}
+        </button>
+      } @else if (result().pending.length) {
+        <p class="pending muted">
+          <span>{{ t('Waiting for {names}.', { names: pendingNames() }) }}</span>
+          @if (organiser()) {
+            <button type="button" class="pill mini remind" (click)="remind()">
+              <mat-icon>campaign</mat-icon>
+              {{ t('Remind them') }}
+            </button>
+          }
+        </p>
       }
 
       <!-- One link is enough; while it exists the button stays away. -->

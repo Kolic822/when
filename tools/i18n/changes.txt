@@ -513,3 +513,23 @@ Dodir ili zadržavanje na zlatnoj traci u kalendaru opet pogađa traku, a ne dan
 Guide: one topic open at a time
 Anleitung: immer nur ein Thema offen
 Vodič: otvorena je samo jedna tema
+
+Share opens the phone’s share sheet; a fresh When asks to be sent
+Teilen öffnet das Teilen-Menü des Handys; ein neues When bittet darum, verschickt zu werden
+Podijeli otvara mobitelov izbornik za dijeljenje; novi When traži da ga pošalješ
+
+Day view: Same as previous, and one-tap answers move on to the next day
+Tagesansicht: Wie am Vortag, und Ein-Tipp-Antworten gehen zum nächsten Tag weiter
+Prikaz dana: Isto kao prethodni, a odgovori jednim dodirom vode na sljedeći dan
+
+Possible sessions: “All answered” state, Remind them, Mark my times, favourites first
+Mögliche Termine: „Alle haben geantwortet“, Erinnern, Meine Zeiten markieren, Favoriten zuerst
+Mogući termini: stanje „Svi su odgovorili“, Podsjeti ih, Označi moja vremena, favoriti prvi
+
+Booked: Tell the group sends the time and the calendar link
+Festgelegt: „Der Gruppe sagen“ schickt die Zeit und den Kalender-Link
+Potvrđeno: Javi grupi šalje vrijeme i poveznicu za kalendar
+
+Loading shapes instead of a spinner; a quieter top bar; softer gold in the dark
+Lade-Formen statt Spinner; eine ruhigere Kopfzeile; sanfteres Gold im Dunkeln
+Oblici učitavanja umjesto vrtuljka; mirnija gornja traka; mekše zlato u tami

@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
 
@@ -10,7 +10,9 @@ import { weekdayLong, weekdayShort, dayMonth } from '../../core/time';
 
 import { dayOf, spanAt } from '../../core/zone';
 
-import { t } from '../../core/i18n/i18n';
+import { listOf, t } from '../../core/i18n/i18n';
+import { canShare, shareOrCopy } from '../../core/share';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** The session the organiser settled on, shown to everyone at the top of the When. */
 @Component({
@@ -56,9 +58,21 @@ import { t } from '../../core/i18n/i18n';
           </div>
         </div>
       }
+      @if (organiser()) {
+        <button type="button" class="pill tell" (click)="tell()">
+          <mat-icon>{{ canShare ? 'ios_share' : 'content_copy' }}</mat-icon>
+          {{ t('Tell the group') }}
+        </button>
+      }
     </section>
   `,
   styles: `
+    .tell {
+      align-self: flex-start;
+      margin-top: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      color: inherit;
+    }
     .booked {
       padding: 14px 16px;
       border-radius: var(--when-radius);
@@ -144,6 +158,26 @@ export class Booked {
   readonly t = t;
   readonly sessions = input.required<Session[]>();
   readonly eventId = input('');
+  readonly title = input('When');
+  readonly url = input('');
+  readonly canShare = canShare;
+  private readonly snack = inject(MatSnackBar);
+
+  /** The organiser sends the booked time to the group, with the link for the calendar. */
+  async tell(): Promise<void> {
+    const when = listOf(this.rows().map((r) => `${r.day} ${r.time}`));
+    const done = await shareOrCopy({
+      title: this.title(),
+      text: t('{title}: we meet {when}. Add it to your calendar here:', {
+        title: this.title(),
+        when,
+      }),
+      url: this.url(),
+    });
+    if (done === 'copied') {
+      this.snack.open(t('Message copied – send it to your group'), undefined, { duration: 2500 });
+    }
+  }
   readonly organiser = input(false);
   /** The organiser takes one session back. */
   readonly unbooked = output<Session>();

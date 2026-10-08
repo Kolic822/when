@@ -122,10 +122,6 @@ Start time
 Startzeit
 Vrijeme početka
 
-Nothing yet. Tap a day to add your times.
-Noch nichts. Tippe auf einen Tag, um deine Zeiten einzutragen.
-Još ništa. Dodirni dan da uneseš svoja vremena.
-
 Waiting for one more person to answer.
 Es fehlt noch die Antwort einer weiteren Person.
 Čeka se odgovor još jedne osobe.
@@ -289,10 +285,6 @@ Obavijesti su uključene
 Notifications are off
 Benachrichtigungen sind aus
 Obavijesti su isključene
-
-Plan a new When
-Neues When planen
-Planiraj novi When
 
 It may have been deleted, or the link is incomplete.
 Es wurde vielleicht gelöscht, oder der Link ist unvollständig.
@@ -1149,3 +1141,67 @@ Prepusti odluku šalje termine nekome izvan grupe da odabere.
 Turn on notifications to hear when everyone has answered.
 Schalte Benachrichtigungen ein, um zu erfahren, wenn alle geantwortet haben.
 Uključi obavijesti da saznaš kad svi odgovore.
+
+Share
+Teilen
+Podijeli
+
+Your When is ready.
+Dein When ist fertig.
+Tvoj When je spreman.
+
+Mark your own times, then send it to the group.
+Markiere deine eigenen Zeiten und schick es dann an die Gruppe.
+Označi svoja vremena, a zatim ga pošalji grupi.
+
+Send
+Senden
+Pošalji
+
+Same as previous
+Wie am Vortag
+Isto kao prethodni
+
+All {n} answered.
+Alle {n} haben geantwortet.
+Odgovorili su svi ({n}).
+
+Pick a session.
+Leg einen Termin fest.
+Odaberi termin.
+
+The organiser picks a session.
+Der Organisator legt einen Termin fest.
+Organizator bira termin.
+
+Nothing yet.
+Noch nichts.
+Još ništa.
+
+Mark my times
+Meine Zeiten markieren
+Označi moja vremena
+
+Remind them
+Erinnern
+Podsjeti ih
+
+Still need your times for {title}:
+Deine Zeiten für {title} fehlen noch:
+Još trebamo tvoja vremena za {title}:
+
+Reminder copied – send it to them
+Erinnerung kopiert – schick sie ihnen
+Podsjetnik kopiran – pošalji im ga
+
+Tell the group
+Der Gruppe sagen
+Javi grupi
+
+{title}: we meet {when}. Add it to your calendar here:
+{title}: Wir treffen uns {when}. Hier in den Kalender eintragen:
+{title}: nalazimo se {when}. Dodaj u kalendar ovdje:
+
+Message copied – send it to your group
+Nachricht kopiert – schick sie deiner Gruppe
+Poruka kopirana – pošalji je svojoj grupi
