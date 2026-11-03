@@ -305,3 +305,55 @@
     transform: none;
   }
 }
+
+/* Part one: one row per day, three choices. */
+.days-pass {
+  padding: 8px 12px;
+  overflow-y: auto;
+}
+
+.day-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 10px 10px;
+    border-radius: 14px;
+    background: var(--when-grid);
+  }
+  .dname {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .segments {
+    display: flex;
+    gap: 6px;
+
+    .pill {
+      flex: 1;
+      height: 36px;
+      padding: 0 6px;
+      font-size: 13px;
+      background: var(--when-surface);
+    }
+    .pill.active {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .pill.active.off {
+      background: var(--mat-sys-error);
+      color: var(--mat-sys-on-error);
+    }
+  }
+}
+
+.nav.one {
+  grid-template-columns: 1fr;
+}

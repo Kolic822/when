@@ -77,6 +77,27 @@ export class DayStepper {
         if (i >= 0) this.index.set(i);
       });
     });
+    // Coming in fresh to a When that asks for days first: start with part one. Decided
+    // once, from the first event the inputs deliver.
+    let decided = false;
+    effect(() => {
+      const ev = this.event();
+      const meId = this.meId();
+      const start = this.startDate();
+      untracked(() => {
+        if (decided) return;
+        decided = true;
+        const me = ev.participants.find((p) => p.id === meId);
+        const fresh = !!me && !me.slots.length && !me.off?.length;
+        if (ev.daysFirst !== false && !start && fresh && ev.dates.length > 1) {
+          this.phase.set('days');
+        }
+      });
+    });
+  }
+
+  dayName(date: string): string {
+    return `${weekdayLong(date)} ${dayMonth(date)}`;
   }
   /** What the side-column day picker is copying: the whole day or one period. */
   readonly copyTarget = signal<{ kind: 'day' } | { kind: 'slot'; slot: Slot } | null>(null);
@@ -123,7 +144,41 @@ export class DayStepper {
     if (target.kind === 'slot') this.copySlotTo.emit({ slot: target.slot, to });
     else this.copyToDays(to);
   }
-  readonly dates = computed(() => this.event().dates);
+  // ---- Part one: which days could work at all. Part two: times, only on those days.
+  readonly phase = signal<'days' | 'times'>('times');
+  /** Per day: can't, maybe (the default), or free all day. */
+  readonly choice = signal<Record<string, 'off' | 'maybe' | 'all'>>({});
+  /** The days to go through in part two; empty means all of them. */
+  private readonly onlyDays = signal<string[] | null>(null);
+  readonly offChanged = output<string[]>();
+
+  choose(date: string, value: 'off' | 'maybe' | 'all'): void {
+    this.choice.update((c) => ({ ...c, [date]: value }));
+  }
+
+  choiceOf(date: string): 'off' | 'maybe' | 'all' {
+    return this.choice()[date] ?? 'maybe';
+  }
+
+  /** Part one is answered: send the days ruled out and the free ones, then on to the times. */
+  continueToTimes(): void {
+    const all = this.event().dates;
+    const off = all.filter((d) => this.choiceOf(d) === 'off');
+    const free = all.filter((d) => this.choiceOf(d) === 'all');
+    const maybe = all.filter((d) => this.choiceOf(d) === 'maybe');
+    this.offChanged.emit(off);
+    for (const d of free) this.quickFree.emit(d);
+    if (!maybe.length) {
+      this.finished.emit();
+      return;
+    }
+    this.onlyDays.set(maybe);
+    this.index.set(0);
+    this.phase.set('times');
+    this.slide.set('left');
+  }
+
+  readonly dates = computed(() => this.onlyDays() ?? this.event().dates);
   readonly date = computed(() => this.dates()[Math.min(this.index(), this.dates().length - 1)]);
   readonly isLast = computed(() => this.index() >= this.dates().length - 1);
   readonly dayLabel = computed(() => `${weekdayLong(this.date())} ${dayMonth(this.date())}`);

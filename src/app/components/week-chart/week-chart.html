@@ -65,6 +65,11 @@
                 <span class="mo">{{ d.month }}</span>
               }
             }
+            @if (d.off.length) {
+              <span class="off" [title]="t('Can’t: {names}', { names: d.off.join(', ') })">
+                <mat-icon>block</mat-icon>{{ d.off.join(', ') }}
+              </span>
+            }
           </span>
           <span class="bar">
             @if (firstDay) {

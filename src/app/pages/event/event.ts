@@ -415,6 +415,7 @@ export class EventPage implements OnDestroy {
       dayStart: ev.dayStart,
       dayEnd: ev.dayEnd,
       partialOk: ev.partialOk,
+      daysFirst: ev.daysFirst !== false,
     });
     this.settingsOpen.set(true);
     window.scrollTo({ top: 0 });

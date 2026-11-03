@@ -7,9 +7,20 @@ export interface Release {
   changes: string[];
 }
 
-export const VERSION = '0.19.1';
+export const VERSION = '0.20';
 
 export const CHANGELOG: Release[] = [
+  {
+    version: '0.20',
+    date: '3 Nov 2026',
+    changes: [
+      m(
+        'Answering in two parts: first Can’t / Maybe / Free all day per day, then times only on the Maybe days',
+      ),
+      m('The organiser switches this on or off when creating or changing a When'),
+      m('Days someone can’t make say so under the date in the calendar'),
+    ],
+  },
   {
     version: '0.19.1',
     date: '8 Oct 2026',

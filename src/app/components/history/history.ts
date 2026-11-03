@@ -194,6 +194,8 @@ function describe(e: HistoryEntry, zone: string | null): string {
       return t('voted for {session}', { session: `${day}, ${span}` });
     case 'unvoted':
       return t('took back the vote for {session}', { session: `${day}, ${span}` });
+    case 'off':
+      return t('can’t make {day}', { day });
   }
 }
 

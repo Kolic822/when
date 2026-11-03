@@ -413,3 +413,7 @@ Izgubio/la si mjesto (novi mobitel, očišćen preglednik)? Upiši svoje staro i
 Once two or more have answered, the organiser can drop the days nobody can make, under the possible sessions. Times marked on those days go with them.
 Sobald zwei oder mehr geantwortet haben, kann der Organisator unter den möglichen Terminen die Tage streichen, an denen niemand kann. Markierte Zeiten an diesen Tagen gehen mit.
 Kad dvoje ili više odgovori, organizator pod mogućim terminima može izbaciti dane koje nitko ne može. Vremena označena na tim danima odlaze s njima.
+
+If the When asks which days first, you start with one tap per day: Can’t, Maybe or Free all day. Then you mark times only on the Maybe days. The organiser chooses this when creating the When.
+Fragt das When erst nach den Tagen, beginnst du mit einem Tipp pro Tag: Geht nicht, Vielleicht oder Ganzer Tag frei. Danach markierst du Zeiten nur an den Vielleicht-Tagen. Der Organisator wählt das beim Erstellen des Whens.
+Ako When prvo pita za dane, počinješ jednim dodirom po danu: Ne mogu, Možda ili Slobodan cijeli dan. Zatim označavaš vremena samo na danima Možda. Organizator to bira pri stvaranju Whena.

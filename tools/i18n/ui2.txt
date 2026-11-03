@@ -1205,3 +1205,43 @@ Javi grupi
 Message copied – send it to your group
 Nachricht kopiert – schick sie deiner Gruppe
 Poruka kopirana – pošalji je svojoj grupi
+
+Ask which days first
+Erst nach den Tagen fragen
+Prvo pitaj za dane
+
+People tap Can’t / Maybe / Free all day per day, then mark times only on the Maybe days.
+Die Leute tippen pro Tag auf Geht nicht / Vielleicht / Ganzer Tag frei und markieren dann nur an den Vielleicht-Tagen Zeiten.
+Ljudi za svaki dan dodirnu Ne mogu / Možda / Slobodan cijeli dan, a zatim označe vremena samo na danima Možda.
+
+Part 1 of 2
+Teil 1 von 2
+1. dio od 2
+
+Which days could work?
+Welche Tage könnten passen?
+Koji bi dani mogli odgovarati?
+
+One tap per day. You mark times only on the Maybe days.
+Ein Tipp pro Tag. Zeiten markierst du nur an den Vielleicht-Tagen.
+Jedan dodir po danu. Vremena označavaš samo na danima Možda.
+
+Can’t
+Geht nicht
+Ne mogu
+
+Maybe
+Vielleicht
+Možda
+
+Continue
+Weiter
+Nastavi
+
+Can’t: {names}
+Geht nicht: {names}
+Ne mogu: {names}
+
+can’t make {day}
+kann {day} nicht
+ne može {day}

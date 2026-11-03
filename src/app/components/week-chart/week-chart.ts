@@ -73,6 +73,8 @@ interface DayColumn {
   picked: Block[];
   hasMine: boolean;
   allDay: boolean;
+  /** People who ruled this day out. */
+  off: string[];
 }
 
 /**
@@ -212,6 +214,7 @@ export class WeekChart {
               ? { from: timeAt(w.date, w.start), to: timeAt(w.date, w.end) }
               : {}),
           })),
+        off: ev.participants.filter((p) => p.off?.includes(key)).map((p) => p.name),
         hasMine: mySlots.length > 0,
         allDay:
           mySlots.length === 1 && mySlots[0].start <= ev.dayStart && mySlots[0].end >= ev.dayEnd,

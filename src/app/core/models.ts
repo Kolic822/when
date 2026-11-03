@@ -12,6 +12,8 @@ export interface Participant {
   name: string;
   color: string;
   slots: Slot[];
+  /** Days this person cannot make at all. */
+  off?: string[];
 }
 
 export type HistoryKind =
@@ -24,7 +26,8 @@ export type HistoryKind =
   | 'cleared'
   | 'settings'
   | 'voted'
-  | 'unvoted';
+  | 'unvoted'
+  | 'off';
 
 /** One line in the event's change log. */
 export interface HistoryEntry {
@@ -99,6 +102,8 @@ export interface MeetEvent {
    * count windows where everyone can make at least part of it.
    */
   partialOk: boolean;
+  /** People first say which days could work, then mark times only on those. */
+  daysFirst?: boolean;
   participants: Participant[];
   history: HistoryEntry[];
   /** The session the organiser settled on, if any. */
@@ -132,6 +137,7 @@ export interface EventPatch {
   partialOk?: boolean;
   booked?: Session | null;
   bookings?: Session[];
+  daysFirst?: boolean;
 }
 
 export const DEFAULT_DAY_START = 8 * 60;
@@ -163,5 +169,6 @@ export type ClientMessage =
   | { type: 'setSlots'; slots: Slot[] }
   | { type: 'rename'; name: string }
   | { type: 'vote'; key: string; value: 1 | 0 }
+  | { type: 'setOff'; dates: string[] }
   | { type: 'updateEvent'; token: string; patch: EventPatch }
   | { type: 'ping' };

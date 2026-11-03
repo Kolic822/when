@@ -90,8 +90,10 @@ export interface AvailabilityResult {
  *   free for the whole window are listed in `partial`.
  */
 export function findCommonWindows(event: MeetEvent): AvailabilityResult {
-  const answered = event.participants.filter((p) => p.slots.length > 0);
-  const pending = event.participants.filter((p) => p.slots.length === 0);
+  // Ruling days out counts as answering, too.
+  const said = (p: Participant) => p.slots.length > 0 || !!p.off?.length;
+  const answered = event.participants.filter(said);
+  const pending = event.participants.filter((p) => !said(p));
   const minLen = Math.round(event.durationHours * 60);
   const windows: CommonWindow[] = [];
 

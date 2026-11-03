@@ -537,3 +537,15 @@ Oblici učitavanja umjesto vrtuljka; mirnija gornja traka; mekše zlato u tami
 The red button in the Drop days popup shows its label again
 Der rote Button im Fenster „Tage streichen“ zeigt seine Beschriftung wieder
 Crveni gumb u prozoru „Izbaci dane“ opet prikazuje svoju oznaku
+
+Answering in two parts: first Can’t / Maybe / Free all day per day, then times only on the Maybe days
+Antworten in zwei Teilen: erst pro Tag Geht nicht / Vielleicht / Ganzer Tag frei, dann Zeiten nur an den Vielleicht-Tagen
+Odgovaranje u dva dijela: prvo Ne mogu / Možda / Slobodan cijeli dan po danu, a zatim vremena samo na danima Možda
+
+The organiser switches this on or off when creating or changing a When
+Der Organisator schaltet das beim Erstellen oder Ändern eines Whens ein oder aus
+Organizator to uključuje ili isključuje pri stvaranju ili mijenjanju Whena
+
+Days someone can’t make say so under the date in the calendar
+Tage, an denen jemand nicht kann, sagen das unter dem Datum im Kalender
+Dani koje netko ne može to kažu ispod datuma u kalendaru

@@ -250,3 +250,14 @@ form:not(.editing) app-day-picker {
     --mat-button-filled-label-text-color: var(--mat-sys-on-error);
   }
 }
+
+.toggle-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+  .small {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}

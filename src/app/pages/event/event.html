@@ -144,6 +144,7 @@
           (allDayToggled)="onAllDay($event.date, $event.on)"
           (notFree)="onStepNotFree($event)"
           (quickFree)="onStepQuick('free', $event)"
+          (offChanged)="session.setOff($event)"
           (copyTo)="onCopyTo($event)"
           (copySlotTo)="onCopySlotTo($event)"
           (finished)="finishStepper()"

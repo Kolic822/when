@@ -166,6 +166,17 @@
     </p>
   }
 
+  <mat-slide-toggle [formField]="form.daysFirst" class="toggle">
+    <span class="toggle-text">
+      {{ t('Ask which days first') }}
+      <span class="muted small">{{
+        t(
+          'People tap Can’t / Maybe / Free all day per day, then mark times only on the Maybe days.'
+        )
+      }}</span>
+    </span>
+  </mat-slide-toggle>
+
   @if (features().partial) {
     <mat-slide-toggle [formField]="form.partialOk" class="toggle"
       >{{ t('People can join for part of it') }}

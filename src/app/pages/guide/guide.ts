@@ -53,6 +53,9 @@ export class Guide {
       title: m('Mark when you are free'),
       intro: m('The first time you open a When it walks you through the days one by one.'),
       steps: [
+        m(
+          'If the When asks which days first, you start with one tap per day: Can’t, Maybe or Free all day. Then you mark times only on the Maybe days. The organiser chooses this when creating the When.',
+        ),
         m('Tap a day in the calendar to open it.'),
         m(
           'Hold your finger on the bar for a moment, then drag to mark a period. A period can’t be shorter than the meetup.',

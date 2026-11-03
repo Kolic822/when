@@ -32,6 +32,7 @@ export interface WhenDetails {
   dayStart: number;
   dayEnd: number;
   partialOk: boolean;
+  daysFirst: boolean;
 }
 
 interface Model {
@@ -42,6 +43,7 @@ interface Model {
   dayStart: number;
   dayEnd: number;
   partialOk: boolean;
+  daysFirst: boolean;
 }
 
 /**
@@ -123,6 +125,7 @@ export class WhenForm {
     dayStart: this.prefs.dayStart,
     dayEnd: this.prefs.dayEnd,
     partialOk: false,
+    daysFirst: true,
   });
   readonly form = form(this.model, (p) => {
     required(p.title);
@@ -186,6 +189,7 @@ export class WhenForm {
       dayStart: m.dayStart,
       dayEnd: m.dayEnd,
       partialOk: m.partialOk,
+      daysFirst: m.daysFirst,
     });
   }
 }

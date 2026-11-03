@@ -115,6 +115,11 @@ export class EventSession {
     this.sendJoin();
   }
 
+  /** The days I cannot make at all. */
+  setOff(dates: string[]): void {
+    this.send({ type: 'setOff', dates });
+  }
+
   /** A vote for a possible session; 0 takes it back. */
   vote(key: string, value: 1 | 0): void {
     this.send({ type: 'vote', key, value });

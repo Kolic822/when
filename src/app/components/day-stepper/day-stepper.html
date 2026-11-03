@@ -1,189 +1,258 @@
 <div class="stepper">
-  <header class="head card">
-    <div class="top">
-      <span class="progress muted">{{
-        t('Day {n} of {total}', { n: index() + 1, total: dates().length })
-      }}</span>
-      @if (calendarOffered()) {
-        <span class="cal-tools">
-          @if (calendar.hasSource()) {
-            <button
-              type="button"
-              class="tool fill"
-              (click)="fillFromCalendar()"
-              [disabled]="calendar.found() === null"
-              [title]="t('Mark the time your calendar leaves free')"
-            >
-              <mat-icon>auto_awesome</mat-icon>
-              {{ t('Fill from calendar') }}
-              <span class="pro-badge">{{ t('Pro') }}</span>
-            </button>
-          }
-          <button
-            type="button"
-            class="tool icon"
-            [class.on]="calendarShown()"
-            [attr.aria-pressed]="calendarShown()"
-            [attr.aria-label]="t('Show my calendar events')"
-            [title]="t('Show my calendar events')"
-            (click)="toggleCalendar()"
-          >
-            <mat-icon>{{ calendarShown() ? 'event' : 'event_busy' }}</mat-icon>
-          </button>
-        </span>
-      }
-    </div>
-    <h2>{{ dayLabel() }}</h2>
-    @if (tip()) {
-      <p class="tip" role="status">
+  @if (phase() === 'days') {
+    <header class="head card">
+      <span class="progress muted">{{ t('Part 1 of 2') }}</span>
+      <h2>{{ t('Which days could work?') }}</h2>
+      <p class="tip" role="note">
         <mat-icon>lightbulb</mat-icon>
-        <span>{{
-          t('Mark each day and tap Next, or tap Overview any time to see all days at once.')
-        }}</span>
-        <button type="button" class="icon-btn" (click)="closeTip()" [attr.aria-label]="t('Close')">
-          <mat-icon>close</mat-icon>
-        </button>
+        <span>{{ t('One tap per day. You mark times only on the Maybe days.') }}</span>
       </p>
-    }
-    @if (fillNote()) {
-      <p class="fill-note" role="status">
-        {{ t('Your calendar leaves no gap long enough on this day.') }}
-      </p>
-    }
-    <div
-      class="bar-track"
-      role="progressbar"
-      [attr.aria-valuenow]="index() + 1"
-      aria-valuemin="1"
-      [attr.aria-valuemax]="dates().length"
-      [attr.aria-label]="t('Day {n} of {total}', { n: index() + 1, total: dates().length })"
-    >
-      <div class="bar-fill" [style.width.%]="((index() + 1) / dates().length) * 100"></div>
-    </div>
-  </header>
-
-  <section
-    class="board card"
-    [class.slide-left]="slide() === 'left'"
-    [class.slide-right]="slide() === 'right'"
-    (touchstart)="onSwipeStart($event)"
-    (touchend)="onSwipeEnd($event)"
-    (animationend)="slide.set(null)"
-  >
-    <app-day-editor
-      [event]="event()"
-      [meId]="meId()"
-      [date]="date()"
-      (slotsChange)="slotsChange.emit($event)"
-      (copySlotRequested)="startCopy({ kind: 'slot', slot: $event })"
-    >
-      <div actions class="side" [class.copying]="copyTarget()">
-        @if (copyTarget(); as target) {
-          <span class="side-title muted"
-            >{{ target.kind === 'slot' ? slotLabel(target.slot) : t('Whole day') }} →</span
-          >
-          <div class="day-list" role="group" [attr.aria-label]="t('Days to copy to')">
-            @for (d of otherDates(); track d) {
+    </header>
+    <section class="board card days-pass">
+      <ul class="day-rows">
+        @for (d of event().dates; track d) {
+          <li>
+            <span class="dname">{{ dayName(d) }}</span>
+            <span class="segments" role="radiogroup" [attr.aria-label]="dayName(d)">
               <button
                 type="button"
-                class="side-btn day-chip"
-                [class.active]="chosen().has(d)"
-                [attr.aria-pressed]="chosen().has(d)"
-                (click)="toggleDay(d)"
+                class="pill"
+                role="radio"
+                [class.active]="choiceOf(d) === 'off'"
+                [class.off]="choiceOf(d) === 'off'"
+                [attr.aria-checked]="choiceOf(d) === 'off'"
+                (click)="choose(d, 'off')"
               >
-                <span>{{ shortLabel(d) }}</span>
+                {{ t('Can’t') }}
+              </button>
+              <button
+                type="button"
+                class="pill"
+                role="radio"
+                [class.active]="choiceOf(d) === 'maybe'"
+                [attr.aria-checked]="choiceOf(d) === 'maybe'"
+                (click)="choose(d, 'maybe')"
+              >
+                {{ t('Maybe') }}
+              </button>
+              <button
+                type="button"
+                class="pill"
+                role="radio"
+                [class.active]="choiceOf(d) === 'all'"
+                [attr.aria-checked]="choiceOf(d) === 'all'"
+                (click)="choose(d, 'all')"
+              >
+                {{ t('Free all day') }}
+              </button>
+            </span>
+          </li>
+        }
+      </ul>
+    </section>
+    <div class="nav one">
+      <button mat-flat-button type="button" class="nav-btn" (click)="continueToTimes()">
+        {{ t('Continue') }}
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
+    </div>
+  } @else {
+    <header class="head card">
+      <div class="top">
+        <span class="progress muted">{{
+          t('Day {n} of {total}', { n: index() + 1, total: dates().length })
+        }}</span>
+        @if (calendarOffered()) {
+          <span class="cal-tools">
+            @if (calendar.hasSource()) {
+              <button
+                type="button"
+                class="tool fill"
+                (click)="fillFromCalendar()"
+                [disabled]="calendar.found() === null"
+                [title]="t('Mark the time your calendar leaves free')"
+              >
+                <mat-icon>auto_awesome</mat-icon>
+                {{ t('Fill from calendar') }}
+                <span class="pro-badge">{{ t('Pro') }}</span>
               </button>
             }
-          </div>
-          <span class="spacer"></span>
-          <button type="button" class="side-btn" (click)="toggleAll()">
-            <mat-icon>{{ allChosen() ? 'deselect' : 'select_all' }}</mat-icon>
-            <span>{{ allChosen() ? t('Select none') : t('Select all') }}</span>
-          </button>
-        } @else {
-          @if (dayHasEvents()) {
-            <span class="side-title muted">{{ calendarLabel() }}</span>
             <button
               type="button"
-              class="side-btn"
-              [class.active]="settings().calendarNames"
-              [attr.aria-pressed]="settings().calendarNames"
-              (click)="toggleSetting('calendarNames')"
+              class="tool icon"
+              [class.on]="calendarShown()"
+              [attr.aria-pressed]="calendarShown()"
+              [attr.aria-label]="t('Show my calendar events')"
+              [title]="t('Show my calendar events')"
+              (click)="toggleCalendar()"
             >
-              <mat-icon>label</mat-icon>
-              <span>{{ t('Names') }}</span>
+              <mat-icon>{{ calendarShown() ? 'event' : 'event_busy' }}</mat-icon>
             </button>
-            <button
-              type="button"
-              class="side-btn"
-              [class.active]="settings().calendarAllDay"
-              [attr.aria-pressed]="settings().calendarAllDay"
-              (click)="toggleSetting('calendarAllDay')"
-            >
-              <mat-icon>today</mat-icon>
-              <span>{{ t('All day') }}</span>
-            </button>
-          }
-          <span class="spacer"></span>
-          @if (index() > 0 && prevHasTimes()) {
-            <button type="button" class="side-btn" (click)="sameAsPrevious()">
-              <mat-icon>content_paste</mat-icon>
-              <span>{{ t('Same as previous') }}</span>
-            </button>
-          }
-          @if (dates().length > 1) {
-            <button
-              type="button"
-              class="side-btn"
-              (click)="startCopy({ kind: 'day' })"
-              [disabled]="!hasTimes()"
-            >
-              <mat-icon>content_copy</mat-icon>
-              <span>{{ t('Copy to…') }}</span>
-            </button>
-          }
-          <button type="button" class="side-btn" (click)="clearDay()" [disabled]="!hasTimes()">
-            <mat-icon>delete_outline</mat-icon>
-            <span>{{ t('Clear day') }}</span>
-          </button>
-          <button type="button" class="side-btn" [class.active]="isAllDay()" (click)="freeAllDay()">
-            <mat-icon>wb_sunny</mat-icon>
-            <span>{{ t('Free all day') }}</span>
-          </button>
+          </span>
         }
       </div>
-    </app-day-editor>
-  </section>
-
-  <div class="nav">
-    @if (copyTarget()) {
-      <button type="button" class="pill nav-btn" (click)="cancelCopy()">
-        <mat-icon>close</mat-icon>
-        {{ t('Cancel') }}
-      </button>
-      <button
-        mat-flat-button
-        type="button"
-        class="nav-btn"
-        (click)="applyCopy()"
-        [disabled]="!chosen().size"
+      <h2>{{ dayLabel() }}</h2>
+      @if (tip()) {
+        <p class="tip" role="status">
+          <mat-icon>lightbulb</mat-icon>
+          <span>{{
+            t('Mark each day and tap Next, or tap Overview any time to see all days at once.')
+          }}</span>
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="closeTip()"
+            [attr.aria-label]="t('Close')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </p>
+      }
+      @if (fillNote()) {
+        <p class="fill-note" role="status">
+          {{ t('Your calendar leaves no gap long enough on this day.') }}
+        </p>
+      }
+      <div
+        class="bar-track"
+        role="progressbar"
+        [attr.aria-valuenow]="index() + 1"
+        aria-valuemin="1"
+        [attr.aria-valuemax]="dates().length"
+        [attr.aria-label]="t('Day {n} of {total}', { n: index() + 1, total: dates().length })"
       >
-        {{ t('Copy ({n})', { n: chosen().size }) }}
-        <mat-icon iconPositionEnd>check</mat-icon>
-      </button>
-    } @else {
-      <button type="button" class="pill nav-btn" (click)="prev()" [disabled]="index() === 0">
-        <mat-icon>arrow_back</mat-icon>
-        {{ t('Prev') }}
-      </button>
-      <button type="button" class="pill nav-btn done" (click)="finished.emit()">
-        <mat-icon>calendar_view_week</mat-icon>
-        {{ t('Overview') }}
-      </button>
-      <button mat-flat-button type="button" class="nav-btn" (click)="next()">
-        {{ isLast() ? t('Finish') : t('Next') }}
-        <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
-      </button>
-    }
-  </div>
+        <div class="bar-fill" [style.width.%]="((index() + 1) / dates().length) * 100"></div>
+      </div>
+    </header>
+
+    <section
+      class="board card"
+      [class.slide-left]="slide() === 'left'"
+      [class.slide-right]="slide() === 'right'"
+      (touchstart)="onSwipeStart($event)"
+      (touchend)="onSwipeEnd($event)"
+      (animationend)="slide.set(null)"
+    >
+      <app-day-editor
+        [event]="event()"
+        [meId]="meId()"
+        [date]="date()"
+        (slotsChange)="slotsChange.emit($event)"
+        (copySlotRequested)="startCopy({ kind: 'slot', slot: $event })"
+      >
+        <div actions class="side" [class.copying]="copyTarget()">
+          @if (copyTarget(); as target) {
+            <span class="side-title muted"
+              >{{ target.kind === 'slot' ? slotLabel(target.slot) : t('Whole day') }} →</span
+            >
+            <div class="day-list" role="group" [attr.aria-label]="t('Days to copy to')">
+              @for (d of otherDates(); track d) {
+                <button
+                  type="button"
+                  class="side-btn day-chip"
+                  [class.active]="chosen().has(d)"
+                  [attr.aria-pressed]="chosen().has(d)"
+                  (click)="toggleDay(d)"
+                >
+                  <span>{{ shortLabel(d) }}</span>
+                </button>
+              }
+            </div>
+            <span class="spacer"></span>
+            <button type="button" class="side-btn" (click)="toggleAll()">
+              <mat-icon>{{ allChosen() ? 'deselect' : 'select_all' }}</mat-icon>
+              <span>{{ allChosen() ? t('Select none') : t('Select all') }}</span>
+            </button>
+          } @else {
+            @if (dayHasEvents()) {
+              <span class="side-title muted">{{ calendarLabel() }}</span>
+              <button
+                type="button"
+                class="side-btn"
+                [class.active]="settings().calendarNames"
+                [attr.aria-pressed]="settings().calendarNames"
+                (click)="toggleSetting('calendarNames')"
+              >
+                <mat-icon>label</mat-icon>
+                <span>{{ t('Names') }}</span>
+              </button>
+              <button
+                type="button"
+                class="side-btn"
+                [class.active]="settings().calendarAllDay"
+                [attr.aria-pressed]="settings().calendarAllDay"
+                (click)="toggleSetting('calendarAllDay')"
+              >
+                <mat-icon>today</mat-icon>
+                <span>{{ t('All day') }}</span>
+              </button>
+            }
+            <span class="spacer"></span>
+            @if (index() > 0 && prevHasTimes()) {
+              <button type="button" class="side-btn" (click)="sameAsPrevious()">
+                <mat-icon>content_paste</mat-icon>
+                <span>{{ t('Same as previous') }}</span>
+              </button>
+            }
+            @if (dates().length > 1) {
+              <button
+                type="button"
+                class="side-btn"
+                (click)="startCopy({ kind: 'day' })"
+                [disabled]="!hasTimes()"
+              >
+                <mat-icon>content_copy</mat-icon>
+                <span>{{ t('Copy to…') }}</span>
+              </button>
+            }
+            <button type="button" class="side-btn" (click)="clearDay()" [disabled]="!hasTimes()">
+              <mat-icon>delete_outline</mat-icon>
+              <span>{{ t('Clear day') }}</span>
+            </button>
+            <button
+              type="button"
+              class="side-btn"
+              [class.active]="isAllDay()"
+              (click)="freeAllDay()"
+            >
+              <mat-icon>wb_sunny</mat-icon>
+              <span>{{ t('Free all day') }}</span>
+            </button>
+          }
+        </div>
+      </app-day-editor>
+    </section>
+
+    <div class="nav">
+      @if (copyTarget()) {
+        <button type="button" class="pill nav-btn" (click)="cancelCopy()">
+          <mat-icon>close</mat-icon>
+          {{ t('Cancel') }}
+        </button>
+        <button
+          mat-flat-button
+          type="button"
+          class="nav-btn"
+          (click)="applyCopy()"
+          [disabled]="!chosen().size"
+        >
+          {{ t('Copy ({n})', { n: chosen().size }) }}
+          <mat-icon iconPositionEnd>check</mat-icon>
+        </button>
+      } @else {
+        <button type="button" class="pill nav-btn" (click)="prev()" [disabled]="index() === 0">
+          <mat-icon>arrow_back</mat-icon>
+          {{ t('Prev') }}
+        </button>
+        <button type="button" class="pill nav-btn done" (click)="finished.emit()">
+          <mat-icon>calendar_view_week</mat-icon>
+          {{ t('Overview') }}
+        </button>
+        <button mat-flat-button type="button" class="nav-btn" (click)="next()">
+          {{ isLast() ? t('Finish') : t('Next') }}
+          <mat-icon iconPositionEnd>{{ isLast() ? 'check' : 'arrow_forward' }}</mat-icon>
+        </button>
+      }
+    </div>
+  }
 </div>

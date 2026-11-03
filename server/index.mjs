@@ -136,6 +136,8 @@ for (const ev of store.all()) {
   ev.history ??= [];
   ev.description ??= '';
   ev.partialOk ??= false;
+  ev.daysFirst ??= true;
+  for (const p of ev.participants) p.off ??= [];
   ev.booked ??= null;
   ev.shortlists ??= [];
   ev.votes ??= {};
@@ -179,6 +181,8 @@ app.post('/api/events', (req, res) => {
   if (dates.length === 0) return res.status(400).json({ error: 'no_dates' });
   const [dayStart, dayEnd] = cleanRange(body.dayStart, body.dayEnd);
   const partialOk = body.partialOk === true;
+  // People first say which days could work at all, then mark times only on those.
+  const daysFirst = body.daysFirst !== false;
   const timeZone = cleanZone(body.timeZone);
   const durationHours = Math.min((dayEnd - dayStart) / 60, Math.max(0.5, Number(body.durationHours) || 3));
 
@@ -194,6 +198,7 @@ app.post('/api/events', (req, res) => {
     dayStart,
     dayEnd,
     partialOk,
+    daysFirst,
     timeZone,
     participants: [],
     history: [],
@@ -1071,7 +1076,7 @@ wss.on('connection', (ws, req) => {
         }
         if (!p) {
           const name = cleanName(msg.name);
-          p = { id: randomUUID(), name, color: pickColor(ev), slots: [] };
+          p = { id: randomUUID(), name, color: pickColor(ev), slots: [], off: [] };
           ev.participants.push(p);
           ev.notifiedComplete = false;
           record(ev, { ...who(p), kind: 'joined' });
@@ -1088,6 +1093,9 @@ wss.on('connection', (ws, req) => {
         if (!p) { send(ws, { type: 'needName' }); return; }
         const before = p.slots;
         p.slots = sanitizeSlots(ev, msg.slots);
+        // Times on a day they had ruled out mean they changed their mind.
+        const withTimes = new Set(p.slots.map((s) => s.date));
+        p.off = (p.off ?? []).filter((d) => !withTimes.has(d));
         recordSlotChanges(ev, p, before, p.slots);
         // The last person to answer completes the picture: tell the others once.
         const everyone = ev.participants.length >= 2 && ev.participants.every((x) => x.slots.length);
@@ -1099,6 +1107,20 @@ wss.on('connection', (ws, req) => {
             body: n ? say('possible', { n }, n) : say('none_fit'),
           }));
         }
+        store.set(ev);
+        broadcast(ev.id);
+        break;
+      }
+      case 'setOff': {
+        // The days this person cannot make at all (the first part of answering).
+        const p = ev.participants.find((x) => x.id === ws.participantId);
+        if (!p) { send(ws, { type: 'needName' }); return; }
+        const wanted = new Set(cleanDates(msg.dates).filter((d) => ev.dates.includes(d)));
+        const before = new Set(p.off ?? []);
+        p.off = [...wanted];
+        // Ruling a day out also drops any times on it.
+        p.slots = p.slots.filter((s) => !wanted.has(s.date));
+        for (const d of wanted) if (!before.has(d)) record(ev, { ...who(p), kind: 'off', date: d });
         store.set(ev);
         broadcast(ev.id);
         break;
@@ -1150,7 +1172,10 @@ wss.on('connection', (ws, req) => {
             ev.dates = dates;
             // Days that left take what sat on them along: times, bookings, votes.
             const keep = new Set(dates);
-            for (const p of ev.participants) p.slots = p.slots.filter((s) => keep.has(s.date));
+            for (const p of ev.participants) {
+              p.slots = p.slots.filter((s) => keep.has(s.date));
+              p.off = (p.off ?? []).filter((d) => keep.has(d));
+            }
             if (ev.bookings) ev.bookings = ev.bookings.filter((b) => keep.has(b.date));
             ev.booked = ev.bookings?.[0] ?? null;
             for (const key of Object.keys(ev.votes ?? {})) {
@@ -1164,6 +1189,7 @@ wss.on('connection', (ws, req) => {
         if (typeof patch.title === 'string' && patch.title.trim()) ev.title = patch.title.trim().slice(0, 80);
         if (typeof patch.description === 'string') ev.description = cleanDescription(patch.description);
         if (typeof patch.partialOk === 'boolean') ev.partialOk = patch.partialOk;
+        if (typeof patch.daysFirst === 'boolean') ev.daysFirst = patch.daysFirst;
         // One booked session, or several (a Pro feature); `booked` stays the first for older clients.
         const before = ev.bookings ?? [];
         if (patch.bookings !== undefined || patch.booked !== undefined) {
